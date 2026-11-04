@@ -137,3 +137,40 @@
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+
+/* ——— Réglages d'accessibilité (bouton « Accessibilité » de l'en-tête) ——— */
+
+/* Taille du texte : tout le site est en rem, il s'agrandit d'un bloc */
+:root[data-text="lg"] { font-size: 112.5%; }
+:root[data-text="xl"] { font-size: 125%; }
+
+/* Contraste renforcé : texte secondaire plus foncé, traits plus marqués, quadrillage retiré */
+:root[data-contrast][data-theme="light"] {
+  --c-muted: #2a3550; --c-rule: #7d89a6; --c-pen: #1b3fa8; --c-paper-2: #eef1f8;
+  --c-seyes: transparent; --c-seyes-light: transparent; --c-margin: #b3123f;
+}
+:root[data-contrast][data-theme="dark"] {
+  --c-muted: #d3d9e8; --c-rule: #6b7a9c; --c-pen: #b8c7ff; --c-paper: #070b14; --c-paper-2: #10172a;
+  --c-seyes: transparent; --c-seyes-light: transparent; --c-margin: #ff9ab2;
+}
+
+/* Police plus lisible */
+:root[data-font] body, :root[data-font] body * {
+  font-family: "Atkinson Hyperlegible", Verdana, Arial, sans-serif !important;
+}
+
+/* Espacement du texte (valeurs du critère WCAG 1.4.12) */
+:root[data-spacing] :is(p, li, dd, dt, label, summary, td, th, blockquote, textarea, input) {
+  line-height: 1.8 !important; letter-spacing: 0.06em !important; word-spacing: 0.16em !important;
+}
+:root[data-spacing] :is(h1, h2, h3) { line-height: 1.3 !important; letter-spacing: 0.01em !important; }
+
+/* Liens toujours soulignés (hors boutons) */
+:root[data-links] a:not([class*="rounded"]) { text-decoration: underline !important; text-underline-offset: 3px; }
+
+/* Animations désactivées */
+:root[data-motion] { scroll-behavior: auto; }
+:root[data-motion] *, :root[data-motion] *::before, :root[data-motion] *::after {
+  animation: none !important; transition: none !important;
+}

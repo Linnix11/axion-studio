@@ -1,3 +1,4 @@
+import { reducedMotion } from '../prefs'
 import { useEffect, useState } from 'react'
 import { tasks } from '../data'
 
@@ -14,7 +15,7 @@ export default function TaskList() {
   // Rature progressive au chargement : seul moment animé de la page.
   const [drawn, setDrawn] = useState(0)
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setDrawn(tasks.length); return }
+    if (reducedMotion()) { setDrawn(tasks.length); return }
     let i = 0
     const id = setInterval(() => { i += 1; setDrawn(i); if (i >= tasks.length) clearInterval(id) }, 350)
     return () => clearInterval(id)

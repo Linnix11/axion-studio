@@ -1,3 +1,4 @@
+import { reducedMotion } from '../prefs'
 import { useEffect, useRef, useState } from 'react'
 import { btn } from './ui'
 import { demo } from '../data'
@@ -25,7 +26,7 @@ export default function Demo() {
 
   const run = () => {
     clearInterval(timer.current)
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setStage(total); return }
+    if (reducedMotion()) { setStage(total); return }
     setStage(0); setRunning(true)
     let i = 0
     timer.current = setInterval(() => {

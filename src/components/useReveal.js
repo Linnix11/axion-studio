@@ -1,3 +1,4 @@
+import { reducedMotion } from '../prefs'
 import { useEffect, useRef } from 'react'
 
 /**
@@ -11,7 +12,7 @@ export function useReveal() {
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduce = reducedMotion()
     if (reduce || !('IntersectionObserver' in window)) return
     if (el.getBoundingClientRect().top < window.innerHeight * 0.9) return
     el.dataset.anim = 'pending'

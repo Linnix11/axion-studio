@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Axion Studio, automatisation et IA pour les entreprises</title>
   <meta name="theme-color" content="#2b5ce6">
+  <script>
+    // Applique tout de suite le thème et les réglages d'accessibilité enregistrés (évite un flash de mauvais thème).
+    (function () {
+      var p = {}; try { p = JSON.parse(localStorage.getItem('axion-prefs') || '{}') } catch (e) {}
+      var r = document.documentElement;
+      r.setAttribute('data-theme', p.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+      r.setAttribute('data-text', p.text || 'normal');
+      ['contrast', 'font', 'spacing', 'links', 'motion'].forEach(function (k) { if (p[k]) r.setAttribute('data-' + k, 'on'); });
+    })();
+  </script>
   <meta name="description" content="Axion Studio : conseil et prestations en automatisation des processus et intelligence artificielle pour les entreprises. Workflows automatisés, intégration d’outils, création de sites web.">
   <link rel="icon" href="%BASE_URL%favicon.svg" type="image/svg+xml">
   <script type="application/ld+json">
