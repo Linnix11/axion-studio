@@ -30,7 +30,6 @@ Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Mentions
 
 ## Hébergement
 - **https://axionstudio.fr** : hébergement Hostinger relié à ce dépôt, mis à jour à chaque envoi sur `main`.
-- **https://linnix11.github.io/axion-studio/** : copie sur GitHub Pages (workflow `deploy.yml`, construit avec `BASE_PATH=/axion-studio/`).
 
 ## À compléter avant la mise en ligne
 - **SIRET** : remplacer « En cours d'attribution » dans `src/data.js` dès réception de l'avis INSEE.
