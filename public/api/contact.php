@@ -3,7 +3,7 @@
 // Répond en JSON : {"ok":true} ou {"ok":false,"error":"..."}.
 
 const TO_EMAIL   = 'arthur.champagne@icloud.com';
-const FROM_EMAIL = 'contact@axionstudio.fr';   // adresse du domaine (à créer dans Hostinger > E-mails pour une meilleure délivrabilité)
+const FROM_EMAIL = 'ne-pas-repondre@axionstudio.fr';   // expéditeur technique (aucune boîte nécessaire, autorisé par le SPF du domaine) ; les réponses vont au visiteur (Reply-To)
 const MAX_PER_HOUR = 5;                         // envois maximum par adresse IP et par heure
 
 require __DIR__ . '/_common.php';

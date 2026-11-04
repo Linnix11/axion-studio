@@ -37,8 +37,9 @@ Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Mentions
 
 ## Formulaire de contact
 `public/api/contact.php` (exécuté par Hostinger) envoie chaque demande par e-mail à l'adresse `TO_EMAIL`,
-avec l'adresse du visiteur en « Répondre à ». Expéditeur : `contact@axionstudio.fr` ; créez cette boîte dans
-Hostinger (E-mails) pour que les messages n'arrivent pas en indésirables. Limite : 5 envois par heure et par adresse IP.
+avec l'adresse du visiteur en « Répondre à ». Expéditeur technique : `ne-pas-repondre@axionstudio.fr`
+(aucune boîte à créer ; envois autorisés par l'enregistrement SPF du domaine, DMARC en mode observation).
+Ne pas utiliser une adresse @icloud.com comme expéditeur : Apple refuse les envois depuis un autre serveur. Limite : 5 envois par heure et par adresse IP.
 
 ## Blog
 Articles dans `src/blog.js` (mode d'emploi en tête du fichier). Chaque article ajouté apparaît automatiquement
