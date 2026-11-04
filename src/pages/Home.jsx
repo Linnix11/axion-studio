@@ -5,7 +5,7 @@ import Demo from '../components/Demo'
 import { IdentityCard, Guarantees, NotDoing } from '../components/Trust'
 import { services, useCases, steps } from '../data'
 
-const heroFacts = ['Audit gratuit de 30 min', 'Prix fixé avant de commencer', 'Vous restez propriétaire de tout']
+const heroFacts = ['Audit gratuit de 30 min', 'Prix fixé avant de commencer', 'Vous gardez tout']
 
 export default function Home() {
   usePageMeta('/')
