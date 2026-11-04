@@ -54,7 +54,7 @@ export default function TaskList() {
       <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2 px-5 py-5 sm:px-6" aria-live="polite">
         <p className="text-sm text-muted">Temps récupérable</p>
         <p className="sm:text-right">
-          <span className="marker rounded-sm px-1.5 text-2xl font-semibold tabular-nums">{fmt(total)}</span>
+          <span key={total} className="bump marker rounded-sm px-1.5 text-2xl font-semibold tabular-nums">{fmt(total)}</span>
           <span className="text-muted"> par semaine</span>
           <span className="block text-sm text-muted">soit environ {yearly} h par an</span>
         </p>

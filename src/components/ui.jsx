@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useReveal } from './useReveal'
 import { Link } from 'react-router'
 import { company } from '../data'
 
@@ -11,13 +12,14 @@ export function Container({ className = '', children }) {
  * manuscrite (note) qui résume la section ; le contenu s'écrit à droite.
  */
 export function Section({ id, tone = 'paper', note, className = '', children }) {
+  const ref = useReveal()
   return (
-    <section id={id} className={`scroll-mt-16 ${tone === 'alt' ? 'bg-paper-2' : ''} ${className}`}>
+    <section ref={ref} id={id} className={`scroll-mt-16 ${tone === 'alt' ? 'bg-paper-2' : ''} ${className}`}>
       <Container className="lg:grid lg:grid-cols-[150px_minmax(0,1fr)]">
-        <aside className="hidden border-r-2 border-margin/70 pt-[4.5rem] pr-5 text-right lg:block md:pt-[6.5rem]">
-          {note && <p className="font-serif text-base leading-snug text-pen italic">{note}</p>}
+        <aside className="margin-line hidden pt-[4.5rem] pr-5 text-right lg:block md:pt-[6.5rem]">
+          {note && <p className="rv-note font-serif text-base leading-snug text-pen italic">{note}</p>}
         </aside>
-        <div className="py-16 md:py-24 lg:pl-12">
+        <div className="rv py-16 md:py-24 lg:pl-12">
           {note && <p className="mb-3 font-serif text-base text-pen italic lg:hidden">{note}</p>}
           {children}
         </div>
@@ -40,10 +42,10 @@ export function PageHeader({ title, note, children }) {
   return (
     <section className="seyes border-b border-rule">
       <Container className="lg:grid lg:grid-cols-[150px_minmax(0,1fr)]">
-        <aside className="hidden border-r-2 border-margin/70 pt-24 pr-5 text-right lg:block">
+        <aside className="margin-line hidden pt-24 pr-5 text-right lg:block">
           {note && <p className="font-serif text-base leading-snug text-pen italic">{note}</p>}
         </aside>
-        <div className="pt-14 pb-12 md:pt-20 md:pb-16 lg:pl-12">
+        <div className="intro pt-14 pb-12 md:pt-20 md:pb-16 lg:pl-12">
           <h1 className="max-w-3xl text-[2.75rem] leading-[1.04] tracking-[-0.03em] sm:text-7xl">{title}</h1>
           {children && <p className="mt-6 max-w-[40rem] rounded-sm bg-paper/80 font-serif text-xl leading-[1.6] text-muted">{children}</p>}
         </div>

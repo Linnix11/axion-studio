@@ -8,7 +8,7 @@
   --c-ink: #14213d;          /* texte */
   --c-muted: #56627d;        /* texte secondaire */
   --c-rule: #d6deee;         /* lignes réglées */
-  --c-pen: #2346c8;          /* stylo bille : liens, boutons, ratures */
+  --c-pen: #2b5ce6;          /* stylo bille : liens, boutons, ratures */
   --c-on-pen: #ffffff;
   --c-marker: #ffe45c;       /* surligneur : réservé à « automatisé » */
   --c-on-marker: #14213d;
@@ -65,7 +65,62 @@
 }
 .strike[data-done="true"] { text-decoration-color: var(--c-pen); }
 
-.marker { background: var(--c-marker); color: var(--c-on-marker); }
+
+/* ——— Animations ———
+   Durées 150 à 600 ms, ease-out à l'entrée. Propriétés : transform et opacity
+   (sauf le surligneur, qui balaie sa largeur comme un vrai feutre). */
+.marker {
+  background: linear-gradient(var(--c-marker), var(--c-marker)) no-repeat 0 0 / 100% 100%;
+  color: var(--c-on-marker);
+}
+
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes draw-y { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes sweep { from { background-size: 0% 100%; } to { background-size: 100% 100%; } }
+@keyframes bump { 0% { transform: scale(1); } 40% { transform: scale(1.08); } 100% { transform: scale(1); } }
+@keyframes pop { 0% { transform: scale(0.6); } 70% { transform: scale(1.12); } 100% { transform: scale(1); } }
+@keyframes drop { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
+
+/* Marge rouge dessinée en trait (pseudo-élément) pour pouvoir la tracer */
+.margin-line { position: relative; }
+.margin-line::before {
+  content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 2px;
+  background: color-mix(in srgb, var(--c-margin) 70%, transparent); transform-origin: top;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Chargement de la page d'accueil : apparition en cascade (seul moment orchestré) */
+  .intro > * { animation: rise 600ms cubic-bezier(.2,.7,.2,1) both; }
+  .intro > :nth-child(2) { animation-delay: 90ms; }
+  .intro > :nth-child(3) { animation-delay: 180ms; }
+  .intro > :nth-child(4) { animation-delay: 270ms; }
+  .intro-late { animation: rise 600ms cubic-bezier(.2,.7,.2,1) 220ms both; }
+
+  /* Changement de page */
+  .page-fade { animation: fade 200ms ease-out both; }
+
+  /* Sections révélées au défilement */
+  [data-anim="pending"] .rv, [data-anim="pending"] .rv-note { opacity: 0; }
+  [data-anim="pending"] .margin-line::before { transform: scaleY(0); }
+  [data-anim="in"] .rv { animation: rise 600ms cubic-bezier(.2,.7,.2,1) 120ms both; }
+  [data-anim="in"] .rv-note { animation: fade 400ms ease-out 450ms both; }
+  [data-anim="in"] .margin-line::before { animation: draw-y 700ms cubic-bezier(.4,0,.2,1) both; }
+  [data-anim="pending"] .marker { background-size: 0% 100%; }
+  [data-anim="in"] .marker { animation: sweep 500ms ease-out 700ms both; }
+
+  /* Interactions */
+  .lift { transition: transform 150ms ease-out, box-shadow 150ms ease-out, border-color 150ms ease-out; }
+  .lift:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(20, 33, 61, 0.07); border-color: var(--c-pen); }
+  .bump { animation: bump 300ms ease-out; display: inline-block; }
+  .pop { animation: pop 300ms ease-out both; }
+  .drop { animation: drop 200ms ease-out both; }
+  details[open] > .faq-a { animation: rise 300ms ease-out both; }
+  .logo-mark path { transition: transform 200ms ease-out; }
+  a:hover .logo-mark path { transform: translateX(6px); }
+  .logo-mark circle { transition: transform 200ms ease-out; transform-box: fill-box; transform-origin: center; }
+  a:hover .logo-mark circle { transform: scale(1.12); }
+}
 
 /* Papier Seyès : carreaux de 8 mm (32 px) et interlignes de 2 mm (8 px) */
 .seyes {

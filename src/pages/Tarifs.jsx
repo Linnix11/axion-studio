@@ -14,7 +14,7 @@ export default function Tarifs() {
       <Section note="3 formules">
         <div className="grid gap-6 lg:grid-cols-3">
           {offers.map(o => (
-            <article key={o.name} className={`flex flex-col rounded-lg border p-6 sm:p-8 ${o.featured ? 'border-2 border-pen' : 'border-rule'}`}>
+            <article key={o.name} className={`lift flex flex-col rounded-lg border p-6 sm:p-8 ${o.featured ? 'border-2 border-pen' : 'border-rule'}`}>
               <h2 className="text-2xl leading-tight">{o.name}</h2>
               <p className="mt-4">
                 <span className="text-[2rem] leading-none font-semibold">{o.price}</span>

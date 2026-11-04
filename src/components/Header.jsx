@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router'
 import { Container, btn } from './ui'
+import { LogoMark } from './Logo'
 import { nav, company } from '../data'
 
 export default function Header() {
@@ -23,10 +24,8 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-rule bg-paper">
       <Container className="relative flex h-16 items-center justify-between">
-        <Link to="/" className="flex min-h-11 items-center gap-2 text-lg font-semibold text-ink no-underline" aria-label="Axion Studio, accueil">
-          <span aria-hidden="true" className="grid size-6 place-items-center rounded-[5px] bg-pen">
-            <span className="h-[3px] w-3.5 rounded-full bg-marker" />
-          </span>
+        <Link to="/" className="group flex min-h-11 items-center gap-2.5 text-xl font-semibold tracking-[-0.01em] text-ink no-underline" aria-label="Axion Studio, accueil">
+          <LogoMark className="logo-mark h-9 w-auto text-ink" />
           Axion Studio
         </Link>
 
@@ -43,7 +42,7 @@ export default function Header() {
         <nav
           id="nav"
           aria-label="Navigation principale"
-          className={`${open ? 'flex' : 'hidden'} absolute inset-x-0 top-16 flex-col border-b border-rule bg-paper px-4 pt-2 pb-4
+          className={`${open ? 'drop flex' : 'hidden'} absolute inset-x-0 top-16 flex-col border-b border-rule bg-paper px-4 pt-2 pb-4
                       lg:static lg:flex lg:flex-row lg:items-center lg:gap-6 lg:border-0 lg:p-0`}
         >
           {nav.map(item => (

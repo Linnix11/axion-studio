@@ -1,5 +1,6 @@
 import { Link } from 'react-router'
 import { Container } from './ui'
+import { LogoMark } from './Logo'
 import { company, nav, services } from '../data'
 
 const link = 'inline-flex min-h-11 items-center text-ink no-underline hover:text-pen'
@@ -9,7 +10,7 @@ export default function Footer() {
     <footer className="border-t border-rule bg-paper-2 text-sm">
       <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div className="max-w-xs">
-          <p className="text-lg font-semibold">{company.brand}</p>
+          <p className="flex items-center gap-2.5 text-lg font-semibold"><LogoMark className="h-7 w-auto text-ink" />{company.brand}</p>
           <p className="mt-2 font-serif text-base leading-[1.6] text-muted">
             Automatisation des processus, intelligence artificielle et sites web pour les TPE, PME et indépendants.
           </p>

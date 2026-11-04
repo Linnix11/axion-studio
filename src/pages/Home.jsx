@@ -13,7 +13,7 @@ export default function Home() {
     <>
       <section className="seyes border-b border-rule">
         <Container className="grid items-start gap-12 pt-14 pb-20 md:pt-20 md:pb-24 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
-          <div className="lg:pt-4">
+          <div className="intro lg:pt-4">
             <h1 className="text-[2.75rem] leading-[1.02] tracking-[-0.03em] sm:text-7xl lg:text-[5.25rem]">
               Vos tâches répétitives, faites sans vous.
             </h1>
@@ -33,7 +33,7 @@ export default function Home() {
               ))}
             </ul>
           </div>
-          <div>
+          <div className="intro-late">
             <TaskList />
             <p className="mt-3 text-sm text-muted">Cochez ce que vous faites encore à la main. Durées moyennes indicatives.</p>
           </div>
@@ -67,7 +67,7 @@ export default function Home() {
         <SectionHead title="Avant, après">Chaque projet part de votre façon de travailler. Les gains sont des ordres de grandeur.</SectionHead>
         <div className="grid gap-5 md:grid-cols-3">
           {useCases.slice(0, 3).map(u => (
-            <article key={u.task} className="flex flex-col rounded-lg border border-rule bg-paper p-6">
+            <article key={u.task} className="lift flex flex-col rounded-lg border border-rule bg-paper p-6">
               <p className="text-sm text-muted">{u.sector}</p>
               <h3 className="mt-1 text-xl leading-tight font-medium">{u.task}</h3>
               <p className="mt-4 font-serif leading-[1.6] text-muted line-through decoration-pen/60">{u.before}</p>

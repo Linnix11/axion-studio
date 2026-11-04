@@ -28,6 +28,17 @@ function ScrollManager() {
   return null
 }
 
+function PageFade() {
+  // Rejoue un fondu léger sur le contenu à chaque changement de page.
+  const { pathname } = useLocation()
+  useEffect(() => {
+    const main = document.getElementById('contenu')
+    if (!main) return
+    main.classList.remove('page-fade'); void main.offsetWidth; main.classList.add('page-fade')
+  }, [pathname])
+  return null
+}
+
 export default function App() {
   return (
     <>
@@ -37,6 +48,7 @@ export default function App() {
       </a>
       <Header />
       <main id="contenu" tabIndex={-1} className="outline-none">
+        <PageFade />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/services" element={<Services />} />

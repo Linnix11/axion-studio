@@ -8,7 +8,7 @@ function Check({ done, active }) {
   return (
     <span aria-hidden="true"
       className={`grid size-6 shrink-0 place-items-center rounded-full border-2 text-xs font-semibold transition-colors duration-200
-        ${done ? 'border-ok bg-ok text-paper' : active ? 'border-pen text-pen' : 'border-rule text-transparent'}`}>
+        ${done ? 'pop border-ok bg-ok text-paper' : active ? 'border-pen text-pen' : 'border-rule text-transparent'}`}>
       ✓
     </span>
   )
@@ -79,7 +79,7 @@ export default function Demo() {
             </p>
           ) : (
             <div className="mt-4 space-y-4">
-              <dl className="rounded-md border border-rule text-sm">
+              <dl className="drop rounded-md border border-rule text-sm">
                 <div className="border-b border-rule bg-paper-2 px-4 py-2 font-medium">Fiche CRM</div>
                 {demo.record.map(([k, v]) => (
                   <div key={k} className="grid grid-cols-[90px_1fr] gap-2 border-b border-rule px-4 py-2 last:border-0">
@@ -88,13 +88,13 @@ export default function Demo() {
                 ))}
               </dl>
               {stage >= 4 && (
-                <div className="rounded-md border border-rule p-4">
+                <div className="drop rounded-md border border-rule p-4">
                   <p className="text-sm font-medium">Brouillon de réponse, à relire</p>
                   <p className="mt-2 font-serif text-sm leading-[1.6]">{demo.reply}</p>
                 </div>
               )}
               {finished && (
-                <p className="text-sm"><span className="marker rounded-sm px-1.5 py-0.5 font-medium">Notification envoyée</span> Nouvelle demande de devis : Claire Martin</p>
+                <p className="drop text-sm"><span className="marker rounded-sm px-1.5 py-0.5 font-medium">Notification envoyée</span> Nouvelle demande de devis : Claire Martin</p>
               )}
             </div>
           )}

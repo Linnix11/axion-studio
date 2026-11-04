@@ -14,7 +14,7 @@ export default function Faq() {
                 {f.q}
                 <span aria-hidden="true" className="shrink-0 text-2xl leading-none text-pen transition-transform duration-150 group-open:rotate-45">+</span>
               </summary>
-              <p className="max-w-[62ch] pb-6 font-serif text-lg leading-[1.6] text-muted">{f.a}</p>
+              <p className="faq-a max-w-[62ch] pb-6 font-serif text-lg leading-[1.6] text-muted">{f.a}</p>
             </details>
           ))}
         </div>
