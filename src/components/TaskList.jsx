@@ -25,7 +25,7 @@ export default function TaskList() {
   const yearly = Math.round((total * WEEKS_PER_YEAR) / 60)
 
   return (
-    <div className="rounded-lg border border-rule bg-paper shadow-[0_2px_16px_rgba(20,33,61,0.06)]">
+    <div className="rounded-lg border border-rule bg-paper shadow-card">
       <div className="flex items-baseline justify-between gap-4 border-b-2 border-pen px-5 pt-5 pb-3 sm:px-6">
         <h2 className="text-lg">Ma semaine, à la main</h2>
         <p className="text-sm text-muted">min / semaine</p>

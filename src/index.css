@@ -17,6 +17,8 @@
   --c-seyes: rgba(35, 70, 200, 0.13);
   --c-seyes-light: rgba(35, 70, 200, 0.055);
   --c-ok: #1d7a4b;
+  --c-logo: #2b5ce6;          /* bleu du logo : fixe, ne change pas avec le thème */
+  --c-shadow: 20 33 61;        /* encre, en RVB, pour les ombres */
 }
 /* Thème clair par défaut ; le thème sombre s'active avec le bouton lune (attribut data-theme="dark"). */
 :root[data-theme="dark"] {
@@ -39,6 +41,11 @@
   --color-error: var(--c-error);
   --color-margin: var(--c-margin);
   --color-ok: var(--c-ok);
+  --color-logo: var(--c-logo);
+  /* Ombres : une échelle unique pour tout le site */
+  --shadow-card: 0 2px 16px rgb(var(--c-shadow) / 0.06);
+  --shadow-float: 0 6px 24px rgb(var(--c-shadow) / 0.14);
+  --shadow-overlay: 0 12px 40px rgb(var(--c-shadow) / 0.18);
   --font-sans: "Schibsted Grotesk Variable", "Helvetica Neue", Arial, sans-serif;
   --font-serif: "Source Serif 4 Variable", Georgia, "Times New Roman", serif;
 }
@@ -109,7 +116,7 @@
 
   /* Interactions */
   .lift { transition: transform 150ms ease-out, box-shadow 150ms ease-out, border-color 150ms ease-out; }
-  .lift:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(20, 33, 61, 0.07); border-color: var(--c-pen); }
+  .lift:hover { transform: translateY(-3px); box-shadow: var(--shadow-card); border-color: var(--c-pen); }
   .bump { animation: bump 300ms ease-out; display: inline-block; }
   .pop { animation: pop 300ms ease-out both; }
   .drop { animation: drop 200ms ease-out both; }

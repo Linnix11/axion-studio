@@ -86,10 +86,11 @@ export function usePageMeta(path) {
   }, [path])
 }
 
-const base = 'inline-flex min-h-12 items-center justify-center rounded-md px-6 text-base font-medium no-underline transition-colors duration-150 cursor-pointer'
+// États : défaut · survol · appui (enfoncé d'1 px) · focus (contour 3 px, global) · désactivé (atténué, curseur interdit)
+const base = 'inline-flex min-h-12 items-center justify-center rounded-md px-6 text-base font-medium no-underline transition-colors duration-150 cursor-pointer active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60 disabled:active:translate-y-0'
 export const btn = {
-  primary: `${base} bg-pen text-on-pen hover:bg-ink`,
-  ghost: `${base} border border-rule bg-paper text-ink hover:border-pen hover:text-pen`,
+  primary: `${base} bg-pen text-on-pen hover:bg-ink active:bg-ink disabled:hover:bg-pen`,
+  ghost: `${base} border border-rule bg-paper text-ink hover:border-pen hover:text-pen active:bg-paper-2`,
 }
 
 export const textLink = 'text-pen underline decoration-1 underline-offset-4 hover:decoration-2'

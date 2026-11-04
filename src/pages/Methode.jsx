@@ -39,7 +39,7 @@ export default function Methode() {
         <SectionHead title="À quoi ressemble une proposition">
           Un document d’une page, sans jargon, qui dit exactement ce qui sera fait, en combien de temps et pour quel prix.
         </SectionHead>
-        <article className="seyes max-w-3xl rounded-lg border border-rule shadow-[0_2px_16px_rgba(20,33,61,0.06)]">
+        <article className="seyes max-w-3xl rounded-lg border border-rule shadow-card">
           <header className="flex flex-wrap items-baseline justify-between gap-2 border-b-2 border-margin/70 bg-paper/85 px-6 py-4">
             <h3 className="text-xl">Proposition d’automatisation</h3>
             <p className="text-sm text-muted">{ps.client}</p>

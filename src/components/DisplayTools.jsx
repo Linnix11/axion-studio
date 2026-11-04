@@ -89,7 +89,7 @@ export default function DisplayTools() {
 
         {open && (
           <div ref={panelRef} id="a11y-panel" role="dialog" aria-modal="false" aria-labelledby="a11y-title"
-            className="drop fixed inset-x-2 top-[4.25rem] z-[70] max-h-[calc(100dvh-5rem)] overflow-y-auto rounded-xl border border-rule bg-paper p-5 shadow-[0_12px_40px_rgba(20,33,61,0.18)] sm:absolute sm:inset-x-auto sm:top-[calc(100%+0.5rem)] sm:right-0 sm:w-[360px]">
+            className="drop fixed inset-x-2 top-[4.25rem] z-[70] max-h-[calc(100dvh-5rem)] overflow-y-auto rounded-xl border border-rule bg-paper p-5 shadow-overlay sm:absolute sm:inset-x-auto sm:top-[calc(100%+0.5rem)] sm:right-0 sm:w-[360px]">
             <h2 id="a11y-title" className="text-lg">Accessibilité</h2>
             <p className="mt-1 text-sm text-muted">Vos réglages sont gardés pour vos prochaines visites.</p>
 

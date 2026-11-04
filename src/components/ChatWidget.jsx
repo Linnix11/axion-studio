@@ -107,7 +107,7 @@ export default function ChatWidget() {
         onClick={() => setOpen(o => !o)}
         aria-expanded={open}
         aria-controls="assistant"
-        className="fixed right-4 bottom-4 z-[60] inline-flex min-h-13 items-center gap-2 rounded-full border-2 border-pen bg-paper px-5 font-medium text-pen shadow-[0_6px_24px_rgba(20,33,61,0.14)] transition-transform duration-150 hover:-translate-y-0.5 focus-visible:outline-offset-4 sm:right-6 sm:bottom-6"
+        className="fixed right-4 bottom-4 z-[60] inline-flex min-h-13 items-center gap-2 rounded-full border-2 border-pen bg-paper px-5 font-medium text-pen shadow-float transition-transform duration-150 hover:-translate-y-0.5 focus-visible:outline-offset-4 sm:right-6 sm:bottom-6"
       >
         <span aria-hidden="true" className="text-lg leading-none">{open ? '×' : '?'}</span>
         {open ? 'Fermer l’assistant' : 'Une question ?'}
@@ -119,7 +119,7 @@ export default function ChatWidget() {
           role="dialog"
           aria-modal="false"
           aria-labelledby="assistant-title"
-          className="drop fixed inset-x-2 bottom-20 z-[60] flex max-h-[min(640px,calc(100dvh-7rem))] flex-col overflow-hidden rounded-xl border border-rule bg-paper shadow-[0_12px_40px_rgba(20,33,61,0.18)] sm:inset-x-auto sm:right-6 sm:bottom-24 sm:w-[400px]"
+          className="drop fixed inset-x-2 bottom-20 z-[60] flex max-h-[min(640px,calc(100dvh-7rem))] flex-col overflow-hidden rounded-xl border border-rule bg-paper shadow-overlay sm:inset-x-auto sm:right-6 sm:bottom-24 sm:w-[400px]"
         >
           <header className="flex items-start justify-between gap-3 border-b border-rule bg-paper-2 px-4 py-3">
             <div>
