@@ -18,14 +18,7 @@
   --c-seyes-light: rgba(35, 70, 200, 0.055);
   --c-ok: #1d7a4b;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --c-paper: #0e1525; --c-paper-2: #141d31; --c-ink: #e7ebf4; --c-muted: #a3adc4;
-    --c-rule: #27324b; --c-pen: #93a9ff; --c-on-pen: #0e1525; --c-marker: #e9d04b;
-    --c-on-marker: #0e1525; --c-error: #ff8a7a; --c-margin: #ff7d9b; --c-seyes: rgba(147, 169, 255, 0.11); --c-seyes-light: rgba(147, 169, 255, 0.045); --c-ok: #5fd39a;
-    color-scheme: dark;
-  }
-}
+/* Thème clair par défaut ; le thème sombre s'active avec le bouton lune (attribut data-theme="dark"). */
 :root[data-theme="dark"] {
   --c-paper: #0e1525; --c-paper-2: #141d31; --c-ink: #e7ebf4; --c-muted: #a3adc4;
   --c-rule: #27324b; --c-pen: #93a9ff; --c-on-pen: #0e1525; --c-marker: #e9d04b;
@@ -51,7 +44,7 @@
 }
 
 @layer base {
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; scroll-padding-bottom: 6rem; }  /* le focus ne passe ni sous l'en-tête ni sous la bulle du chat */
   body { @apply bg-paper text-ink font-sans leading-[1.5] antialiased; }
   h1, h2, h3 { @apply font-sans font-semibold; text-wrap: balance; }
   strong, b { @apply font-semibold; }
@@ -95,6 +88,7 @@
   .intro > :nth-child(2) { animation-delay: 90ms; }
   .intro > :nth-child(3) { animation-delay: 180ms; }
   .intro > :nth-child(4) { animation-delay: 270ms; }
+  .intro > .no-anim { animation: none; }  /* les boutons d'action restent visibles dès le départ */
   .intro-late { animation: rise 600ms cubic-bezier(.2,.7,.2,1) 220ms both; }
 
   /* Changement de page */

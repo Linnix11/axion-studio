@@ -21,7 +21,7 @@ export default function Home() {
               J’automatise le travail administratif des TPE, PME et indépendants : saisies, relances, reporting,
               réponses récurrentes. Vous gardez vos outils, ils travaillent ensemble.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="no-anim mt-8 flex flex-wrap gap-3">
               <Link to="/contact" className={btn.primary}>Réserver un audit gratuit</Link>
               <a href="#demo" className={btn.ghost}>Voir une démonstration</a>
             </div>

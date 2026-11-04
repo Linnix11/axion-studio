@@ -1,5 +1,6 @@
 import { PageHeader, Section, SectionHead, CtaBand, usePageMeta } from '../components/ui'
-import { steps, commitments, proposalSample as ps } from '../data'
+import { steps, proposalSample as ps } from '../data'
+import { Guarantees } from '../components/Trust'
 
 const needed = [
   'Une heure de votre temps pour l’audit et la validation de la proposition',
@@ -61,7 +62,7 @@ export default function Methode() {
         </article>
       </Section>
 
-      <Section note="Votre part, ma part">
+      <Section note="Votre part, mes garanties">
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
             <h2 className="mb-8 text-[2rem] leading-tight">Ce dont j’ai besoin de votre part</h2>
@@ -70,15 +71,8 @@ export default function Methode() {
             </ul>
           </div>
           <div>
-            <h2 className="mb-8 text-[2rem] leading-tight">Mes engagements</h2>
-            <dl className="space-y-6">
-              {commitments.map(c => (
-                <div key={c.title} className="border-l-2 border-pen pl-5">
-                  <dt className="text-xl leading-tight font-medium">{c.title}</dt>
-                  <dd className="mt-2 font-serif leading-[1.6] text-muted">{c.text}</dd>
-                </div>
-              ))}
-            </dl>
+            <h2 className="mb-8 text-[2rem] leading-tight">Mes garanties</h2>
+            <Guarantees compact />
           </div>
         </div>
       </Section>

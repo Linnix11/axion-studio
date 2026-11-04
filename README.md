@@ -57,7 +57,7 @@ Hostinger (E-mails) pour que les messages n'arrivent pas en indésirables. Limit
 - Limites : 30 messages par heure et par visiteur, 400 par jour pour tout le site (constantes en tête de `chat.php`).
 
 ## Thème et accessibilité
-- Bouton lune/soleil (en-tête) : mode clair ou sombre. Sans choix, le site suit le réglage de l'appareil.
+- Bouton lune/soleil (en-tête) : mode clair (par défaut) ou sombre.
 - Bouton Accessibilité : taille du texte, contraste renforcé, police Atkinson Hyperlegible, espacement du texte,
   liens soulignés, arrêt des animations. Réglages gardés dans le navigateur du visiteur (`src/prefs.js`),
   appliqués dès le chargement par le script de `index.html`, styles en fin de `src/index.css`.

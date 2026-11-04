@@ -102,7 +102,7 @@ export default function ChatWidget() {
         onClick={() => setOpen(o => !o)}
         aria-expanded={open}
         aria-controls="assistant"
-        className="fixed right-4 bottom-4 z-[60] inline-flex min-h-13 items-center gap-2 rounded-full bg-pen px-5 font-medium text-on-pen shadow-[0_6px_24px_rgba(20,33,61,0.18)] transition-transform duration-150 hover:-translate-y-0.5 focus-visible:outline-offset-4 sm:right-6 sm:bottom-6"
+        className="fixed right-4 bottom-4 z-[60] inline-flex min-h-13 items-center gap-2 rounded-full border-2 border-pen bg-paper px-5 font-medium text-pen shadow-[0_6px_24px_rgba(20,33,61,0.14)] transition-transform duration-150 hover:-translate-y-0.5 focus-visible:outline-offset-4 sm:right-6 sm:bottom-6"
       >
         <span aria-hidden="true" className="text-lg leading-none">{open ? '×' : '?'}</span>
         {open ? 'Fermer l’assistant' : 'Une question ?'}
@@ -119,7 +119,7 @@ export default function ChatWidget() {
           <header className="flex items-start justify-between gap-3 border-b border-rule bg-paper-2 px-4 py-3">
             <div>
               <h2 id="assistant-title" className="text-base">{assistantName}</h2>
-              <p className="text-sm text-muted">Assistant IA. Ne partagez pas d’informations sensibles.</p>
+              <p className="text-sm text-muted">Assistant IA, répond à partir du contenu du site.</p>
             </div>
             {messages.length > 0 && (
               <button type="button" onClick={reset} className="inline-flex min-h-11 shrink-0 items-center text-sm text-pen hover:underline">Effacer</button>
@@ -161,8 +161,9 @@ export default function ChatWidget() {
               </button>
             </div>
           )}
-          <form onSubmit={e => { e.preventDefault(); send(input) }} className="flex items-end gap-2 p-3">
-            <label htmlFor="assistant-input" className="sr-only">Votre question</label>
+          <form onSubmit={e => { e.preventDefault(); send(input) }} className="p-3">
+            <label htmlFor="assistant-input" className="mb-1.5 block text-sm font-medium">Votre question <span className="font-normal text-muted">(sans données sensibles)</span></label>
+            <div className="flex items-end gap-2">
             <textarea
               id="assistant-input"
               ref={inputRef}
@@ -171,12 +172,13 @@ export default function ChatWidget() {
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(input) } }}
-              placeholder="Votre question…"
+              placeholder="Ex. : je perds du temps sur mes devis"
               className="max-h-32 min-h-11 flex-1 resize-none rounded-md border border-rule bg-paper px-3 py-2.5 text-base"
             />
             <button type="submit" disabled={sending || !input.trim()} className="inline-flex min-h-11 items-center rounded-md bg-pen px-4 font-medium text-on-pen disabled:opacity-50">
               Envoyer
             </button>
+            </div>
           </form>
           <p className="border-t border-rule px-4 py-2 text-xs text-muted">
             Réponses générées par l’IA Gemini de Google, à vérifier. <Link to="/confidentialite" onClick={() => setOpen(false)} className="underline">Confidentialité</Link>

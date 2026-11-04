@@ -1,6 +1,6 @@
 import { PageHeader, Section, SectionHead, CtaBand, usePageMeta } from '../components/ui'
 import { IdentityCard, Guarantees } from '../components/Trust'
-import { company, commitments } from '../data'
+import { company } from '../data'
 
 export default function APropos() {
   usePageMeta('/a-propos')
@@ -38,16 +38,8 @@ export default function APropos() {
         </div>
       </Section>
       <Section tone="alt" note="Mes garanties">
-        <SectionHead title="Ma façon de travailler" />
-        <div className="mb-12"><Guarantees /></div>
-        <dl className="grid gap-x-10 gap-y-8 md:grid-cols-2">
-          {commitments.map(c => (
-            <div key={c.title} className="border-l-2 border-pen pl-5">
-              <dt className="text-xl leading-tight font-medium">{c.title}</dt>
-              <dd className="mt-2 max-w-[52ch] font-serif leading-[1.6] text-muted">{c.text}</dd>
-            </div>
-          ))}
-        </dl>
+        <SectionHead title="Mes garanties" />
+        <Guarantees />
       </Section>
       <CtaBand />
     </>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { loadPrefs, savePrefs, applyPrefs, defaults, systemTheme } from '../prefs'
+import { loadPrefs, savePrefs, applyPrefs, defaults } from '../prefs'
 
 const iconBtn = 'inline-grid size-11 place-items-center rounded-md border border-rule text-ink hover:border-pen hover:text-pen'
 
@@ -38,9 +38,9 @@ function Switch({ id, label, hint, checked, onChange }) {
       <button
         type="button" id={id} role="switch" aria-checked={checked} aria-labelledby={`${id}-l`} aria-describedby={`${id}-h`}
         onClick={() => onChange(!checked)}
-        className={`relative mt-0.5 inline-flex h-7 w-12 shrink-0 items-center rounded-full border-2 transition-colors duration-150 ${checked ? 'border-pen bg-pen' : 'border-rule bg-paper-2'}`}
+        className={`relative mt-0.5 inline-flex h-7 w-12 shrink-0 items-center rounded-full border-2 transition-colors duration-150 ${checked ? 'border-pen bg-pen' : 'border-muted bg-paper'}`}
       >
-        <span className={`inline-block size-5 rounded-full bg-paper shadow transition-transform duration-150 ${checked ? 'translate-x-5' : 'translate-x-0.5'}`} />
+        <span className={`inline-block size-5 rounded-full transition-transform duration-150 ${checked ? 'translate-x-5 bg-paper' : 'translate-x-0.5 bg-muted'}`} />
       </button>
     </div>
   )
@@ -55,15 +55,6 @@ export default function DisplayTools() {
   const update = patch => setPrefs(p => { const next = { ...p, ...patch }; savePrefs(next); return next })
   useEffect(() => applyPrefs(prefs), [prefs])
 
-  // Sans choix explicite, le thème suit l'appareil en direct.
-  useEffect(() => {
-    if (prefs.theme) return
-    const mq = window.matchMedia('(prefers-color-scheme: dark)')
-    const onChange = () => applyPrefs(prefs)
-    mq.addEventListener('change', onChange)
-    return () => mq.removeEventListener('change', onChange)
-  }, [prefs])
-
   // Panneau : Échap et clic à l'extérieur le ferment ; le focus revient sur le bouton.
   useEffect(() => {
     if (!open) return
@@ -74,7 +65,7 @@ export default function DisplayTools() {
     return () => { window.removeEventListener('keydown', onKey); document.removeEventListener('mousedown', onClick) }
   }, [open])
 
-  const current = prefs.theme || systemTheme()
+  const current = prefs.theme === 'dark' ? 'dark' : 'light'
   const toggleTheme = () => update({ theme: current === 'dark' ? 'light' : 'dark' })
   const sizes = [['normal', 'Normal'], ['lg', 'Grand'], ['xl', 'Très grand']]
   const changed = Object.keys(defaults).some(k => k !== 'theme' && prefs[k] !== defaults[k])

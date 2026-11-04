@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" data-theme="light">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,7 +10,7 @@
     (function () {
       var p = {}; try { p = JSON.parse(localStorage.getItem('axion-prefs') || '{}') } catch (e) {}
       var r = document.documentElement;
-      r.setAttribute('data-theme', p.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+      r.setAttribute('data-theme', p.theme === 'dark' ? 'dark' : 'light');  // clair par défaut
       r.setAttribute('data-text', p.text || 'normal');
       ['contrast', 'font', 'spacing', 'links', 'motion'].forEach(function (k) { if (p[k]) r.setAttribute('data-' + k, 'on'); });
     })();

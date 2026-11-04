@@ -5,7 +5,7 @@
 export const PREFS_KEY = 'axion-prefs'
 
 export const defaults = {
-  theme: null,        // 'light' | 'dark' | null (= suit le réglage de l'appareil)
+  theme: 'light',     // 'light' (par défaut) | 'dark'
   text: 'normal',     // 'normal' | 'lg' | 'xl'
   contrast: false,    // contraste renforcé
   font: false,        // police plus lisible (Atkinson Hyperlegible)
@@ -22,11 +22,9 @@ export function savePrefs(p) {
   try { localStorage.setItem(PREFS_KEY, JSON.stringify(p)) } catch { /* stockage indisponible : réglage valable pour cette page */ }
 }
 
-export const systemTheme = () => (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
-
 export function applyPrefs(p) {
   const r = document.documentElement
-  r.dataset.theme = p.theme || systemTheme()
+  r.dataset.theme = p.theme === 'dark' ? 'dark' : 'light'
   r.dataset.text = p.text
   const flag = (name, on) => (on ? r.setAttribute(`data-${name}`, 'on') : r.removeAttribute(`data-${name}`))
   flag('contrast', p.contrast); flag('font', p.font); flag('spacing', p.spacing); flag('links', p.links); flag('motion', p.motion)

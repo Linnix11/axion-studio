@@ -96,13 +96,6 @@ export const steps = [
   { title: 'Suivi', duration: '1 mois inclus', text: 'Prise en main, documentation et ajustements pour que tout reste fiable.', detail: "Je vous montre comment tout fonctionne et vous remets une documentation simple. Pendant un mois, j’ajuste ce qui doit l’être. Ensuite, vous êtes autonome ou vous choisissez un suivi mensuel." },
 ]
 
-export const commitments = [
-  { title: 'Vous restez propriétaire', text: 'Les automatisations sont créées sur vos comptes et vous appartiennent. Rien ne s’arrête si nous cessons de travailler ensemble.' },
-  { title: 'Pas de boîte noire', text: 'Chaque workflow est documenté en français, avec des mots simples, pour que vous ou quelqu’un d’autre puissiez le reprendre.' },
-  { title: 'Vos outils d’abord', text: 'Je pars de ce que vous utilisez déjà. Je ne propose un nouvel outil que s’il apporte un vrai gain.' },
-  { title: 'Un prix fixé à l’avance', text: 'Chaque projet est chiffré au forfait. Pas de facturation à l’heure qui dérape.' },
-]
-
 export const offers = [
   { name: 'Audit', price: 'Offert', unit: '30 minutes', text: 'Pour savoir ce qui peut être automatisé chez vous et par quoi commencer.', items: ['Appel en visio ou par téléphone', 'Liste des tâches automatisables', 'Ordre de priorité conseillé'], cta: 'Réserver l’audit' },
   { name: 'Projet', from: true, price: '150 €', unit: 'au forfait, prix exact sur devis', text: 'Pour une automatisation, une intégration ou un site web, livré clés en main.', items: ['Proposition détaillée sous 72 h', 'Construction et tests sur vos données', 'Documentation et 1 mois de suivi inclus'], cta: 'Demander un devis', featured: true },
@@ -151,9 +144,11 @@ export const identity = [
 
 export const guarantees = [
   { title: 'Audit gratuit, sans engagement', text: '30 minutes pour savoir ce qui peut être automatisé. Vous ne devez rien ensuite.' },
-  { title: 'Prix fixé avant de commencer', text: 'Un forfait écrit dans la proposition. Il ne bouge pas en cours de projet.' },
+  { title: 'Prix fixé avant de commencer', text: 'Un forfait écrit dans la proposition, jamais de facturation à l’heure. Il ne bouge pas en cours de projet.' },
   { title: 'Rien ne part sans votre accord', text: 'Chaque automatisation est testée avec vous avant de toucher vos clients.' },
-  { title: 'Vous gardez tout', text: 'Comptes, workflows et documentation sont à votre nom et restent chez vous.' },
+  { title: 'Vous gardez tout', text: 'Comptes, workflows et documentation sont à votre nom. Rien ne s’arrête si nous cessons de travailler ensemble.' },
+  { title: 'Pas de boîte noire', text: 'Chaque workflow est documenté en français, avec des mots simples, pour que vous ou quelqu’un d’autre puissiez le reprendre.' },
+  { title: 'Vos outils d’abord', text: 'Je pars de ce que vous utilisez déjà. Je ne propose un nouvel outil que s’il apporte un vrai gain.' },
   { title: 'Un mois de suivi inclus', text: 'Les corrections après la mise en route sont comprises dans le prix.' },
   { title: 'Un interlocuteur unique', text: 'La personne qui fait l’audit est celle qui construit et qui répond au téléphone.' },
 ]

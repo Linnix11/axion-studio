@@ -33,7 +33,7 @@ export default function Footer() {
         </div>
       </Container>
       <div className="border-t border-rule">
-        <Container className="flex flex-wrap justify-between gap-x-8 gap-y-1 py-4 text-muted">
+        <Container className="flex flex-wrap justify-between gap-x-8 gap-y-1 pt-4 pb-24 text-muted sm:pb-28">
           <p className="flex min-h-11 items-center">© {new Date().getFullYear()} {company.owner}, EI en micro-entreprise. TVA non applicable, art. 293 B du CGI.</p>
           <p className="flex gap-6">
             <Link className="inline-flex min-h-11 items-center text-muted hover:text-pen" to="/mentions-legales">Mentions légales</Link>
