@@ -14,8 +14,7 @@ npm run build    # génère le site statique dans dist/
 npm run preview  # prévisualise le build
 ```
 
-Le site est publié automatiquement sur GitHub Pages à chaque envoi sur `main`
-(workflow `.github/workflows/deploy.yml`) : https://linnix11.github.io/axion-studio/
+Le site est en ligne sur https://axionstudio.fr et se met à jour à chaque envoi sur `main`.
 
 ## Pages
 Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Mentions légales, Confidentialité
@@ -29,9 +28,9 @@ Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Mentions
 - `src/components/` — en-tête, pied de page, formulaire, liste interactive, éléments communs (`ui.jsx`).
 - `src/index.css` — couleurs du thème (clair et sombre).
 
-## Sous-dossier ou domaine dédié
-Sur GitHub Pages, le site est servi sous `/axion-studio/` : le workflow construit avec `BASE_PATH=/axion-studio/`.
-Avec un domaine dédié (axionstudio.fr), supprimez la variable `BASE_PATH` du workflow.
+## Hébergement
+- **https://axionstudio.fr** : hébergement Hostinger relié à ce dépôt, mis à jour à chaque envoi sur `main`.
+- **https://linnix11.github.io/axion-studio/** : copie sur GitHub Pages (workflow `deploy.yml`, construit avec `BASE_PATH=/axion-studio/`).
 
 ## À compléter avant la mise en ligne
 - **SIRET** : remplacer « En cours d'attribution » dans `src/data.js` dès réception de l'avis INSEE.

@@ -10,7 +10,7 @@ export const company = {
   siege: '95680 Montlignon, France',
   domain: 'axionstudio.fr',
   siret: "En cours d'attribution",
-  host: 'GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis (GitHub Pages)',
+  host: 'Hostinger International Ltd., 61 Lordou Vironos Street, 6023 Larnaca, Chypre (hostinger.fr)',
 }
 
 export const nav = [
