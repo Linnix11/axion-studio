@@ -1,0 +1,32 @@
+name: Signaler les pages à Bing (IndexNow)
+
+# À chaque envoi sur main qui modifie le contenu du site : on attend que Hostinger ait publié
+# la nouvelle version, puis on signale toutes les pages du plan du site à Bing via IndexNow.
+on:
+  push:
+    branches: [main]
+    paths: ['src/**', 'public/**', 'index.html', 'scripts/prerender-routes.mjs']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Attendre la mise en ligne par Hostinger
+        run: |
+          for i in $(seq 1 20); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "https://axionstudio.fr/sitemap.xml?v=$RANDOM")
+            echo "essai $i : plan du site HTTP $code"
+            [ "$code" = 200 ] && break
+            sleep 15
+          done
+          sleep 90
+      - name: Envoyer les pages à IndexNow
+        run: node scripts/indexnow.mjs

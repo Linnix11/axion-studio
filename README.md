@@ -85,4 +85,5 @@ en tête du fichier (`cgvSettings`) ; pensez à mettre à jour `version` à chaq
 
 ## IndexNow (Bing et moteurs compatibles)
 Fichier de clé `public/<clé>.txt`. Après une publication importante (nouvel article, nouvelle page) :
-`node scripts/indexnow.mjs` signale toutes les pages du plan du site à Bing, qui les explore alors rapidement.
+C'est automatique : le workflow GitHub `.github/workflows/indexnow.yml` lance `node scripts/indexnow.mjs`
+après chaque envoi sur `main` (le temps que Hostinger publie), et signale toutes les pages du plan du site à Bing.
