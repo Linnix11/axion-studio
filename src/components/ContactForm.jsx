@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { btn, textLink } from './ui'
 import { CheckIcon } from './Icons'
 import { company, needs } from '../data'
@@ -50,6 +50,8 @@ export default function ContactForm() {
   const [state, setState] = useState('idle') // idle | sending | sent | failed
   const [failure, setFailure] = useState('')
   const [copied, setCopied] = useState(false)
+  const [showSummary, setShowSummary] = useState(false)
+  const summaryRef = useRef(null)
 
   const validate = name => setErrors(e => ({ ...e, [name]: rules[name](values[name]) }))
 
@@ -64,14 +66,15 @@ export default function ContactForm() {
     const next = Object.fromEntries(Object.keys(rules).map(k => [k, rules[k](values[k])]))
     setErrors(next)
     const firstBad = Object.keys(next).find(k => next[k])
-    if (firstBad) { document.getElementById(firstBad)?.focus(); return }
+    if (firstBad) { setShowSummary(true); requestAnimationFrame(() => summaryRef.current?.focus()); return }
+    setShowSummary(false)
 
     setState('sending'); setFailure('')
     try {
       const res = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(values) })
       const data = await res.json().catch(() => ({}))
       if (res.ok && data.ok) { setState('sent'); return }
-      if (data.error === 'validation' && data.fields) { setErrors(data.fields); setState('idle'); return }
+      if (data.error === 'validation' && data.fields) { setErrors(data.fields); setState('idle'); setShowSummary(true); requestAnimationFrame(() => summaryRef.current?.focus()); return }
       setFailure(failureText[data.error] || failureText.default); setState('failed')
     } catch {
       setFailure(failureText.default); setState('failed')
@@ -109,6 +112,18 @@ export default function ContactForm() {
 
   return (
     <form noValidate onSubmit={onSubmit} aria-busy={state === 'sending'} className="rounded-lg border border-rule bg-paper-2 p-6 sm:p-8">
+      {showSummary && Object.values(errors).some(Boolean) && (
+        <div ref={summaryRef} tabIndex={-1} role="alert" aria-labelledby="form-errors-title" className="mb-6 rounded-md border-2 border-error bg-paper p-4 outline-offset-4">
+          <h2 id="form-errors-title" className="text-base font-medium text-error">
+            {Object.values(errors).filter(Boolean).length > 1 ? `${Object.values(errors).filter(Boolean).length} champs sont à corriger` : 'Un champ est à corriger'}
+          </h2>
+          <ul className="mt-2 space-y-1 text-sm">
+            {Object.entries(errors).filter(([, v]) => v).map(([k, v]) => (
+              <li key={k}><a href={`#${k}`} onClick={e => { e.preventDefault(); document.getElementById(k)?.focus() }} className="inline-flex min-h-11 items-center text-error underline underline-offset-2">{v}</a></li>
+            ))}
+          </ul>
+        </div>
+      )}
       {fromChat && (
         <p className="drop mb-5 rounded-md bg-marker px-3 py-2 text-sm text-on-marker">
           Votre échange avec l’assistant a été repris dans le message. Complétez votre nom et votre e-mail, puis envoyez.

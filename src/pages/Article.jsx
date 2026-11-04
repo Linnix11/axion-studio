@@ -72,8 +72,8 @@ export default function Article() {
             {toc.length > 2 && (
               <nav aria-label="Sommaire de l’article" className="hidden min-w-0 self-start xl:sticky xl:top-24 xl:block">
                 <p className="text-sm font-medium">Sommaire</p>
-                <ol className="mt-2 space-y-1 border-l-2 border-rule pl-4 text-sm">
-                  {toc.map(t => <li key={t.h2}><a href={`#${slugify(t.h2)}`} className="inline-flex min-h-9 items-center text-muted hover:text-pen">{t.h2}</a></li>)}
+                <ol className="mt-2 space-y-2 border-l-2 border-rule pl-4 text-sm">
+                  {toc.map(t => <li key={t.h2}><a href={`#${slugify(t.h2)}`} className="inline-flex min-h-11 items-center text-muted hover:text-pen">{t.h2}</a></li>)}
                 </ol>
               </nav>
             )}

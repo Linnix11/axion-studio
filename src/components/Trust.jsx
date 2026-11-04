@@ -18,7 +18,7 @@ export function IdentityCard() {
           </div>
         ))}
       </dl>
-      <div className="flex flex-wrap gap-x-6 border-t border-rule bg-paper/85 px-5 py-2 sm:px-6">
+      <div className="flex flex-wrap gap-x-6 gap-y-2 border-t border-rule bg-paper/85 px-5 py-2 sm:px-6">
         <a href={`tel:${company.phoneHref}`} className={standaloneLink}>{company.phone}</a>
         <a href={`mailto:${company.email}`} className={`${standaloneLink} break-all`}>{company.email}</a>
       </div>

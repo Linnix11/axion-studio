@@ -17,15 +17,15 @@ export default function Footer() {
         </div>
         <div>
           <h2 className="mb-2 text-base">Services</h2>
-          <ul>{services.map(s => <li key={s.slug}><Link className={link} to={`/services#${s.slug}`}>{s.title}</Link></li>)}</ul>
+          <ul className="space-y-2">{services.map(s => <li key={s.slug}><Link className={link} to={`/services#${s.slug}`}>{s.title}</Link></li>)}</ul>
         </div>
         <div>
           <h2 className="mb-2 text-base">Le studio</h2>
-          <ul>{nav.filter(n => n.to !== '/services').map(n => <li key={n.to}><Link className={link} to={n.to}>{n.label}</Link></li>)}<li><Link className={link} to="/securite">Sécurité et données</Link></li></ul>
+          <ul className="space-y-2">{nav.filter(n => n.to !== '/services').map(n => <li key={n.to}><Link className={link} to={n.to}>{n.label}</Link></li>)}<li><Link className={link} to="/securite">Sécurité et données</Link></li></ul>
         </div>
         <div>
           <h2 className="mb-2 text-base">Contact</h2>
-          <ul>
+          <ul className="space-y-2">
             <li><a className={link} href={`mailto:${company.email}`}>{company.email.replace('@', '@\u200b')}</a></li>
             <li><a className={link} href={`tel:${company.phoneHref}`}>{company.phone}</a></li>
             <li className="flex min-h-11 items-center text-muted">{company.city}</li>

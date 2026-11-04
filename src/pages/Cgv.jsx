@@ -18,9 +18,9 @@ export default function Cgv() {
       </PageHeader>
       <Section note={`${cgv.length} articles`}>
         <nav aria-label="Sommaire des CGV" className="mb-10 max-w-3xl">
-          <ol className="grid gap-x-8 gap-y-1 text-sm sm:grid-cols-2">
+          <ol className="grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
             {cgv.map((a, i) => (
-              <li key={a.title}><a href={`#article-${i + 1}`} className="inline-flex min-h-9 items-center text-muted hover:text-pen">{i + 1}. {a.title}</a></li>
+              <li key={a.title}><a href={`#article-${i + 1}`} className="inline-flex min-h-11 items-center text-muted hover:text-pen">{i + 1}. {a.title}</a></li>
             ))}
           </ol>
         </nav>
