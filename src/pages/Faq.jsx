@@ -2,7 +2,7 @@ import { PageHeader, Section, CtaBand, usePageMeta } from '../components/ui'
 import { faq } from '../data'
 
 export default function Faq() {
-  usePageMeta('Questions fréquentes', "Outils, données, délais, prix, maintenance : les réponses aux questions les plus fréquentes.")
+  usePageMeta('/faq')
   return (
     <>
       <PageHeader title="Questions fréquentes" note="7 questions avant de se lancer" />
@@ -19,7 +19,7 @@ export default function Faq() {
           ))}
         </div>
       </Section>
-      <CtaBand title="Votre question n'est pas ici ?" text="Écrivez-moi, je vous réponds sous 48 heures ouvrées." />
+      <CtaBand title="Votre question n’est pas ici ?" text="Écrivez-moi, je vous réponds sous 48 heures ouvrées." />
     </>
   )
 }

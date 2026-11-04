@@ -4,11 +4,11 @@ import { NotDoing } from '../components/Trust'
 import { security } from '../data'
 
 export default function Securite() {
-  usePageMeta('Sécurité et données', "Comptes à votre nom, accès révocables, IA utilisée avec précaution : comment Axion Studio protège vos données.")
+  usePageMeta('/securite')
   return (
     <>
       <PageHeader title="Sécurité et données" note="Vos outils restent les vôtres">
-        Automatiser, c'est donner accès à vos outils. Voici les règles que j'applique sur chaque projet, sans
+        Automatiser, c’est donner accès à vos outils. Voici les règles que j’applique sur chaque projet, sans
         exception.
       </PageHeader>
       <Section note="6 règles, sur chaque projet">
@@ -26,8 +26,8 @@ export default function Securite() {
           <div>
             <SectionHead title="Et sur ce site ?" />
             <p className="max-w-[56ch] font-serif text-lg leading-[1.6] text-muted">
-              Ce site ne dépose aucun cookie et ne mesure pas votre navigation. Le formulaire de contact ouvre votre
-              propre messagerie : rien n'est stocké ici. Détails dans la{' '}
+              Ce site ne dépose aucun cookie et ne mesure pas votre navigation. Le formulaire de contact m’envoie votre
+              message par e-mail : il n’est pas enregistré sur le site. Détails dans la{' '}
               <Link to="/confidentialite" className={textLink}>politique de confidentialité</Link>.
             </p>
           </div>

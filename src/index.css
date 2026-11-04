@@ -46,8 +46,8 @@
   --color-error: var(--c-error);
   --color-margin: var(--c-margin);
   --color-ok: var(--c-ok);
-  --font-sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
-  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: "Schibsted Grotesk Variable", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Source Serif 4 Variable", Georgia, "Times New Roman", serif;
 }
 
 @layer base {

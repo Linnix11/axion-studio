@@ -3,11 +3,11 @@ import { PageHeader, Section, CtaBand, btn, textLink, usePageMeta } from '../com
 import { offers } from '../data'
 
 export default function Tarifs() {
-  usePageMeta('Tarifs', "Audit offert, projets au forfait et suivi mensuel sans engagement. TVA non applicable.")
+  usePageMeta('/tarifs')
   return (
     <>
-      <PageHeader title="Tarifs" note="Forfait, jamais à l'heure">
-        Pas de facturation à l'heure : chaque projet est chiffré au forfait après l'audit gratuit. Vous connaissez
+      <PageHeader title="Tarifs" note="Forfait, jamais à l’heure">
+        Pas de facturation à l’heure : chaque projet est chiffré au forfait après l’audit gratuit. Vous connaissez
         le prix exact avant de vous engager.
       </PageHeader>
 
@@ -31,7 +31,7 @@ export default function Tarifs() {
         <div className="mt-10 max-w-[64ch] space-y-3 font-serif leading-[1.6] text-muted">
           <p>TVA non applicable, article 293 B du CGI : les prix indiqués sur les devis sont les prix que vous payez.</p>
           <p>
-            Les abonnements aux outils d'automatisation ou d'IA (par exemple n8n, Make ou une API d'IA) restent à votre
+            Les abonnements aux outils d’automatisation ou d’IA (par exemple n8n, Make ou une API d’IA) restent à votre
             nom et à votre charge. Je vous indique leur coût dans la proposition.
             {' '}<Link to="/faq" className={textLink}>Voir les questions fréquentes</Link>
           </p>

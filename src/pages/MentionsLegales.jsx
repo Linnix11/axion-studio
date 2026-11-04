@@ -3,7 +3,7 @@ import { PageHeader, Section, textLink, usePageMeta } from '../components/ui'
 import { company } from '../data'
 
 export default function MentionsLegales() {
-  usePageMeta('Mentions légales', `Mentions légales du site ${company.domain}.`)
+  usePageMeta('/mentions-legales')
   const rows = [
     ['Éditeur', `${company.owner}, entrepreneur individuel (micro-entreprise), nom commercial « ${company.tradeName} »`],
     ['Siège', company.siege],

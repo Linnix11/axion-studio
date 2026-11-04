@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react'
 
 /**
- * Animation à l'apparition au défilement.
+ * Animation à l’apparition au défilement.
  * Seuls les éléments situés sous la ligne de flottaison au chargement sont masqués puis révélés :
  * tout ce qui est visible au chargement reste affiché immédiatement.
- * Rien n'est masqué si le visiteur a demandé de réduire les animations.
+ * Rien n’est masqué si le visiteur a demandé de réduire les animations.
  */
 export function useReveal() {
   const ref = useRef(null)

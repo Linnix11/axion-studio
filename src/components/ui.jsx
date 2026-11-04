@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useReveal } from './useReveal'
 import { Link } from 'react-router'
 import { company } from '../data'
+import { pageMeta, fullTitle } from '../seo'
 
 export function Container({ className = '', children }) {
   return <div className={`mx-auto max-w-[1180px] px-4 md:px-8 ${className}`}>{children}</div>
@@ -9,7 +10,7 @@ export function Container({ className = '', children }) {
 
 /**
  * Section « page de cahier » : sur grand écran, une marge rouge à gauche porte une annotation
- * manuscrite (note) qui résume la section ; le contenu s'écrit à droite.
+ * manuscrite (note) qui résume la section ; le contenu s’écrit à droite.
  */
 export function Section({ id, tone = 'paper', note, className = '', children }) {
   const ref = useReveal()
@@ -47,15 +48,15 @@ export function PageHeader({ title, note, children }) {
         </aside>
         <div className="intro pt-14 pb-12 md:pt-20 md:pb-16 lg:pl-12">
           <h1 className="max-w-3xl text-[2.75rem] leading-[1.04] tracking-[-0.03em] sm:text-7xl">{title}</h1>
-          {children && <p className="mt-6 max-w-[40rem] rounded-sm bg-paper/80 font-serif text-xl leading-[1.6] text-muted">{children}</p>}
+          {children && <p className="mt-6 max-w-[40rem] font-serif text-xl leading-[1.6] text-muted">{children}</p>}
         </div>
       </Container>
     </section>
   )
 }
 
-/** Bandeau d'appel à l'action placé en bas des pages. */
-export function CtaBand({ title = 'Une tâche vous fait perdre du temps ?', text = 'Décrivez-la en quelques lignes. Je vous dis sous 48 heures ce qui peut être automatisé, gratuitement et sans engagement.' }) {
+/** Bandeau d’appel à l’action placé en bas des pages. */
+export function CtaBand({ title = 'Une tâche vous fait perdre du temps ?', text = 'Décrivez-la en quelques lignes. Je vous dis sous 48 heures ouvrées ce qui peut être automatisé, gratuitement et sans engagement.' }) {
   return (
     <section className="bg-pen text-on-pen">
       <Container className="flex flex-col items-start justify-between gap-6 py-14 md:flex-row md:items-center">
@@ -64,10 +65,10 @@ export function CtaBand({ title = 'Une tâche vous fait perdre du temps ?', text
           <p className="mt-3 font-serif text-lg leading-[1.6] opacity-90">{text}</p>
         </div>
         <div className="flex shrink-0 flex-col items-start gap-2">
-          <Link to="/contact" className="inline-flex min-h-12 items-center rounded-md bg-marker px-6 font-medium text-on-marker no-underline hover:opacity-90">
+          <Link to="/contact" className="inline-flex min-h-12 items-center rounded-md bg-marker px-6 font-medium text-on-marker no-underline hover:opacity-90 focus-visible:outline-on-pen">
             Réserver un audit gratuit
           </Link>
-          <a href={`tel:${company.phoneHref}`} className="inline-flex min-h-11 items-center text-on-pen underline-offset-4 hover:underline">
+          <a href={`tel:${company.phoneHref}`} className="inline-flex min-h-11 items-center text-on-pen underline-offset-4 hover:underline focus-visible:outline-on-pen">
             ou appeler le {company.phone}
           </a>
         </div>
@@ -76,13 +77,13 @@ export function CtaBand({ title = 'Une tâche vous fait perdre du temps ?', text
   )
 }
 
-/** Titre de l'onglet et description de la page. */
-export function usePageMeta(title, description) {
+/** Titre de l’onglet et description de la page (mêmes valeurs que celles écrites dans le HTML). */
+export function usePageMeta(path) {
   useEffect(() => {
-    document.title = title ? `${title} | ${company.brand}` : `${company.brand}, automatisation et IA pour les entreprises`
+    document.title = fullTitle(path)
     const meta = document.querySelector('meta[name="description"]')
-    if (meta && description) meta.setAttribute('content', description)
-  }, [title, description])
+    if (meta && pageMeta[path]) meta.setAttribute('content', pageMeta[path].description)
+  }, [path])
 }
 
 const base = 'inline-flex min-h-12 items-center justify-center rounded-md px-6 text-base font-medium no-underline transition-colors duration-150 cursor-pointer'

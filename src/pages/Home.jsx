@@ -8,7 +8,7 @@ import { services, useCases, steps } from '../data'
 const heroFacts = ['Audit gratuit de 30 min', 'Prix fixé avant de commencer', 'Vous restez propriétaire de tout']
 
 export default function Home() {
-  usePageMeta(null, "Axion Studio automatise le travail administratif des TPE, PME et indépendants : workflows, intégration d'outils, intelligence artificielle et sites web.")
+  usePageMeta('/')
   return (
     <>
       <section className="seyes border-b border-rule">
@@ -17,8 +17,8 @@ export default function Home() {
             <h1 className="text-[2.75rem] leading-[1.02] tracking-[-0.03em] sm:text-7xl lg:text-[5.25rem]">
               Vos tâches répétitives, faites sans vous.
             </h1>
-            <p className="mt-6 max-w-[34rem] bg-paper/80 font-serif text-xl leading-[1.6] text-muted">
-              J'automatise le travail administratif des TPE, PME et indépendants : saisies, relances, reporting,
+            <p className="mt-6 max-w-[34rem] font-serif text-xl leading-[1.6] text-muted">
+              J’automatise le travail administratif des TPE, PME et indépendants : saisies, relances, reporting,
               réponses récurrentes. Vous gardez vos outils, ils travaillent ensemble.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -27,7 +27,7 @@ export default function Home() {
             </div>
             <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
               {heroFacts.map(f => (
-                <li key={f} className="flex items-center gap-2 bg-paper/80 text-sm">
+                <li key={f} className="flex items-center gap-2 text-sm">
                   <span aria-hidden="true" className="grid size-5 place-items-center rounded-full bg-ok text-[0.75rem] text-paper">✓</span>{f}
                 </li>
               ))}
@@ -81,7 +81,7 @@ export default function Home() {
 
       <Section tone="alt" note="Identité, garanties, limites">
         <SectionHead title="Travailler avec moi, concrètement">
-          Vous confiez vos outils et vos données à quelqu'un. Voici exactement à qui, et à quelles conditions.
+          Vous confiez vos outils et vos données à quelqu’un. Voici exactement à qui, et à quelles conditions.
         </SectionHead>
         <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)]">
           <IdentityCard />
@@ -91,7 +91,7 @@ export default function Home() {
         <Guarantees />
       </Section>
 
-      <Section note="4 étapes, prix fixé à l'étape 2">
+      <Section note="4 étapes, prix fixé à l’étape 2">
         <SectionHead title="Comment on travaille ensemble" />
         <ol className="grid gap-x-8 gap-y-10 sm:grid-cols-2 xl:grid-cols-4">
           {steps.map((s, i) => (

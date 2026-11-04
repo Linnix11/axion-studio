@@ -16,7 +16,7 @@ function Check({ done, active }) {
 
 /** Démonstration déclenchée par le visiteur : un e-mail devient une fiche CRM et un brouillon. */
 export default function Demo() {
-  const [stage, setStage] = useState(0) // 0 = pas lancé, n = nombre d'étapes terminées
+  const [stage, setStage] = useState(0) // 0 = pas lancé, n = nombre d’étapes terminées
   const [running, setRunning] = useState(false)
   const timer = useRef(null)
   const total = demo.steps.length
@@ -45,7 +45,7 @@ export default function Demo() {
       </div>
 
       <div className="grid lg:grid-cols-3">
-        {/* 1. L'e-mail */}
+        {/* 1. L’e-mail */}
         <section className="border-b border-rule p-5 sm:p-6 lg:border-r lg:border-b-0">
           <h3 className="text-base font-medium text-muted">1. Ce qui arrive</h3>
           <div className="mt-4 rounded-md border border-rule p-4">
@@ -57,7 +57,7 @@ export default function Demo() {
 
         {/* 2. Les étapes */}
         <section className="border-b border-rule p-5 sm:p-6 lg:border-r lg:border-b-0">
-          <h3 className="text-base font-medium text-muted">2. Ce que fait l'automatisation</h3>
+          <h3 className="text-base font-medium text-muted">2. Ce que fait l’automatisation</h3>
           <ol className="mt-4 space-y-4" aria-live="polite">
             {demo.steps.map((s, i) => (
               <li key={s} className="flex items-start gap-3">

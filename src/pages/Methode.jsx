@@ -9,11 +9,11 @@ const needed = [
 ]
 
 export default function Methode() {
-  usePageMeta('Méthode', "Audit offert, proposition au forfait sous 72 h, mise en place testée sur vos données et un mois de suivi inclus.")
+  usePageMeta('/methode')
   return (
     <>
       <PageHeader title="Méthode" note="4 étapes, aucune surprise">
-        Quatre étapes, un prix fixé à l'avance et aucune surprise. Vous validez chaque étape avant de passer à la
+        Quatre étapes, un prix fixé à l’avance et aucune surprise. Vous validez chaque étape avant de passer à la
         suivante.
       </PageHeader>
 
@@ -34,13 +34,13 @@ export default function Methode() {
         </ol>
       </Section>
 
-      <Section tone="alt" note="Ce que vous recevez à l'étape 2">
+      <Section tone="alt" note="Ce que vous recevez à l’étape 2">
         <SectionHead title="À quoi ressemble une proposition">
-          Un document d'une page, sans jargon, qui dit exactement ce qui sera fait, en combien de temps et pour quel prix.
+          Un document d’une page, sans jargon, qui dit exactement ce qui sera fait, en combien de temps et pour quel prix.
         </SectionHead>
         <article className="seyes max-w-3xl rounded-lg border border-rule shadow-[0_2px_16px_rgba(20,33,61,0.06)]">
           <header className="flex flex-wrap items-baseline justify-between gap-2 border-b-2 border-margin/70 bg-paper/85 px-6 py-4">
-            <h3 className="text-xl">Proposition d'automatisation</h3>
+            <h3 className="text-xl">Proposition d’automatisation</h3>
             <p className="text-sm text-muted">{ps.client}</p>
           </header>
           <dl className="bg-paper/75 px-6 py-2">
@@ -64,7 +64,7 @@ export default function Methode() {
       <Section note="Votre part, ma part">
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
-            <h2 className="mb-8 text-[2rem] leading-tight">Ce dont j'ai besoin de votre part</h2>
+            <h2 className="mb-8 text-[2rem] leading-tight">Ce dont j’ai besoin de votre part</h2>
             <ul className="border-t-2 border-ink">
               {needed.map(n => <li key={n} className="border-b border-rule py-4 font-serif text-lg leading-[1.5]">{n}</li>)}
             </ul>

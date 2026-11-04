@@ -2,7 +2,7 @@ import { PageHeader, Section, CtaBand, usePageMeta } from '../components/ui'
 import { useCases } from '../data'
 
 export default function Exemples() {
-  usePageMeta('Exemples', "Des cas types d'automatisation pour artisans, cabinets, boutiques en ligne, agences et indépendants.")
+  usePageMeta('/exemples')
   return (
     <>
       <PageHeader title="Exemples" note="5 cas types, 5 métiers">
@@ -36,7 +36,7 @@ export default function Exemples() {
         </div>
       </Section>
 
-      <CtaBand title="Votre cas n'est pas dans la liste ?" text="Chaque entreprise a ses propres tâches répétitives. Décrivez la vôtre, je vous dis si elle peut être automatisée." />
+      <CtaBand title="Votre cas n’est pas dans la liste ?" text="Chaque entreprise a ses propres tâches répétitives. Décrivez la vôtre, je vous dis si elle peut être automatisée." />
     </>
   )
 }

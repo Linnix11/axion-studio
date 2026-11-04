@@ -15,7 +15,7 @@ import Confidentialite from './pages/Confidentialite'
 import Securite from './pages/Securite'
 import NotFound from './pages/NotFound'
 
-/** Remonte en haut à chaque changement de page, ou va à l'ancre (#...) demandée. */
+/** Remonte en haut à chaque changement de page, ou va à l’ancre (#...) demandée. */
 function ScrollManager() {
   const { pathname, hash } = useLocation()
   useEffect(() => {

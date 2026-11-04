@@ -1,4 +1,4 @@
-// Toutes les informations de l'entreprise et les textes du site sont centralisés ici.
+// Toutes les informations de l’entreprise et les textes du site sont centralisés ici.
 export const company = {
   brand: 'Axion Studio',
   tradeName: 'axionstudio',
@@ -9,7 +9,7 @@ export const company = {
   city: 'Montlignon (95)',
   siege: '95680 Montlignon, France',
   domain: 'axionstudio.fr',
-  siret: "En cours d'attribution",
+  siret: "En cours d’attribution",
   host: 'Hostinger International Ltd., 61 Lordou Vironos Street, 6023 Larnaca, Chypre (hostinger.fr)',
 }
 
@@ -27,7 +27,7 @@ export const services = [
     slug: 'workflows',
     title: 'Workflows automatisés',
     short: 'Relances, facturation, reporting, saisie de données : des workflows qui tournent seuls, 24 h/24.',
-    intro: "Les tâches que vous refaites chaque semaine à l'identique sont les premières à automatiser. Je conçois des enchaînements qui se déclenchent seuls : à la réception d'un e-mail, d'un formulaire, d'une commande ou à heure fixe.",
+    intro: "Les tâches que vous refaites chaque semaine à l’identique sont les premières à automatiser. Je conçois des enchaînements qui se déclenchent seuls : à la réception d’un e-mail, d’un formulaire, d’une commande ou à heure fixe.",
     includes: [
       'Cartographie de la tâche telle que vous la faites aujourd’hui',
       'Conception et construction du workflow',
@@ -39,9 +39,9 @@ export const services = [
   },
   {
     slug: 'integrations',
-    title: "Intégration d'outils",
+    title: "Intégration d’outils",
     short: 'CRM, tableur, messagerie, agenda, facturation : vos logiciels connectés via leurs API.',
-    intro: "Vous utilisez déjà de bons outils, mais ils ne se parlent pas : vous recopiez donc les mêmes informations à plusieurs endroits. Je les relie pour qu'une donnée saisie une fois soit à jour partout.",
+    intro: "Vous utilisez déjà de bons outils, mais ils ne se parlent pas : vous recopiez donc les mêmes informations à plusieurs endroits. Je les relie pour qu’une donnée saisie une fois soit à jour partout.",
     includes: [
       'Inventaire de vos outils et des données qui circulent',
       'Connexion via les API ou les intégrations natives',
@@ -53,8 +53,8 @@ export const services = [
   {
     slug: 'ia',
     title: 'Intelligence artificielle',
-    short: "Tri d'e-mails, extraction de documents, assistants internes, réponses clients assistées.",
-    intro: "L'IA est utile là où une tâche demande de lire et de comprendre un texte : trier, résumer, extraire, rédiger un premier jet. Je l'intègre dans vos workflows, avec une validation humaine quand c'est nécessaire.",
+    short: "Tri d’e-mails, extraction de documents, assistants internes, réponses clients assistées.",
+    intro: "L’IA est utile là où une tâche demande de lire et de comprendre un texte : trier, résumer, extraire, rédiger un premier jet. Je l’intègre dans vos workflows, avec une validation humaine quand c’est nécessaire.",
     includes: [
       'Choix du bon usage : là où l’IA fait vraiment gagner du temps',
       'Extraction de données depuis des PDF, e-mails ou formulaires',
@@ -90,10 +90,10 @@ export const useCases = [
 ]
 
 export const steps = [
-  { title: 'Audit', duration: '30 min offertes', text: 'On repère ensemble les tâches qui vous coûtent le plus de temps.', detail: "Un appel en visio ou par téléphone. Vous me décrivez votre semaine type et vos outils. Je vous dis ce qui peut être automatisé, ce qui ne vaut pas la peine de l'être, et dans quel ordre." },
+  { title: 'Audit', duration: '30 min offertes', text: 'On repère ensemble les tâches qui vous coûtent le plus de temps.', detail: "Un appel en visio ou par téléphone. Vous me décrivez votre semaine type et vos outils. Je vous dis ce qui peut être automatisé, ce qui ne vaut pas la peine de l’être, et dans quel ordre." },
   { title: 'Proposition', duration: 'sous 72 h', text: 'Une solution chiffrée, avec le temps gagné estimé, sans engagement.', detail: 'Vous recevez un document clair : ce qui sera construit, avec quels outils, le prix au forfait, le délai et une estimation du temps gagné. Vous décidez ensuite, sans relance insistante.' },
-  { title: 'Mise en place', duration: '1 à 4 semaines', text: 'Construction, tests sur vos vraies données, puis mise en production.', detail: "Je construis l'automatisation, je la teste sur des cas réels avec vous, puis je la mets en route. Vous suivez l'avancement et validez chaque étape avant qu'elle touche vos clients." },
-  { title: 'Suivi', duration: '1 mois inclus', text: 'Prise en main, documentation et ajustements pour que tout reste fiable.', detail: "Je vous montre comment tout fonctionne et vous remets une documentation simple. Pendant un mois, j'ajuste ce qui doit l'être. Ensuite, vous êtes autonome ou vous choisissez un suivi mensuel." },
+  { title: 'Mise en place', duration: '1 à 4 semaines', text: 'Construction, tests sur vos vraies données, puis mise en production.', detail: "Je construis l’automatisation, je la teste sur des cas réels avec vous, puis je la mets en route. Vous suivez l’avancement et validez chaque étape avant qu’elle touche vos clients." },
+  { title: 'Suivi', duration: '1 mois inclus', text: 'Prise en main, documentation et ajustements pour que tout reste fiable.', detail: "Je vous montre comment tout fonctionne et vous remets une documentation simple. Pendant un mois, j’ajuste ce qui doit l’être. Ensuite, vous êtes autonome ou vous choisissez un suivi mensuel." },
 ]
 
 export const commitments = [
@@ -119,7 +119,7 @@ export const faq = [
   { q: 'Combien ça coûte ?', a: 'Chaque projet est chiffré au forfait après l’audit gratuit, en fonction de ce qui est à construire. Vous connaissez le prix exact avant de vous engager. La TVA n’est pas applicable (article 293 B du CGI).' },
 ]
 
-// Liste interactive de la page d'accueil : durées moyennes indicatives, en minutes par semaine.
+// Liste interactive de la page d’accueil : durées moyennes indicatives, en minutes par semaine.
 export const tasks = [
   { label: 'Recopier les commandes dans le tableur', minutes: 45, preset: true },
   { label: 'Relancer les factures impayées', minutes: 30, preset: true },
@@ -131,7 +131,7 @@ export const tasks = [
 
 export const needs = [
   'Automatisation de processus',
-  "Intégration d'outils",
+  "Intégration d’outils",
   'Intelligence artificielle',
   'Site web',
   'Je ne sais pas encore',
@@ -144,7 +144,7 @@ export const identity = [
   ['Dirigeant', 'Arthur Champagne-Forterre'],
   ['Statut', 'Entrepreneur individuel, micro-entreprise'],
   ['Déclaration', 'Guichet unique de l’INPI, novembre 2026'],
-  ['SIRET', "En cours d'attribution"],
+  ['SIRET', "En cours d’attribution"],
   ['Siège', 'Montlignon (95680), Val-d’Oise'],
   ['TVA', 'Non applicable, art. 293 B du CGI'],
 ]
@@ -174,7 +174,7 @@ export const security = [
   { title: 'Fin de projet propre', text: 'À la fin de la mission, je vous remets la documentation, puis je supprime mes accès et les données de test.' },
 ]
 
-// Démonstration interactive de la page d'accueil (données fictives).
+// Démonstration interactive de la page d’accueil (données fictives).
 export const demo = {
   email: {
     from: 'Claire Martin <c.martin@exemple.fr>',

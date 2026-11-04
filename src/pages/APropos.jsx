@@ -3,7 +3,7 @@ import { IdentityCard, Guarantees } from '../components/Trust'
 import { company, commitments } from '../data'
 
 export default function APropos() {
-  usePageMeta('À propos', `${company.owner}, fondateur d'${company.brand}, micro-entreprise d'automatisation et d'IA basée dans le Val-d'Oise.`)
+  usePageMeta('/a-propos')
   return (
     <>
       <PageHeader title="À propos" note="Un seul interlocuteur" />
@@ -13,12 +13,12 @@ export default function APropos() {
             <h2 className="text-[2rem] leading-tight md:text-[2.5rem]">Qui je suis</h2>
             <div className="mt-8 space-y-5 font-serif text-lg leading-[1.7]">
               <p>
-                Je m'appelle {company.owner} et j'ai créé {company.brand} pour une raison simple : trop d'entreprises
+                Je m’appelle {company.owner} et j’ai créé {company.brand} pour une raison simple : trop d’entreprises
                 perdent des heures chaque semaine à recopier, relancer et classer à la main.
               </p>
               <p>
-                Ces tâches ne demandent pas de réflexion, mais elles prennent du temps et de l'attention. Elles sont
-                aussi celles où les erreurs arrivent le plus souvent : une facture oubliée, un client qu'on ne rappelle
+                Ces tâches ne demandent pas de réflexion, mais elles prennent du temps et de l’attention. Elles sont
+                aussi celles où les erreurs arrivent le plus souvent : une facture oubliée, un client qu’on ne rappelle
                 pas, un chiffre mal recopié.
               </p>
               <p>
@@ -27,7 +27,7 @@ export default function APropos() {
                 vous appartient.
               </p>
               <p>
-                Je suis basé à Montlignon, dans le Val-d'Oise. Je me déplace en Île-de-France et je travaille à
+                Je suis basé à Montlignon, dans le Val-d’Oise. Je me déplace en Île-de-France et je travaille à
                 distance partout en France.
               </p>
             </div>

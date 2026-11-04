@@ -35,3 +35,12 @@ Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Mentions
 - **SIRET** : remplacer « En cours d'attribution » dans `src/data.js` dès réception de l'avis INSEE.
 - **Adresse** : seule la commune est affichée. La loi (LCEN) demande l'adresse de l'éditeur ;
   ajoutez-la ou utilisez une domiciliation si vous ne voulez pas publier votre adresse personnelle.
+
+## Formulaire de contact
+`public/api/contact.php` (exécuté par Hostinger) envoie chaque demande par e-mail à l'adresse `TO_EMAIL`,
+avec l'adresse du visiteur en « Répondre à ». Expéditeur : `contact@axionstudio.fr` ; créez cette boîte dans
+Hostinger (E-mails) pour que les messages n'arrivent pas en indésirables. Limite : 5 envois par heure et par adresse IP.
+
+## Référencement
+`npm run build` écrit pour chaque page le titre, la description, l'adresse canonique et les balises de partage
+(textes dans `src/seo.js`, image `public/og.png`), et génère `sitemap.xml` et `robots.txt`.

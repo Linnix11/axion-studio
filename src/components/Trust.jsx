@@ -2,7 +2,7 @@ import { Link } from 'react-router'
 import { standaloneLink } from './ui'
 import { identity, guarantees, notDoing, company } from '../data'
 
-/** Fiche d'identité de l'entreprise, présentée comme une fiche remplie au stylo. */
+/** Fiche d’identité de l’entreprise, présentée comme une fiche remplie au stylo. */
 export function IdentityCard() {
   return (
     <div className="seyes rounded-lg border border-rule">
