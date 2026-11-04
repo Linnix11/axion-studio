@@ -41,6 +41,11 @@ Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Mentions
 avec l'adresse du visiteur en « Répondre à ». Expéditeur : `contact@axionstudio.fr` ; créez cette boîte dans
 Hostinger (E-mails) pour que les messages n'arrivent pas en indésirables. Limite : 5 envois par heure et par adresse IP.
 
+## Blog
+Articles dans `src/blog.js` (mode d'emploi en tête du fichier). Chaque article ajouté apparaît automatiquement
+sur `/blog`, a sa propre page pré-rendue, ses données structurées « BlogPosting », et figure dans le plan du site
+et dans `llms.txt` / `llms-full.txt`.
+
 ## Référencement (SEO) et référencement dans les IA
 - `npm run build` **pré-rend chaque page en HTML complet** (`src/entry-server.jsx` + `scripts/prerender-routes.mjs`) :
   tout le texte est lisible par Google, Bing et les robots des IA sans exécuter de JavaScript ; React prend

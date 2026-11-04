@@ -25,7 +25,7 @@ const C = {
     wrap: 'lg:gap-6',
     nav: 'lg:static lg:flex lg:flex-row lg:items-center lg:gap-5 lg:border-0 lg:p-0 xl:gap-6',
     link: 'lg:border-0', active: 'lg:underline lg:decoration-2 lg:underline-offset-8',
-    phone: 'lg:hidden xl:flex xl:border-l xl:border-rule xl:pl-6', contact: 'lg:mt-0', burger: 'lg:hidden', brand: '',
+    phone: 'lg:hidden 2xl:flex 2xl:border-l 2xl:border-rule 2xl:pl-6', contact: 'lg:mt-0', burger: 'lg:hidden', brand: '',
   },
   big: {
     wrap: '2xl:gap-6',

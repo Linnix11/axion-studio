@@ -8,6 +8,7 @@ import { join } from 'node:path'
 import { pageMeta, fullTitle, pageUrl, schemaFor, SITE_URL, BRAND } from '../src/seo.js'
 import * as data from '../src/data.js'
 import { assistantRules } from '../src/chatbot.js'
+import { posts } from '../src/blog.js'
 import { render } from '../dist-server/entry-server.js'
 
 const dist = 'dist'
@@ -59,7 +60,7 @@ writeFileSync(join(dist, '404.html'), page('/404'))
 
 // ——— Plan du site et robots ———
 const today = new Date().toISOString().slice(0, 10)
-const priority = p => (p === '/' ? '1.0' : ['/services', '/tarifs', '/contact', '/exemples'].includes(p) ? '0.8' : p.startsWith('/mentions') || p === '/confidentialite' ? '0.3' : '0.6')
+const priority = p => (p === '/' ? '1.0' : p.startsWith('/blog') ? '0.7' : ['/services', '/tarifs', '/contact', '/exemples'].includes(p) ? '0.8' : p.startsWith('/mentions') || p === '/confidentialite' ? '0.3' : '0.6')
 writeFileSync(join(dist, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${paths.map(p => `  <url><loc>${pageUrl(p)}</loc><lastmod>${today}</lastmod><priority>${priority(p)}</priority></url>`).join('\n')}
@@ -78,7 +79,7 @@ Sitemap: ${SITE_URL}/sitemap.xml
 // ——— Référencement dans les IA : llms.txt (résumé) et llms-full.txt (contenu complet) ———
 const { company, services, useCases, steps, offers, faq, guarantees, security, notDoing, tools } = data
 const intro = `> Axion Studio est la micro-entreprise d'${company.owner}, basée à Montlignon (Val-d'Oise, 95). Elle automatise les tâches répétitives des TPE, PME et indépendants : workflows automatisés, intégration d'outils (CRM, messagerie, tableurs, facturation), intelligence artificielle appliquée et création de sites web. Interventions en Île-de-France et à distance partout en France. Audit gratuit de 30 minutes ; projets au forfait à partir de 150 € ; suivi mensuel à partir de 250 € par mois ; TVA non applicable (art. 293 B du CGI).`
-const links = paths.filter(p => !['/mentions-legales'].includes(p)).map(p => `- [${pageMeta[p].name}](${pageUrl(p)}) : ${pageMeta[p].description}`).join('\n')
+const links = paths.filter(p => !['/mentions-legales'].includes(p) && !p.startsWith('/blog/')).map(p => `- [${pageMeta[p].name}](${pageUrl(p)}) : ${pageMeta[p].description}`).join('\n')
 writeFileSync(join(dist, 'llms.txt'), `# ${BRAND}
 
 ${intro}
@@ -92,6 +93,9 @@ ${intro}
 
 ## Pages
 ${links}
+
+## Articles
+${posts.map(p => `- [${p.title}](${pageUrl(`/blog/${p.slug}`)}) : ${p.description}`).join('\n')}
 
 ## Pour aller plus loin
 - [Contenu complet du site en texte](${SITE_URL}/llms-full.txt)
@@ -107,6 +111,7 @@ md.push(`## Garanties\n` + guarantees.map(g => `- ${g.title} : ${g.text}`).join(
 md.push(`## Ce qu'Axion Studio ne fait pas\n` + notDoing.map(n => `- ${n}`).join('\n') + '\n')
 md.push(`## Sécurité des données\n` + security.map(s => `- ${s.title} : ${s.text}`).join('\n') + '\n')
 md.push(`## Questions fréquentes\n` + faq.map(f => `### ${f.q}\n${f.a}\n`).join('\n'))
+md.push(`## Articles du blog\n` + posts.map(p => `### ${p.title}\n${pageUrl(`/blog/${p.slug}`)} (${p.date})\n\n${p.lead}\n\n` + p.body.map(b => b.h2 ? `#### ${b.h2}` : b.p ? b.p : b.note ? `> ${b.note}` : (b.ul || b.ol).map((x, i) => (b.ol ? `${i + 1}. ` : '- ') + x).join('\n')).join('\n\n')).join('\n\n') + '\n')
 md.push(`## Contact\n- E-mail : ${company.email}\n- Téléphone : ${company.phone}\n- Adresse : ${company.siege}\n- Formulaire : ${pageUrl('/contact')}\n`)
 writeFileSync(join(dist, 'llms-full.txt'), md.join('\n'))
 

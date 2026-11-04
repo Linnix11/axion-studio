@@ -1,6 +1,8 @@
 // Référencement : titre, description et données structurées (schema.org) de chaque page.
 // Utilisé par les pages (onglet du navigateur) ET écrit dans le HTML au build (scripts/prerender-routes.mjs),
 // pour Google, Bing et les moteurs de réponse des IA (ChatGPT, Gemini, Perplexity, Claude…).
+import { posts, wordCount } from './blog.js'
+
 export const SITE_URL = 'https://axionstudio.fr'
 export const BRAND = 'Axion Studio'
 
@@ -14,6 +16,8 @@ export const pageMeta = {
   '/faq': { title: 'Questions fréquentes sur l’automatisation et l’IA', name: 'FAQ', description: 'Outils utilisés, sécurité des données, délais, prix, maintenance : les réponses aux questions fréquentes sur l’automatisation avec Axion Studio.' },
   '/contact': { title: 'Contact : audit gratuit de 30 minutes', name: 'Contact', description: 'Décrivez la tâche qui vous fait perdre du temps : audit gratuit de 30 minutes, réponse sous 48 heures ouvrées. Montlignon (95), Île-de-France et à distance.' },
   '/securite': { title: 'Sécurité des données et usage de l’IA', name: 'Sécurité et données', description: 'Comptes à votre nom, accès révocables, IA utilisée avec précaution, fin de projet propre : les règles d’Axion Studio pour protéger vos données.' },
+  '/blog': { title: 'Blog : automatisation et IA pour les petites entreprises', name: 'Blog', description: 'Conseils concrets pour gagner du temps : quelles tâches automatiser, quels outils choisir (n8n, Make, Zapier), comment utiliser l’IA sans risque pour vos données.' },
+  ...Object.fromEntries(posts.map(p => [`/blog/${p.slug}`, { title: p.title, name: p.title, description: p.description, post: p }])),
   '/mentions-legales': { title: 'Mentions légales', name: 'Mentions légales', description: 'Mentions légales du site axionstudio.fr.' },
   '/confidentialite': { title: 'Politique de confidentialité', name: 'Confidentialité', description: 'Données collectées, durée de conservation, assistant IA, cookies : la politique de confidentialité du site axionstudio.fr.' },
 }
@@ -59,12 +63,22 @@ export function schemaFor(path, data) {
   }
   const website = { '@type': 'WebSite', '@id': `${SITE_URL}/#site`, url: `${SITE_URL}/`, name: BRAND, inLanguage: 'fr-FR', publisher: { '@id': `${SITE_URL}/#entreprise` } }
   const out = [org, website]
+  const post = pageMeta[path]?.post
   if (path !== '/' && pageMeta[path]) {
-    out.push({ '@type': 'BreadcrumbList', itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: `${SITE_URL}/` },
-      { '@type': 'ListItem', position: 2, name: pageMeta[path].name, item: pageUrl(path) },
-    ] })
+    const crumbs = [{ name: 'Accueil', item: `${SITE_URL}/` }]
+    if (post) crumbs.push({ name: 'Blog', item: pageUrl('/blog') })
+    crumbs.push({ name: pageMeta[path].name, item: pageUrl(path) })
+    out.push({ '@type': 'BreadcrumbList', itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, ...c })) })
   }
+  if (path === '/blog') out.push({ '@type': 'Blog', '@id': `${pageUrl('/blog')}#blog`, name: 'Blog Axion Studio', url: pageUrl('/blog'), inLanguage: 'fr-FR', publisher: { '@id': `${SITE_URL}/#entreprise` },
+    blogPost: posts.map(p => ({ '@type': 'BlogPosting', headline: p.title, url: pageUrl(`/blog/${p.slug}`), datePublished: p.date })) })
+  if (post) out.push({
+    '@type': 'BlogPosting', headline: post.title, description: post.description, datePublished: post.date, dateModified: post.updated || post.date,
+    inLanguage: 'fr-FR', articleSection: post.category, wordCount: wordCount(post), image: `${SITE_URL}/og.png`,
+    mainEntityOfPage: pageUrl(path), url: pageUrl(path), isPartOf: { '@id': `${pageUrl('/blog')}#blog` },
+    author: { '@type': 'Person', '@id': `${SITE_URL}/a-propos/#arthur`, name: data.company.owner, url: pageUrl('/a-propos') },
+    publisher: { '@id': `${SITE_URL}/#entreprise` },
+  })
   if (path === '/faq') out.push({ '@type': 'FAQPage', mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
   if (path === '/services') out.push(...services.map(s => ({
     '@type': 'Service', name: s.title, description: s.intro, serviceType: s.title, provider: { '@id': `${SITE_URL}/#entreprise` },

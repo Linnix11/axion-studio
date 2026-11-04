@@ -18,6 +18,7 @@ export const nav = [
   { to: '/exemples', label: 'Exemples' },
   { to: '/methode', label: 'Méthode' },
   { to: '/tarifs', label: 'Tarifs' },
+  { to: '/blog', label: 'Blog' },
   { to: '/a-propos', label: 'À propos' },
   { to: '/faq', label: 'FAQ' },
 ]
