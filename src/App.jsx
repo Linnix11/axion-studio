@@ -13,6 +13,7 @@ import Contact from './pages/Contact'
 import MentionsLegales from './pages/MentionsLegales'
 import Confidentialite from './pages/Confidentialite'
 import Securite from './pages/Securite'
+import Cgv from './pages/Cgv'
 import Blog from './pages/Blog'
 import Article from './pages/Article'
 import ChatWidget from './components/ChatWidget'
@@ -62,6 +63,7 @@ export default function App() {
           <Route path="/faq" element={<Faq />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/securite" element={<Securite />} />
+          <Route path="/cgv" element={<Cgv />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<Article />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />

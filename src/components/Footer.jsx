@@ -37,6 +37,7 @@ export default function Footer() {
           <p className="flex min-h-11 items-center">© {new Date().getFullYear()} {company.owner}, EI en micro-entreprise. TVA non applicable, art. 293 B du CGI.</p>
           <p className="flex gap-6">
             <Link className="inline-flex min-h-11 items-center text-muted hover:text-pen" to="/mentions-legales">Mentions légales</Link>
+            <Link className="inline-flex min-h-11 items-center text-muted hover:text-pen" to="/cgv">CGV</Link>
             <Link className="inline-flex min-h-11 items-center text-muted hover:text-pen" to="/confidentialite">Confidentialité</Link>
           </p>
         </Container>

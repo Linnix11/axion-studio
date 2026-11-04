@@ -18,6 +18,7 @@ export const pageMeta = {
   '/securite': { title: 'Sécurité des données et usage de l’IA', name: 'Sécurité et données', description: 'Comptes à votre nom, accès révocables, IA utilisée avec précaution, fin de projet propre : les règles d’Axion Studio pour protéger vos données.' },
   '/blog': { title: 'Blog : automatisation et IA', name: 'Blog', description: 'Conseils concrets pour gagner du temps : tâches à automatiser, choix des outils (n8n, Make, Zapier) et usage de l’IA sans risque pour vos données.' },
   ...Object.fromEntries(posts.map(p => [`/blog/${p.slug}`, { title: p.seoTitle || p.title, name: p.title, description: p.seoDescription || p.description, post: p }])),
+  '/cgv': { title: 'Conditions générales de vente', name: 'CGV', description: 'Conditions générales de vente d’Axion Studio : commande, prix au forfait, paiement, livraison, propriété des livrables, responsabilité et données.' },
   '/mentions-legales': { title: 'Mentions légales', name: 'Mentions légales', description: 'Mentions légales du site axionstudio.fr : éditeur, statut de micro-entreprise, hébergeur et contact d’Axion Studio.' },
   '/confidentialite': { title: 'Politique de confidentialité', name: 'Confidentialité', description: 'Données collectées, durée de conservation, assistant IA, cookies : la politique de confidentialité du site axionstudio.fr.' },
 }

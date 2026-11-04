@@ -9,6 +9,7 @@ import { pageMeta, fullTitle, pageUrl, schemaFor, SITE_URL, BRAND } from '../src
 import * as data from '../src/data.js'
 import { assistantRules } from '../src/chatbot.js'
 import { posts } from '../src/blog.js'
+import { cgv, cgvSettings } from '../src/legal.js'
 import { render } from '../dist-server/entry-server.js'
 
 const dist = 'dist'
@@ -60,7 +61,7 @@ writeFileSync(join(dist, '404.html'), page('/404'))
 
 // ——— Plan du site et robots ———
 const today = new Date().toISOString().slice(0, 10)
-const priority = p => (p === '/' ? '1.0' : p.startsWith('/blog') ? '0.7' : ['/services', '/tarifs', '/contact', '/exemples'].includes(p) ? '0.8' : p.startsWith('/mentions') || p === '/confidentialite' ? '0.3' : '0.6')
+const priority = p => (p === '/' ? '1.0' : p.startsWith('/blog') ? '0.7' : ['/services', '/tarifs', '/contact', '/exemples'].includes(p) ? '0.8' : p.startsWith('/mentions') || p === '/confidentialite' || p === '/cgv' ? '0.3' : '0.6')
 writeFileSync(join(dist, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${paths.map(p => `  <url><loc>${pageUrl(p)}</loc><lastmod>${today}</lastmod><priority>${priority(p)}</priority></url>`).join('\n')}
@@ -112,11 +113,12 @@ md.push(`## Ce qu'Axion Studio ne fait pas\n` + notDoing.map(n => `- ${n}`).join
 md.push(`## Sécurité des données\n` + security.map(s => `- ${s.title} : ${s.text}`).join('\n') + '\n')
 md.push(`## Questions fréquentes\n` + faq.map(f => `### ${f.q}\n${f.a}\n`).join('\n'))
 md.push(`## Articles du blog\n` + posts.map(p => `### ${p.title}\n${pageUrl(`/blog/${p.slug}`)} (${p.date})\n\n${p.lead}\n\n` + p.body.map(b => b.h2 ? `#### ${b.h2}` : b.p ? b.p : b.note ? `> ${b.note}` : (b.ul || b.ol).map((x, i) => (b.ol ? `${i + 1}. ` : '- ') + x).join('\n')).join('\n\n')).join('\n\n') + '\n')
+md.push(`## Conditions générales de vente (version du ${cgvSettings.version})\n` + cgv.map((a, i) => `### Article ${i + 1}. ${a.title}\n` + a.text.join('\n')).join('\n\n') + '\n')
 md.push(`## Contact\n- E-mail : ${company.email}\n- Téléphone : ${company.phone}\n- Adresse : ${company.siege}\n- Formulaire : ${pageUrl('/contact')}\n`)
 writeFileSync(join(dist, 'llms-full.txt'), md.join('\n'))
 
 // ——— Consignes du chatbot ———
-const knowledge = Object.entries(data).filter(([k]) => !['nav', 'tasks', 'demo'].includes(k)).map(([k, v]) => `## ${k}\n${JSON.stringify(v, null, 1)}`).join('\n\n')
+const knowledge = [...Object.entries(data), ['conditions_generales_de_vente', cgv]].filter(([k]) => !['nav', 'tasks', 'demo'].includes(k)).map(([k, v]) => `## ${k}\n${JSON.stringify(v, null, 1)}`).join('\n\n')
 mkdirSync(join(dist, 'api'), { recursive: true })
 writeFileSync(join(dist, 'api', 'assistant-prompt.txt'), `${assistantRules}\n\nINFORMATIONS SUR AXION STUDIO (source : le site axionstudio.fr)\n\n${knowledge}\n`)
 
