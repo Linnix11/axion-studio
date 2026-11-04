@@ -141,6 +141,7 @@ export default function ContactForm() {
       <button type="submit" disabled={state === 'sending'} className={`${btn.primary} disabled:cursor-wait disabled:opacity-70`}>
         {state === 'sending' ? 'Envoi en cours…' : 'Envoyer la demande'}
       </button>
+      <p className="mt-4 text-sm text-muted">Prestations réservées aux professionnels (entreprises, indépendants, associations).</p>
       <div role="status" aria-live="polite">
         {state === 'failed' && (
           <div className="drop mt-5 rounded-md border border-error p-4">

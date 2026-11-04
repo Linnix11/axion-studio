@@ -5,7 +5,7 @@ export default function Faq() {
   usePageMeta('/faq')
   return (
     <>
-      <PageHeader title="Questions fréquentes" note="7 questions avant de se lancer" />
+      <PageHeader title="Questions fréquentes" note={`${faq.length} questions avant de se lancer`} />
       <Section note="Cliquez pour lire la réponse">
         <div className="max-w-3xl border-t-2 border-ink">
           {faq.map(f => (
