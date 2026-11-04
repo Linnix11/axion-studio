@@ -30,6 +30,8 @@ function load_config(): array {
   $cfg = [];
   $candidates = [];
   if (!empty($_SERVER['DOCUMENT_ROOT'])) $candidates[] = dirname(rtrim($_SERVER['DOCUMENT_ROOT'], '/')) . '/axion-config.php';
+  if (!empty($_SERVER['DOCUMENT_ROOT'])) $candidates[] = rtrim($_SERVER['DOCUMENT_ROOT'], '/') . '/axion-config.php';  // dans le dossier public (accès web bloqué par .htaccess)
+  $candidates[] = dirname(__DIR__) . '/axion-config.php';
   $candidates[] = dirname(__DIR__, 2) . '/axion-config.php';
   $candidates[] = dirname(__DIR__, 3) . '/axion-config.php';
   foreach ($candidates as $f) {

@@ -1,1 +1,6 @@
 ErrorDocument 404 /404.html
+
+# Le fichier de configuration (clé d'API) ne doit jamais être accessible depuis le web
+<Files "axion-config.php">
+  Require all denied
+</Files>
