@@ -5,8 +5,8 @@ export default function Faq() {
   usePageMeta('Questions fréquentes', "Outils, données, délais, prix, maintenance : les réponses aux questions les plus fréquentes.")
   return (
     <>
-      <PageHeader title="Questions fréquentes" />
-      <Section>
+      <PageHeader title="Questions fréquentes" note="7 questions avant de se lancer" />
+      <Section note="Cliquez pour lire la réponse">
         <div className="max-w-3xl border-t-2 border-ink">
           {faq.map(f => (
             <details key={f.q} className="group border-b border-rule">

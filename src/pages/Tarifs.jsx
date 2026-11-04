@@ -6,12 +6,12 @@ export default function Tarifs() {
   usePageMeta('Tarifs', "Audit offert, projets au forfait et suivi mensuel sans engagement. TVA non applicable.")
   return (
     <>
-      <PageHeader title="Tarifs">
+      <PageHeader title="Tarifs" note="Forfait, jamais à l'heure">
         Pas de facturation à l'heure : chaque projet est chiffré au forfait après l'audit gratuit. Vous connaissez
         le prix exact avant de vous engager.
       </PageHeader>
 
-      <Section>
+      <Section note="3 formules">
         <div className="grid gap-6 lg:grid-cols-3">
           {offers.map(o => (
             <article key={o.name} className={`flex flex-col rounded-lg border p-6 sm:p-8 ${o.featured ? 'border-2 border-pen' : 'border-rule'}`}>

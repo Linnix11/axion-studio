@@ -14,10 +14,10 @@ export default function Confidentialite() {
   usePageMeta('Confidentialité', `Politique de confidentialité du site ${company.domain}.`)
   return (
     <>
-      <PageHeader title="Confidentialité">
+      <PageHeader title="Confidentialité" note="Aucun cookie">
         Ce site collecte le moins de données possible. Voici exactement lesquelles, et ce qu'elles deviennent.
       </PageHeader>
-      <Section>
+      <Section note="RGPD">
         <div className="max-w-3xl border-t-2 border-ink">
           {blocks(company).map(([t, x]) => (
             <section key={t} className="border-b border-rule py-6">

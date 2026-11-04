@@ -12,6 +12,7 @@ import Faq from './pages/Faq'
 import Contact from './pages/Contact'
 import MentionsLegales from './pages/MentionsLegales'
 import Confidentialite from './pages/Confidentialite'
+import Securite from './pages/Securite'
 import NotFound from './pages/NotFound'
 
 /** Remonte en haut à chaque changement de page, ou va à l'ancre (#...) demandée. */
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="/a-propos" element={<APropos />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/securite" element={<Securite />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/confidentialite" element={<Confidentialite />} />
           <Route path="*" element={<NotFound />} />

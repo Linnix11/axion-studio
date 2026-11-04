@@ -15,7 +15,7 @@ export default function MentionsLegales() {
   ]
   return (
     <>
-      <PageHeader title="Mentions légales" />
+      <PageHeader title="Mentions légales" note="Obligations légales" />
       <Section>
         <dl className="grid max-w-4xl gap-x-8 border-t-2 border-ink sm:grid-cols-[minmax(140px,240px)_1fr]">
           {rows.map(([k, v]) => (

@@ -136,3 +136,63 @@ export const needs = [
   'Site web',
   'Je ne sais pas encore',
 ]
+
+// ——— Confiance ———
+
+export const identity = [
+  ['Entreprise', 'Axion Studio (nom commercial « axionstudio »)'],
+  ['Dirigeant', 'Arthur Champagne-Forterre'],
+  ['Statut', 'Entrepreneur individuel, micro-entreprise'],
+  ['Déclaration', 'Guichet unique de l’INPI, novembre 2026'],
+  ['SIRET', "En cours d'attribution"],
+  ['Siège', 'Montlignon (95680), Val-d’Oise'],
+  ['TVA', 'Non applicable, art. 293 B du CGI'],
+]
+
+export const guarantees = [
+  { title: 'Audit gratuit, sans engagement', text: '30 minutes pour savoir ce qui peut être automatisé. Vous ne devez rien ensuite.' },
+  { title: 'Prix fixé avant de commencer', text: 'Un forfait écrit dans la proposition. Il ne bouge pas en cours de projet.' },
+  { title: 'Rien ne part sans votre accord', text: 'Chaque automatisation est testée avec vous avant de toucher vos clients.' },
+  { title: 'Vous gardez tout', text: 'Comptes, workflows et documentation sont à votre nom et restent chez vous.' },
+  { title: 'Un mois de suivi inclus', text: 'Les corrections après la mise en route sont comprises dans le prix.' },
+  { title: 'Un interlocuteur unique', text: 'La personne qui fait l’audit est celle qui construit et qui répond au téléphone.' },
+]
+
+export const notDoing = [
+  'Je ne vous vends pas un logiciel ni un abonnement maison.',
+  'Je n’automatise pas une tâche si le gain ne justifie pas le coût : je vous le dis à l’audit.',
+  'Je n’envoie pas vos données sensibles à une IA sans votre accord explicite.',
+  'Je ne facture pas à l’heure et je n’ajoute pas de frais en cours de route.',
+]
+
+export const security = [
+  { title: 'Tout est créé sur vos comptes', text: 'Les outils d’automatisation, les clés d’accès et les workflows sont ouverts à votre nom. Vous en êtes propriétaire et vous pouvez tout arrêter à tout moment.' },
+  { title: 'Des accès limités et révocables', text: 'Je demande uniquement les accès nécessaires au projet, de préférence via des comptes invités ou des clés dédiées que vous pouvez retirer en un clic.' },
+  { title: 'L’IA, avec précaution', text: 'Seules les informations utiles à la tâche sont envoyées à un service d’IA. Je privilégie les offres professionnelles qui n’utilisent pas vos données pour entraîner leurs modèles, et rien de sensible ne part sans votre accord.' },
+  { title: 'Hébergement en Europe quand c’est possible', text: 'Quand vos données le demandent, les automatisations peuvent tourner sur un serveur situé dans l’Union européenne, sous votre contrôle.' },
+  { title: 'Des erreurs signalées, pas cachées', text: 'Chaque workflow vous prévient s’il échoue. Aucune donnée n’est perdue en silence.' },
+  { title: 'Fin de projet propre', text: 'À la fin de la mission, je vous remets la documentation, puis je supprime mes accès et les données de test.' },
+]
+
+// Démonstration interactive de la page d'accueil (données fictives).
+export const demo = {
+  email: {
+    from: 'Claire Martin <c.martin@exemple.fr>',
+    subject: 'Demande de devis rénovation salle de bain',
+    body: 'Bonjour, nous souhaiterions refaire notre salle de bain (environ 6 m²) à Taverny, si possible avant l’été. Pouvez-vous me rappeler au 06 00 00 00 00 ? Merci, Claire Martin',
+  },
+  steps: ['E-mail reçu dans la boîte de contact', 'Lecture par l’IA : nom, téléphone, ville, besoin, délai', 'Fiche client créée dans le CRM', 'Brouillon de réponse préparé', 'Vous êtes prévenu sur votre téléphone'],
+  record: [['Nom', 'Claire Martin'], ['Téléphone', '06 00 00 00 00'], ['Ville', 'Taverny'], ['Besoin', 'Rénovation salle de bain, 6 m²'], ['Délai', 'Avant l’été'], ['Statut', 'À rappeler']],
+  reply: 'Bonjour Madame Martin, merci pour votre demande concernant la rénovation de votre salle de bain à Taverny. Je vous rappelle demain dans la matinée pour en parler. Bien cordialement.',
+}
+
+// Extrait type de proposition commerciale (page Méthode).
+export const proposalSample = {
+  client: 'Exemple : cabinet de conseil, 4 personnes',
+  problem: 'Environ 2 heures par semaine à classer les factures fournisseurs et à les transmettre au comptable.',
+  solution: ['Lecture automatique des factures reçues par e-mail', 'Renommage et classement dans le dossier partagé', 'Report des montants dans le tableau de suivi', 'Envoi mensuel du récapitulatif au comptable'],
+  tools: 'Votre messagerie, votre Google Drive, un tableur partagé, n8n',
+  delay: '2 semaines, tests compris',
+  price: 'Forfait indiqué ici, TVA non applicable',
+  gain: 'Environ 90 heures par an',
+}

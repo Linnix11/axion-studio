@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router'
 import { Container, btn } from './ui'
-import { nav } from '../data'
+import { nav, company } from '../data'
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -49,7 +49,8 @@ export default function Header() {
           {nav.map(item => (
             <NavLink key={item.to} to={item.to} className={linkClass}>{item.label}</NavLink>
           ))}
-          <Link to="/contact" className={`${btn.primary} mt-3 min-h-11 lg:mt-0 lg:ml-2`}>Contact</Link>
+          <a href={`tel:${company.phoneHref}`} className="flex min-h-11 items-center text-base text-ink no-underline hover:text-pen lg:ml-2 xl:border-l xl:border-rule xl:pl-6">{company.phone}</a>
+          <Link to="/contact" className={`${btn.primary} mt-3 min-h-11 lg:mt-0`}>Contact</Link>
         </nav>
       </Container>
     </header>

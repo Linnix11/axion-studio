@@ -6,13 +6,13 @@ export default function Services() {
   usePageMeta('Services', "Workflows automatisés, intégration d'outils, intelligence artificielle et sites web pour les TPE, PME et indépendants.")
   return (
     <>
-      <PageHeader title="Services">
+      <PageHeader title="Services" note="4 missions, au forfait">
         Quatre types de missions pour vous libérer des tâches répétitives. Elles se combinent souvent : un site dont
         le formulaire alimente votre CRM, une IA qui lit vos factures et les range.
       </PageHeader>
 
       <nav aria-label="Dans cette page" className="border-b border-rule">
-        <ul className="mx-auto flex max-w-[1120px] flex-wrap gap-x-6 px-4 md:px-8">
+        <ul className="mx-auto flex max-w-[1180px] flex-wrap gap-x-6 px-4 md:px-8">
           {services.map(s => (
             <li key={s.slug}><a href={`#${s.slug}`} className="inline-flex min-h-12 items-center text-ink no-underline hover:text-pen">{s.title}</a></li>
           ))}
@@ -20,7 +20,7 @@ export default function Services() {
       </nav>
 
       {services.map((s, i) => (
-        <Section key={s.slug} id={s.slug} tone={i % 2 ? 'alt' : 'paper'}>
+        <Section key={s.slug} id={s.slug} tone={i % 2 ? 'alt' : 'paper'} note={`Mission ${i + 1} sur 4`}>
           <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
             <div>
               <h2 className="text-[2rem] leading-tight md:text-[2.5rem]">{s.title}</h2>
@@ -44,7 +44,7 @@ export default function Services() {
         </Section>
       ))}
 
-      <Section>
+      <Section note="Vos outils d'abord">
         <SectionHead title="Avec quels outils ?">
           Je pars toujours de ceux que vous utilisez. Selon votre situation, je travaille notamment avec :
         </SectionHead>

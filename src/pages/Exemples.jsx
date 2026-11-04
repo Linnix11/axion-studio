@@ -5,12 +5,12 @@ export default function Exemples() {
   usePageMeta('Exemples', "Des cas types d'automatisation pour artisans, cabinets, boutiques en ligne, agences et indépendants.")
   return (
     <>
-      <PageHeader title="Exemples">
+      <PageHeader title="Exemples" note="5 cas types, 5 métiers">
         Des cas types, inspirés de situations courantes dans les petites entreprises. Ils montrent ce qui change
         concrètement au quotidien. Les gains de temps sont des ordres de grandeur.
       </PageHeader>
 
-      <Section>
+      <Section note="Gains en ordre de grandeur">
         <div className="space-y-6">
           {useCases.map(u => (
             <article key={u.task} className="overflow-hidden rounded-lg border border-rule">
@@ -24,7 +24,7 @@ export default function Exemples() {
               <div className="grid md:grid-cols-2">
                 <div className="border-b border-rule p-6 md:border-r md:border-b-0">
                   <h3 className="text-base font-medium text-muted">Avant</h3>
-                  <p className="mt-2 font-serif text-lg leading-[1.6] text-muted">{u.before}</p>
+                  <p className="mt-2 font-serif text-lg leading-[1.6] text-muted line-through decoration-pen/60">{u.before}</p>
                 </div>
                 <div className="p-6">
                   <h3 className="text-base font-medium text-pen">Après</h3>

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-/* Univers : papier à lignes, stylo bille bleu, surligneur.
-   Mise en page : colonne de texte alignée à gauche, lignes réglées comme structure. */
+/* Univers : cahier à grands carreaux (Seyès), stylo bille bleu, marge rouge, surligneur.
+   Mise en page : une marge à gauche porte des annotations, le contenu s'écrit à droite. */
 :root {
   --c-paper: #ffffff;
   --c-paper-2: #f3f6fc;      /* surface : bandeaux, formulaire */
@@ -13,19 +13,23 @@
   --c-marker: #ffe45c;       /* surligneur : réservé à « automatisé » */
   --c-on-marker: #14213d;
   --c-error: #b42318;
+  --c-margin: #d93d63;        /* marge rouge du cahier */
+  --c-seyes: rgba(35, 70, 200, 0.13);
+  --c-seyes-light: rgba(35, 70, 200, 0.055);
+  --c-ok: #1d7a4b;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --c-paper: #0e1525; --c-paper-2: #141d31; --c-ink: #e7ebf4; --c-muted: #a3adc4;
     --c-rule: #27324b; --c-pen: #93a9ff; --c-on-pen: #0e1525; --c-marker: #e9d04b;
-    --c-on-marker: #0e1525; --c-error: #ff8a7a;
+    --c-on-marker: #0e1525; --c-error: #ff8a7a; --c-margin: #ff7d9b; --c-seyes: rgba(147, 169, 255, 0.11); --c-seyes-light: rgba(147, 169, 255, 0.045); --c-ok: #5fd39a;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --c-paper: #0e1525; --c-paper-2: #141d31; --c-ink: #e7ebf4; --c-muted: #a3adc4;
   --c-rule: #27324b; --c-pen: #93a9ff; --c-on-pen: #0e1525; --c-marker: #e9d04b;
-  --c-on-marker: #0e1525; --c-error: #ff8a7a;
+  --c-on-marker: #0e1525; --c-error: #ff8a7a; --c-margin: #ff7d9b; --c-seyes: rgba(147, 169, 255, 0.11); --c-seyes-light: rgba(147, 169, 255, 0.045); --c-ok: #5fd39a;
   color-scheme: dark;
 }
 
@@ -40,6 +44,8 @@
   --color-marker: var(--c-marker);
   --color-on-marker: var(--c-on-marker);
   --color-error: var(--c-error);
+  --color-margin: var(--c-margin);
+  --color-ok: var(--c-ok);
   --font-sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
   --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
 }
@@ -60,6 +66,17 @@
 .strike[data-done="true"] { text-decoration-color: var(--c-pen); }
 
 .marker { background: var(--c-marker); color: var(--c-on-marker); }
+
+/* Papier Seyès : carreaux de 8 mm (32 px) et interlignes de 2 mm (8 px) */
+.seyes {
+  background-color: var(--c-paper);
+  background-image:
+    linear-gradient(var(--c-seyes) 1px, transparent 1px),
+    linear-gradient(90deg, var(--c-seyes) 1px, transparent 1px),
+    linear-gradient(var(--c-seyes-light) 1px, transparent 1px);
+  background-size: 32px 32px, 32px 32px, 32px 8px;
+  background-position: -1px -1px;
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

@@ -1,12 +1,13 @@
 import { PageHeader, Section, SectionHead, CtaBand, usePageMeta } from '../components/ui'
+import { IdentityCard, Guarantees } from '../components/Trust'
 import { company, commitments } from '../data'
 
 export default function APropos() {
   usePageMeta('À propos', `${company.owner}, fondateur d'${company.brand}, micro-entreprise d'automatisation et d'IA basée dans le Val-d'Oise.`)
   return (
     <>
-      <PageHeader title="À propos" />
-      <Section>
+      <PageHeader title="À propos" note="Un seul interlocuteur" />
+      <Section note="Le fondateur">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:gap-16">
           <div className="max-w-[62ch]">
             <h2 className="text-[2rem] leading-tight md:text-[2.5rem]">Qui je suis</h2>
@@ -33,27 +34,12 @@ export default function APropos() {
             <p className="mt-8 text-lg font-medium">{company.owner}</p>
             <p className="text-muted">Fondateur, {company.brand}</p>
           </div>
-          <aside className="self-start rounded-lg border border-rule bg-paper-2 p-6">
-            <h2 className="text-lg">En bref</h2>
-            <dl className="mt-4 text-base">
-              {[
-                ['Statut', 'Entrepreneur individuel, micro-entreprise'],
-                ['Basé à', company.city],
-                ['Intervient', 'Île-de-France et à distance'],
-                ['Pour qui', 'TPE, PME et indépendants'],
-                ['Spécialités', 'Automatisation, intégration d’outils, IA, sites web'],
-              ].map(([k, v]) => (
-                <div key={k} className="border-t border-rule py-3">
-                  <dt className="text-sm text-muted">{k}</dt>
-                  <dd>{v}</dd>
-                </div>
-              ))}
-            </dl>
-          </aside>
+          <div className="self-start lg:sticky lg:top-24"><IdentityCard /></div>
         </div>
       </Section>
-      <Section tone="alt">
+      <Section tone="alt" note="Mes garanties">
         <SectionHead title="Ma façon de travailler" />
+        <div className="mb-12"><Guarantees /></div>
         <dl className="grid gap-x-10 gap-y-8 md:grid-cols-2">
           {commitments.map(c => (
             <div key={c.title} className="border-l-2 border-pen pl-5">
