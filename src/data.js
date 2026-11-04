@@ -7,7 +7,7 @@ export const company = {
   phone: '06 48 61 23 50',
   phoneHref: '+33648612350',
   city: 'Montlignon (95)',
-  siege: '95680 Montlignon, France',
+  siege: '5 allée des Pommiers, 95680 Montlignon, France',
   domain: 'axionstudio.fr',
   siret: "En cours d’attribution",
   host: 'Hostinger International Ltd., 61 Lordou Vironos Street, 6023 Larnaca, Chypre (hostinger.fr)',
@@ -140,7 +140,7 @@ export const identity = [
   ['Statut', 'Entrepreneur individuel, micro-entreprise'],
   ['Déclaration', 'Guichet unique de l’INPI, novembre 2026'],
   ['SIRET', "En cours d’attribution"],
-  ['Siège', 'Montlignon (95680), Val-d’Oise'],
+  ['Siège', '5 allée des Pommiers, 95680 Montlignon (Val-d’Oise)'],
   ['TVA', 'Non applicable, art. 293 B du CGI'],
 ]
 

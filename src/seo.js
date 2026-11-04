@@ -48,7 +48,7 @@ export function schemaFor(path, data) {
     telephone: '+33648612350',
     priceRange: 'À partir de 150 €',
     currenciesAccepted: 'EUR',
-    address: { '@type': 'PostalAddress', postalCode: '95680', addressLocality: 'Montlignon', addressRegion: 'Val-d’Oise', addressCountry: 'FR' },
+    address: { '@type': 'PostalAddress', streetAddress: '5 allée des Pommiers', postalCode: '95680', addressLocality: 'Montlignon', addressRegion: 'Val-d’Oise', addressCountry: 'FR' },
     areaServed: [
       { '@type': 'AdministrativeArea', name: 'Val-d’Oise' },
       { '@type': 'AdministrativeArea', name: 'Île-de-France' },
