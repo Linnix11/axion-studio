@@ -1,5 +1,6 @@
 import { PageHeader, Section, usePageMeta } from '../components/ui'
 import ContactForm from '../components/ContactForm'
+import { CheckIcon } from '../components/Icons'
 import { company, guarantees } from '../data'
 
 export default function Contact() {
@@ -39,7 +40,7 @@ export default function Contact() {
             <ul className="mt-6 space-y-3">
               {guarantees.slice(0, 3).map(g => (
                 <li key={g.title} className="flex gap-3 text-sm">
-                  <span aria-hidden="true" className="grid size-5 shrink-0 place-items-center rounded-full bg-ok text-[0.75rem] text-paper">✓</span>
+                  <span aria-hidden="true" className="grid size-5 shrink-0 place-items-center rounded-full bg-ok text-paper"><CheckIcon className="size-3" /></span>
                   <span><strong>{g.title}.</strong> <span className="text-muted">{g.text}</span></span>
                 </li>
               ))}

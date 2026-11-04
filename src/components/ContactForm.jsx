@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { btn, textLink } from './ui'
+import { CheckIcon } from './Icons'
 import { company, needs } from '../data'
 
 const ENDPOINT = '/api/contact.php'
@@ -85,7 +86,7 @@ export default function ContactForm() {
     return (
       <div className="drop rounded-lg border-2 border-ok bg-paper-2 p-6 sm:p-8" role="status">
         <p className="flex items-center gap-3 text-2xl leading-tight font-medium">
-          <span aria-hidden="true" className="grid size-8 place-items-center rounded-full bg-ok text-paper">✓</span>
+          <span aria-hidden="true" className="grid size-8 place-items-center rounded-full bg-ok text-paper"><CheckIcon className="size-4" /></span>
           Message envoyé
         </p>
         <p className="mt-4 font-serif text-lg leading-[1.6]">

@@ -1,6 +1,7 @@
 import { reducedMotion } from '../prefs'
 import { useEffect, useRef, useState } from 'react'
 import { btn } from './ui'
+import { CheckIcon } from './Icons'
 import { demo } from '../data'
 
 const STEP_MS = 700
@@ -10,7 +11,7 @@ function Check({ done, active }) {
     <span aria-hidden="true"
       className={`grid size-6 shrink-0 place-items-center rounded-full border-2 text-xs font-semibold transition-colors duration-200
         ${done ? 'pop border-ok bg-ok text-paper' : active ? 'border-pen text-pen' : 'border-rule text-transparent'}`}>
-      ✓
+      <CheckIcon className="size-3" />
     </span>
   )
 }

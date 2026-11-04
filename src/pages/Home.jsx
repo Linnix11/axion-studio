@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { Container, Section, SectionHead, CtaBand, btn, standaloneLink, usePageMeta } from '../components/ui'
 import TaskList from '../components/TaskList'
 import Demo from '../components/Demo'
+import { CheckIcon } from '../components/Icons'
 import { IdentityCard, Guarantees, NotDoing } from '../components/Trust'
 import { services, useCases, steps } from '../data'
 
@@ -28,7 +29,7 @@ export default function Home() {
             <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
               {heroFacts.map(f => (
                 <li key={f} className="flex items-center gap-2 text-sm">
-                  <span aria-hidden="true" className="grid size-5 place-items-center rounded-full bg-ok text-[0.75rem] text-paper">✓</span>{f}
+                  <span aria-hidden="true" className="grid size-5 place-items-center rounded-full bg-ok text-paper"><CheckIcon className="size-3" /></span>{f}
                 </li>
               ))}
             </ul>

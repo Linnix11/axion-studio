@@ -48,7 +48,11 @@
   body { @apply bg-paper text-ink font-sans leading-[1.5] antialiased; }
   h1, h2, h3 { @apply font-sans font-semibold; text-wrap: balance; }
   strong, b { @apply font-semibold; }
-  :focus-visible { @apply outline-2 outline-offset-2 outline-pen; }
+  :focus-visible { outline: 3px solid var(--c-pen); outline-offset: 2px; }
+  /* Tout ce qui est cliquable montre la main (Tailwind v4 ne le fait plus par défaut pour les boutons) */
+  button:not(:disabled), [role="button"], [role="switch"], summary, select, label:has(> input), input[type="checkbox"] { cursor: pointer; }
+  /* Changements de couleur au survol en douceur (150 ms) ; désactivés si moins d'animations */
+  a, button, summary { transition: color 150ms ease-out, background-color 150ms ease-out, border-color 150ms ease-out, text-decoration-color 150ms ease-out; }
 }
 
 /* Rature au stylo : suit le texte ligne par ligne, apparaît en fondu de couleur */

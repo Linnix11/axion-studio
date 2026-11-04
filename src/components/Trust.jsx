@@ -1,4 +1,5 @@
 import { Link } from 'react-router'
+import { CheckIcon } from './Icons'
 import { standaloneLink } from './ui'
 import { identity, guarantees, notDoing, company } from '../data'
 
@@ -30,7 +31,7 @@ export function Guarantees({ compact = false }) {
     <ul className={`grid gap-x-10 gap-y-8 sm:grid-cols-2 ${compact ? '' : 'xl:grid-cols-4'}`}>
       {guarantees.map(g => (
         <li key={g.title} className="flex gap-3">
-          <span aria-hidden="true" className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-ok text-xs font-semibold text-paper">✓</span>
+          <span aria-hidden="true" className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-ok text-paper"><CheckIcon /></span>
           <div>
             <p className="text-lg leading-tight font-medium">{g.title}</p>
             <p className="mt-1 font-serif leading-[1.6] text-muted">{g.text}</p>

@@ -87,3 +87,9 @@ en tête du fichier (`cgvSettings`) ; pensez à mettre à jour `version` à chaq
 Fichier de clé `public/<clé>.txt`. Après une publication importante (nouvel article, nouvelle page) :
 C'est automatique : le workflow GitHub `.github/workflows/indexnow.yml` lance `node scripts/indexnow.mjs`
 après chaque envoi sur `main` (le temps que Hostinger publie), et signale toutes les pages du plan du site à Bing.
+
+## Skills Claude Code du projet
+`.claude/skills/` contient le skill **design** de nextlevelbuilder/ui-ux-pro-max-skill (licence MIT, voir
+`LICENSE-ui-ux-pro-max-skill`) et ses dépendances : brand, design-system, ui-styling, ui-ux-pro-max.
+Ils se chargent dans les nouvelles sessions Claude Code. Les scripts de génération d'images (logo, icônes,
+mockups) demandent une clé `GEMINI_API_KEY` dans l'environnement ; la recherche ui-ux-pro-max fonctionne sans clé.
