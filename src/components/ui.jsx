@@ -56,7 +56,7 @@ export function PageHeader({ title, note, children }) {
 }
 
 /** Bandeau d’appel à l’action placé en bas des pages. */
-export function CtaBand({ title = 'Une tâche vous fait perdre du temps ?', text = 'Décrivez-la en quelques lignes. Je vous dis sous 48 heures ouvrées ce qui peut être automatisé, gratuitement et sans engagement.' }) {
+export function CtaBand({ title = 'Une tâche vous fait perdre du temps ?', text = 'Décrivez-la en quelques lignes. Je vous dis sous 48 heures ouvrées ce qui peut être automatisé, gratuitement et sans engagement.' }) {
   return (
     <section className="bg-pen text-on-pen">
       <Container className="flex flex-col items-start justify-between gap-6 py-14 md:flex-row md:items-center">

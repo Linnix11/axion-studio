@@ -75,7 +75,7 @@ export default function ContactForm() {
           Message envoyé
         </p>
         <p className="mt-4 font-serif text-lg leading-[1.6]">
-          Merci {values.nom.split(' ')[0]}. Je vous réponds sous 48 heures ouvrées à l’adresse {values.email}.
+          Merci {values.nom.split(' ')[0]}. Je vous réponds sous 48 heures ouvrées à l’adresse {values.email}.
         </p>
         <button type="button" className={`${btn.ghost} mt-6`} onClick={() => { setValues(empty); setState('idle') }}>
           Écrire un autre message

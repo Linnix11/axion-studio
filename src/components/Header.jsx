@@ -49,7 +49,7 @@ export default function Header() {
             <NavLink key={item.to} to={item.to} className={linkClass}>{item.label}</NavLink>
           ))}
           <a href={`tel:${company.phoneHref}`} className="flex min-h-11 items-center text-base text-ink no-underline hover:text-pen lg:ml-2 xl:border-l xl:border-rule xl:pl-6">{company.phone}</a>
-          <Link to="/contact" className={`${btn.primary} mt-3 min-h-11 lg:mt-0`}>Contact</Link>
+          <Link to="/contact" className={`${btn.primary} mt-3 min-h-11 lg:mt-0`}>Contact</Link>
         </nav>
       </Container>
     </header>

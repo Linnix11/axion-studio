@@ -19,7 +19,7 @@ export default function Faq() {
           ))}
         </div>
       </Section>
-      <CtaBand title="Votre question n’est pas ici ?" text="Écrivez-moi, je vous réponds sous 48 heures ouvrées." />
+      <CtaBand title="Votre question n’est pas ici ?" text="Écrivez-moi, je vous réponds sous 48 heures ouvrées." />
     </>
   )
 }

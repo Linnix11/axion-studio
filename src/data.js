@@ -26,7 +26,7 @@ export const services = [
   {
     slug: 'workflows',
     title: 'Workflows automatisés',
-    short: 'Relances, facturation, reporting, saisie de données : des workflows qui tournent seuls, 24 h/24.',
+    short: 'Relances, facturation, reporting, saisie de données : des workflows qui tournent seuls, 24 h/24.',
     intro: "Les tâches que vous refaites chaque semaine à l’identique sont les premières à automatiser. Je conçois des enchaînements qui se déclenchent seuls : à la réception d’un e-mail, d’un formulaire, d’une commande ou à heure fixe.",
     includes: [
       'Cartographie de la tâche telle que vous la faites aujourd’hui',
@@ -82,18 +82,18 @@ export const services = [
 export const tools = ['n8n', 'Make', 'Zapier', 'Google Workspace', 'Microsoft 365', 'Notion', 'Airtable', 'HubSpot', 'Pipedrive', 'Brevo', 'Stripe', 'API OpenAI et Anthropic']
 
 export const useCases = [
-  { sector: 'Artisan du bâtiment', task: 'Demandes de devis', before: 'Les demandes arrivent par le site, par e-mail et par téléphone. Vous les recopiez dans un carnet, puis rédigez chaque devis de zéro.', after: 'Chaque demande crée une fiche client, un brouillon de devis est préparé à partir de vos tarifs et vous êtes prévenu sur votre téléphone.', gain: '2 à 3 h par semaine' },
-  { sector: 'Cabinet de conseil', task: 'Factures fournisseurs', before: 'Les PDF s’accumulent dans la boîte mail et sont classés à la main en fin de mois, avant d’être envoyés au comptable.', after: 'Chaque facture est lue, renommée, rangée dans le bon dossier et ses montants sont reportés dans le tableau de suivi partagé avec le comptable.', gain: '1 à 2 h par semaine' },
-  { sector: 'Boutique en ligne', task: 'Suivi des commandes', before: 'Vous exportez les commandes, mettez à jour le stock dans un tableur et répondez aux clients qui demandent où en est leur colis.', after: 'Le stock se met à jour à chaque vente, le client reçoit son numéro de suivi automatiquement et vous recevez une alerte quand un produit passe sous le seuil.', gain: '3 à 4 h par semaine' },
-  { sector: 'Agence immobilière', task: 'Qualification des contacts', before: 'Les demandes des portails d’annonces arrivent en vrac, et il faut les trier et rappeler chaque contact pour connaître son projet.', after: 'Chaque demande est classée (achat, location, estimation), un e-mail de bienvenue pose les premières questions et le contact arrive qualifié dans le CRM.', gain: '2 h par semaine' },
-  { sector: 'Indépendant', task: 'Reporting et relances', before: 'Le lundi matin, vous assemblez les chiffres de trois outils et relancez les factures en retard une par une.', after: 'Le récapitulatif arrive seul dans votre boîte mail et les relances partent automatiquement, avec un ton que vous avez choisi.', gain: '1 h 30 par semaine' },
+  { sector: 'Artisan du bâtiment', task: 'Demandes de devis', before: 'Les demandes arrivent par le site, par e-mail et par téléphone. Vous les recopiez dans un carnet, puis rédigez chaque devis de zéro.', after: 'Chaque demande crée une fiche client, un brouillon de devis est préparé à partir de vos tarifs et vous êtes prévenu sur votre téléphone.', gain: '2 à 3 h par semaine' },
+  { sector: 'Cabinet de conseil', task: 'Factures fournisseurs', before: 'Les PDF s’accumulent dans la boîte mail et sont classés à la main en fin de mois, avant d’être envoyés au comptable.', after: 'Chaque facture est lue, renommée, rangée dans le bon dossier et ses montants sont reportés dans le tableau de suivi partagé avec le comptable.', gain: '1 à 2 h par semaine' },
+  { sector: 'Boutique en ligne', task: 'Suivi des commandes', before: 'Vous exportez les commandes, mettez à jour le stock dans un tableur et répondez aux clients qui demandent où en est leur colis.', after: 'Le stock se met à jour à chaque vente, le client reçoit son numéro de suivi automatiquement et vous recevez une alerte quand un produit passe sous le seuil.', gain: '3 à 4 h par semaine' },
+  { sector: 'Agence immobilière', task: 'Qualification des contacts', before: 'Les demandes des portails d’annonces arrivent en vrac, et il faut les trier et rappeler chaque contact pour connaître son projet.', after: 'Chaque demande est classée (achat, location, estimation), un e-mail de bienvenue pose les premières questions et le contact arrive qualifié dans le CRM.', gain: '2 h par semaine' },
+  { sector: 'Indépendant', task: 'Reporting et relances', before: 'Le lundi matin, vous assemblez les chiffres de trois outils et relancez les factures en retard une par une.', after: 'Le récapitulatif arrive seul dans votre boîte mail et les relances partent automatiquement, avec un ton que vous avez choisi.', gain: '1 h 30 par semaine' },
 ]
 
 export const steps = [
-  { title: 'Audit', duration: '30 min offertes', text: 'On repère ensemble les tâches qui vous coûtent le plus de temps.', detail: "Un appel en visio ou par téléphone. Vous me décrivez votre semaine type et vos outils. Je vous dis ce qui peut être automatisé, ce qui ne vaut pas la peine de l’être, et dans quel ordre." },
-  { title: 'Proposition', duration: 'sous 72 h', text: 'Une solution chiffrée, avec le temps gagné estimé, sans engagement.', detail: 'Vous recevez un document clair : ce qui sera construit, avec quels outils, le prix au forfait, le délai et une estimation du temps gagné. Vous décidez ensuite, sans relance insistante.' },
-  { title: 'Mise en place', duration: '1 à 4 semaines', text: 'Construction, tests sur vos vraies données, puis mise en production.', detail: "Je construis l’automatisation, je la teste sur des cas réels avec vous, puis je la mets en route. Vous suivez l’avancement et validez chaque étape avant qu’elle touche vos clients." },
-  { title: 'Suivi', duration: '1 mois inclus', text: 'Prise en main, documentation et ajustements pour que tout reste fiable.', detail: "Je vous montre comment tout fonctionne et vous remets une documentation simple. Pendant un mois, j’ajuste ce qui doit l’être. Ensuite, vous êtes autonome ou vous choisissez un suivi mensuel." },
+  { title: 'Audit', duration: '30 min offertes', text: 'On repère ensemble les tâches qui vous coûtent le plus de temps.', detail: "Un appel en visio ou par téléphone. Vous me décrivez votre semaine type et vos outils. Je vous dis ce qui peut être automatisé, ce qui ne vaut pas la peine de l’être, et dans quel ordre." },
+  { title: 'Proposition', duration: 'sous 72 h', text: 'Une solution chiffrée, avec le temps gagné estimé, sans engagement.', detail: 'Vous recevez un document clair : ce qui sera construit, avec quels outils, le prix au forfait, le délai et une estimation du temps gagné. Vous décidez ensuite, sans relance insistante.' },
+  { title: 'Mise en place', duration: '1 à 4 semaines', text: 'Construction, tests sur vos vraies données, puis mise en production.', detail: "Je construis l’automatisation, je la teste sur des cas réels avec vous, puis je la mets en route. Vous suivez l’avancement et validez chaque étape avant qu’elle touche vos clients." },
+  { title: 'Suivi', duration: '1 mois inclus', text: 'Prise en main, documentation et ajustements pour que tout reste fiable.', detail: "Je vous montre comment tout fonctionne et vous remets une documentation simple. Pendant un mois, j’ajuste ce qui doit l’être. Ensuite, vous êtes autonome ou vous choisissez un suivi mensuel." },
 ]
 
 export const commitments = [
@@ -105,8 +105,8 @@ export const commitments = [
 
 export const offers = [
   { name: 'Audit', price: 'Offert', unit: '30 minutes', text: 'Pour savoir ce qui peut être automatisé chez vous et par quoi commencer.', items: ['Appel en visio ou par téléphone', 'Liste des tâches automatisables', 'Ordre de priorité conseillé'], cta: 'Réserver l’audit' },
-  { name: 'Projet', price: 'Sur devis', unit: 'au forfait', text: 'Pour une automatisation, une intégration ou un site web, livré clés en main.', items: ['Proposition détaillée sous 72 h', 'Construction et tests sur vos données', 'Documentation et 1 mois de suivi inclus'], cta: 'Demander un devis', featured: true },
-  { name: 'Suivi mensuel', price: 'Sur devis', unit: 'par mois, sans engagement', text: 'Pour faire évoluer vos automatisations et en ajouter au fil de l’eau.', items: ['Surveillance et correction des workflows', 'Petites évolutions incluses', 'Un point mensuel sur les prochaines tâches à automatiser'], cta: 'En parler' },
+  { name: 'Projet', from: true, price: '250 €', unit: 'au forfait, prix exact sur devis', text: 'Pour une automatisation, une intégration ou un site web, livré clés en main.', items: ['Proposition détaillée sous 72 h', 'Construction et tests sur vos données', 'Documentation et 1 mois de suivi inclus'], cta: 'Demander un devis', featured: true },
+  { name: 'Suivi mensuel', from: true, price: '250 €', unit: 'par mois, sans engagement', text: 'Pour faire évoluer vos automatisations et en ajouter au fil de l’eau.', items: ['Surveillance et correction des workflows', 'Petites évolutions incluses', 'Un point mensuel sur les prochaines tâches à automatiser'], cta: 'En parler' },
 ]
 
 export const faq = [
@@ -116,7 +116,7 @@ export const faq = [
   { q: 'Combien de temps faut-il pour mettre en place une automatisation ?', a: 'Une automatisation simple est en place en une à deux semaines. Un projet qui relie plusieurs outils ou intègre de l’IA demande généralement trois à quatre semaines, tests compris.' },
   { q: 'Que se passe-t-il si une automatisation tombe en panne ?', a: 'Chaque workflow prévient en cas d’erreur. Pendant le mois de suivi inclus, je corrige sans frais. Ensuite, vous pouvez choisir le suivi mensuel ou me solliciter ponctuellement.' },
   { q: 'Travaillez-vous à distance ?', a: 'Oui, la plupart des projets se font entièrement à distance, partout en France. Je me déplace aussi en Île-de-France, notamment dans le Val-d’Oise, quand c’est utile.' },
-  { q: 'Combien ça coûte ?', a: 'Chaque projet est chiffré au forfait après l’audit gratuit, en fonction de ce qui est à construire. Vous connaissez le prix exact avant de vous engager. La TVA n’est pas applicable (article 293 B du CGI).' },
+  { q: 'Combien ça coûte ?', a: 'Les projets démarrent à 250 €, et le suivi mensuel à 250 € par mois. Chaque projet est chiffré au forfait après l’audit gratuit, en fonction de ce qui est à construire : vous connaissez le prix exact avant de vous engager. La TVA n’est pas applicable (article 293 B du CGI).' },
 ]
 
 // Liste interactive de la page d’accueil : durées moyennes indicatives, en minutes par semaine.
@@ -179,20 +179,20 @@ export const demo = {
   email: {
     from: 'Claire Martin <c.martin@exemple.fr>',
     subject: 'Demande de devis rénovation salle de bain',
-    body: 'Bonjour, nous souhaiterions refaire notre salle de bain (environ 6 m²) à Taverny, si possible avant l’été. Pouvez-vous me rappeler au 06 00 00 00 00 ? Merci, Claire Martin',
+    body: 'Bonjour, nous souhaiterions refaire notre salle de bain (environ 6 m²) à Taverny, si possible avant l’été. Pouvez-vous me rappeler au 06 00 00 00 00 ? Merci, Claire Martin',
   },
   steps: ['E-mail reçu dans la boîte de contact', 'Lecture par l’IA : nom, téléphone, ville, besoin, délai', 'Fiche client créée dans le CRM', 'Brouillon de réponse préparé', 'Vous êtes prévenu sur votre téléphone'],
-  record: [['Nom', 'Claire Martin'], ['Téléphone', '06 00 00 00 00'], ['Ville', 'Taverny'], ['Besoin', 'Rénovation salle de bain, 6 m²'], ['Délai', 'Avant l’été'], ['Statut', 'À rappeler']],
+  record: [['Nom', 'Claire Martin'], ['Téléphone', '06 00 00 00 00'], ['Ville', 'Taverny'], ['Besoin', 'Rénovation salle de bain, 6 m²'], ['Délai', 'Avant l’été'], ['Statut', 'À rappeler']],
   reply: 'Bonjour Madame Martin, merci pour votre demande concernant la rénovation de votre salle de bain à Taverny. Je vous rappelle demain dans la matinée pour en parler. Bien cordialement.',
 }
 
 // Extrait type de proposition commerciale (page Méthode).
 export const proposalSample = {
   client: 'Exemple : cabinet de conseil, 4 personnes',
-  problem: 'Environ 2 heures par semaine à classer les factures fournisseurs et à les transmettre au comptable.',
+  problem: 'Environ 2 heures par semaine à classer les factures fournisseurs et à les transmettre au comptable.',
   solution: ['Lecture automatique des factures reçues par e-mail', 'Renommage et classement dans le dossier partagé', 'Report des montants dans le tableau de suivi', 'Envoi mensuel du récapitulatif au comptable'],
   tools: 'Votre messagerie, votre Google Drive, un tableur partagé, n8n',
-  delay: '2 semaines, tests compris',
+  delay: '2 semaines, tests compris',
   price: 'Forfait indiqué ici, TVA non applicable',
-  gain: 'Environ 90 heures par an',
+  gain: 'Environ 90 heures par an',
 }

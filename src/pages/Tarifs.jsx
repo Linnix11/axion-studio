@@ -7,8 +7,8 @@ export default function Tarifs() {
   return (
     <>
       <PageHeader title="Tarifs" note="Forfait, jamais à l’heure">
-        Pas de facturation à l’heure : chaque projet est chiffré au forfait après l’audit gratuit. Vous connaissez
-        le prix exact avant de vous engager.
+        Des projets à partir de 250 €, chiffrés au forfait après l’audit gratuit. Pas de facturation à l’heure :
+        vous connaissez le prix exact avant de vous engager.
       </PageHeader>
 
       <Section note="3 formules">
@@ -17,7 +17,8 @@ export default function Tarifs() {
             <article key={o.name} className={`lift flex flex-col rounded-lg border p-6 sm:p-8 ${o.featured ? 'border-2 border-pen' : 'border-rule'}`}>
               <h2 className="text-2xl leading-tight">{o.name}</h2>
               <p className="mt-4">
-                <span className="text-[2rem] leading-none font-semibold">{o.price}</span>
+                {o.from && <span className="block text-sm text-muted">À partir de</span>}
+                <span className="text-[2rem] leading-none font-semibold tabular-nums">{o.price}</span>
                 <span className="block mt-1 text-sm text-muted">{o.unit}</span>
               </p>
               <p className="mt-4 font-serif leading-[1.6] text-muted">{o.text}</p>
