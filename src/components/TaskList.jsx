@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { Container, btn } from './ui'
 import { tasks } from '../data'
 
 const WEEKS_PER_YEAR = 47
@@ -10,7 +9,7 @@ function fmt(min) {
   return m ? `${h} h ${String(m).padStart(2, '0')}` : `${h} h`
 }
 
-function TaskList() {
+export default function TaskList() {
   const [checked, setChecked] = useState(() => tasks.map(t => t.preset))
   // Rature progressive au chargement : seul moment animé de la page.
   const [drawn, setDrawn] = useState(0)
@@ -61,31 +60,5 @@ function TaskList() {
         </p>
       </div>
     </div>
-  )
-}
-
-export default function Hero() {
-  return (
-    <section className="border-b border-rule pt-16 pb-20 md:pt-24 md:pb-24">
-      <Container className="grid items-start gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
-        <div className="lg:pt-6">
-          <h1 className="text-[2.5rem] leading-[1.08] tracking-[-0.02em] sm:text-6xl">
-            Vos tâches répétitives, faites sans vous.
-          </h1>
-          <p className="mt-6 max-w-[34rem] font-serif text-xl leading-[1.6] text-muted">
-            J'automatise le travail administratif des TPE, PME et indépendants : saisies, relances, reporting,
-            réponses récurrentes. Vous gardez vos outils, ils travaillent ensemble.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#contact" className={btn.primary}>Réserver un audit gratuit</a>
-            <a href="#exemples" className={btn.ghost}>Voir des exemples</a>
-          </div>
-          <p className="mt-8 max-w-[30rem] text-sm text-muted">
-            Cochez dans la liste ce que vous faites encore à la main. Les durées sont des moyennes indicatives.
-          </p>
-        </div>
-        <TaskList />
-      </Container>
-    </section>
   )
 }

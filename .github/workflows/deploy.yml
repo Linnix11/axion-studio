@@ -25,6 +25,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          BASE_PATH: /axion-studio/
       - name: Publier dist/ sur gh-pages
         run: |
           cd dist
