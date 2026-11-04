@@ -7,7 +7,7 @@ export default function Tarifs() {
   return (
     <>
       <PageHeader title="Tarifs" note="Forfait, jamais à l’heure">
-        Des projets à partir de 250 €, chiffrés au forfait après l’audit gratuit. Pas de facturation à l’heure :
+        Des projets à partir de 150 €, chiffrés au forfait après l’audit gratuit. Pas de facturation à l’heure :
         vous connaissez le prix exact avant de vous engager.
       </PageHeader>
 

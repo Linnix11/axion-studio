@@ -105,7 +105,7 @@ export const commitments = [
 
 export const offers = [
   { name: 'Audit', price: 'Offert', unit: '30 minutes', text: 'Pour savoir ce qui peut être automatisé chez vous et par quoi commencer.', items: ['Appel en visio ou par téléphone', 'Liste des tâches automatisables', 'Ordre de priorité conseillé'], cta: 'Réserver l’audit' },
-  { name: 'Projet', from: true, price: '250 €', unit: 'au forfait, prix exact sur devis', text: 'Pour une automatisation, une intégration ou un site web, livré clés en main.', items: ['Proposition détaillée sous 72 h', 'Construction et tests sur vos données', 'Documentation et 1 mois de suivi inclus'], cta: 'Demander un devis', featured: true },
+  { name: 'Projet', from: true, price: '150 €', unit: 'au forfait, prix exact sur devis', text: 'Pour une automatisation, une intégration ou un site web, livré clés en main.', items: ['Proposition détaillée sous 72 h', 'Construction et tests sur vos données', 'Documentation et 1 mois de suivi inclus'], cta: 'Demander un devis', featured: true },
   { name: 'Suivi mensuel', from: true, price: '250 €', unit: 'par mois, sans engagement', text: 'Pour faire évoluer vos automatisations et en ajouter au fil de l’eau.', items: ['Surveillance et correction des workflows', 'Petites évolutions incluses', 'Un point mensuel sur les prochaines tâches à automatiser'], cta: 'En parler' },
 ]
 
@@ -116,7 +116,7 @@ export const faq = [
   { q: 'Combien de temps faut-il pour mettre en place une automatisation ?', a: 'Une automatisation simple est en place en une à deux semaines. Un projet qui relie plusieurs outils ou intègre de l’IA demande généralement trois à quatre semaines, tests compris.' },
   { q: 'Que se passe-t-il si une automatisation tombe en panne ?', a: 'Chaque workflow prévient en cas d’erreur. Pendant le mois de suivi inclus, je corrige sans frais. Ensuite, vous pouvez choisir le suivi mensuel ou me solliciter ponctuellement.' },
   { q: 'Travaillez-vous à distance ?', a: 'Oui, la plupart des projets se font entièrement à distance, partout en France. Je me déplace aussi en Île-de-France, notamment dans le Val-d’Oise, quand c’est utile.' },
-  { q: 'Combien ça coûte ?', a: 'Les projets démarrent à 250 €, et le suivi mensuel à 250 € par mois. Chaque projet est chiffré au forfait après l’audit gratuit, en fonction de ce qui est à construire : vous connaissez le prix exact avant de vous engager. La TVA n’est pas applicable (article 293 B du CGI).' },
+  { q: 'Combien ça coûte ?', a: 'Les projets démarrent à 150 €, et le suivi mensuel à 250 € par mois. Chaque projet est chiffré au forfait après l’audit gratuit, en fonction de ce qui est à construire : vous connaissez le prix exact avant de vous engager. La TVA n’est pas applicable (article 293 B du CGI).' },
 ]
 
 // Liste interactive de la page d’accueil : durées moyennes indicatives, en minutes par semaine.

@@ -8,7 +8,7 @@ export const pageMeta = {
   '/services': { title: 'Services', description: "Workflows automatisés, intégration d’outils, intelligence artificielle et sites web pour les TPE, PME et indépendants." },
   '/exemples': { title: 'Exemples', description: "Des cas types d’automatisation pour artisans, cabinets, boutiques en ligne, agences et indépendants." },
   '/methode': { title: 'Méthode', description: 'Audit offert, proposition au forfait sous 72 h, mise en place testée sur vos données et un mois de suivi inclus.' },
-  '/tarifs': { title: 'Tarifs', description: 'Audit offert, projets au forfait à partir de 250 € et suivi mensuel à partir de 250 € par mois, sans engagement. TVA non applicable.' },
+  '/tarifs': { title: 'Tarifs', description: 'Audit offert, projets au forfait à partir de 150 € et suivi mensuel à partir de 250 € par mois, sans engagement. TVA non applicable.' },
   '/a-propos': { title: 'À propos', description: "Arthur Champagne-Forterre, fondateur d’Axion Studio, micro-entreprise d’automatisation et d’IA basée dans le Val-d’Oise." },
   '/faq': { title: 'Questions fréquentes', description: 'Outils, données, délais, prix, maintenance : les réponses aux questions les plus fréquentes.' },
   '/contact': { title: 'Contact', description: 'Contactez Axion Studio pour un audit gratuit de 30 minutes. Réponse sous 48 heures ouvrées.' },
