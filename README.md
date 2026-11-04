@@ -14,7 +14,8 @@ npm run build    # génère le site statique dans dist/
 npm run preview  # prévisualise le build
 ```
 
-Le dossier `dist/` se déploie tel quel sur n'importe quel hébergeur statique (Netlify, Vercel, OVH…).
+Le site est publié automatiquement sur GitHub Pages à chaque envoi sur `main`
+(workflow `.github/workflows/deploy.yml`) : https://linnix11.github.io/axion-studio/
 
 ## Structure
 - `src/data.js` — **toutes les infos de l'entreprise** (e-mail, téléphone, SIRET, services, exemples…).
