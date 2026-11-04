@@ -14,7 +14,7 @@ const MAX_MESSAGES_PER_DAY  = 400;   // pour tout le site (maîtrise des coûts)
 const MAX_INPUT_CHARS       = 1000;  // longueur maximale d'un message du visiteur
 const MAX_HISTORY           = 12;    // nombre de messages de la conversation envoyés à Gemini
 const DEFAULT_MODEL         = 'gemini-3.5-flash';
-const FALLBACK_MODEL        = 'gemini-flash-lite-latest';   // utilisé si le modèle choisi est retiré par Google
+const FALLBACK_MODELS       = ['gemini-3.5-flash-lite', 'gemini-flash-lite-latest'];   // si le modèle principal est saturé ou retiré
 
 header('Content-Type: application/json; charset=utf-8');
 header('X-Robots-Tag: noindex');
@@ -85,7 +85,7 @@ if (hit_limit('global_day', MAX_MESSAGES_PER_DAY, 86400)) reply(429, ['ok' => fa
 $payload = [
   'systemInstruction' => ['parts' => [['text' => $prompt]]],
   'contents' => $contents,
-  'generationConfig' => ['temperature' => 0.4, 'maxOutputTokens' => 1500],
+  'generationConfig' => ['temperature' => 0.3, 'maxOutputTokens' => 1200],
   'safetySettings' => [
     ['category' => 'HARM_CATEGORY_HARASSMENT', 'threshold' => 'BLOCK_MEDIUM_AND_ABOVE'],
     ['category' => 'HARM_CATEGORY_HATE_SPEECH', 'threshold' => 'BLOCK_MEDIUM_AND_ABOVE'],
@@ -108,7 +108,7 @@ function call_gemini(string $model, array $payload, string $key): array {
     CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'x-goog-api-key: ' . $key],
     CURLOPT_POSTFIELDS => json_encode($payload, JSON_UNESCAPED_UNICODE),
     CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_TIMEOUT => 30,
+    CURLOPT_TIMEOUT => 20,
     CURLOPT_CONNECTTIMEOUT => 8,
   ]);
   $raw = curl_exec($ch);
@@ -117,10 +117,13 @@ function call_gemini(string $model, array $payload, string $key): array {
   return [$status, $raw];
 }
 
-[$status, $raw] = call_gemini($config['model'], $payload, $config['key']);
-if (($status === 404 || $status === 400) && $config['model'] !== FALLBACK_MODEL) {
-  error_log('Axion chat: modèle ' . $config['model'] . ' indisponible (HTTP ' . $status . '), repli sur ' . FALLBACK_MODEL);
-  [$status, $raw] = call_gemini(FALLBACK_MODEL, $payload, $config['key']);
+// Modèle principal, puis modèles allégés si Google le sature (quota 429), le retire (404/400) ou ne répond pas.
+$models = array_values(array_unique(array_merge([$config['model']], FALLBACK_MODELS)));
+foreach ($models as $i => $model) {
+  [$status, $raw] = call_gemini($model, $payload, $config['key']);
+  if ($status === 200) break;
+  if (!in_array($status, [0, 400, 404, 429, 500, 503], true)) break;
+  error_log('Axion chat: ' . $model . ' HTTP ' . $status . ($i + 1 < count($models) ? ', essai du modèle suivant' : ''));
 }
 
 $res = json_decode((string) $raw, true);
@@ -130,6 +133,11 @@ if ($status !== 200 || !is_array($res)) {
 }
 $text = '';
 foreach (($res['candidates'][0]['content']['parts'] ?? []) as $part) if (empty($part['thought'])) $text .= $part['text'] ?? '';
+// Nettoyage : pas de Markdown dans la bulle (gras, titres, puces « * »), pas de lignes vides en série.
+$text = preg_replace('/\*\*(.+?)\*\*/su', '$1', $text);
+$text = preg_replace('/^#{1,6}\s*/mu', '', $text);
+$text = preg_replace('/^\s*[*•]\s+/mu', '- ', $text);
+$text = preg_replace("/\n{3,}/u", "\n\n", $text);
 $text = trim($text);
 if ($text === '') reply(200, ['ok' => true, 'reply' => 'Je préfère ne pas répondre à cette demande. Pour toute question sur Axion Studio, je suis là, ou vous pouvez écrire à Arthur via /contact.']);
 reply(200, ['ok' => true, 'reply' => $text]);

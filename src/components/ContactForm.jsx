@@ -1,8 +1,13 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { btn, textLink } from './ui'
 import { company, needs } from '../data'
 
 const ENDPOINT = '/api/contact.php'
+const DRAFT_KEY = 'axion-contact-draft'
+
+function takeDraft() {
+  try { const d = sessionStorage.getItem(DRAFT_KEY); if (d) sessionStorage.removeItem(DRAFT_KEY); return d || '' } catch { return '' }
+}
 
 const rules = {
   nom: v => (v.trim() ? '' : 'Indiquez votre nom.'),
@@ -30,7 +35,15 @@ const failureText = {
 
 export default function ContactForm() {
   const empty = { nom: '', entreprise: '', email: '', type: needs[0], message: '', site: '' }
-  const [values, setValues] = useState(empty)
+  const [values, setValues] = useState(() => ({ ...empty, message: takeDraft() }))
+  const [fromChat, setFromChat] = useState(() => values.message !== '')
+
+  // Demande transmise depuis l'assistant alors que la page Contact est déjà ouverte.
+  useEffect(() => {
+    const onDraft = () => { const d = takeDraft(); if (d) { setValues(v => ({ ...v, message: d })); setFromChat(true) } }
+    window.addEventListener('axion-draft', onDraft)
+    return () => window.removeEventListener('axion-draft', onDraft)
+  }, [])
   const [errors, setErrors] = useState({})
   const [state, setState] = useState('idle') // idle | sending | sent | failed
   const [failure, setFailure] = useState('')
@@ -94,6 +107,11 @@ export default function ContactForm() {
 
   return (
     <form noValidate onSubmit={onSubmit} aria-busy={state === 'sending'} className="rounded-lg border border-rule bg-paper-2 p-6 sm:p-8">
+      {fromChat && (
+        <p className="drop mb-5 rounded-md bg-marker px-3 py-2 text-sm text-on-marker">
+          Votre échange avec l’assistant a été repris dans le message. Complétez votre nom et votre e-mail, puis envoyez.
+        </p>
+      )}
       <div className="grid gap-x-5 sm:grid-cols-2">
         <Field id="nom" label="Nom" error={errors.nom}>
           <input {...fieldProps('nom')} autoComplete="name" required />

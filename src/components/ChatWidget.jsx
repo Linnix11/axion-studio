@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { assistantName, welcome, suggestions } from '../chatbot'
 import { company } from '../data'
 
 const ENDPOINT = '/api/chat.php'
 const STORE = 'axion-chat'
+export const DRAFT_KEY = 'axion-contact-draft'
 const PAGES = ['/services', '/exemples', '/methode', '/tarifs', '/a-propos', '/faq', '/securite', '/contact']
 
 const errorText = {
@@ -43,6 +44,7 @@ export default function ChatWidget() {
   const inputRef = useRef(null)
   const toggleRef = useRef(null)
   const listRef = useRef(null)
+  const navigate = useNavigate()
 
   // L'assistant n'apparaît que si le serveur est configuré (clé Gemini présente).
   useEffect(() => {
@@ -76,6 +78,16 @@ export default function ChatWidget() {
       setSending(false)
       inputRef.current?.focus()
     }
+  }
+
+  // Pré-remplit le formulaire de contact avec ce que le visiteur a décrit dans la conversation.
+  const handOff = () => {
+    const said = messages.filter(m => m.role === 'user').map(m => `- ${m.text}`).join('\n')
+    const draft = `Bonjour Arthur,\n\nVoici ce que j’ai décrit à l’assistant du site :\n${said}\n\nJe souhaite en parler lors de l’audit gratuit.`
+    try { sessionStorage.setItem(DRAFT_KEY, draft) } catch { /* stockage indisponible */ }
+    setOpen(false)
+    navigate('/contact')
+    window.dispatchEvent(new Event('axion-draft'))
   }
 
   const reset = () => { setMessages([]); setError(''); inputRef.current?.focus() }
@@ -142,7 +154,14 @@ export default function ChatWidget() {
             )}
           </div>
 
-          <form onSubmit={e => { e.preventDefault(); send(input) }} className="flex items-end gap-2 border-t border-rule p-3">
+          {messages.some(m => m.role === 'model') && (
+            <div className="border-t border-rule px-3 pt-3">
+              <button type="button" onClick={handOff} className="inline-flex min-h-11 w-full items-center justify-center rounded-md bg-marker px-4 font-medium text-on-marker hover:opacity-90">
+                Envoyer ma demande à Arthur
+              </button>
+            </div>
+          )}
+          <form onSubmit={e => { e.preventDefault(); send(input) }} className="flex items-end gap-2 p-3">
             <label htmlFor="assistant-input" className="sr-only">Votre question</label>
             <textarea
               id="assistant-input"
