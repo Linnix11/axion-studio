@@ -8,8 +8,9 @@ import { nav, company } from '../data'
 /** Vrai quand le visiteur a agrandi le texte (bouton Accessibilité). */
 function useBigText() {
   const read = () => (document.documentElement.dataset.text || 'normal') !== 'normal'
-  const [big, setBig] = useState(read)
+  const [big, setBig] = useState(false)
   useEffect(() => {
+    setBig(read())
     const obs = new MutationObserver(() => setBig(read()))
     obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-text'] })
     return () => obs.disconnect()

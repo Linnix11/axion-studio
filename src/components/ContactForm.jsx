@@ -35,12 +35,13 @@ const failureText = {
 
 export default function ContactForm() {
   const empty = { nom: '', entreprise: '', email: '', type: needs[0], message: '', site: '' }
-  const [values, setValues] = useState(() => ({ ...empty, message: takeDraft() }))
-  const [fromChat, setFromChat] = useState(() => values.message !== '')
+  const [values, setValues] = useState(empty)
+  const [fromChat, setFromChat] = useState(false)
 
   // Demande transmise depuis l'assistant alors que la page Contact est déjà ouverte.
   useEffect(() => {
     const onDraft = () => { const d = takeDraft(); if (d) { setValues(v => ({ ...v, message: d })); setFromChat(true) } }
+    onDraft()  // brouillon transmis par l'assistant avant l'ouverture de la page
     window.addEventListener('axion-draft', onDraft)
     return () => window.removeEventListener('axion-draft', onDraft)
   }, [])

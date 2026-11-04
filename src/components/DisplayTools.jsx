@@ -47,13 +47,16 @@ function Switch({ id, label, hint, checked, onChange }) {
 }
 
 export default function DisplayTools() {
-  const [prefs, setPrefs] = useState(loadPrefs)
+  // Réglages lus après l'affichage (compatible pré-rendu) ; le script de index.html les a déjà appliqués.
+  const [prefs, setPrefs] = useState(defaults)
+  const [loaded, setLoaded] = useState(false)
+  useEffect(() => { setPrefs(loadPrefs()); setLoaded(true) }, [])
   const [open, setOpen] = useState(false)
   const panelRef = useRef(null)
   const btnRef = useRef(null)
 
   const update = patch => setPrefs(p => { const next = { ...p, ...patch }; savePrefs(next); return next })
-  useEffect(() => applyPrefs(prefs), [prefs])
+  useEffect(() => { if (loaded) applyPrefs(prefs) }, [prefs, loaded])
 
   // Panneau : Échap et clic à l'extérieur le ferment ; le focus revient sur le bouton.
   useEffect(() => {

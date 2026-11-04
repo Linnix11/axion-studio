@@ -41,9 +41,13 @@ Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Mentions
 avec l'adresse du visiteur en « Répondre à ». Expéditeur : `contact@axionstudio.fr` ; créez cette boîte dans
 Hostinger (E-mails) pour que les messages n'arrivent pas en indésirables. Limite : 5 envois par heure et par adresse IP.
 
-## Référencement
-`npm run build` écrit pour chaque page le titre, la description, l'adresse canonique et les balises de partage
-(textes dans `src/seo.js`, image `public/og.png`), et génère `sitemap.xml` et `robots.txt`.
+## Référencement (SEO) et référencement dans les IA
+- `npm run build` **pré-rend chaque page en HTML complet** (`src/entry-server.jsx` + `scripts/prerender-routes.mjs`) :
+  tout le texte est lisible par Google, Bing et les robots des IA sans exécuter de JavaScript ; React prend
+  ensuite le relais dans le navigateur.
+- Titres, descriptions et données structurées schema.org (entreprise, services, prix, FAQ, fil d'Ariane) : `src/seo.js`.
+- Fichiers générés : `sitemap.xml`, `robots.txt` (robots des IA autorisés), `llms.txt` (résumé du site pour les IA)
+  et `llms-full.txt` (contenu complet en texte), à partir de `src/data.js`.
 
 ## Assistant IA (Gemini)
 - Bouton « Une question ? » en bas à droite (`src/components/ChatWidget.jsx`), relayé par `public/api/chat.php`.

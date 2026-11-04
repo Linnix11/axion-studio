@@ -37,7 +37,8 @@ function load() {
 export default function ChatWidget() {
   const [available, setAvailable] = useState(false)
   const [open, setOpen] = useState(false)
-  const [messages, setMessages] = useState(load)
+  const [messages, setMessages] = useState([])
+  const loaded = useRef(false)
   const [input, setInput] = useState('')
   const [sending, setSending] = useState(false)
   const [error, setError] = useState('')
@@ -53,7 +54,8 @@ export default function ChatWidget() {
     fetch(ENDPOINT).then(r => r.json()).then(d => setAvailable(!!d.available)).catch(() => setAvailable(false))
   }, [])
 
-  useEffect(() => { try { sessionStorage.setItem(STORE, JSON.stringify(messages.slice(-30))) } catch { /* stockage indisponible */ } }, [messages])
+  useEffect(() => { setMessages(load()); loaded.current = true }, [])
+  useEffect(() => { if (!loaded.current) return; try { sessionStorage.setItem(STORE, JSON.stringify(messages.slice(-30))) } catch { /* stockage indisponible */ } }, [messages])
   useEffect(() => { if (open) inputRef.current?.focus() }, [open])
   useEffect(() => { listRef.current?.scrollTo({ top: listRef.current.scrollHeight }) }, [messages, sending, open])
 
