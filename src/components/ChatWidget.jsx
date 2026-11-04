@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router'
-import { assistantName, welcome, suggestions } from '../chatbot'
+import { Link, useNavigate, useLocation } from 'react-router'
+import { assistantName, welcome, suggestions, geminiFreeTier } from '../chatbot'
 import { company } from '../data'
 
 const ENDPOINT = '/api/chat.php'
@@ -45,6 +45,8 @@ export default function ChatWidget() {
   const toggleRef = useRef(null)
   const listRef = useRef(null)
   const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const onContact = pathname.startsWith('/contact')
 
   // L'assistant n'apparaît que si le serveur est configuré (clé Gemini présente).
   useEffect(() => {
@@ -92,7 +94,8 @@ export default function ChatWidget() {
 
   const reset = () => { setMessages([]); setError(''); inputRef.current?.focus() }
 
-  if (!available) return null
+  // Masqué sur la page Contact : le formulaire y est déjà, et la bulle ne recouvre pas le champ du message.
+  if (!available || (onContact && !open)) return null
 
   return (
     <>
@@ -181,7 +184,7 @@ export default function ChatWidget() {
             </div>
           </form>
           <p className="border-t border-rule px-4 py-2 text-xs text-muted">
-            Réponses générées par l’IA Gemini de Google, à vérifier. <Link to="/confidentialite" onClick={() => setOpen(false)} className="underline">Confidentialité</Link>
+            Réponses générées par l’IA Gemini de Google, à vérifier.{geminiFreeTier && ' Offre gratuite : Google peut utiliser ces échanges.'} <Link to="/confidentialite" onClick={() => setOpen(false)} className="underline">Confidentialité</Link>
           </p>
         </section>
       )}

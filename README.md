@@ -55,6 +55,8 @@ Hostinger (E-mails) pour que les messages n'arrivent pas en indésirables. Limit
   ```
   Sans clé, l'assistant reste simplement masqué.
 - Limites : 30 messages par heure et par visiteur, 400 par jour pour tout le site (constantes en tête de `chat.php`).
+- Facturation Google activée ? Passez `geminiFreeTier` à `false` dans `src/chatbot.js` : les mentions
+  « offre gratuite » disparaissent du chat et des pages Confidentialité et Sécurité.
 
 ## Thème et accessibilité
 - Bouton lune/soleil (en-tête) : mode clair (par défaut) ou sombre.

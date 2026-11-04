@@ -2,6 +2,7 @@ import { Link } from 'react-router'
 import { PageHeader, Section, SectionHead, CtaBand, textLink, usePageMeta } from '../components/ui'
 import { NotDoing } from '../components/Trust'
 import { security } from '../data'
+import { geminiFreeTier, freeTierNotice } from '../chatbot'
 
 export default function Securite() {
   usePageMeta('/securite')
@@ -28,7 +29,7 @@ export default function Securite() {
             <p className="max-w-[56ch] font-serif text-lg leading-[1.6] text-muted">
               Ce site ne dépose aucun cookie et ne mesure pas votre navigation. Le formulaire de contact m’envoie votre
               message par e-mail : il n’est pas enregistré sur le site. Les questions posées à l’assistant IA sont
-              transmises à Google Gemini pour y répondre, sans être conservées ici. Détails dans la{' '}
+              transmises à Google Gemini pour y répondre, sans être conservées ici.{geminiFreeTier && ` ${freeTierNotice}`} Détails dans la{' '}
               <Link to="/confidentialite" className={textLink}>politique de confidentialité</Link>.
             </p>
           </div>
