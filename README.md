@@ -82,3 +82,7 @@ Les scripts PHP partagent `public/api/_common.php` (adresse réelle du visiteur 
 Page `/cgv`, texte dans `src/legal.js`. **Modèle à faire relire par un professionnel du droit.**
 Les valeurs courantes (acompte, délai de paiement, validité du devis, délai de validation) sont réglables
 en tête du fichier (`cgvSettings`) ; pensez à mettre à jour `version` à chaque modification.
+
+## IndexNow (Bing et moteurs compatibles)
+Fichier de clé `public/<clé>.txt`. Après une publication importante (nouvel article, nouvelle page) :
+`node scripts/indexnow.mjs` signale toutes les pages du plan du site à Bing, qui les explore alors rapidement.

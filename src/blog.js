@@ -13,6 +13,52 @@
 
 export const posts = [
   {
+    slug: 'cout-automatisation-petite-entreprise',
+    seoTitle: 'Combien coûte l’automatisation ? (TPE)',
+    seoDescription: 'Ce qui fait varier le prix d’une automatisation, les coûts à prévoir et une méthode simple pour savoir si elle sera rentable pour votre entreprise.',
+    title: 'Combien coûte l’automatisation pour une petite entreprise ?',
+    description: 'Ce qui fait varier le prix d’une automatisation, les coûts récurrents à prévoir, et une méthode simple pour calculer si elle sera rentable dans votre cas.',
+    date: '2026-11-04',
+    category: 'Automatisation',
+    lead: 'C’est la première question que se posent les dirigeants de petites entreprises, et elle est légitime : une automatisation n’a d’intérêt que si elle fait gagner plus qu’elle ne coûte. Voici ce qui fait varier le prix, ce qu’il faut prévoir chaque mois, et comment savoir en cinq minutes si le jeu en vaut la chandelle.',
+    body: [
+      { h2: 'Ce qui fait varier le prix' },
+      { p: 'Le prix d’une automatisation dépend moins de la technologie que du nombre d’étapes et d’outils à relier. Quatre critères comptent surtout :' },
+      { ul: [
+        'Le nombre d’outils à connecter : relier une boîte mail à un tableur est plus simple que relier un site, un CRM et un logiciel de facturation.',
+        'Le nombre de cas particuliers : une tâche toujours identique coûte moins cher qu’une tâche avec beaucoup d’exceptions.',
+        'L’usage de l’intelligence artificielle : lire des PDF ou rédiger des brouillons demande plus de réglages et de tests.',
+        'Le niveau de fiabilité attendu : alertes en cas d’erreur, reprise automatique, documentation.',
+      ] },
+
+      { h2: 'Le coût de mise en place' },
+      { p: 'Chez Axion Studio, chaque projet est chiffré au forfait après un audit gratuit de 30 minutes, et démarre à 150 €. Une automatisation simple, qui relie deux outils sur une tâche répétitive, se situe dans le bas de la fourchette ; un projet qui combine plusieurs logiciels et de l’IA demande davantage de travail. Le prix exact figure dans la proposition, avant tout engagement, et il ne bouge pas en cours de route. Le détail est sur la page [Tarifs](/tarifs).' },
+
+      { h2: 'Les coûts récurrents à prévoir' },
+      { p: 'Une fois en place, une automatisation a généralement deux types de coûts mensuels :' },
+      { ul: [
+        'L’abonnement aux outils : outil d’automatisation (n8n, Make, Zapier…) et, le cas échéant, service d’IA. Il est souscrit à votre nom ; certains usages restent dans les offres gratuites, d’autres non.',
+        'Le suivi, si vous le souhaitez : surveillance, corrections et petites évolutions. Il est facultatif et sans engagement.',
+      ] },
+      { note: 'Les tarifs des outils évoluent souvent : la proposition indique toujours leur coût estimé, vérifié au moment du projet.' },
+
+      { h2: 'Calculer si c’est rentable : la méthode en 3 étapes' },
+      { ol: [
+        'Estimez le temps passé sur la tâche, en minutes par semaine. Soyez honnête : comptez aussi les interruptions et les reprises.',
+        'Multipliez par 47 semaines travaillées pour obtenir les heures par an, puis par la valeur d’une heure de votre temps.',
+        'Comparez ce montant au coût de mise en place et aux abonnements sur un an.',
+      ] },
+      { p: 'Exemple de calcul, avec des chiffres d’illustration : une tâche qui prend 2 heures par semaine représente environ 94 heures par an. Si une heure de votre temps vaut 40 €, cela fait près de 3 760 € de temps par an consacrés à cette tâche. Même en retirant le coût de l’automatisation et des outils, le gain est rapide. À l’inverse, une tâche de 10 minutes par mois ne mérite souvent pas d’être automatisée.' },
+      { p: 'Vous pouvez faire l’exercice en quelques secondes avec la liste « Ma semaine, à la main » de la [page d’accueil](/) : cochez vos tâches, elle calcule le temps récupérable par semaine et par an.' },
+
+      { h2: 'Ce qui ne se chiffre pas, mais compte' },
+      { p: 'Le temps gagné n’est pas le seul bénéfice : moins d’oublis (une relance qui part toujours à l’heure), moins d’erreurs de recopie, des clients qui reçoivent une réponse plus vite, et l’esprit plus libre pour le travail qui compte vraiment.' },
+
+      { h2: 'Le bon réflexe' },
+      { p: 'Commencez par la tâche qui vous coûte le plus de temps, et faites-la chiffrer. Si le gain ne justifie pas le coût, un bon prestataire doit vous le dire. C’est l’objet de l’[audit gratuit de 30 minutes](/contact) : repartir avec une liste claire de ce qui vaut la peine d’être automatisé, et de ce qui ne l’est pas.' },
+    ],
+  },
+  {
     slug: 'taches-a-automatiser-tpe',
     seoTitle: '5 tâches à automatiser en priorité (TPE)',              // titre pour Google (≤ 45 caractères)
     seoDescription: 'Devis, relances, justificatifs, reporting, réponses récurrentes : les 5 tâches qui font gagner le plus de temps une fois automatisées.',
