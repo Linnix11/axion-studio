@@ -2,6 +2,8 @@
 // la date et le contenu. Il apparaît automatiquement sur /blog, dans le plan du site, dans les données
 // structurées (Google) et dans llms-full.txt (IA).
 //
+// seoTitle / seoDescription (facultatifs) : versions courtes pour Google ; sinon title / description.
+//
 // Contenu : une liste de blocs.
 //   { h2: 'Titre de partie' }
 //   { p: 'Paragraphe. Les liens s’écrivent [comme ceci](/contact).' }
@@ -12,6 +14,8 @@
 export const posts = [
   {
     slug: 'taches-a-automatiser-tpe',
+    seoTitle: '5 tâches à automatiser en priorité (TPE)',              // titre pour Google (≤ 45 caractères)
+    seoDescription: 'Devis, relances, justificatifs, reporting, réponses récurrentes : les 5 tâches qui font gagner le plus de temps une fois automatisées.',
     title: '5 tâches à automatiser en priorité dans une petite entreprise',
     description: 'Devis, relances de factures, classement des justificatifs, reporting, réponses récurrentes : les tâches qui rapportent le plus de temps quand on les automatise, et comment s’y prendre.',
     date: '2026-11-04',
@@ -43,6 +47,8 @@ export const posts = [
   },
   {
     slug: 'n8n-make-zapier-comparatif',
+    seoTitle: 'n8n, Make ou Zapier : lequel choisir ?',              // titre pour Google (≤ 45 caractères)
+    seoDescription: 'Comparatif simple de n8n, Make et Zapier pour les TPE et PME : facilité, coût, hébergement des données, et comment choisir sans se tromper.',
     title: 'n8n, Make ou Zapier : quel outil choisir pour automatiser votre entreprise ?',
     description: 'Comparatif simple des trois principaux outils d’automatisation pour les TPE et PME : facilité, prix, hébergement des données, cas d’usage. Et comment choisir sans se tromper.',
     date: '2026-11-04',
@@ -77,6 +83,8 @@ export const posts = [
   },
   {
     slug: 'ia-donnees-clients-regles',
+    seoTitle: 'IA et données clients : 6 règles sûres',              // titre pour Google (≤ 45 caractères)
+    seoDescription: 'Utiliser l’IA dans une petite entreprise sans exposer les données de ses clients : 6 bonnes pratiques simples à appliquer.',
     title: 'IA et données clients : 6 règles pour l’utiliser sans risque',
     description: 'Utiliser l’intelligence artificielle dans une petite entreprise sans exposer les données de ses clients : les bonnes pratiques à appliquer, simplement.',
     date: '2026-11-04',

@@ -1,5 +1,30 @@
 ErrorDocument 404 /404.html
 
+# Une seule adresse : https://axionstudio.fr (sans www), en une seule redirection
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} ^www\.axionstudio\.fr$ [NC]
+  RewriteRule ^(.*)$ https://axionstudio.fr/$1 [R=301,L]
+</IfModule>
+
+# En-têtes de sécurité
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+
+  # Fichiers versionnés (leur nom change à chaque publication) : un an en cache
+  <FilesMatch "\.(js|css|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Pages : toujours revalidées, pour que les mises à jour soient visibles tout de suite
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
+
 # Le fichier de configuration (clé d'API) ne doit jamais être accessible depuis le web
 <Files "axion-config.php">
   Require all denied

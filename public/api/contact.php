@@ -6,6 +6,8 @@ const TO_EMAIL   = 'arthur.champagne@icloud.com';
 const FROM_EMAIL = 'contact@axionstudio.fr';   // adresse du domaine (à créer dans Hostinger > E-mails pour une meilleure délivrabilité)
 const MAX_PER_HOUR = 5;                         // envois maximum par adresse IP et par heure
 
+require __DIR__ . '/_common.php';
+
 header('Content-Type: application/json; charset=utf-8');
 header('X-Robots-Tag: noindex');
 header('Cache-Control: no-store');
@@ -41,14 +43,8 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors['email'] = 'Indiquez une
 if ((function_exists('mb_strlen') ? mb_strlen($message) : strlen($message)) < 10) $errors['message'] = 'Décrivez votre projet en quelques mots (10 caractères minimum).';
 if ($errors) reply(422, ['ok' => false, 'error' => 'validation', 'fields' => $errors]);
 
-// Limite simple d'envois par IP.
-$ip = $_SERVER['REMOTE_ADDR'] ?? 'inconnue';
-$file = sys_get_temp_dir() . '/axion_contact_' . md5($ip);
-$now = time();
-$hits = array_filter(is_file($file) ? (array) json_decode((string) file_get_contents($file), true) : [], fn($t) => $t > $now - 3600);
-if (count($hits) >= MAX_PER_HOUR) reply(429, ['ok' => false, 'error' => 'rate']);
-$hits[] = $now;
-@file_put_contents($file, json_encode(array_values($hits)));
+// Limite d'envois par visiteur (adresse réelle, compteur verrouillé).
+if (hit_limit('contact_' . client_ip(), MAX_PER_HOUR, 3600)) reply(429, ['ok' => false, 'error' => 'rate']);
 
 $subject = '=?UTF-8?B?' . base64_encode("Demande Axion Studio – $type – $nom") . '?=';
 $body = "Nouvelle demande depuis axionstudio.fr\n\n"

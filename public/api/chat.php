@@ -16,6 +16,8 @@ const MAX_HISTORY           = 12;    // nombre de messages de la conversation en
 const DEFAULT_MODEL         = 'gemini-3.5-flash';
 const FALLBACK_MODELS       = ['gemini-3.5-flash-lite', 'gemini-flash-lite-latest'];   // si le modèle principal est saturé ou retiré
 
+require __DIR__ . '/_common.php';
+
 header('Content-Type: application/json; charset=utf-8');
 header('X-Robots-Tag: noindex');
 header('Cache-Control: no-store');
@@ -42,21 +44,6 @@ function load_config(): array {
   return ['key' => trim((string) $key), 'model' => preg_replace('/[^a-z0-9.\-]/i', '', (string) $model)];
 }
 
-function hit_limit(string $name, int $max, int $window): bool {
-  $file = sys_get_temp_dir() . '/axion_chat_' . md5($name);
-  $now = time();
-  $fp = @fopen($file, 'c+');
-  if (!$fp) return false;
-  flock($fp, LOCK_EX);
-  $hits = json_decode((string) stream_get_contents($fp), true);
-  $hits = array_values(array_filter(is_array($hits) ? $hits : [], fn($t) => $t > $now - $window));
-  $blocked = count($hits) >= $max;
-  if (!$blocked) $hits[] = $now;
-  ftruncate($fp, 0); rewind($fp); fwrite($fp, json_encode($hits));
-  flock($fp, LOCK_UN); fclose($fp);
-  return $blocked;
-}
-
 $config = load_config();
 $prompt = @file_get_contents(__DIR__ . '/assistant-prompt.txt');
 $available = $config['key'] !== '' && $prompt !== false && function_exists('curl_init');
@@ -78,8 +65,7 @@ foreach ($messages as $m) {
 if (!$contents || end($contents)['role'] !== 'user') reply(422, ['ok' => false, 'error' => 'empty']);
 while ($contents && $contents[0]['role'] !== 'user') array_shift($contents);  // Gemini attend un premier message utilisateur
 
-$ip = $_SERVER['REMOTE_ADDR'] ?? 'inconnue';
-if (hit_limit('ip_' . $ip, MAX_MESSAGES_PER_HOUR, 3600)) reply(429, ['ok' => false, 'error' => 'rate']);
+if (hit_limit('chat_' . client_ip(), MAX_MESSAGES_PER_HOUR, 3600)) reply(429, ['ok' => false, 'error' => 'rate']);
 if (hit_limit('global_day', MAX_MESSAGES_PER_DAY, 86400)) reply(429, ['ok' => false, 'error' => 'quota']);
 
 $payload = [

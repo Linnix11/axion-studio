@@ -23,7 +23,6 @@ Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Mentions
 
 ## Structure
 - `src/data.js` — **toutes les infos et tous les textes** : entreprise, services, exemples, étapes, tarifs, FAQ.
-- `src/routes.js` — liste des pages (à compléter si vous ajoutez une page).
 - `src/pages/` — une page par fichier.
 - `src/components/` — en-tête, pied de page, formulaire, liste interactive, éléments communs (`ui.jsx`).
 - `src/index.css` — couleurs du thème (clair et sombre).
@@ -72,3 +71,8 @@ et dans `llms.txt` / `llms-full.txt`.
 - Bouton Accessibilité : taille du texte, contraste renforcé, police Atkinson Hyperlegible, espacement du texte,
   liens soulignés, arrêt des animations. Réglages gardés dans le navigateur du visiteur (`src/prefs.js`),
   appliqués dès le chargement par le script de `index.html`, styles en fin de `src/index.css`.
+
+## Serveur (public/.htaccess)
+Redirection www → axionstudio.fr, en-têtes de sécurité (HSTS, nosniff, Referrer-Policy, X-Frame-Options,
+Permissions-Policy), cache d'un an pour les fichiers versionnés (`/assets`), pages toujours revalidées.
+Les scripts PHP partagent `public/api/_common.php` (adresse réelle du visiteur derrière le CDN, limites verrouillées).

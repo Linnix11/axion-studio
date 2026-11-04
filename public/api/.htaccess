@@ -2,3 +2,8 @@
 <Files "assistant-prompt.txt">
   Require all denied
 </Files>
+
+# Fonctions internes : jamais appelées directement
+<Files "_common.php">
+  Require all denied
+</Files>
