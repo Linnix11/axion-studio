@@ -51,7 +51,7 @@ Hostinger (E-mails) pour que les messages n'arrivent pas en indésirables. Limit
 - **La clé d'API n'est pas dans le dépôt.** Créez le fichier `axion-config.php` au-dessus du dossier public du site
   (gestionnaire de fichiers Hostinger, dossier `domains/axionstudio.fr/`) :
   ```php
-  <?php return ['gemini_api_key' => 'VOTRE_CLE', 'gemini_model' => 'gemini-2.5-flash'];
+  <?php return ['gemini_api_key' => 'VOTRE_CLE'];
   ```
   Sans clé, l'assistant reste simplement masqué.
 - Limites : 30 messages par heure et par visiteur, 400 par jour pour tout le site (constantes en tête de `chat.php`).

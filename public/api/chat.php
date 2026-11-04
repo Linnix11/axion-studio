@@ -4,7 +4,7 @@
 //   1. dans la variable d'environnement GEMINI_API_KEY ;
 //   2. dans un fichier axion-config.php placé AU-DESSUS du dossier public du site
 //      (ex. /home/uXXXX/domains/axionstudio.fr/axion-config.php), qui contient :
-//        <?php return ['gemini_api_key' => 'VOTRE_CLE', 'gemini_model' => 'gemini-2.5-flash'];
+//        <?php return ['gemini_api_key' => 'VOTRE_CLE'];   // modèle facultatif : 'gemini_model' => 'gemini-3.5-flash'
 //
 // GET  → {"available": true|false}  (le site affiche ou non l'assistant)
 // POST {"messages":[{"role":"user"|"model","text":"..."}]} → {"ok":true,"reply":"..."}
@@ -13,7 +13,8 @@ const MAX_MESSAGES_PER_HOUR = 30;    // par adresse IP
 const MAX_MESSAGES_PER_DAY  = 400;   // pour tout le site (maîtrise des coûts)
 const MAX_INPUT_CHARS       = 1000;  // longueur maximale d'un message du visiteur
 const MAX_HISTORY           = 12;    // nombre de messages de la conversation envoyés à Gemini
-const DEFAULT_MODEL         = 'gemini-2.5-flash';
+const DEFAULT_MODEL         = 'gemini-3.5-flash';
+const FALLBACK_MODEL        = 'gemini-flash-lite-latest';   // utilisé si le modèle choisi est retiré par Google
 
 header('Content-Type: application/json; charset=utf-8');
 header('X-Robots-Tag: noindex');
@@ -82,7 +83,7 @@ if (hit_limit('global_day', MAX_MESSAGES_PER_DAY, 86400)) reply(429, ['ok' => fa
 $payload = [
   'systemInstruction' => ['parts' => [['text' => $prompt]]],
   'contents' => $contents,
-  'generationConfig' => ['temperature' => 0.4, 'maxOutputTokens' => 700],
+  'generationConfig' => ['temperature' => 0.4, 'maxOutputTokens' => 1500],
   'safetySettings' => [
     ['category' => 'HARM_CATEGORY_HARASSMENT', 'threshold' => 'BLOCK_MEDIUM_AND_ABOVE'],
     ['category' => 'HARM_CATEGORY_HATE_SPEECH', 'threshold' => 'BLOCK_MEDIUM_AND_ABOVE'],
@@ -91,22 +92,34 @@ $payload = [
   ],
 ];
 
-// Les modèles 2.5 « réfléchissent » par défaut : on coupe la réflexion pour des réponses rapides et moins chères.
-if (strpos($config['model'], '2.5-flash') !== false) $payload['generationConfig']['thinkingConfig'] = ['thinkingBudget' => 0];
+// Réflexion réduite : réponses rapides, moins chères, et jamais coupées faute de place.
+function thinking_for(string $model): array {
+  if (strpos($model, '2.5') !== false) return ['thinkingBudget' => 0];
+  return ['thinkingLevel' => 'low'];
+}
 
-$url = 'https://generativelanguage.googleapis.com/v1beta/models/' . $config['model'] . ':generateContent';
-$ch = curl_init($url);
-curl_setopt_array($ch, [
-  CURLOPT_POST => true,
-  CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'x-goog-api-key: ' . $config['key']],
-  CURLOPT_POSTFIELDS => json_encode($payload, JSON_UNESCAPED_UNICODE),
-  CURLOPT_RETURNTRANSFER => true,
-  CURLOPT_TIMEOUT => 30,
-  CURLOPT_CONNECTTIMEOUT => 8,
-]);
-$raw = curl_exec($ch);
-$status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-curl_close($ch);
+function call_gemini(string $model, array $payload, string $key): array {
+  $payload['generationConfig']['thinkingConfig'] = thinking_for($model);
+  $ch = curl_init('https://generativelanguage.googleapis.com/v1beta/models/' . $model . ':generateContent');
+  curl_setopt_array($ch, [
+    CURLOPT_POST => true,
+    CURLOPT_HTTPHEADER => ['Content-Type: application/json', 'x-goog-api-key: ' . $key],
+    CURLOPT_POSTFIELDS => json_encode($payload, JSON_UNESCAPED_UNICODE),
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_TIMEOUT => 30,
+    CURLOPT_CONNECTTIMEOUT => 8,
+  ]);
+  $raw = curl_exec($ch);
+  $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+  curl_close($ch);
+  return [$status, $raw];
+}
+
+[$status, $raw] = call_gemini($config['model'], $payload, $config['key']);
+if (($status === 404 || $status === 400) && $config['model'] !== FALLBACK_MODEL) {
+  error_log('Axion chat: modèle ' . $config['model'] . ' indisponible (HTTP ' . $status . '), repli sur ' . FALLBACK_MODEL);
+  [$status, $raw] = call_gemini(FALLBACK_MODEL, $payload, $config['key']);
+}
 
 $res = json_decode((string) $raw, true);
 if ($status !== 200 || !is_array($res)) {
@@ -114,7 +127,7 @@ if ($status !== 200 || !is_array($res)) {
   reply(502, ['ok' => false, 'error' => $status === 429 ? 'busy' : 'upstream']);
 }
 $text = '';
-foreach (($res['candidates'][0]['content']['parts'] ?? []) as $part) $text .= $part['text'] ?? '';
+foreach (($res['candidates'][0]['content']['parts'] ?? []) as $part) if (empty($part['thought'])) $text .= $part['text'] ?? '';
 $text = trim($text);
 if ($text === '') reply(200, ['ok' => true, 'reply' => 'Je préfère ne pas répondre à cette demande. Pour toute question sur Axion Studio, je suis là, ou vous pouvez écrire à Arthur via /contact.']);
 reply(200, ['ok' => true, 'reply' => $text]);
