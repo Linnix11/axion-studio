@@ -1,0 +1,4 @@
+# Les instructions de l'assistant ne sont lues que par chat.php
+<Files "assistant-prompt.txt">
+  Require all denied
+</Files>

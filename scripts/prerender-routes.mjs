@@ -5,6 +5,8 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { pageMeta, fullTitle, SITE_URL, BRAND } from '../src/seo.js'
+import * as data from '../src/data.js'
+import { assistantRules } from '../src/chatbot.js'
 
 const dist = 'dist'
 const template = readFileSync(join(dist, 'index.html'), 'utf8')
@@ -54,4 +56,12 @@ ${paths.map(p => `  <url><loc>${SITE_URL}${p === '/' ? '/' : p + '/'}</loc><last
 </urlset>
 `)
 writeFileSync(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${SITE_URL}/sitemap.xml\n`)
+// Instructions de l'assistant IA : règles + tout le contenu du site, lus par public/api/chat.php.
+const knowledge = Object.entries(data)
+  .filter(([k]) => !['nav', 'tasks', 'demo'].includes(k))
+  .map(([k, v]) => `## ${k}\n${JSON.stringify(v, null, 1)}`)
+  .join('\n\n')
+mkdirSync(join(dist, 'api'), { recursive: true })
+writeFileSync(join(dist, 'api', 'assistant-prompt.txt'), `${assistantRules}\n\nINFORMATIONS SUR AXION STUDIO (source : le site axionstudio.fr)\n\n${knowledge}\n`)
+
 console.log(`${paths.length} pages, 404.html, sitemap.xml et robots.txt générés`)

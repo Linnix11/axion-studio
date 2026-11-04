@@ -4,6 +4,7 @@ import { company } from '../data'
 const blocks = (c) => [
   ['Responsable du traitement', `${c.owner}, entrepreneur individuel, ${c.siege}.`],
   ['Données collectées', 'Uniquement celles que vous saisissez dans le formulaire de contact : nom, entreprise, adresse e-mail et message. Elles me sont transmises par e-mail, via le serveur de l’hébergeur Hostinger, et ne sont pas enregistrées sur ce site.'],
+  ['Assistant IA', 'Les questions posées à l’assistant du site sont transmises à l’API Gemini de Google (Google LLC) pour générer une réponse. Elles ne sont pas enregistrées sur ce site ; la conversation reste dans votre navigateur et s’efface à la fermeture de l’onglet. N’y saisissez aucune information sensible.'],
   ['Finalité', 'Répondre à votre demande et, si vous le souhaitez, préparer une proposition commerciale.'],
   ['Durée de conservation', 'Les échanges sont conservés 3 ans après le dernier contact, puis supprimés.'],
   ['Cookies et mesure d’audience', 'Ce site ne dépose aucun cookie et n’utilise aucun outil de mesure d’audience ni de publicité.'],
