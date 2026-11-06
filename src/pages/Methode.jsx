@@ -72,7 +72,7 @@ export default function Methode() {
           </div>
           <div>
             <h2 className="mb-8 text-[2rem] leading-tight">Mes garanties</h2>
-            <Guarantees compact />
+            <Guarantees />
           </div>
         </div>
       </Section>

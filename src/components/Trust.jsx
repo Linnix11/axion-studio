@@ -26,9 +26,9 @@ export function IdentityCard() {
   )
 }
 
-export function Guarantees({ compact = false }) {
+export function Guarantees() {
   return (
-    <ul className={`grid gap-x-10 gap-y-8 sm:grid-cols-2 ${compact ? '' : 'xl:grid-cols-4'}`}>
+    <ul className="grid gap-x-10 gap-y-8 sm:grid-cols-2">
       {guarantees.map(g => (
         <li key={g.title} className="flex gap-3">
           <span aria-hidden="true" className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-ok text-paper"><CheckIcon /></span>

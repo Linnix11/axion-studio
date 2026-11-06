@@ -107,10 +107,11 @@ export default function ChatWidget() {
         onClick={() => setOpen(o => !o)}
         aria-expanded={open}
         aria-controls="assistant"
-        className="fixed right-4 bottom-4 z-[60] inline-flex min-h-13 items-center gap-2 rounded-full border-2 border-pen bg-paper px-5 font-medium text-pen shadow-float transition-transform duration-150 hover:-translate-y-0.5 focus-visible:outline-offset-4 sm:right-6 sm:bottom-6"
+        className="fixed right-4 bottom-4 z-[60] inline-flex min-h-13 min-w-13 items-center justify-center gap-2 rounded-full border-2 border-pen bg-paper px-0 font-medium text-pen shadow-float sm:px-5 transition-transform duration-150 hover:-translate-y-0.5 focus-visible:outline-offset-4 sm:right-6 sm:bottom-6"
       >
-        <span aria-hidden="true" className="text-lg leading-none">{open ? '×' : '?'}</span>
-        {open ? 'Fermer l’assistant' : 'Une question ?'}
+        <span aria-hidden="true" className="text-2xl leading-none sm:text-lg">{open ? '×' : '?'}</span>
+        {/* Sur mobile, bouton rond : le libellé long masquait le contenu de la page */}
+        <span className="sr-only sm:not-sr-only">{open ? 'Fermer l’assistant' : 'Une question ?'}</span>
       </button>
 
       {open && (
