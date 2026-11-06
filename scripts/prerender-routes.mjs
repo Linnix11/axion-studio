@@ -52,19 +52,28 @@ function page(path) {
 }
 
 const paths = Object.keys(pageMeta)
+// Typographie française : une espace normale devant : ; ? ! » laisse le signe tomber seul en début de ligne.
+const typoWarnings = []
 for (const path of paths) {
   const dir = path === '/' ? dist : join(dist, path)
   mkdirSync(dir, { recursive: true })
-  writeFileSync(join(dir, 'index.html'), page(path))
+  const html = page(path)
+  writeFileSync(join(dir, 'index.html'), html)
+  const text = html.replace(/<(script|style)[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, ' ')
+  for (const m of text.matchAll(/\S{0,30} [:;?!»]/g)) typoWarnings.push(`${path} : « ${m[0]} »`)
 }
+if (typoWarnings.length) console.warn(`⚠ Espace insécable manquante (à remplacer par \\u00A0 avant « : », \\u202F avant ; ? ! ») :\n  ${typoWarnings.join('\n  ')}`)
 writeFileSync(join(dist, '404.html'), page('/404'))
 
 // ——— Plan du site et robots ———
-const today = new Date().toISOString().slice(0, 10)
 const priority = p => (p === '/' ? '1.0' : p.startsWith('/blog') ? '0.7' : ['/services', '/tarifs', '/contact', '/exemples'].includes(p) ? '0.8' : p.startsWith('/mentions') || p === '/confidentialite' || p === '/cgv' ? '0.3' : '0.6')
 writeFileSync(join(dist, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${paths.map(p => `  <url><loc>${pageUrl(p)}</loc><lastmod>${today}</lastmod><priority>${priority(p)}</priority></url>`).join('\n')}
+${paths.map(p => {
+  // Date réelle seulement pour les articles : une date de build ferait croire que tout change à chaque publication
+  const date = pageMeta[p]?.post?.date
+  return `  <url><loc>${pageUrl(p)}</loc>${date ? `<lastmod>${date}</lastmod>` : ''}<priority>${priority(p)}</priority></url>`
+}).join('\n')}
 </urlset>
 `)
 const aiBots = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User', 'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot-Extended', 'Applebot', 'Bingbot', 'Googlebot', 'DuckAssistBot', 'MistralAI-User', 'meta-externalagent']
