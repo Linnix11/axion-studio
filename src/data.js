@@ -115,13 +115,14 @@ export const faq = [
 ]
 
 // Liste interactive de la page d’accueil : durées moyennes indicatives, en minutes par semaine.
+// day : 0 = lundi … 4 = vendredi (place dans la semaine type de l’accueil)
 export const tasks = [
-  { label: 'Recopier les commandes dans le tableur', minutes: 45, preset: true },
-  { label: 'Relancer les factures impayées', minutes: 30, preset: true },
-  { label: 'Répondre aux mêmes questions par e-mail', minutes: 60, preset: true },
-  { label: 'Préparer le reporting du lundi', minutes: 40, preset: false },
-  { label: 'Classer les justificatifs et factures', minutes: 35, preset: false },
-  { label: 'Saisir les rendez-vous dans l’agenda', minutes: 20, preset: false },
+  { label: 'Recopier les commandes dans le tableur', minutes: 45, preset: true, day: 0 },
+  { label: 'Relancer les factures impayées', minutes: 30, preset: true, day: 1 },
+  { label: 'Répondre aux mêmes questions par e-mail', minutes: 60, preset: true, day: 2 },
+  { label: 'Préparer le reporting du lundi', minutes: 40, preset: false, day: 0 },
+  { label: 'Classer les justificatifs et factures', minutes: 35, preset: false, day: 3 },
+  { label: 'Saisir les rendez-vous dans l’agenda', minutes: 20, preset: false, day: 4 },
 ]
 
 export const needs = [

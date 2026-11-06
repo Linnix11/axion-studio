@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <>
       <section className="border-b border-rule">
-        <Container className="grid items-start gap-12 pt-14 pb-20 md:pt-20 md:pb-24 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
+        <Container className="grid items-start gap-12 pt-14 pb-20 md:pt-20 md:pb-24 lg:grid-cols-[1fr_1.1fr] lg:gap-14">
           <div className="intro lg:pt-4">
             <p className={eyebrow}>Automatisation pour TPE, PME et indépendants</p>
             <h1 className="mt-3 text-[2.75rem] leading-[1.02] tracking-[-0.03em] sm:text-7xl lg:text-[5.25rem]">
@@ -37,7 +37,7 @@ export default function Home() {
           </div>
           <div className="intro-late">
             <TaskList />
-            <p className="mt-3 text-sm text-muted">Cochez ce que vous faites encore à la main. Durées moyennes indicatives.</p>
+            <p className="mt-3 text-sm text-muted">Touchez une tâche pour indiquer si elle peut être automatisée.</p>
           </div>
         </Container>
       </section>
