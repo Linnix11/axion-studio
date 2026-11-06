@@ -18,8 +18,8 @@ export const cgv = [
   {
     title: 'Objet et champ d’application',
     text: [
-      'Les présentes conditions générales de vente (CGV) s’appliquent à toutes les prestations réalisées par Axion Studio, nom commercial d’Arthur Champagne-Forterre, entrepreneur individuel (micro-entreprise), dont le siège est situé 5 allée des Pommiers, 95680 Montlignon, ci-après « Axion Studio », pour le compte de ses clients professionnels, ci-après « le Client ».',
-      'Les prestations concernées sont : l’audit, la conception et la mise en place d’automatisations, l’intégration d’outils, l’intégration de solutions d’intelligence artificielle, la création de sites web et le suivi mensuel.',
+      'Les présentes conditions générales de vente (CGV) s’appliquent à toutes les prestations réalisées par Axion Studio, nom commercial d’Arthur Champagne-Forterre, entrepreneur individuel (micro-entreprise), dont le siège est situé 5 allée des Pommiers, 95680 Montlignon, ci-après « Axion Studio », pour le compte de ses clients professionnels, ci-après « le Client ».',
+      'Les prestations concernées sont : l’audit, la conception et la mise en place d’automatisations, l’intégration d’outils, l’intégration de solutions d’intelligence artificielle, la création de sites web et le suivi mensuel.',
       'Les prestations s’adressent aux professionnels (entreprises, indépendants, associations dans le cadre de leur activité). Toute commande implique l’acceptation sans réserve des présentes CGV, qui prévalent sur tout autre document du Client, sauf accord écrit contraire.',
     ],
   },
@@ -28,7 +28,7 @@ export const cgv = [
     text: [
       'L’audit initial de 30 minutes est gratuit et sans engagement.',
       `À l’issue de l’audit, Axion Studio adresse au Client une proposition écrite précisant les prestations, les outils utilisés, le délai prévisionnel et le prix au forfait. Cette proposition est valable ${s.quoteValidityDays} jours.`,
-      `La commande est ferme dès l’acceptation écrite de la proposition par le Client (signature ou e-mail) et le versement de l’acompte prévu à l’article « Modalités de paiement ».`,
+      `La commande est ferme dès l’acceptation écrite de la proposition par le Client (signature ou e-mail) et le versement de l’acompte prévu à l’article « Modalités de paiement ».`,
       'Toute prestation non prévue dans la proposition acceptée fait l’objet d’une proposition complémentaire.',
     ],
   },
@@ -42,16 +42,16 @@ export const cgv = [
   {
     title: 'Modalités de paiement',
     text: [
-      `Projets au forfait : un acompte de ${s.depositPercent} % est versé à la commande ; le solde est facturé à la livraison.`,
-      'Suivi mensuel : facturé chaque mois, en début de période.',
+      `Projets au forfait : un acompte de ${s.depositPercent} % est versé à la commande ; le solde est facturé à la livraison.`,
+      'Suivi mensuel : facturé chaque mois, en début de période.',
       `Les factures sont payables par virement bancaire dans un délai de ${s.paymentDays} jours à compter de leur date d’émission. Aucun escompte n’est accordé en cas de paiement anticipé.`,
     ],
   },
   {
     title: 'Retard de paiement',
     text: [
-      'Tout retard de paiement entraîne de plein droit, sans rappel préalable :',
-      '- des pénalités de retard calculées au taux égal à trois fois le taux d’intérêt légal en vigueur, sur les sommes dues ;',
+      'Tout retard de paiement entraîne de plein droit, sans rappel préalable :',
+      '- des pénalités de retard calculées au taux égal à trois fois le taux d’intérêt légal en vigueur, sur les sommes dues ;',
       '- une indemnité forfaitaire pour frais de recouvrement de 40 €, conformément aux articles L441-10 et D441-5 du Code de commerce.',
       'Après une mise en demeure restée sans effet, Axion Studio peut suspendre l’exécution des prestations en cours jusqu’au paiement complet.',
     ],
@@ -74,8 +74,8 @@ export const cgv = [
   {
     title: 'Suivi inclus et suivi mensuel',
     text: [
-      'Chaque projet comprend un mois de suivi à compter de la livraison : correction des anomalies et ajustements dans le périmètre de la proposition, sans frais supplémentaires.',
-      'Le suivi mensuel est sans engagement de durée. Il peut être résilié à tout moment par e-mail ; la résiliation prend effet à la fin du mois en cours.',
+      'Chaque projet comprend un mois de suivi à compter de la livraison : correction des anomalies et ajustements dans le périmètre de la proposition, sans frais supplémentaires.',
+      'Le suivi mensuel est sans engagement de durée. Il peut être résilié à tout moment par e-mail ; la résiliation prend effet à la fin du mois en cours.',
       'Les évolutions hors du périmètre initial font l’objet d’une proposition distincte.',
     ],
   },
@@ -98,7 +98,7 @@ export const cgv = [
   {
     title: 'Données personnelles',
     text: [
-      'Lorsque la mission conduit Axion Studio à traiter des données personnelles pour le compte du Client, Axion Studio agit en qualité de sous-traitant au sens de l’article 28 du Règlement général sur la protection des données (RGPD) : il ne traite ces données que sur instruction du Client, en assure la sécurité et la confidentialité, et les supprime en fin de mission. Un accord de sous-traitance peut être signé sur demande.',
+      'Lorsque la mission conduit Axion Studio à traiter des données personnelles pour le compte du Client, Axion Studio agit en qualité de sous-traitant au sens de l’article 28 du Règlement général sur la protection des données (RGPD) : il ne traite ces données que sur instruction du Client, en assure la sécurité et la confidentialité, et les supprime en fin de mission. Un accord de sous-traitance peut être signé sur demande.',
       'Les données des visiteurs du site sont traitées conformément à la politique de confidentialité, disponible sur la page /confidentialite.',
     ],
   },

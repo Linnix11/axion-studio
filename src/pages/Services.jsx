@@ -7,7 +7,7 @@ export default function Services() {
   return (
     <>
       <PageHeader title="Services" note="4 missions, au forfait">
-        Quatre types de missions pour vous libérer des tâches répétitives. Elles se combinent souvent : un site dont
+        Quatre types de missions pour vous libérer des tâches répétitives. Elles se combinent souvent : un site dont
         le formulaire alimente votre CRM, une IA qui lit vos factures et les range.
       </PageHeader>
 
@@ -45,14 +45,14 @@ export default function Services() {
       ))}
 
       <Section note="Vos outils d’abord">
-        <SectionHead title="Avec quels outils ?">
-          Je pars toujours de ceux que vous utilisez. Selon votre situation, je travaille notamment avec :
+        <SectionHead title="Avec quels outils ?">
+          Je pars toujours de ceux que vous utilisez. Selon votre situation, je travaille notamment avec :
         </SectionHead>
         <ul className="flex flex-wrap gap-2">
           {tools.map(t => <li key={t} className="rounded-md border border-rule px-3 py-2">{t}</li>)}
         </ul>
         <p className="mt-8 max-w-[60ch] font-serif leading-[1.6] text-muted">
-          Votre logiciel n’est pas dans la liste ? S’il dispose d’une API ou d’un export, il peut presque toujours être
+          Votre logiciel n’est pas dans la liste ? S’il dispose d’une API ou d’un export, il peut presque toujours être
           relié. <Link to="/contact" className={textLink}>Posez-moi la question</Link>.
         </p>
       </Section>

@@ -5,7 +5,7 @@ import { Guarantees } from '../components/Trust'
 const needed = [
   'Une heure de votre temps pour l’audit et la validation de la proposition',
   'Des accès aux outils concernés, que vous pouvez retirer à tout moment',
-  'Quelques exemples réels : e-mails, factures, exports, pour tester',
+  'Quelques exemples réels : e-mails, factures, exports, pour tester',
   'Un interlocuteur disponible pour valider chaque étape',
 ]
 

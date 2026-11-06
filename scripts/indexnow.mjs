@@ -10,4 +10,4 @@ const res = await fetch('https://api.indexnow.org/indexnow', {
   headers: { 'Content-Type': 'application/json; charset=utf-8' },
   body: JSON.stringify({ host: HOST, key: KEY, keyLocation: `https://${HOST}/${KEY}.txt`, urlList }),
 })
-console.log(`IndexNow : ${urlList.length} adresses envoyées → HTTP ${res.status} ${res.statusText}`)
+console.log(`IndexNow : ${urlList.length} adresses envoyées → HTTP ${res.status} ${res.statusText}`)

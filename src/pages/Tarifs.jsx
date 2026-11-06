@@ -7,7 +7,7 @@ export default function Tarifs() {
   return (
     <>
       <PageHeader title="Tarifs" note="Forfait, jamais à l’heure">
-        Des projets à partir de 150 €, chiffrés au forfait après l’audit gratuit. Pas de facturation à l’heure :
+        Des projets à partir de 150 €, chiffrés au forfait après l’audit gratuit. Pas de facturation à l’heure :
         vous connaissez le prix exact avant de vous engager.
       </PageHeader>
 
@@ -30,8 +30,8 @@ export default function Tarifs() {
           ))}
         </div>
         <div className="mt-10 max-w-[64ch] space-y-3 font-serif leading-[1.6] text-muted">
-          <p className="font-sans font-medium text-ink">Prestations réservées aux professionnels : entreprises, indépendants, professions libérales et associations.</p>
-          <p>TVA non applicable, article 293 B du CGI : les prix indiqués sur les devis sont les prix que vous payez.
+          <p className="font-sans font-medium text-ink">Prestations réservées aux professionnels : entreprises, indépendants, professions libérales et associations.</p>
+          <p>TVA non applicable, article 293 B du CGI : les prix indiqués sur les devis sont les prix que vous payez.
             Acompte, paiement et conditions détaillés dans les <Link to="/cgv" className={textLink}>conditions générales de vente</Link>.</p>
           <p>
             Les abonnements aux outils d’automatisation ou d’IA (par exemple n8n, Make ou une API d’IA) restent à votre

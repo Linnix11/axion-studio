@@ -5,7 +5,7 @@ import { company } from '../data'
 export default function MentionsLegales() {
   usePageMeta('/mentions-legales')
   const rows = [
-    ['Éditeur', `${company.owner}, entrepreneur individuel (micro-entreprise), nom commercial « ${company.tradeName} »`],
+    ['Éditeur', `${company.owner}, entrepreneur individuel (micro-entreprise), nom commercial « ${company.tradeName} »`],
     ['Siège', company.siege],
     ['SIRET', company.siret],
     ['TVA', 'TVA non applicable, art. 293 B du CGI'],

@@ -83,7 +83,7 @@ export default function DisplayTools() {
 
       <div className="relative">
         <button ref={btnRef} type="button" onClick={() => setOpen(o => !o)} className={`${iconBtn} ${changed ? 'border-pen text-pen' : ''}`}
-          aria-expanded={open} aria-controls="a11y-panel" aria-label="Accessibilité : taille du texte, contraste, police, animations" title="Accessibilité">
+          aria-expanded={open} aria-controls="a11y-panel" aria-label="Accessibilité : taille du texte, contraste, police, animations" title="Accessibilité">
           <A11yIcon />
         </button>
 

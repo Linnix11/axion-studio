@@ -8,7 +8,7 @@ export default function Blog() {
   return (
     <>
       <PageHeader title="Blog" note="Conseils concrets, sans jargon">
-        Des articles courts et pratiques pour gagner du temps dans votre entreprise : quoi automatiser, avec
+        Des articles courts et pratiques pour gagner du temps dans votre entreprise : quoi automatiser, avec
         quels outils, et comment utiliser l’IA sans risque.
       </PageHeader>
       <Section note={`${list.length} article${list.length > 1 ? 's' : ''}`}>
@@ -26,7 +26,7 @@ export default function Blog() {
                   </h2>
                   <p className="mt-3 max-w-[62ch] font-serif text-lg leading-[1.6] text-muted">{p.description}</p>
                   <p className="mt-3">
-                    <Link to={`/blog/${p.slug}`} className="inline-flex min-h-11 items-center text-pen underline decoration-1 underline-offset-4 hover:decoration-2" aria-label={`Lire l’article : ${p.title}`}>
+                    <Link to={`/blog/${p.slug}`} className="inline-flex min-h-11 items-center text-pen underline decoration-1 underline-offset-4 hover:decoration-2" aria-label={`Lire l’article : ${p.title}`}>
                       Lire l’article
                     </Link>
                   </p>

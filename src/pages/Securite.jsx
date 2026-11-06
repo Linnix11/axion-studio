@@ -25,10 +25,10 @@ export default function Securite() {
       <Section tone="alt" note="Écrit noir sur blanc">
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
-            <SectionHead title="Et sur ce site ?" />
+            <SectionHead title="Et sur ce site ?" />
             <p className="max-w-[56ch] font-serif text-lg leading-[1.6] text-muted">
               Ce site ne dépose aucun cookie et ne mesure pas votre navigation. Le formulaire de contact m’envoie votre
-              message par e-mail : il n’est pas enregistré sur le site. Les questions posées à l’assistant IA sont
+              message par e-mail : il n’est pas enregistré sur le site. Les questions posées à l’assistant IA sont
               transmises à Google Gemini pour y répondre, sans être conservées ici.{geminiFreeTier && ` ${freeTierNotice}`} Détails dans la{' '}
               <Link to="/confidentialite" className={textLink}>politique de confidentialité</Link>.
             </p>
@@ -36,7 +36,7 @@ export default function Securite() {
           <NotDoing />
         </div>
       </Section>
-      <CtaBand title="Une question sur vos données ?" text="Posez-la avant de vous engager. Je vous réponds précisément, outil par outil." />
+      <CtaBand title="Une question sur vos données ?" text="Posez-la avant de vous engager. Je vous réponds précisément, outil par outil." />
     </>
   )
 }

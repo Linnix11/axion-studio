@@ -19,7 +19,7 @@ export default function Home() {
               Vos tâches répétitives, faites sans vous.
             </h1>
             <p className="mt-6 max-w-[34rem] font-serif text-xl leading-[1.6] text-muted">
-              J’automatise le travail administratif des TPE, PME et indépendants : saisies, relances, reporting,
+              J’automatise le travail administratif des TPE, PME et indépendants : saisies, relances, reporting,
               réponses récurrentes. Vous gardez vos outils, ils travaillent ensemble.
             </p>
             <div className="no-anim mt-8 flex flex-wrap gap-3">

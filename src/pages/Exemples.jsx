@@ -36,7 +36,7 @@ export default function Exemples() {
         </div>
       </Section>
 
-      <CtaBand title="Votre cas n’est pas dans la liste ?" text="Chaque entreprise a ses propres tâches répétitives. Décrivez la vôtre, je vous dis si elle peut être automatisée." />
+      <CtaBand title="Votre cas n’est pas dans la liste ?" text="Chaque entreprise a ses propres tâches répétitives. Décrivez la vôtre, je vous dis si elle peut être automatisée." />
     </>
   )
 }

@@ -13,7 +13,7 @@ export default function Cgv() {
   return (
     <>
       <PageHeader title="Conditions générales de vente" note={`Version du ${cgvSettings.version}`}>
-        Les règles qui s’appliquent à chaque prestation : commande, prix, paiement, livraison, propriété et
+        Les règles qui s’appliquent à chaque prestation : commande, prix, paiement, livraison, propriété et
         responsabilité. Écrites simplement, sans petites lignes.
       </PageHeader>
       <Section note={`${cgv.length} articles`}>
@@ -41,7 +41,7 @@ export default function Cgv() {
           ))}
         </div>
         <p className="mt-8 max-w-[68ch] text-sm text-muted">
-          Une question sur ces conditions ? <Link to="/contact" className={textLink}>Écrivez-moi</Link> avant de passer commande.
+          Une question sur ces conditions ? <Link to="/contact" className={textLink}>Écrivez-moi</Link> avant de passer commande.
           Voir aussi les <Link to="/mentions-legales" className={textLink}>mentions légales</Link>.
         </p>
       </Section>

@@ -51,7 +51,7 @@ export default function Demo() {
         <section className="border-b border-rule p-5 sm:p-6 lg:border-r lg:border-b-0">
           <h3 className="text-base font-medium text-muted">1. Ce qui arrive</h3>
           <div className="mt-4 rounded-md border border-rule p-4">
-            <p className="text-sm text-muted">De : {demo.email.from}</p>
+            <p className="text-sm text-muted">De : {demo.email.from}</p>
             <p className="mt-1 font-medium">{demo.email.subject}</p>
             <p className="mt-3 font-serif leading-[1.6]">{demo.email.body}</p>
           </div>
@@ -65,11 +65,11 @@ export default function Demo() {
               <li key={s} className="flex items-start gap-3">
                 <Check done={stage > i} active={running && stage === i} />
                 <span className={stage > i ? '' : 'text-muted'}>{s}</span>
-                <span className="sr-only">{stage > i ? ' : terminé' : ' : en attente'}</span>
+                <span className="sr-only">{stage > i ? ' : terminé' : ' : en attente'}</span>
               </li>
             ))}
           </ol>
-          <p className="mt-6 text-sm text-muted">Temps total : quelques secondes, sans intervention.</p>
+          <p className="mt-6 text-sm text-muted">Temps total : quelques secondes, sans intervention.</p>
         </section>
 
         {/* 3. Le résultat */}
@@ -96,7 +96,7 @@ export default function Demo() {
                 </div>
               )}
               {finished && (
-                <p className="drop text-sm"><span className="marker rounded-sm px-1.5 py-0.5 font-medium">Notification envoyée</span> Nouvelle demande de devis : Claire Martin</p>
+                <p className="drop text-sm"><span className="marker rounded-sm px-1.5 py-0.5 font-medium">Notification envoyée</span> Nouvelle demande de devis : Claire Martin</p>
               )}
             </div>
           )}

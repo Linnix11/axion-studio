@@ -27,12 +27,12 @@ export const services = [
   {
     slug: 'workflows',
     title: 'Workflows automatisés',
-    short: 'Relances, facturation, reporting, saisie de données : des workflows qui tournent seuls, 24 h/24.',
-    intro: "Les tâches que vous refaites chaque semaine à l’identique sont les premières à automatiser. Je conçois des enchaînements qui se déclenchent seuls : à la réception d’un e-mail, d’un formulaire, d’une commande ou à heure fixe.",
+    short: 'Relances, facturation, reporting, saisie de données : des workflows qui tournent seuls, 24 h/24.',
+    intro: "Les tâches que vous refaites chaque semaine à l’identique sont les premières à automatiser. Je conçois des enchaînements qui se déclenchent seuls : à la réception d’un e-mail, d’un formulaire, d’une commande ou à heure fixe.",
     includes: [
       'Cartographie de la tâche telle que vous la faites aujourd’hui',
       'Conception et construction du workflow',
-      'Gestion des erreurs : vous êtes prévenu si quelque chose bloque',
+      'Gestion des erreurs : vous êtes prévenu si quelque chose bloque',
       'Tests sur vos vraies données avant la mise en route',
       'Documentation simple pour comprendre et modifier',
     ],
@@ -41,8 +41,8 @@ export const services = [
   {
     slug: 'integrations',
     title: "Intégration d’outils",
-    short: 'CRM, tableur, messagerie, agenda, facturation : vos logiciels connectés via leurs API.',
-    intro: "Vous utilisez déjà de bons outils, mais ils ne se parlent pas : vous recopiez donc les mêmes informations à plusieurs endroits. Je les relie pour qu’une donnée saisie une fois soit à jour partout.",
+    short: 'CRM, tableur, messagerie, agenda, facturation : vos logiciels connectés via leurs API.',
+    intro: "Vous utilisez déjà de bons outils, mais ils ne se parlent pas : vous recopiez donc les mêmes informations à plusieurs endroits. Je les relie pour qu’une donnée saisie une fois soit à jour partout.",
     includes: [
       'Inventaire de vos outils et des données qui circulent',
       'Connexion via les API ou les intégrations natives',
@@ -55,9 +55,9 @@ export const services = [
     slug: 'ia',
     title: 'Intelligence artificielle',
     short: "Tri d’e-mails, extraction de documents, assistants internes, réponses clients assistées.",
-    intro: "L’IA est utile là où une tâche demande de lire et de comprendre un texte : trier, résumer, extraire, rédiger un premier jet. Je l’intègre dans vos workflows, avec une validation humaine quand c’est nécessaire.",
+    intro: "L’IA est utile là où une tâche demande de lire et de comprendre un texte : trier, résumer, extraire, rédiger un premier jet. Je l’intègre dans vos workflows, avec une validation humaine quand c’est nécessaire.",
     includes: [
-      'Choix du bon usage : là où l’IA fait vraiment gagner du temps',
+      'Choix du bon usage : là où l’IA fait vraiment gagner du temps',
       'Extraction de données depuis des PDF, e-mails ou formulaires',
       'Brouillons de réponses que vous relisez avant envoi',
       'Assistant interne qui répond à partir de vos propres documents',
@@ -92,7 +92,7 @@ export const useCases = [
 
 export const steps = [
   { title: 'Audit', duration: '30 min offertes', text: 'On repère ensemble les tâches qui vous coûtent le plus de temps.', detail: "Un appel en visio ou par téléphone. Vous me décrivez votre semaine type et vos outils. Je vous dis ce qui peut être automatisé, ce qui ne vaut pas la peine de l’être, et dans quel ordre." },
-  { title: 'Proposition', duration: 'sous 72 h', text: 'Une solution chiffrée, avec le temps gagné estimé, sans engagement.', detail: 'Vous recevez un document clair : ce qui sera construit, avec quels outils, le prix au forfait, le délai et une estimation du temps gagné. Vous décidez ensuite, sans relance insistante.' },
+  { title: 'Proposition', duration: 'sous 72 h', text: 'Une solution chiffrée, avec le temps gagné estimé, sans engagement.', detail: 'Vous recevez un document clair : ce qui sera construit, avec quels outils, le prix au forfait, le délai et une estimation du temps gagné. Vous décidez ensuite, sans relance insistante.' },
   { title: 'Mise en place', duration: '1 à 4 semaines', text: 'Construction, tests sur vos vraies données, puis mise en production.', detail: "Je construis l’automatisation, je la teste sur des cas réels avec vous, puis je la mets en route. Vous suivez l’avancement et validez chaque étape avant qu’elle touche vos clients." },
   { title: 'Suivi', duration: '1 mois inclus', text: 'Prise en main, documentation et ajustements pour que tout reste fiable.', detail: "Je vous montre comment tout fonctionne et vous remets une documentation simple. Pendant un mois, j’ajuste ce qui doit l’être. Ensuite, vous êtes autonome ou vous choisissez un suivi mensuel." },
 ]
@@ -104,14 +104,14 @@ export const offers = [
 ]
 
 export const faq = [
-  { q: 'Je ne suis pas à l’aise avec la technique, est-ce un problème ?', a: 'Non. Vous me décrivez votre travail avec vos mots, je m’occupe de la partie technique. Je vous explique ensuite le fonctionnement simplement, et la documentation est écrite pour être lue par quelqu’un qui n’est pas développeur.' },
-  { q: 'Quels outils utilisez-vous ?', a: 'Je pars des vôtres. Pour relier et automatiser, j’utilise selon les cas n8n, Make ou Zapier, et les API des logiciels que vous utilisez. Je vous recommande la solution la plus simple à maintenir pour votre situation.' },
-  { q: 'Que deviennent mes données ?', a: 'Les automatisations tournent sur vos comptes. Avant d’utiliser un service d’IA, je vérifie avec vous quelles données lui sont envoyées et je privilégie les options qui n’utilisent pas vos données pour entraîner leurs modèles. Rien n’est conservé de mon côté au-delà du projet.' },
-  { q: 'Combien de temps faut-il pour mettre en place une automatisation ?', a: 'Une automatisation simple est en place en une à deux semaines. Un projet qui relie plusieurs outils ou intègre de l’IA demande généralement trois à quatre semaines, tests compris.' },
-  { q: 'Que se passe-t-il si une automatisation tombe en panne ?', a: 'Chaque workflow prévient en cas d’erreur. Pendant le mois de suivi inclus, je corrige sans frais. Ensuite, vous pouvez choisir le suivi mensuel ou me solliciter ponctuellement.' },
-  { q: 'Travaillez-vous avec les particuliers ?', a: 'Non. Les prestations d’Axion Studio sont réservées aux professionnels : entreprises, indépendants, professions libérales et associations, dans le cadre de leur activité. Les conditions générales de vente (page /cgv) sont écrites pour ce cadre.' },
-  { q: 'Travaillez-vous à distance ?', a: 'Oui, la plupart des projets se font entièrement à distance, partout en France. Je me déplace aussi en Île-de-France, notamment dans le Val-d’Oise, quand c’est utile.' },
-  { q: 'Combien ça coûte ?', a: 'Les projets démarrent à 150 €, et le suivi mensuel à 250 € par mois. Chaque projet est chiffré au forfait après l’audit gratuit, en fonction de ce qui est à construire : vous connaissez le prix exact avant de vous engager. La TVA n’est pas applicable (article 293 B du CGI).' },
+  { q: 'Je ne suis pas à l’aise avec la technique, est-ce un problème ?', a: 'Non. Vous me décrivez votre travail avec vos mots, je m’occupe de la partie technique. Je vous explique ensuite le fonctionnement simplement, et la documentation est écrite pour être lue par quelqu’un qui n’est pas développeur.' },
+  { q: 'Quels outils utilisez-vous ?', a: 'Je pars des vôtres. Pour relier et automatiser, j’utilise selon les cas n8n, Make ou Zapier, et les API des logiciels que vous utilisez. Je vous recommande la solution la plus simple à maintenir pour votre situation.' },
+  { q: 'Que deviennent mes données ?', a: 'Les automatisations tournent sur vos comptes. Avant d’utiliser un service d’IA, je vérifie avec vous quelles données lui sont envoyées et je privilégie les options qui n’utilisent pas vos données pour entraîner leurs modèles. Rien n’est conservé de mon côté au-delà du projet.' },
+  { q: 'Combien de temps faut-il pour mettre en place une automatisation ?', a: 'Une automatisation simple est en place en une à deux semaines. Un projet qui relie plusieurs outils ou intègre de l’IA demande généralement trois à quatre semaines, tests compris.' },
+  { q: 'Que se passe-t-il si une automatisation tombe en panne ?', a: 'Chaque workflow prévient en cas d’erreur. Pendant le mois de suivi inclus, je corrige sans frais. Ensuite, vous pouvez choisir le suivi mensuel ou me solliciter ponctuellement.' },
+  { q: 'Travaillez-vous avec les particuliers ?', a: 'Non. Les prestations d’Axion Studio sont réservées aux professionnels : entreprises, indépendants, professions libérales et associations, dans le cadre de leur activité. Les conditions générales de vente (page /cgv) sont écrites pour ce cadre.' },
+  { q: 'Travaillez-vous à distance ?', a: 'Oui, la plupart des projets se font entièrement à distance, partout en France. Je me déplace aussi en Île-de-France, notamment dans le Val-d’Oise, quand c’est utile.' },
+  { q: 'Combien ça coûte ?', a: 'Les projets démarrent à 150 €, et le suivi mensuel à 250 € par mois. Chaque projet est chiffré au forfait après l’audit gratuit, en fonction de ce qui est à construire : vous connaissez le prix exact avant de vous engager. La TVA n’est pas applicable (article 293 B du CGI).' },
 ]
 
 // Liste interactive de la page d’accueil : durées moyennes indicatives, en minutes par semaine.
@@ -135,7 +135,7 @@ export const needs = [
 // ——— Confiance ———
 
 export const identity = [
-  ['Entreprise', 'Axion Studio (nom commercial « axionstudio »)'],
+  ['Entreprise', 'Axion Studio (nom commercial « axionstudio »)'],
   ['Dirigeant', 'Arthur Champagne-Forterre'],
   ['Statut', 'Entrepreneur individuel, micro-entreprise'],
   ['Déclaration', 'Guichet unique de l’INPI, novembre 2026'],
@@ -157,7 +157,7 @@ export const guarantees = [
 
 export const notDoing = [
   'Je ne vous vends pas un logiciel ni un abonnement maison.',
-  'Je n’automatise pas une tâche si le gain ne justifie pas le coût : je vous le dis à l’audit.',
+  'Je n’automatise pas une tâche si le gain ne justifie pas le coût : je vous le dis à l’audit.',
   'Je n’envoie pas vos données sensibles à une IA sans votre accord explicite.',
   'Je ne facture pas à l’heure et je n’ajoute pas de frais en cours de route.',
 ]
@@ -176,16 +176,16 @@ export const demo = {
   email: {
     from: 'Claire Martin <c.martin@exemple.fr>',
     subject: 'Demande de devis rénovation salle de bain',
-    body: 'Bonjour, nous souhaiterions refaire notre salle de bain (environ 6 m²) à Taverny, si possible avant l’été. Pouvez-vous me rappeler au 06 00 00 00 00 ? Merci, Claire Martin',
+    body: 'Bonjour, nous souhaiterions refaire notre salle de bain (environ 6 m²) à Taverny, si possible avant l’été. Pouvez-vous me rappeler au 06 00 00 00 00 ? Merci, Claire Martin',
   },
-  steps: ['E-mail reçu dans la boîte de contact', 'Lecture par l’IA : nom, téléphone, ville, besoin, délai', 'Fiche client créée dans le CRM', 'Brouillon de réponse préparé', 'Vous êtes prévenu sur votre téléphone'],
+  steps: ['E-mail reçu dans la boîte de contact', 'Lecture par l’IA : nom, téléphone, ville, besoin, délai', 'Fiche client créée dans le CRM', 'Brouillon de réponse préparé', 'Vous êtes prévenu sur votre téléphone'],
   record: [['Nom', 'Claire Martin'], ['Téléphone', '06 00 00 00 00'], ['Ville', 'Taverny'], ['Besoin', 'Rénovation salle de bain, 6 m²'], ['Délai', 'Avant l’été'], ['Statut', 'À rappeler']],
   reply: 'Bonjour Madame Martin, merci pour votre demande concernant la rénovation de votre salle de bain à Taverny. Je vous rappelle demain dans la matinée pour en parler. Bien cordialement.',
 }
 
 // Extrait type de proposition commerciale (page Méthode).
 export const proposalSample = {
-  client: 'Exemple : cabinet de conseil, 4 personnes',
+  client: 'Exemple : cabinet de conseil, 4 personnes',
   problem: 'Environ 2 heures par semaine à classer les factures fournisseurs et à les transmettre au comptable.',
   solution: ['Lecture automatique des factures reçues par e-mail', 'Renommage et classement dans le dossier partagé', 'Report des montants dans le tableau de suivi', 'Envoi mensuel du récapitulatif au comptable'],
   tools: 'Votre messagerie, votre Google Drive, un tableur partagé, n8n',

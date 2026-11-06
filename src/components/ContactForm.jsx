@@ -31,7 +31,7 @@ function Field({ id, label, hint, error, children }) {
 
 const failureText = {
   rate: 'Trop de messages envoyés depuis votre connexion. Réessayez dans une heure, ou écrivez-moi directement.',
-  default: 'Le message n’est pas parti : le serveur n’a pas répondu. Réessayez dans un instant, ou écrivez-moi directement.',
+  default: 'Le message n’est pas parti : le serveur n’a pas répondu. Réessayez dans un instant, ou écrivez-moi directement.',
 }
 
 export default function ContactForm() {

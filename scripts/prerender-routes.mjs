@@ -39,7 +39,7 @@ function page(path) {
     `<meta property="og:image" content="${SITE_URL}/og.png">`,
     `<meta property="og:image:width" content="1200">`,
     `<meta property="og:image:height" content="630">`,
-    `<meta property="og:image:alt" content="Axion Studio : vos tâches répétitives, faites sans vous.">`,
+    `<meta property="og:image:alt" content="Axion Studio : vos tâches répétitives, faites sans vous.">`,
     `<meta name="twitter:card" content="summary_large_image">`,
     `<script type="application/ld+json">${jsonld}</script>`,
   ].join('\n  ')
@@ -68,7 +68,7 @@ ${paths.map(p => `  <url><loc>${pageUrl(p)}</loc><lastmod>${today}</lastmod><pri
 </urlset>
 `)
 const aiBots = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User', 'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot-Extended', 'Applebot', 'Bingbot', 'Googlebot', 'DuckAssistBot', 'MistralAI-User', 'meta-externalagent']
-writeFileSync(join(dist, 'robots.txt'), `# Moteurs de recherche et moteurs de réponse des IA : bienvenue.
+writeFileSync(join(dist, 'robots.txt'), `# Moteurs de recherche et moteurs de réponse des IA : bienvenue.
 ${aiBots.map(b => `User-agent: ${b}\nAllow: /\nDisallow: /api/\n`).join('\n')}
 User-agent: *
 Allow: /
@@ -79,48 +79,48 @@ Sitemap: ${SITE_URL}/sitemap.xml
 
 // ——— Référencement dans les IA : llms.txt (résumé) et llms-full.txt (contenu complet) ———
 const { company, services, useCases, steps, offers, faq, guarantees, security, notDoing, tools } = data
-const intro = `> Axion Studio est la micro-entreprise d'${company.owner}, basée à Montlignon (Val-d'Oise, 95). Elle automatise les tâches répétitives des TPE, PME et indépendants : workflows automatisés, intégration d'outils (CRM, messagerie, tableurs, facturation), intelligence artificielle appliquée et création de sites web. Interventions en Île-de-France et à distance partout en France. Audit gratuit de 30 minutes ; projets au forfait à partir de 150 € ; suivi mensuel à partir de 250 € par mois ; TVA non applicable (art. 293 B du CGI).`
-const links = paths.filter(p => !['/mentions-legales'].includes(p) && !p.startsWith('/blog/')).map(p => `- [${pageMeta[p].name}](${pageUrl(p)}) : ${pageMeta[p].description}`).join('\n')
+const intro = `> Axion Studio est la micro-entreprise d'${company.owner}, basée à Montlignon (Val-d'Oise, 95). Elle automatise les tâches répétitives des TPE, PME et indépendants : workflows automatisés, intégration d'outils (CRM, messagerie, tableurs, facturation), intelligence artificielle appliquée et création de sites web. Interventions en Île-de-France et à distance partout en France. Audit gratuit de 30 minutes ; projets au forfait à partir de 150 € ; suivi mensuel à partir de 250 € par mois ; TVA non applicable (art. 293 B du CGI).`
+const links = paths.filter(p => !['/mentions-legales'].includes(p) && !p.startsWith('/blog/')).map(p => `- [${pageMeta[p].name}](${pageUrl(p)}) : ${pageMeta[p].description}`).join('\n')
 writeFileSync(join(dist, 'llms.txt'), `# ${BRAND}
 
 ${intro}
 
 ## Contact
-- Site : ${SITE_URL}/
-- E-mail : ${company.email}
-- Téléphone : ${company.phone}
-- Zone : Montlignon (95), Val-d'Oise, Île-de-France, et à distance partout en France
-- Prise de contact : ${pageUrl('/contact')} (réponse sous 48 heures ouvrées)
+- Site : ${SITE_URL}/
+- E-mail : ${company.email}
+- Téléphone : ${company.phone}
+- Zone : Montlignon (95), Val-d'Oise, Île-de-France, et à distance partout en France
+- Prise de contact : ${pageUrl('/contact')} (réponse sous 48 heures ouvrées)
 
 ## Pages
 ${links}
 
 ## Articles
-${posts.map(p => `- [${p.title}](${pageUrl(`/blog/${p.slug}`)}) : ${p.description}`).join('\n')}
+${posts.map(p => `- [${p.title}](${pageUrl(`/blog/${p.slug}`)}) : ${p.description}`).join('\n')}
 
 ## Pour aller plus loin
 - [Contenu complet du site en texte](${SITE_URL}/llms-full.txt)
 `)
 const md = []
-md.push(`# ${BRAND} : contenu complet du site\n\n${intro}\n`)
+md.push(`# ${BRAND} : contenu complet du site\n\n${intro}\n`)
 md.push(`## Services\n` + services.map(s => `### ${s.title}\n${s.intro}\n\nCe qui est inclus :\n${s.includes.map(i => `- ${i}`).join('\n')}\n\nExemples :\n${s.examples.map(i => `- ${i}`).join('\n')}\n`).join('\n'))
-md.push(`Outils utilisés selon les besoins : ${tools.join(', ')}.\n`)
-md.push(`## Exemples (cas types, gains en ordre de grandeur)\n` + useCases.map(u => `### ${u.task} (${u.sector})\n- Avant : ${u.before}\n- Après : ${u.after}\n- Temps gagné : ${u.gain}\n`).join('\n'))
-md.push(`## Méthode\n` + steps.map((s, i) => `${i + 1}. ${s.title} (${s.duration}) : ${s.text} ${s.detail}`).join('\n') + '\n')
-md.push(`## Tarifs\n` + offers.map(o => `- ${o.name} : ${o.from ? 'à partir de ' : ''}${o.price}, ${o.unit}. ${o.text} (${o.items.join(' ; ')})`).join('\n') + '\n\nTVA non applicable, article 293 B du CGI.\n')
-md.push(`## Garanties\n` + guarantees.map(g => `- ${g.title} : ${g.text}`).join('\n') + '\n')
+md.push(`Outils utilisés selon les besoins : ${tools.join(', ')}.\n`)
+md.push(`## Exemples (cas types, gains en ordre de grandeur)\n` + useCases.map(u => `### ${u.task} (${u.sector})\n- Avant : ${u.before}\n- Après : ${u.after}\n- Temps gagné : ${u.gain}\n`).join('\n'))
+md.push(`## Méthode\n` + steps.map((s, i) => `${i + 1}. ${s.title} (${s.duration}) : ${s.text} ${s.detail}`).join('\n') + '\n')
+md.push(`## Tarifs\n` + offers.map(o => `- ${o.name} : ${o.from ? 'à partir de ' : ''}${o.price}, ${o.unit}. ${o.text} (${o.items.join(' ; ')})`).join('\n') + '\n\nTVA non applicable, article 293 B du CGI.\n')
+md.push(`## Garanties\n` + guarantees.map(g => `- ${g.title} : ${g.text}`).join('\n') + '\n')
 md.push(`## Ce qu'Axion Studio ne fait pas\n` + notDoing.map(n => `- ${n}`).join('\n') + '\n')
-md.push(`## Sécurité des données\n` + security.map(s => `- ${s.title} : ${s.text}`).join('\n') + '\n')
+md.push(`## Sécurité des données\n` + security.map(s => `- ${s.title} : ${s.text}`).join('\n') + '\n')
 md.push(`## Questions fréquentes\n` + faq.map(f => `### ${f.q}\n${f.a}\n`).join('\n'))
 md.push(`## Articles du blog\n` + posts.map(p => `### ${p.title}\n${pageUrl(`/blog/${p.slug}`)} (${p.date})\n\n${p.lead}\n\n` + p.body.map(b => b.h2 ? `#### ${b.h2}` : b.p ? b.p : b.note ? `> ${b.note}` : (b.ul || b.ol).map((x, i) => (b.ol ? `${i + 1}. ` : '- ') + x).join('\n')).join('\n\n')).join('\n\n') + '\n')
 md.push(`## Conditions générales de vente (version du ${cgvSettings.version})\n` + cgv.map((a, i) => `### Article ${i + 1}. ${a.title}\n` + a.text.join('\n')).join('\n\n') + '\n')
-md.push(`## Contact\n- E-mail : ${company.email}\n- Téléphone : ${company.phone}\n- Adresse : ${company.siege}\n- Formulaire : ${pageUrl('/contact')}\n`)
+md.push(`## Contact\n- E-mail : ${company.email}\n- Téléphone : ${company.phone}\n- Adresse : ${company.siege}\n- Formulaire : ${pageUrl('/contact')}\n`)
 writeFileSync(join(dist, 'llms-full.txt'), md.join('\n'))
 
 // ——— Consignes du chatbot ———
 const knowledge = [...Object.entries(data), ['conditions_generales_de_vente', cgv]].filter(([k]) => !['nav', 'tasks', 'demo'].includes(k)).map(([k, v]) => `## ${k}\n${JSON.stringify(v, null, 1)}`).join('\n\n')
 mkdirSync(join(dist, 'api'), { recursive: true })
-writeFileSync(join(dist, 'api', 'assistant-prompt.txt'), `${assistantRules}\n\nINFORMATIONS SUR AXION STUDIO (source : le site axionstudio.fr)\n\n${knowledge}\n`)
+writeFileSync(join(dist, 'api', 'assistant-prompt.txt'), `${assistantRules}\n\nINFORMATIONS SUR AXION STUDIO (source : le site axionstudio.fr)\n\n${knowledge}\n`)
 
 rmSync('dist-server', { recursive: true, force: true })
 console.log(`${paths.length} pages pré-rendues, 404.html, sitemap.xml, robots.txt, llms.txt et llms-full.txt générés`)

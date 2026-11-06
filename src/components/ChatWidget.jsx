@@ -111,7 +111,7 @@ export default function ChatWidget() {
       >
         <span aria-hidden="true" className="text-2xl leading-none sm:text-lg">{open ? '×' : '?'}</span>
         {/* Sur mobile, bouton rond : le libellé long masquait le contenu de la page */}
-        <span className="sr-only sm:not-sr-only">{open ? 'Fermer l’assistant' : 'Une question ?'}</span>
+        <span className="sr-only sm:not-sr-only">{open ? 'Fermer l’assistant' : 'Une question ?'}</span>
       </button>
 
       {open && (
@@ -147,7 +147,7 @@ export default function ChatWidget() {
               <p key={i} className={m.role === 'user'
                 ? 'ml-auto max-w-[85%] rounded-lg rounded-tr-sm bg-pen px-3 py-2 whitespace-pre-line text-on-pen'
                 : 'max-w-[90%] rounded-lg rounded-tl-sm bg-paper-2 px-3 py-2 font-serif leading-[1.55] whitespace-pre-line'}>
-                <span className="sr-only">{m.role === 'user' ? 'Vous : ' : 'Assistant : '}</span>
+                <span className="sr-only">{m.role === 'user' ? 'Vous : ' : 'Assistant : '}</span>
                 {m.role === 'user' ? m.text : <Rich text={m.text} onNavigate={() => setOpen(false)} />}
               </p>
             ))}
@@ -178,7 +178,7 @@ export default function ChatWidget() {
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(input) } }}
-              placeholder="Ex. : je perds du temps sur mes devis"
+              placeholder="Ex. : je perds du temps sur mes devis"
               className="max-h-32 min-h-11 flex-1 resize-none rounded-md border border-rule bg-paper px-3 py-2.5 text-base"
             />
             <button type="submit" disabled={sending || !input.trim()} className="inline-flex min-h-11 items-center rounded-md bg-pen px-4 font-medium text-on-pen disabled:opacity-50">
@@ -187,7 +187,7 @@ export default function ChatWidget() {
             </div>
           </form>
           <p className="border-t border-rule px-4 py-2 text-xs text-muted">
-            Réponses générées par l’IA Gemini de Google, à vérifier.{geminiFreeTier && ' Offre gratuite : Google peut utiliser ces échanges.'} <Link to="/confidentialite" onClick={() => setOpen(false)} className="underline">Confidentialité</Link>
+            Réponses générées par l’IA Gemini de Google, à vérifier.{geminiFreeTier && ' Offre gratuite : Google peut utiliser ces échanges.'} <Link to="/confidentialite" onClick={() => setOpen(false)} className="underline">Confidentialité</Link>
           </p>
         </section>
       )}
