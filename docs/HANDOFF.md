@@ -1,0 +1,140 @@
+# Axion Studio : récapitulatif du projet (passation)
+
+À donner tel quel à un nouvel assistant. Il décrit tout ce qui a été fait, comment le projet marche
+et les règles à respecter. Dernière mise à jour : 6 novembre 2026.
+
+## 1. Le client et l'entreprise
+
+- **Arthur Champagne-Forterre**, micro-entreprise **Axion Studio** : automatisation, intégration d'IA et sites web pour TPE, PME et indépendants.
+- Adresse : 5 allée des Pommiers, 95680 Montlignon. Téléphone : 06 48 61 23 50.
+- **Seul e-mail à utiliser : arthur.champagne@icloud.com.** Il n'existe pas de boîte contact@. Les e-mails du site partent de `ne-pas-repondre@axionstudio.fr` (expéditeur technique).
+- SIRET : « En cours d'attribution » (à remplacer dans `src/data.js` dès qu'il est connu).
+- L'utilisateur parle français et n'est pas développeur : il faut lui répondre en français simple et faire les choses à sa place quand c'est possible.
+
+## 2. Où est le code, comment il est mis en ligne
+
+- Dépôt : **https://github.com/Linnix11/axion-studio** (public), branche **`main`**.
+- Site en ligne : **https://axionstudio.fr** (hébergé chez **Hostinger**).
+- **Déploiement automatique** : chaque push sur `main` est reconstruit et publié par Hostinger en 1 à 3 minutes. Il n'y a rien d'autre à faire.
+- Vérifier une mise en ligne : comparer le nom du fichier `dist/assets/index-XXXX.css` du build local avec celui que sert `https://axionstudio.fr/`.
+- L'ancienne copie GitHub Pages a été supprimée.
+
+## 3. Technique
+
+- **React 19 + Vite 8 + Tailwind CSS v4** (jetons dans `@theme inline`), **react-router 8**.
+- **Pré-rendu SSR au build** (bon pour le SEO) :
+  `vite build && vite build --ssr src/entry-server.jsx --outDir dist-server && node scripts/prerender-routes.mjs`
+  → 17 pages HTML, `404.html`, `sitemap.xml`, `robots.txt`, `llms.txt`, `llms-full.txt`.
+  `main.jsx` utilise `hydrateRoot`. Tout ce qui lit `localStorage` ou `sessionStorage` se fait dans un `useEffect` pour que l'hydratation reste propre.
+- Commandes : `npm install`, `npm run dev`, `npm run build`.
+
+### Arborescence utile
+```
+src/
+  data.js        contenus : entreprise, menu, services, offres, FAQ, garanties, etc.
+  blog.js        4 articles (blocs h2/p/ul/ol/note, seoTitle/seoDescription)
+  legal.js       CGV (réglages en haut : acompte 30 %, paiement 30 j, etc.)
+  chatbot.js     règles et textes de l'assistant IA (geminiFreeTier = true)
+  seo.js         titres, descriptions, données structurées JSON-LD par page
+  prefs.js       préférences d'affichage (thème, accessibilité)
+  index.css      jetons de design, thèmes sombre et contraste, animations
+  pages/         Home, Services, Exemples, Methode, Tarifs, APropos, Faq, Contact,
+                 Securite, Blog, Article, Cgv, MentionsLegales, Confidentialite, NotFound
+  components/    ui.jsx (Container, Section, PageHeader, CtaBand, boutons, usePageMeta),
+                 Header, Footer, DisplayTools (thème et accessibilité), ChatWidget,
+                 ContactForm, TaskList, Demo, Trust, Logo, Icons, useReveal
+public/
+  api/contact.php   envoi du formulaire (mail(), piège à robots, validation, limite de débit)
+  api/chat.php      relais vers l'API Gemini pour le chatbot
+  api/_common.php   IP du client, limite de débit (flock)
+  .htaccess         404, www → domaine nu, en-têtes de sécurité, cache
+  a0c151f7f1797e02da7cf2971dc6be50.txt   clé IndexNow
+scripts/            prerender-routes.mjs, indexnow.mjs
+.github/workflows/indexnow.yml   signale les pages modifiées à Bing et aux autres moteurs IndexNow après chaque push
+docs/brand-guidelines.md         charte de marque complète
+marketing/banners/               bannières LinkedIn et Google (PNG + HTML + generate.mjs)
+.claude/skills/                  skills installés (voir § 9)
+```
+
+## 4. Contenu et offre
+
+- Pages : Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Sécurité, Blog (4 articles), CGV, Mentions légales, Confidentialité, 404.
+- **Prix** : Projet **à partir de 150 €** au forfait, prix exact sur devis ; Suivi **à partir de 250 €/mois**. Prestations réservées aux professionnels (la FAQ précise ce qui est possible pour les particuliers).
+- Arguments : audit gratuit de 30 min, prix fixé avant de commencer, le client garde tout, un mois de suivi inclus.
+- **Pas de photos. Pas de faux témoignages ni de chiffres inventés** (les gains sont présentés comme des ordres de grandeur).
+
+## 5. Design
+
+- Identité « **cahier Seyès** » : papier quadrillé, marge rouge, stylo bleu, surligneur jaune. Tout est détaillé dans `docs/brand-guidelines.md`.
+- Couleurs : bleu stylo #2B5CE6, encre #14213D, surligneur #FFE45C, marge #D93D63, vert #1D7A4B, fond #FFFFFF / #F3F6FC, texte secondaire #56627D, bordures #D6DEEE, erreur #B42318.
+- Polices hébergées sur le site : Schibsted Grotesk (titres), Source Serif 4 (textes), Atkinson Hyperlegible (mode accessibilité).
+- **Thème clair par défaut**, avec un bouton thème sombre et un panneau d'accessibilité (taille du texte, contraste, police lisible, espacement, liens soulignés, animations réduites). Les réglages sont posés en attributs `data-*` sur `<html>` par un script en ligne dans `index.html`.
+- Animations d'apparition (`useReveal`), qui respectent `prefers-reduced-motion`.
+- Ombres limitées à trois jetons (`shadow-card`, `shadow-float`, `shadow-overlay`) ; couleur du logo `--c-logo`. Boutons avec états survol, appui, focus (contour de 3 px) et désactivé.
+- Audits réalisés à plusieurs reprises (UX, accessibilité, contraste, débordements, CLS, liens) : tout est au vert au dernier passage.
+
+## 6. Chatbot IA (Gemini)
+
+- Bulle de chat sur toutes les pages sauf `/contact`. Elle propose un bouton « Envoyer ma demande à Arthur » qui pré-remplit le formulaire.
+- `public/api/chat.php` appelle **gemini-3.5-flash** (`thinkingLevel: low`), puis en secours gemini-3.5-flash-lite et gemini-flash-lite-latest. Limites : 30 messages par heure et par IP, 400 par jour.
+- **La clé API Gemini n'est PAS dans le dépôt.** Elle se trouve sur Hostinger dans `domains/axionstudio.fr/axion-config.php`, en dehors de `public_html`, qui est effacé à chaque déploiement. Ne jamais la committer.
+- La facturation Gemini a été activée par l'utilisateur. `geminiFreeTier` vaut encore `true` dans `src/chatbot.js` ; il faudra le passer à `false` si l'avis « version gratuite » ne doit plus s'afficher.
+- Règles de l'assistant : parler d'Arthur à la 3e personne, ne pas inventer de chiffres, répondre brièvement, renvoyer vers les bonnes pages.
+
+## 7. Formulaire de contact
+
+- `public/api/contact.php` envoie la demande à arthur.champagne@icloud.com. Testé : l'utilisateur a bien reçu les e-mails.
+- Côté navigateur, la validation se fait à la sortie de chaque champ, et un résumé des erreurs s'affiche (`role=alert`).
+
+## 8. SEO et référencement dans les IA
+
+- `src/seo.js` : titres de 60 caractères maximum, descriptions de 160 caractères maximum. JSON-LD : ProfessionalService, Person, WebSite, BreadcrumbList, Service, OfferCatalog, FAQPage, Blog, BlogPosting.
+- `sitemap.xml`, `robots.txt` (robots des IA autorisés), `llms.txt`, `llms-full.txt` et `og.png` sont générés au build.
+- IndexNow est automatisé par GitHub Actions.
+- DNS (via l'API Hostinger, avec l'accord de l'utilisateur) : SPF `v=spf1 ip4:92.113.28.5 include:_spf.mail.hostinger.com ~all` et DMARC `v=DMARC1; p=none; rua=mailto:arthur.champagne@icloud.com`.
+- Problème connu non résolu : la protection anti-robots de Hostinger renvoie parfois 403 à Bingbot et 429 à GPTBot. Cela se règle dans le hPanel, par l'utilisateur.
+
+## 9. Skills installés (`.claude/skills/`)
+
+- `design`, `brand`, `design-system`, `ui-styling`, `ui-ux-pro-max` (nextlevelbuilder/ui-ux-pro-max-skill, MIT). Ils ont servi au redesign, à la charte, aux bannières et à la revue UX.
+- `ponytail`, `ponytail-review`, `ponytail-audit`, `ponytail-debt`, `ponytail-gain`, `ponytail-help` (DietrichGebert/ponytail @96608e0, MIT). Seuls les skills sont installés, pas les hooks du plugin.
+- `.claude/settings.json` active le plugin `hostinger@claude-plugins-official`.
+- Contrôle des jetons : `node .claude/skills/design-system/scripts/validate-tokens.cjs` doit afficher « No token violations ».
+- Contrôle de la charte : `node .claude/skills/brand/scripts/inject-brand-context.cjs --json`.
+
+## 10. Règles à respecter
+
+1. **Ne jamais committer ni afficher une clé API, un jeton ou un mot de passe** (Gemini, Hostinger…). Ne jamais saisir un mot de passe à la place de l'utilisateur.
+2. Demander l'accord explicite de l'utilisateur avant toute modification DNS, toute modification des réglages Claude ou toute action difficile à annuler.
+3. Utiliser uniquement l'adresse arthur.champagne@icloud.com.
+4. Garder le thème clair par défaut, ne pas mettre de photos ni de témoignages inventés.
+5. Avant chaque push, vérifier que `npm run build` passe. Pousser sur `main` en réessayant en cas d'erreur réseau, puis vérifier la mise en ligne.
+6. Les CGV (`src/legal.js`) sont un modèle : elles doivent être relues par un juriste.
+
+## 11. Reste à faire par l'utilisateur
+
+- [ ] **Supprimer le jeton API Hostinger** utilisé pendant la session (hPanel → Profil → API). C'est le plus urgent.
+- [ ] Google Search Console : ajouter le site et envoyer `https://axionstudio.fr/sitemap.xml`.
+- [ ] Bing Webmaster Tools : ajouter le site (import possible depuis Search Console).
+- [ ] hPanel : assouplir la protection anti-robots, qui bloque Bingbot et GPTBot.
+- [ ] Créer la fiche Google Business Profile. Les visuels sont prêts dans `marketing/banners/`.
+- [ ] Mettre à jour la page LinkedIn avec les bannières.
+- [ ] Renseigner le SIRET dès qu'il est attribué (`src/data.js`).
+- [ ] Faire relire les CGV.
+- [ ] Recueillir de vrais avis clients avant d'en afficher.
+- [ ] Gemini : la facturation étant active, passer `geminiFreeTier` à `false` dans `src/chatbot.js` si l'avis « version gratuite » ne doit plus s'afficher (l'assistant peut le faire).
+
+## 12. Historique résumé
+
+1. Site vitrine créé à partir du document INPI, puis passé en React + Tailwind.
+2. Mise en ligne sur GitHub et Hostinger (déploiement automatique), domaine axionstudio.fr.
+3. Site multi-pages et refonte « cahier Seyès » pour inspirer confiance, animations, logo fourni par l'utilisateur.
+4. Plusieurs audits UX et accessibilité, avec toutes les corrections appliquées.
+5. Prix ajoutés (150 € pour un projet, 250 €/mois pour le suivi).
+6. Chatbot Gemini : réglages, corrections de modèle et de quotas, amélioration des réponses.
+7. Thèmes clair et sombre, panneau d'accessibilité, thème clair par défaut.
+8. SEO et référencement IA, blog de 4 articles, audit complet du code et du déploiement, CGV.
+9. DNS SPF et DMARC via l'API Hostinger, adresse ajoutée aux pages légales, IndexNow.
+10. Installation des skills de design, bannières LinkedIn et Google, revue ui-ux-pro-max.
+11. Réglage du design (jetons, états des boutons), charte `docs/brand-guidelines.md`.
+12. Installation des skills Ponytail.
