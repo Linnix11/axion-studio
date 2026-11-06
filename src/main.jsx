@@ -12,7 +12,7 @@ import App from './App.jsx'
 hydrateRoot(
   document.getElementById('root'),
   <StrictMode>
-    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </StrictMode>,

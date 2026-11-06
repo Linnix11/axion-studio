@@ -25,7 +25,7 @@ ErrorDocument 404 /404.html
   </FilesMatch>
 </IfModule>
 
-# Le fichier de configuration (clé d'API) ne doit jamais être accessible depuis le web
-<Files "axion-config.php">
+# Le fichier de configuration (clé d'API) et les fonctions PHP communes ne doivent jamais être appelés depuis le web
+<FilesMatch "^(axion-config|_common)\.php$">
   Require all denied
-</Files>
+</FilesMatch>

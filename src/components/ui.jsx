@@ -24,10 +24,10 @@ export function Section({ id, tone = 'paper', note, className = '', children }) 
   )
 }
 
-export function SectionHead({ title, children, as: H = 'h2' }) {
+export function SectionHead({ title, children }) {
   return (
     <header className="mb-10 max-w-2xl">
-      <H className="text-[2rem] leading-tight tracking-[-0.01em] md:text-5xl">{title}</H>
+      <h2 className="text-[2rem] leading-tight tracking-[-0.01em] md:text-5xl">{title}</h2>
       {children && <p className="mt-4 text-lg leading-[1.6] text-muted">{children}</p>}
     </header>
   )
