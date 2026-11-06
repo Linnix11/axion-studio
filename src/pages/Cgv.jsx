@@ -27,8 +27,8 @@ export default function Cgv() {
         <div className="max-w-3xl border-t-2 border-ink">
           {cgv.map((a, i) => (
             <section key={a.title} id={`article-${i + 1}`} className="scroll-mt-24 border-b border-rule py-7">
-              <h2 className="text-xl leading-tight"><span className="mr-2 font-serif text-pen italic">Article {i + 1}.</span>{a.title}</h2>
-              <div className="mt-3 max-w-[68ch] space-y-3 font-serif text-lg leading-[1.6]">
+              <h2 className="text-xl leading-tight"><span className="mr-2 text-pen">Article {i + 1}.</span>{a.title}</h2>
+              <div className="mt-3 max-w-[68ch] space-y-3 text-lg leading-[1.6]">
                 {a.text.some(x => x.startsWith('- ')) ? (
                   <>
                     {a.text.filter(x => !x.startsWith('- ')).slice(0, 1).map(x => <p key={x}><Text t={x} /></p>)}

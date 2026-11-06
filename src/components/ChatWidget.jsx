@@ -133,7 +133,7 @@ export default function ChatWidget() {
           </header>
 
           <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4" aria-live="polite">
-            <p className="max-w-[90%] rounded-lg rounded-tl-sm bg-paper-2 px-3 py-2 font-serif leading-[1.55]">{welcome}</p>
+            <p className="max-w-[90%] rounded-lg rounded-tl-sm bg-paper-2 px-3 py-2 leading-[1.55]">{welcome}</p>
             {messages.length === 0 && (
               <ul className="flex flex-wrap gap-2 pt-1" aria-label="Questions suggérées">
                 {suggestions.map(s => (
@@ -146,7 +146,7 @@ export default function ChatWidget() {
             {messages.map((m, i) => (
               <p key={i} className={m.role === 'user'
                 ? 'ml-auto max-w-[85%] rounded-lg rounded-tr-sm bg-pen px-3 py-2 whitespace-pre-line text-on-pen'
-                : 'max-w-[90%] rounded-lg rounded-tl-sm bg-paper-2 px-3 py-2 font-serif leading-[1.55] whitespace-pre-line'}>
+                : 'max-w-[90%] rounded-lg rounded-tl-sm bg-paper-2 px-3 py-2 leading-[1.55] whitespace-pre-line'}>
                 <span className="sr-only">{m.role === 'user' ? 'Vous : ' : 'Assistant : '}</span>
                 {m.role === 'user' ? m.text : <Rich text={m.text} onNavigate={() => setOpen(false)} />}
               </p>

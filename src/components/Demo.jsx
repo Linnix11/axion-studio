@@ -53,7 +53,7 @@ export default function Demo() {
           <div className="mt-4 rounded-md border border-rule p-4">
             <p className="text-sm text-muted">De : {demo.email.from}</p>
             <p className="mt-1 font-medium">{demo.email.subject}</p>
-            <p className="mt-3 font-serif leading-[1.6]">{demo.email.body}</p>
+            <p className="mt-3 leading-[1.6]">{demo.email.body}</p>
           </div>
         </section>
 
@@ -76,7 +76,7 @@ export default function Demo() {
         <section className="p-5 sm:p-6">
           <h3 className="text-base font-medium text-muted">3. Ce que vous retrouvez</h3>
           {stage < 3 ? (
-            <p className="mt-4 rounded-md border border-dashed border-rule p-4 font-serif leading-[1.6] text-muted">
+            <p className="mt-4 rounded-md border border-dashed border-rule p-4 leading-[1.6] text-muted">
               Lancez la démonstration pour voir la fiche client se remplir et la réponse se préparer.
             </p>
           ) : (
@@ -92,7 +92,7 @@ export default function Demo() {
               {stage >= 4 && (
                 <div className="drop rounded-md border border-rule p-4">
                   <p className="text-sm font-medium">Brouillon de réponse, à relire</p>
-                  <p className="mt-2 font-serif text-sm leading-[1.6]">{demo.reply}</p>
+                  <p className="mt-2 text-sm leading-[1.6]">{demo.reply}</p>
                 </div>
               )}
               {finished && (

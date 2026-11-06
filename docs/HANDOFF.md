@@ -65,9 +65,9 @@ marketing/banners/               bannières LinkedIn et Google (PNG + HTML + gen
 
 ## 5. Design
 
-- Identité « **cahier Seyès** » : papier quadrillé, marge rouge, stylo bleu, surligneur jaune. Tout est détaillé dans `docs/brand-guidelines.md`.
-- Couleurs : bleu stylo #2B5CE6, encre #14213D, surligneur #FFE45C, marge #D93D63, vert #1D7A4B, fond #FFFFFF / #F3F6FC, texte secondaire #56627D, bordures #D6DEEE, erreur #B42318.
-- Polices hébergées sur le site : Schibsted Grotesk (titres), Source Serif 4 (textes), Atkinson Hyperlegible (mode accessibilité).
+- Identité « **le temps rendu** » (depuis novembre 2026, remplace le cahier Seyès) : fond gris bleuté, cartes blanches arrondies, boutons en pilule, surligneur jaune pour le temps gagné, hachures pour ce qui est automatisé. Tout est détaillé dans `docs/brand-guidelines.md` (v2).
+- Couleurs : bleu #2B5CE6, encre #14213D, surligneur #FFE45C, hachures #C3CDE0, vert #1D7A4B, fond de page #F3F5F9, cartes #FFFFFF, texte secondaire #56627D, bordures #D9E0EC, erreur #B42318.
+- Polices hébergées sur le site : Bricolage Grotesque (titres, gros chiffres), Hanken Grotesk (textes et interface), Atkinson Hyperlegible (mode accessibilité). Les anciennes (Schibsted Grotesk, Source Serif 4) restent installées pour les bannières de `marketing/banners/`, encore dans l'ancienne identité.
 - **Thème clair par défaut**, avec un bouton thème sombre et un panneau d'accessibilité (taille du texte, contraste, police lisible, espacement, liens soulignés, animations réduites). Les réglages sont posés en attributs `data-*` sur `<html>` par un script en ligne dans `index.html`.
 - Animations d'apparition (`useReveal`), qui respectent `prefers-reduced-motion`.
 - Ombres limitées à trois jetons (`shadow-card`, `shadow-float`, `shadow-overlay`) ; couleur du logo `--c-logo`. Boutons avec états survol, appui, focus (contour de 3 px) et désactivé.
@@ -138,3 +138,5 @@ marketing/banners/               bannières LinkedIn et Google (PNG + HTML + gen
 10. Installation des skills de design, bannières LinkedIn et Google, revue ui-ux-pro-max.
 11. Réglage du design (jetons, états des boutons), charte `docs/brand-guidelines.md`.
 12. Installation des skills Ponytail.
+13. Revue ui-ux-pro-max et ponytail : bouton du chat rond sur mobile, garanties sur 2 colonnes, espaces insécables avant : ; ? ! » (règle à garder pour tout nouveau texte).
+14. Refonte « le temps rendu » (piste C choisie parmi trois maquettes) : nouvelles polices, nouveaux jetons, fin du cahier Seyès.

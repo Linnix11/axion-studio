@@ -87,12 +87,12 @@ export default function ContactForm() {
 
   if (state === 'sent') {
     return (
-      <div className="drop rounded-lg border-2 border-ok bg-paper-2 p-6 sm:p-8" role="status">
+      <div className="drop rounded-xl border-2 border-ok bg-paper p-6 sm:p-8" role="status">
         <p className="flex items-center gap-3 text-2xl leading-tight font-medium">
           <span aria-hidden="true" className="grid size-8 place-items-center rounded-full bg-ok text-paper"><CheckIcon className="size-4" /></span>
           Message envoyé
         </p>
-        <p className="mt-4 font-serif text-lg leading-[1.6]">
+        <p className="mt-4 text-lg leading-[1.6]">
           Merci {values.nom.split(' ')[0]}. Je vous réponds sous 48 heures ouvrées à l’adresse {values.email}.
         </p>
         <button type="button" className={`${btn.ghost} mt-6`} onClick={() => { setValues(empty); setState('idle') }}>
@@ -111,7 +111,7 @@ export default function ContactForm() {
   })
 
   return (
-    <form noValidate onSubmit={onSubmit} aria-busy={state === 'sending'} className="rounded-lg border border-rule bg-paper-2 p-6 sm:p-8">
+    <form noValidate onSubmit={onSubmit} aria-busy={state === 'sending'} className="rounded-xl border border-rule bg-paper p-6 sm:p-8">
       {showSummary && Object.values(errors).some(Boolean) && (
         <div ref={summaryRef} tabIndex={-1} role="alert" aria-labelledby="form-errors-title" className="mb-6 rounded-md border-2 border-error bg-paper p-4 outline-offset-4">
           <h2 id="form-errors-title" className="text-base font-medium text-error">

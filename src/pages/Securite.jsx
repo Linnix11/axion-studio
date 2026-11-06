@@ -16,8 +16,8 @@ export default function Securite() {
         <ol className="border-t-2 border-ink">
           {security.map((s, i) => (
             <li key={s.title} className="grid gap-2 border-b border-rule py-7 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-10">
-              <h2 className="text-2xl leading-tight"><span className="mr-3 font-serif text-pen italic">{i + 1}.</span>{s.title}</h2>
-              <p className="max-w-[60ch] font-serif text-lg leading-[1.6] text-muted">{s.text}</p>
+              <h2 className="text-2xl leading-tight"><span className="mr-3 text-pen">{i + 1}.</span>{s.title}</h2>
+              <p className="max-w-[60ch] text-lg leading-[1.6] text-muted">{s.text}</p>
             </li>
           ))}
         </ol>
@@ -26,7 +26,7 @@ export default function Securite() {
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
             <SectionHead title="Et sur ce site ?" />
-            <p className="max-w-[56ch] font-serif text-lg leading-[1.6] text-muted">
+            <p className="max-w-[56ch] text-lg leading-[1.6] text-muted">
               Ce site ne dépose aucun cookie et ne mesure pas votre navigation. Le formulaire de contact m’envoie votre
               message par e-mail : il n’est pas enregistré sur le site. Les questions posées à l’assistant IA sont
               transmises à Google Gemini pour y répondre, sans être conservées ici.{geminiFreeTier && ` ${freeTierNotice}`} Détails dans la{' '}

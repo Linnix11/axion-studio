@@ -24,19 +24,19 @@ export default function Services() {
           <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
             <div>
               <h2 className="text-[2rem] leading-tight md:text-[2.5rem]">{s.title}</h2>
-              <p className="mt-4 max-w-[52ch] font-serif text-lg leading-[1.6] text-muted">{s.intro}</p>
+              <p className="mt-4 max-w-[52ch] text-lg leading-[1.6] text-muted">{s.intro}</p>
             </div>
             <div className="grid gap-8 sm:grid-cols-2">
               <div>
                 <h3 className="border-b-2 border-ink pb-2 text-base font-medium">Ce qui est inclus</h3>
                 <ul className="mt-2">
-                  {s.includes.map(x => <li key={x} className="border-b border-rule py-3 font-serif leading-[1.5]">{x}</li>)}
+                  {s.includes.map(x => <li key={x} className="border-b border-rule py-3 leading-[1.5]">{x}</li>)}
                 </ul>
               </div>
               <div>
                 <h3 className="border-b-2 border-ink pb-2 text-base font-medium">Par exemple</h3>
                 <ul className="mt-2">
-                  {s.examples.map(x => <li key={x} className="border-b border-rule py-3 font-serif leading-[1.5]">{x}</li>)}
+                  {s.examples.map(x => <li key={x} className="border-b border-rule py-3 leading-[1.5]">{x}</li>)}
                 </ul>
               </div>
             </div>
@@ -49,9 +49,9 @@ export default function Services() {
           Je pars toujours de ceux que vous utilisez. Selon votre situation, je travaille notamment avec :
         </SectionHead>
         <ul className="flex flex-wrap gap-2">
-          {tools.map(t => <li key={t} className="rounded-md border border-rule px-3 py-2">{t}</li>)}
+          {tools.map(t => <li key={t} className="rounded-md border border-rule bg-paper px-3 py-2">{t}</li>)}
         </ul>
-        <p className="mt-8 max-w-[60ch] font-serif leading-[1.6] text-muted">
+        <p className="mt-8 max-w-[60ch] leading-[1.6] text-muted">
           Votre logiciel n’est pas dans la liste ? S’il dispose d’une API ou d’un export, il peut presque toujours être
           relié. <Link to="/contact" className={textLink}>Posez-moi la question</Link>.
         </p>

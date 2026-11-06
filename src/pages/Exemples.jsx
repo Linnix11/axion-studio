@@ -13,7 +13,7 @@ export default function Exemples() {
       <Section note="Gains en ordre de grandeur">
         <div className="space-y-6">
           {useCases.map(u => (
-            <article key={u.task} className="lift overflow-hidden rounded-lg border border-rule">
+            <article key={u.task} className="lift overflow-hidden rounded-lg border border-rule bg-paper">
               <header className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-b border-rule bg-paper-2 px-6 py-4">
                 <div>
                   <p className="text-sm text-muted">{u.sector}</p>
@@ -24,11 +24,11 @@ export default function Exemples() {
               <div className="grid md:grid-cols-2">
                 <div className="border-b border-rule p-6 md:border-r md:border-b-0">
                   <h3 className="text-base font-medium text-muted">Avant</h3>
-                  <p className="mt-2 font-serif text-lg leading-[1.6] text-muted line-through decoration-pen/60">{u.before}</p>
+                  <p className="mt-2 text-lg leading-[1.6] text-muted line-through decoration-pen/60">{u.before}</p>
                 </div>
                 <div className="p-6">
                   <h3 className="text-base font-medium text-pen">Après</h3>
-                  <p className="mt-2 font-serif text-lg leading-[1.6]">{u.after}</p>
+                  <p className="mt-2 text-lg leading-[1.6]">{u.after}</p>
                 </div>
               </div>
             </article>

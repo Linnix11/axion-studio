@@ -24,7 +24,7 @@ function Block({ b }) {
   if (b.p) return <p className="mt-5"><Inline text={b.p} /></p>
   if (b.ul) return <ul className="mt-5 list-disc space-y-2 pl-6 marker:text-pen">{b.ul.map(i => <li key={i}><Inline text={i} /></li>)}</ul>
   if (b.ol) return <ol className="mt-5 list-decimal space-y-2 pl-6 marker:font-sans marker:text-pen">{b.ol.map(i => <li key={i}><Inline text={i} /></li>)}</ol>
-  if (b.note) return <p className="mt-8 border-l-4 border-marker bg-paper-2 px-5 py-4 font-sans text-base leading-[1.6]"><Inline text={b.note} /></p>
+  if (b.note) return <p className="mt-8 rounded-r-md border-l-4 border-marker bg-paper px-5 py-4 font-sans text-base leading-[1.6]"><Inline text={b.note} /></p>
   return null
 }
 
@@ -41,12 +41,9 @@ export default function Article() {
   return (
     <>
       <article>
-        <header className="seyes border-b border-rule">
-          <Container className="lg:grid lg:grid-cols-[150px_minmax(0,1fr)]">
-            <aside className="margin-line hidden pt-24 pr-5 text-right lg:block">
-              <p className="font-serif text-base leading-snug text-pen italic">{post.category}</p>
-            </aside>
-            <div className="intro pt-10 pb-12 md:pt-14 md:pb-16 lg:pl-12">
+        <header className="border-b border-rule">
+          <Container>
+            <div className="intro pt-10 pb-12 md:pt-14 md:pb-16">
               <nav aria-label="Fil d’Ariane" className="text-sm text-muted">
                 <ol className="flex flex-wrap gap-x-2">
                   <li><Link to="/" className="inline-flex min-h-11 items-center hover:text-pen">Accueil</Link> /</li>
@@ -62,10 +59,9 @@ export default function Article() {
           </Container>
         </header>
 
-        <Container className="lg:grid lg:grid-cols-[150px_minmax(0,1fr)]">
-          <aside className="margin-line hidden lg:block" />
-          <div className="grid gap-12 py-12 md:py-16 lg:pl-12 xl:grid-cols-[minmax(0,1fr)_15rem]">
-            <div className="min-w-0 max-w-[68ch] font-serif text-lg leading-[1.7]">
+        <Container>
+          <div className="grid gap-12 py-12 md:py-16 xl:grid-cols-[minmax(0,1fr)_15rem]">
+            <div className="min-w-0 max-w-[68ch] text-lg leading-[1.7]">
               <p className="text-xl leading-[1.6] text-muted">{post.lead}</p>
               {post.body.map((b, i) => <Block key={i} b={b} />)}
             </div>
@@ -82,7 +78,7 @@ export default function Article() {
       </article>
 
       {others.length > 0 && (
-        <section className="border-t border-rule bg-paper-2">
+        <section className="border-t border-rule bg-paper">
           <Container className="py-14 lg:pl-[13.5rem]">
             <h2 className="text-2xl leading-tight">À lire aussi</h2>
             <ul className="mt-6 grid gap-5 md:grid-cols-2">

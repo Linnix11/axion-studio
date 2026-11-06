@@ -25,7 +25,7 @@ export default function MentionsLegales() {
             </div>
           ))}
         </dl>
-        <div className="mt-10 max-w-[64ch] space-y-4 font-serif leading-[1.6] text-muted">
+        <div className="mt-10 max-w-[64ch] space-y-4 leading-[1.6] text-muted">
           <h2 className="font-sans text-xl text-ink">Propriété intellectuelle</h2>
           <p>Les textes et éléments graphiques de ce site sont la propriété de {company.owner}. Toute reproduction sans autorisation est interdite.</p>
           <h2 className="pt-4 font-sans text-xl text-ink">Données personnelles</h2>

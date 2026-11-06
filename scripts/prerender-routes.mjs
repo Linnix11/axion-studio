@@ -17,7 +17,7 @@ const template = readFileSync(join(dist, 'index.html'), 'utf8')
 const esc = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
 
 // Précharge les deux polices principales (alphabet latin) pour accélérer le premier affichage.
-const fonts = readdirSync(join(dist, 'assets')).filter(f => /^(schibsted-grotesk|source-serif-4)-latin-wght-normal-.*\.woff2$/.test(f))
+const fonts = readdirSync(join(dist, 'assets')).filter(f => /^(bricolage-grotesque-latin-wdth|hanken-grotesk-latin-wght)-normal-.*\.woff2$/.test(f))
 const preload = fonts.map(f => `<link rel="preload" href="/assets/${f}" as="font" type="font/woff2" crossorigin>`).join('\n  ')
 
 function page(path) {

@@ -27,8 +27,8 @@ export default function Methode() {
                 <h2 className="mt-1 text-[2rem] leading-tight">{s.title}</h2>
               </div>
               <div className="max-w-[62ch]">
-                <p className="font-serif text-lg leading-[1.6]">{s.text}</p>
-                <p className="mt-3 font-serif text-lg leading-[1.6] text-muted">{s.detail}</p>
+                <p className="text-lg leading-[1.6]">{s.text}</p>
+                <p className="mt-3 text-lg leading-[1.6] text-muted">{s.detail}</p>
               </div>
             </li>
           ))}
@@ -39,12 +39,12 @@ export default function Methode() {
         <SectionHead title="À quoi ressemble une proposition">
           Un document d’une page, sans jargon, qui dit exactement ce qui sera fait, en combien de temps et pour quel prix.
         </SectionHead>
-        <article className="seyes max-w-3xl rounded-lg border border-rule shadow-card">
-          <header className="flex flex-wrap items-baseline justify-between gap-2 border-b-2 border-margin/70 bg-paper/85 px-6 py-4">
+        <article className="max-w-3xl rounded-xl border border-rule bg-paper">
+          <header className="flex flex-wrap items-baseline justify-between gap-2 border-b border-rule px-6 py-4">
             <h3 className="text-xl">Proposition d’automatisation</h3>
             <p className="text-sm text-muted">{ps.client}</p>
           </header>
-          <dl className="bg-paper/75 px-6 py-2">
+          <dl className="px-6 py-2">
             {[
               ['Constat', ps.problem],
               ['Ce qui sera construit', <ul className="list-disc pl-5">{ps.solution.map(x => <li key={x}>{x}</li>)}</ul>],
@@ -55,7 +55,7 @@ export default function Methode() {
             ].map(([k, v]) => (
               <div key={k} className="grid gap-x-6 border-b border-rule py-3 last:border-0 sm:grid-cols-[170px_1fr]">
                 <dt className="text-sm text-muted">{k}</dt>
-                <dd className="font-serif leading-[1.6]">{v}</dd>
+                <dd className="leading-[1.6]">{v}</dd>
               </div>
             ))}
           </dl>
@@ -67,7 +67,7 @@ export default function Methode() {
           <div>
             <h2 className="mb-8 text-[2rem] leading-tight">Ce dont j’ai besoin de votre part</h2>
             <ul className="border-t-2 border-ink">
-              {needed.map(n => <li key={n} className="border-b border-rule py-4 font-serif text-lg leading-[1.5]">{n}</li>)}
+              {needed.map(n => <li key={n} className="border-b border-rule py-4 text-lg leading-[1.5]">{n}</li>)}
             </ul>
           </div>
           <div>

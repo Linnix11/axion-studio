@@ -14,14 +14,14 @@ export default function Tarifs() {
       <Section note="3 formules">
         <div className="grid gap-6 lg:grid-cols-3">
           {offers.map(o => (
-            <article key={o.name} className={`lift flex flex-col rounded-lg border p-6 sm:p-8 ${o.featured ? 'border-2 border-pen' : 'border-rule'}`}>
+            <article key={o.name} className={`lift flex flex-col rounded-lg border bg-paper p-6 sm:p-8 ${o.featured ? 'border-2 border-pen' : 'border-rule'}`}>
               <h2 className="text-2xl leading-tight">{o.name}</h2>
               <p className="mt-4">
                 {o.from && <span className="block text-sm text-muted">À partir de</span>}
-                <span className="text-[2rem] leading-none font-semibold tabular-nums">{o.price}</span>
+                <span className="font-display text-[2.5rem] leading-none font-extrabold tabular-nums [font-stretch:85%]">{o.price}</span>
                 <span className="block mt-1 text-sm text-muted">{o.unit}</span>
               </p>
-              <p className="mt-4 font-serif leading-[1.6] text-muted">{o.text}</p>
+              <p className="mt-4 leading-[1.6] text-muted">{o.text}</p>
               <ul className="mt-6 mb-8 border-t border-rule">
                 {o.items.map(i => <li key={i} className="border-b border-rule py-3">{i}</li>)}
               </ul>
@@ -29,7 +29,7 @@ export default function Tarifs() {
             </article>
           ))}
         </div>
-        <div className="mt-10 max-w-[64ch] space-y-3 font-serif leading-[1.6] text-muted">
+        <div className="mt-10 max-w-[64ch] space-y-3 leading-[1.6] text-muted">
           <p className="font-sans font-medium text-ink">Prestations réservées aux professionnels : entreprises, indépendants, professions libérales et associations.</p>
           <p>TVA non applicable, article 293 B du CGI : les prix indiqués sur les devis sont les prix que vous payez.
             Acompte, paiement et conditions détaillés dans les <Link to="/cgv" className={textLink}>conditions générales de vente</Link>.</p>

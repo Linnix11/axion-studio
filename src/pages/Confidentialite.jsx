@@ -25,7 +25,7 @@ export default function Confidentialite() {
           {blocks(company).map(([t, x]) => (
             <section key={t} className="border-b border-rule py-6">
               <h2 className="text-xl leading-tight">{t}</h2>
-              <p className="mt-2 max-w-[64ch] font-serif text-lg leading-[1.6] text-muted">{x}</p>
+              <p className="mt-2 max-w-[64ch] text-lg leading-[1.6] text-muted">{x}</p>
             </section>
           ))}
           <p className="py-6">Contact : <a href={`mailto:${company.email}`} className={`${textLink} -my-3 inline-block py-3`}>{company.email}</a></p>

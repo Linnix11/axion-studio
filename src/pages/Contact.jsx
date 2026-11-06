@@ -29,7 +29,7 @@ export default function Contact() {
               ))}
             </ul>
             <h2 className="mt-10 text-2xl leading-tight">Ce qui se passe ensuite</h2>
-            <ol className="mt-4 space-y-3 font-serif text-lg leading-[1.6] text-muted">
+            <ol className="mt-4 space-y-3 text-lg leading-[1.6] text-muted">
               <li>1. Je lis votre message et vous propose un créneau pour l’audit.</li>
               <li>2. On échange 30 minutes sur votre semaine et vos outils.</li>
               <li>3. Vous recevez une proposition chiffrée sous 72 heures, sans engagement.</li>

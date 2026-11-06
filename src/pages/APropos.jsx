@@ -11,7 +11,7 @@ export default function APropos() {
         <div className="grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:gap-16">
           <div className="max-w-[62ch]">
             <h2 className="text-[2rem] leading-tight md:text-[2.5rem]">Qui je suis</h2>
-            <div className="mt-8 space-y-5 font-serif text-lg leading-[1.7]">
+            <div className="mt-8 space-y-5 text-lg leading-[1.7]">
               <p>
                 Je m’appelle {company.owner} et j’ai créé {company.brand} pour une raison simple : trop d’entreprises
                 perdent des heures chaque semaine à recopier, relancer et classer à la main.
