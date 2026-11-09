@@ -95,6 +95,8 @@ automatisations/n8n/             workflows n8n de prospection (collecte SIRENE +
 - `src/seo.js` : titres de 60 caractères maximum, descriptions de 160 caractères maximum. JSON-LD : ProfessionalService, Person, WebSite, BreadcrumbList, Service, OfferCatalog, FAQPage, Blog, BlogPosting.
 - `sitemap.xml` (date `lastmod` seulement sur les articles, leur vraie date de publication), `robots.txt` (robots des IA autorisés), `llms.txt`, `llms-full.txt` et `og.png` sont générés au build.
 - IndexNow est automatisé par GitHub Actions, seulement quand les textes changent (un changement de style ne déclenche rien).
+- **Cible : la France entière** (ni seulement le Val-d'Oise, ni l'international). Signaux en place : titre de l'accueil « Automatisation IA pour TPE et PME en France », descriptions « partout en France », `lang="fr-FR"` et `hreflang="fr-FR"` sur la page elle-même (il n'existe pas d'autre version), `geo.region FR-95` (lu par Bing), JSON-LD avec `areaServed` France, coordonnées de Montlignon et `contactPoint` en français, `llms.txt` « clientèle en France, accompagnée en français ». Garder « France » dans le titre et la description de l'accueil lors de toute retouche.
+- Google ne propose plus de réglage « pays ciblé » dans Search Console : le domaine en .fr et ces signaux suffisent. Pour des publicités Google (SEA), choisir la zone « France » dans la campagne.
 - DNS (via l'API Hostinger, avec l'accord de l'utilisateur) : SPF `v=spf1 ip4:92.113.28.5 include:_spf.mail.hostinger.com ~all` et DMARC `v=DMARC1; p=none; rua=mailto:arthur.champagne@icloud.com`.
 - Problème connu non résolu : la protection anti-robots de Hostinger renvoie parfois 403 à Bingbot et 429 à GPTBot. Cela se règle dans le hPanel, par l'utilisateur.
 
@@ -103,7 +105,7 @@ automatisations/n8n/             workflows n8n de prospection (collecte SIRENE +
 - `axion-1-collecte-prospects.json` (lancé à la main) : plusieurs métiers (lignes « code NAF = métier ») et départements par lancement, plafond `max_entreprises` → API publique « Recherche d'entreprises » (SIRENE, gratuite) → les entreprises avec `opposition_diffusion_commerciale` ou déjà présentes sont écartées → Google Places (site, téléphone) → outils repérés sur la page d'accueil (CMS, prise de rendez-vous, boutique, formulaire, chat, e-mailing) et 1 ou 2 pistes d'automatisation (colonnes `outils`, `pistes`) → e-mail générique trouvé sur l'accueil puis la page contact → feuille Google Sheets « Prospects ».
 - `axion-2-envoi-emails.json` (jours ouvrés, 9 h 40) : 20 lignes « nouveau » au maximum → objet et accroche rédigés par Gemini à partir du métier, des outils repérés et des pistes (consigne : ne citer que les outils listés) → e-mail texte depuis arthur.champagne@icloud.com (SMTP iCloud, mot de passe pour app) → statut « envoyé » ou « erreur d'envoi » → pause de 2 à 4 min.
 - `README.md` : mise en route, accès à créer, coûts, règles CNIL. Les réponses « STOP » se traitent à la main (statut « désinscrit »).
-- Le n8n de l'utilisateur tourne **sur son ordinateur** : une session cloud ne peut pas l'atteindre. Il importe les workflows lui-même par « Import from URL » avec les adresses `https://raw.githubusercontent.com/Linnix11/axion-studio/main/automatisations/n8n/<fichier>.json`.
+- Le n8n de l'utilisateur (version 2.7.5) tourne **sur son Mac**, à http://localhost:5678 : une session cloud ne peut pas l'atteindre, même si l'utilisateur pense le contraire. Pour agir dedans, il faut une session Claude qui tourne sur le Mac (application Claude, onglet Code, ou `claude` dans le Terminal) ou un dossier relié par Remote Control. Sinon, il importe les workflows lui-même par « Import from URL » avec les adresses `https://raw.githubusercontent.com/Linnix11/axion-studio/main/automatisations/n8n/<fichier>.json`.
 - Pièges vus en les construisant : dans un nœud Code n8n, `URL` n'existe pas (utiliser des expressions régulières) ; l'import en ligne de commande (`n8n import:workflow`) exige `active`, `id` et `versionId`, pas l'import par l'interface ; dans le conteneur cloud, les requêtes HTTP de n8n ne passent pas le proxy, donc tester avec un petit serveur local et des données enregistrées.
 - Les workflows ont été testés en exécution réelle dans n8n 1.123 (Google Sheets, Places, Gemini et SMTP simulés). L'utilisateur fait tourner n8n 2.7.5 : la collecte y fonctionne avec ses vrais accès (après avoir nommé l'onglet « Prospects » et partagé la feuille en Éditeur avec le compte Google branché dans n8n). L'envoi réel n'a pas encore été confirmé.
 
@@ -133,13 +135,13 @@ automatisations/n8n/             workflows n8n de prospection (collecte SIRENE +
 - [ ] Google Search Console : ajouter le site et envoyer `https://axionstudio.fr/sitemap.xml`.
 - [ ] Bing Webmaster Tools : ajouter le site (import possible depuis Search Console).
 - [ ] hPanel : assouplir la protection anti-robots, qui bloque Bingbot et GPTBot.
-- [ ] Créer la fiche Google Business Profile. Les visuels sont prêts dans `marketing/banners/` (nouveau style).
+- [ ] Créer la fiche Google Business Profile (zone desservie : France, ou Île-de-France pour les déplacements). Les visuels sont prêts dans `marketing/banners/` (nouveau style).
 - [ ] Mettre à jour le profil et la page LinkedIn avec les nouvelles bannières (`marketing/banners/README.md` dit où mettre chacune).
 - [ ] Renseigner le SIRET dès qu'il est attribué (`src/data.js`).
 - [ ] Faire relire les CGV.
 - [ ] Recueillir de vrais avis clients avant d'en afficher.
 - [ ] Gemini : la facturation étant active, passer `geminiFreeTier` à `false` dans `src/chatbot.js` si l'avis « version gratuite » ne doit plus s'afficher (l'assistant peut le faire).
-- [ ] Prospection n8n : importer les deux workflows par URL, créer la feuille Google « Prospects » (en-têtes dans `automatisations/n8n/feuille-prospects-en-tetes.csv`), créer les 4 accès (Google Sheets, clé Google Places, clé Gemini, mot de passe pour app iCloud), faire un essai sur sa propre adresse, puis activer l'envoi.
+- [ ] Prospection n8n : sa version installée est la première (un seul métier, sans repérage des outils). Pour passer à la nouvelle : ajouter les colonnes `outils` et `pistes` à la fin de la ligne 1 de la feuille, réimporter les deux workflows par URL, y choisir ses accès et l'adresse de la feuille, puis supprimer les anciens (sinon envoi en double). Ensuite : un essai sur sa propre adresse, puis activer l'envoi.
 - [ ] Supprimer la branche `gh-pages` sur GitHub (ancienne copie du site).
 
 ## 12. Historique résumé
@@ -162,3 +164,5 @@ automatisations/n8n/             workflows n8n de prospection (collecte SIRENE +
 16. Audit ponytail du dépôt, puis corrections : dates réelles dans le plan du site, IndexNow limité aux changements de texte, avertissement typographique au build, restes GitHub Pages retirés, `_common.php` bloqué depuis le web, option inutile retirée de `SectionHead`.
 17. Accueil : la carte du temps rendu devient une semaine type du lundi au vendredi, interactive, comme sur la maquette retenue.
 18. Bannières LinkedIn et Google refaites dans le style « le temps rendu » ; polices Schibsted Grotesk et Source Serif 4 retirées du projet.
+19. Prospection n8n, deuxième version : plusieurs métiers et départements par lancement, repérage des outils visibles sur le site des prospects et pistes d'automatisation reprises par Gemini dans l'e-mail. Mise en route chez l'utilisateur : onglet à nommer « Prospects » après l'import du CSV, feuille à partager en Éditeur avec le compte Google branché dans n8n.
+20. SEO recentré sur la France entière (titre et descriptions, `fr-FR`, hreflang, données structurées, `llms.txt`).
