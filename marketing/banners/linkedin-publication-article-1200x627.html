@@ -1,25 +1,27 @@
 <!doctype html><html lang="fr"><head><meta charset="utf-8"><style>
-@font-face{font-family:SG;src:url(file:///home/user/axion-studio/node_modules/@fontsource-variable/schibsted-grotesk/files/schibsted-grotesk-latin-wght-normal.woff2);font-weight:100 900}
-@font-face{font-family:SS;src:url(file:///home/user/axion-studio/node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-normal.woff2);font-weight:100 900}
-@font-face{font-family:SS;font-style:italic;src:url(file:///home/user/axion-studio/node_modules/@fontsource-variable/source-serif-4/files/source-serif-4-latin-wght-italic.woff2);font-weight:100 900}
+@font-face{font-family:BG;src:url(file:///home/user/axion-studio/node_modules/@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wdth-normal.woff2);font-weight:200 800;font-stretch:75% 100%}
+@font-face{font-family:HG;src:url(file:///home/user/axion-studio/node_modules/@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2);font-weight:100 900}
 *{box-sizing:border-box;margin:0}
 html,body{width:1200px;height:627px;overflow:hidden}
-body{font-family:SG,Arial,sans-serif;color:#14213d;background:#ffffff;position:relative;
-background-image:linear-gradient(rgba(35,70,200,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(35,70,200,.13) 1px,transparent 1px),linear-gradient(rgba(35,70,200,.055) 1px,transparent 1px);
-background-size:32px 32px,32px 32px,32px 8px;background-position:-1px -1px}
-.margin{position:absolute;top:0;bottom:0;left:150px;width:3px;background:rgba(217,61,99,.75)}
+body{font-family:HG,Arial,sans-serif;color:#14213d;background:#f3f5f9;position:relative}
 .brand{display:flex;align-items:center;gap:.45em;font-weight:600;letter-spacing:-.01em}
-.h{font-weight:600;letter-spacing:-.03em;line-height:1.02;text-wrap:balance}
-.serif{font-family:SS,Georgia,serif;color:#56627d}
-.note{font-family:SS,Georgia,serif;font-style:italic;color:#2b5ce6}
-.mark{background:#ffe45c;padding:0 .18em;border-radius:3px}
-.pill{display:inline-flex;align-items:center;background:#2b5ce6;color:#fff;border-radius:10px;font-weight:600}
+.h{font-family:BG,'Arial Narrow',sans-serif;font-weight:700;font-stretch:85%;letter-spacing:-.02em;line-height:1.02;text-wrap:balance}
+.lead{color:#56627d;line-height:1.45}
+.muted{color:#56627d}
+.eyebrow{color:#2b5ce6;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.mark{background:#ffe45c;color:#14213d;padding:0 .14em;border-radius:.14em}
+.card{background:#ffffff;border:1px solid #d9e0ec;border-radius:18px}
+.day{font-size:.72em;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#56627d;text-align:center}
+.blk{font-size:.78em;line-height:1.25;padding:.45em .5em;border:1px solid #d9e0ec;border-radius:.6em;background:#f3f5f9}
+.hatch{background:repeating-linear-gradient(-45deg,transparent 0 6px,#c3cde0 6px 7px),#ffffff;color:#56627d}
+.hatch s{text-decoration-color:#2b5ce6;text-decoration-thickness:1.5px}
+.pill{display:inline-flex;align-items:center;background:#2b5ce6;color:#fff;border-radius:999px;font-weight:600}
 .abs{position:absolute}
-</style></head><body><div class="margin"></div>
-      <div class="abs" style="left:200px;top:70px;right:80px">
-        <p class="note" style="font-size:26px">Nouvel article · Blog Axion Studio</p>
-        <p class="h" style="font-size:66px;margin-top:22px">Combien coûte l’automatisation pour une petite entreprise ?</p>
-        <p class="serif" style="font-size:28px;margin-top:24px">Ce qui fait varier le prix, les coûts à prévoir et une méthode simple pour savoir si c’est rentable.</p>
-      </div>
-      <div class="abs brand" style="left:200px;bottom:56px;font-size:28px"><svg viewBox="0 0 210 175" height="38" aria-hidden="true"><g stroke="#2b5ce6" stroke-width="9" stroke-linecap="round"><line x1="66" y1="25" x2="23" y2="81"/><line x1="23" y1="81" x2="128" y2="81"/><line x1="128" y1="81" x2="68" y2="150"/></g><g fill="#2b5ce6"><circle cx="66" cy="25" r="18"/><circle cx="23" cy="81" r="18"/><circle cx="128" cy="81" r="18"/><circle cx="68" cy="150" r="18"/></g><path d="M95 22H148L190 86L148 152H95" fill="none" stroke="#14213d" stroke-width="18" stroke-linejoin="round"/></svg>Axion Studio</div>
-      <p class="abs" style="right:80px;bottom:62px;font-size:24px;color:#2b5ce6;font-weight:600">axionstudio.fr/blog</p></body></html>
+</style></head><body>
+      <div class="abs card" style="left:56px;top:56px;right:56px;bottom:56px;padding:58px 64px">
+        <p class="eyebrow" style="font-size:19px">Nouvel article · Blog Axion Studio</p>
+        <p class="h" style="font-size:70px;margin-top:20px;max-width:900px">Combien coûte l’automatisation pour une petite entreprise ?</p>
+        <p class="lead" style="font-size:26px;margin-top:24px;max-width:860px">Ce qui fait varier le prix, les coûts à prévoir et une méthode simple pour savoir si c’est rentable.</p>
+        <div class="abs brand" style="left:64px;bottom:48px;font-size:26px"><svg viewBox="0 0 210 175" height="34" aria-hidden="true"><g stroke="#2b5ce6" stroke-width="9" stroke-linecap="round"><line x1="66" y1="25" x2="23" y2="81"/><line x1="23" y1="81" x2="128" y2="81"/><line x1="128" y1="81" x2="68" y2="150"/></g><g fill="#2b5ce6"><circle cx="66" cy="25" r="18"/><circle cx="23" cy="81" r="18"/><circle cx="128" cy="81" r="18"/><circle cx="68" cy="150" r="18"/></g><path d="M95 22H148L190 86L148 152H95" fill="none" stroke="#14213d" stroke-width="18" stroke-linejoin="round"/></svg>Axion Studio</div>
+        <p class="abs" style="right:64px;bottom:52px;font-size:23px;color:#2b5ce6;font-weight:600">axionstudio.fr/blog</p>
+      </div></body></html>

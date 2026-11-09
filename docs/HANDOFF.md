@@ -68,7 +68,7 @@ automatisations/n8n/             workflows n8n de prospection (collecte SIRENE +
 
 - Identité « **le temps rendu** » (depuis novembre 2026, remplace le cahier Seyès) : fond gris bleuté, cartes blanches arrondies, boutons en pilule, surligneur jaune pour le temps gagné, hachures pour ce qui est automatisé. Tout est détaillé dans `docs/brand-guidelines.md` (v2).
 - Couleurs : bleu #2B5CE6, encre #14213D, surligneur #FFE45C, hachures #C3CDE0, vert #1D7A4B, fond de page #F3F5F9, cartes #FFFFFF, texte secondaire #56627D, bordures #D9E0EC, erreur #B42318.
-- Polices hébergées sur le site : Bricolage Grotesque (titres, gros chiffres), Hanken Grotesk (textes et interface), Atkinson Hyperlegible (mode accessibilité). Les anciennes (Schibsted Grotesk, Source Serif 4) restent installées pour les bannières de `marketing/banners/`, encore dans l'ancienne identité.
+- Polices hébergées sur le site : Bricolage Grotesque (titres, gros chiffres), Hanken Grotesk (textes et interface), Atkinson Hyperlegible (mode accessibilité). Les bannières de `marketing/banners/` utilisent les mêmes.
 - **Thème clair par défaut**, avec un bouton thème sombre et un panneau d'accessibilité (taille du texte, contraste, police lisible, espacement, liens soulignés, animations réduites). Les réglages sont posés en attributs `data-*` sur `<html>` par un script en ligne dans `index.html`.
 - Animations d'apparition (`useReveal`), qui respectent `prefers-reduced-motion`.
 - Ombres limitées à trois jetons (`shadow-card`, `shadow-float`, `shadow-overlay`) ; couleur du logo `--c-logo`. Boutons avec états survol, appui, focus (contour de 3 px) et désactivé.

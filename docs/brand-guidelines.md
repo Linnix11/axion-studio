@@ -168,4 +168,4 @@ Ombres : `shadow-card` (cartes), `shadow-float` (bulle du chat), `shadow-overlay
 
 ## Usage
 - Toute nouvelle page ou visuel respecte ce document ; en cas de doute, la valeur de `src/index.css` fait foi.
-- Bannières et visuels de réseaux sociaux : `marketing/banners/` (script de génération inclus). Elles sont encore dans l'identité v1 (Seyès) et sont à refaire.
+- Bannières et visuels de réseaux sociaux : `marketing/banners/` (script de génération inclus), dans l'identité v2.
