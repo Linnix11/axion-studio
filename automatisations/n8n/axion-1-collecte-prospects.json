@@ -3,7 +3,7 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "4f1fab0d-e625-4f2f-a97d-ab08084c2270",
+      "id": "77716c1b-5e6a-49fb-bac8-d11e27f0b91b",
       "name": "Lancer la collecte",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
@@ -17,34 +17,34 @@
         "assignments": {
           "assignments": [
             {
-              "id": "038d5029-a4c5-4ecb-9850-462ade593325",
-              "name": "naf",
-              "value": "43.22A",
+              "id": "eb775083-f2c4-4936-8b27-a5051bb58dc7",
+              "name": "metiers",
+              "value": "43.22A = plombiers et chauffagistes\n43.21A = électriciens\n43.32A = menuisiers\n69.20Z = experts-comptables",
               "type": "string"
             },
             {
-              "id": "2adedcad-bccc-411b-af6b-4a29d6263c5a",
-              "name": "metier",
-              "value": "plombiers et chauffagistes",
+              "id": "f62530c3-b2b1-4fca-82db-aa10ba7d4a3c",
+              "name": "departements",
+              "value": "95, 78",
               "type": "string"
             },
             {
-              "id": "82f9933b-52bb-49b0-8913-fb37ccdcbd34",
-              "name": "departement",
-              "value": "95",
-              "type": "string"
-            },
-            {
-              "id": "33cb4f13-73fc-4eb9-a720-e891ecda5cee",
+              "id": "125ffcd1-a5b0-42d8-869e-40d69bea6be4",
               "name": "pages",
-              "value": 2,
+              "value": 1,
+              "type": "number"
+            },
+            {
+              "id": "b19a96dd-57f5-4f02-8fef-00f6f18e217b",
+              "name": "max_entreprises",
+              "value": 80,
               "type": "number"
             }
           ]
         },
         "options": {}
       },
-      "id": "57b4b33e-57bf-47d2-b49e-38e1c6491d1f",
+      "id": "deceb6f9-c8d5-4fd3-8162-2b7915829c6a",
       "name": "Critères de recherche",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -52,7 +52,7 @@
         220,
         300
       ],
-      "notes": "À modifier avant chaque lancement :\n• naf : code d'activité (43.22A plomberie, 43.21A électricité, 69.20Z comptables, 56.10A restaurants, 47.71Z boutiques de vêtements…)\n• metier : le même métier en mots, utilisé dans l'e-mail\n• departement : 95, 78, 75…\n• pages : 25 entreprises par page",
+      "notes": "À modifier avant chaque lancement :\n• metiers : une ligne par métier, « code d'activité = métier en mots » (43.22A plomberie, 43.21A électricité, 69.20Z comptables, 56.10A restaurants, 96.02A coiffure, 47.71Z vêtements…)\n• departements : séparés par des virgules (95, 78, 75…)\n• pages : 25 entreprises par page, pour chaque métier et chaque département\n• max_entreprises : plafond par lancement (limite le coût de Google Places)",
       "notesInFlow": true
     },
     {
@@ -69,7 +69,7 @@
         },
         "options": {}
       },
-      "id": "cb236313-2196-44d2-b929-4e2047c47fc5",
+      "id": "9cc923a5-8a44-4f29-acd8-6867a2870203",
       "name": "Lire les prospects déjà connus",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
@@ -88,9 +88,9 @@
     },
     {
       "parameters": {
-        "jsCode": "// Une ligne par page de résultats de l'annuaire (25 entreprises par page)\nconst { pages } = $('Critères de recherche').first().json\nreturn Array.from({ length: pages }, (_, i) => ({ json: { page: i + 1 } }))"
+        "jsCode": "// Une ligne par recherche : chaque métier × chaque département × chaque page (25 entreprises par page)\nconst c = $('Critères de recherche').first().json\nconst metiers = String(c.metiers || '').split('\\n').map(l => l.split('=')).filter(([naf]) => naf && naf.trim())\n  .map(([naf, metier]) => ({ naf: naf.trim().toUpperCase(), metier: (metier || '').trim() }))\nconst departements = String(c.departements || '').split(/[,;\\s]+/).filter(Boolean)\nconst recherches = []\nfor (const m of metiers) for (const departement of departements) for (let page = 1; page <= (c.pages || 1); page++)\n  recherches.push({ json: { ...m, departement, page } })\nreturn recherches"
       },
-      "id": "8979d06b-be36-4ad6-b13a-570272a66189",
+      "id": "6549ea89-e8b4-4478-9120-a01e75f31f47",
       "name": "Pages à lire",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -107,11 +107,11 @@
           "parameters": [
             {
               "name": "activite_principale",
-              "value": "={{ $('Critères de recherche').first().json.naf }}"
+              "value": "={{ $json.naf }}"
             },
             {
               "name": "departement",
-              "value": "={{ $('Critères de recherche').first().json.departement }}"
+              "value": "={{ $json.departement }}"
             },
             {
               "name": "etat_administratif",
@@ -137,7 +137,7 @@
           "timeout": 20000
         }
       },
-      "id": "105d5d22-74ce-4c20-80ca-297c940b9b39",
+      "id": "19570996-66f8-419a-bfcc-95a250c6355f",
       "name": "Chercher les entreprises (annuaire de l'État)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -153,7 +153,7 @@
         "fieldToSplitOut": "results",
         "options": {}
       },
-      "id": "0633cf07-b98a-4cc7-95de-e201409cde56",
+      "id": "3c63fb63-9035-404f-9ec6-59e868d1ded5",
       "name": "Une ligne par entreprise",
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
@@ -164,9 +164,9 @@
     },
     {
       "parameters": {
-        "jsCode": "// Écarte : les entreprises qui refusent la prospection commerciale (droit d'opposition SIRENE),\n// celles à diffusion restreinte, celles déjà dans la feuille, et les doublons.\nconst deja = new Set($('Lire les prospects déjà connus').all().map(i => String(i.json.siren || '')).filter(Boolean))\nconst { metier } = $('Critères de recherche').first().json\nconst vus = new Set()\nconst prospects = []\nfor (const { json: e } of $input.all()) {\n  if (e.opposition_diffusion_commerciale || e.statut_diffusion !== 'O') continue\n  if (deja.has(e.siren) || vus.has(e.siren)) continue\n  const etab = (e.matching_etablissements || []).find(x => x.etat_administratif === 'A')   // établissement ouvert dans le département\n  if (!etab) continue\n  vus.add(e.siren)\n  prospects.push({ json: {\n    siren: e.siren,\n    nom: etab.nom_commercial || (etab.liste_enseignes || [])[0] || e.nom_complet,\n    metier,\n    activite: e.activite_principale,\n    adresse: etab.adresse,\n    code_postal: etab.code_postal,\n    ville: etab.libelle_commune,\n  } })\n}\nreturn prospects"
+        "jsCode": "// Écarte : les entreprises qui refusent la prospection commerciale (droit d'opposition SIRENE),\n// celles à diffusion restreinte, celles déjà dans la feuille, et les doublons.\nconst deja = new Set($('Lire les prospects déjà connus').all().map(i => String(i.json.siren || '')).filter(Boolean))\nconst metierDe = Object.fromEntries($('Pages à lire').all().map(i => [i.json.naf, i.json.metier]))\nconst { max_entreprises } = $('Critères de recherche').first().json\nconst vus = new Set()\nconst prospects = []\nfor (const { json: e } of $input.all()) {\n  if (e.opposition_diffusion_commerciale || e.statut_diffusion !== 'O') continue\n  if (deja.has(e.siren) || vus.has(e.siren)) continue\n  const etab = (e.matching_etablissements || []).find(x => x.etat_administratif === 'A')   // établissement ouvert dans le département\n  if (!etab) continue\n  vus.add(e.siren)\n  prospects.push({ json: {\n    siren: e.siren,\n    nom: etab.nom_commercial || (etab.liste_enseignes || [])[0] || e.nom_complet,\n    metier: metierDe[e.activite_principale] || '',\n    activite: e.activite_principale,\n    adresse: etab.adresse,\n    code_postal: etab.code_postal,\n    ville: etab.libelle_commune,\n  } })\n}\nreturn prospects.slice(0, max_entreprises || 80)"
       },
-      "id": "868cb34a-56d1-4a50-8635-3a1b9c1d11c5",
+      "id": "60548d83-da08-4c20-ba1c-c2ee6cc57502",
       "name": "Garder les prospects utilisables",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -203,7 +203,7 @@
           "timeout": 15000
         }
       },
-      "id": "103f9179-917d-4de9-a1ec-db28e01cd3ae",
+      "id": "d8fb1937-7113-4da0-b0bb-6c936e24bdb4",
       "name": "Trouver le site et le téléphone (Google)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -226,7 +226,7 @@
         "mode": "runOnceForEachItem",
         "jsCode": "const lieu = ($json.places || [])[0] || {}\nreturn { json: {\n  ...$('Garder les prospects utilisables').item.json,\n  site: lieu.websiteUri || '',\n  telephone: lieu.nationalPhoneNumber || '',\n  nom_google: lieu.displayName?.text || '',   // à comparer au nom : Google peut renvoyer une autre entreprise\n} }"
       },
-      "id": "1cbf30e1-6e63-4889-a8fc-e53a627f065a",
+      "id": "d67f580d-4872-4531-a40a-0785024d7ac6",
       "name": "Ajouter site et téléphone",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -246,7 +246,7 @@
           },
           "conditions": [
             {
-              "id": "e84996ba-6d75-476e-bfd3-effc395e0c20",
+              "id": "cd51fdcf-f233-4d71-9074-aeffb4f21f65",
               "leftValue": "={{ $json.site }}",
               "operator": {
                 "type": "string",
@@ -260,7 +260,7 @@
         },
         "options": {}
       },
-      "id": "2ee4ef8d-a9b2-4f2b-8d88-ffcd3c7153a3",
+      "id": "0d52f3d0-b6b5-4683-8ea4-101656e16b12",
       "name": "Site trouvé ?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -288,7 +288,7 @@
           }
         }
       },
-      "id": "2ebb8c6d-33fe-4028-b498-2ebe050a4f6e",
+      "id": "4aab7d01-4a55-4dd9-9e5e-e2caca2a36fd",
       "name": "Lire la page d'accueil",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -301,14 +301,30 @@
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "function chercherEmail(html, site) {\n  const origine = (String(site || '').match(/^https?:\\/\\/[^\\/?#]+/i) || [''])[0]\n  const domaine = origine.replace(/^https?:\\/\\/(www\\.)?/i, '').replace(/:\\d+$/, '').toLowerCase()\n  const texte = String(html || '')\n    .replace(/&#64;|&#x40;|\\[at\\]|\\(at\\)| arobase /gi, '@')\n    .replace(/%40/g, '@')\n  const trouves = [...new Set((texte.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}/gi) || []).map(e => e.toLowerCase()))]\n    .filter(e => !/\\.(png|jpe?g|gif|svg|webp|css|js)$/.test(e))          // noms d'images du type logo@2x.png\n    .filter(e => !/(sentry|wixpress|example|exemple|domain|votre|email@|nom@|user@)/.test(e))\n  const generique = /^(contact|info|infos|accueil|bonjour|hello|devis|commercial|secretariat|administration|agence|atelier)@/\n  const score = e => (domaine && e.endsWith('@' + domaine) ? 2 : 0) + (generique.test(e) ? 1 : 0)\n  const email = trouves.sort((a, b) => score(b) - score(a))[0] || ''\n  // Lien vers une page contact ou mentions légales, pour un second essai si rien n'est trouvé\n  const lien = (String(html || '').match(/href=[\"']([^\"'#]*(contact|mentions)[^\"'#]*)[\"']/i) || [])[1] || ''\n  let lien_contact = ''\n  if (lien && !/^(mailto|tel|javascript):/i.test(lien)) {\n    if (/^https?:\\/\\//i.test(lien)) lien_contact = lien\n    else if (lien.startsWith('//')) lien_contact = 'https:' + lien\n    else if (lien.startsWith('/')) lien_contact = origine + lien\n    else lien_contact = String(site).replace(/[^\\/]*$/, '') + lien\n  }\n  return { email, lien_contact }\n}\n\nconst base = $('Ajouter site et téléphone').item.json\nconst r = chercherEmail($json.html, base.site)\nreturn { json: { ...base, email: r.email, source_email: r.email ? base.site : '', lien_contact: r.lien_contact } }"
+        "jsCode": "function reperer(html) {\n  const h = String(html || '').toLowerCase()\n  const OUTILS = [\n    ['WordPress', /wp-content|wp-includes/], ['Wix', /wixstatic|wix\\.com/], ['Shopify', /cdn\\.shopify|myshopify/],\n    ['Squarespace', /squarespace/], ['Webflow', /website-files\\.com|webflow\\.js/], ['Jimdo', /jimdo/],\n    ['PrestaShop', /prestashop/], ['WooCommerce', /woocommerce/], ['Google Sites', /sites\\.google\\.com/],\n    ['Calendly', /calendly\\.com/], ['Doctolib', /doctolib\\.fr/], ['Planity', /planity\\.com/], ['Resalib', /resalib\\.fr/],\n    ['Treatwell', /treatwell/], ['Zenchef', /zenchef/], ['TheFork', /thefork|lafourchette/], ['Google Agenda', /calendar\\.google\\.com|calendar\\.app\\.google/],\n    ['HubSpot', /hs-scripts|hubspot/], ['Brevo', /sendinblue|brevo\\.com|sibforms/], ['Mailchimp', /mailchimp|list-manage\\.com/],\n    ['Stripe', /js\\.stripe\\.com/], ['PayPal', /paypal\\.com/], ['SumUp', /sumup/],\n    ['Crisp', /crisp\\.chat/], ['Tawk.to', /tawk\\.to/], ['Intercom', /intercom/], ['Zendesk', /zdassets|zendesk/], ['WhatsApp', /wa\\.me\\/|api\\.whatsapp\\.com/],\n    ['Typeform', /typeform/], ['Google Forms', /docs\\.google\\.com\\/forms|forms\\.gle/], ['Jotform', /jotform/],\n  ]\n  const outils = OUTILS.filter(([, re]) => re.test(h)).map(([nom]) => nom)\n  const a = noms => noms.filter(n => outils.includes(n))\n  const rdv = a(['Calendly', 'Doctolib', 'Planity', 'Resalib', 'Treatwell', 'Zenchef', 'TheFork', 'Google Agenda'])\n  const crm = a(['HubSpot', 'Brevo', 'Mailchimp'])\n  const chat = a(['Crisp', 'Tawk.to', 'Intercom', 'Zendesk', 'WhatsApp'])\n  const boutique = a(['Shopify', 'WooCommerce', 'PrestaShop']).length > 0 || /ajouter au panier|add to cart/.test(h)\n  const formulaire = /<form[\\s>]/.test(h.replace(/<form[^>]*(search|recherche)[^>]*>/g, '')) || a(['Typeform', 'Google Forms', 'Jotform']).length > 0\n  const devis = /demande de devis|devis gratuit|devis en ligne|demander un devis/.test(h)\n  if (formulaire) outils.push('formulaire de contact')\n\n  const pistes = []\n  if (boutique) pistes.push('mettre à jour commandes, stock et suivi client automatiquement')\n  if (devis) pistes.push('préparer automatiquement les demandes de devis reçues par le site')\n  if (rdv.length) pistes.push(`relier les rendez-vous pris sur ${rdv[0]} au fichier client et aux rappels`)\n  if (formulaire && !crm.length && !devis) pistes.push('faire arriver les demandes du formulaire directement dans un fichier client')\n  if (chat.length) pistes.push('répondre automatiquement aux questions les plus fréquentes')\n  if (!formulaire && !rdv.length && !boutique) pistes.push('ajouter un formulaire ou une prise de rendez-vous en ligne reliés à vos outils')\n  return { outils: outils.join(', '), pistes: pistes.slice(0, 2).join(' ; ') }\n}\n\nconst r = reperer($json.html)\nreturn { json: { ...$('Ajouter site et téléphone').item.json, html: $json.html, outils: r.outils, pistes: r.pistes } }"
       },
-      "id": "353451aa-9aae-47e6-8275-a41c853f6011",
-      "name": "Chercher l'e-mail (accueil)",
+      "id": "5919f955-95e7-44d6-a4f0-ec8f7e65aead",
+      "name": "Repérer les outils du site",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
         2420,
+        200
+      ],
+      "notes": "Outils visibles dans le code de la page d'accueil (site, rendez-vous, boutique, formulaire, chat, e-mailing) et 1 ou 2 pistes d'automatisation, reprises dans l'e-mail.",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "function chercherEmail(html, site) {\n  const origine = (String(site || '').match(/^https?:\\/\\/[^\\/?#]+/i) || [''])[0]\n  const domaine = origine.replace(/^https?:\\/\\/(www\\.)?/i, '').replace(/:\\d+$/, '').toLowerCase()\n  const texte = String(html || '')\n    .replace(/&#64;|&#x40;|\\[at\\]|\\(at\\)| arobase /gi, '@')\n    .replace(/%40/g, '@')\n  const trouves = [...new Set((texte.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}/gi) || []).map(e => e.toLowerCase()))]\n    .filter(e => !/\\.(png|jpe?g|gif|svg|webp|css|js)$/.test(e))          // noms d'images du type logo@2x.png\n    .filter(e => !/(sentry|wixpress|example|exemple|domain|votre|email@|nom@|user@)/.test(e))\n  const generique = /^(contact|info|infos|accueil|bonjour|hello|devis|commercial|secretariat|administration|agence|atelier)@/\n  const score = e => (domaine && e.endsWith('@' + domaine) ? 2 : 0) + (generique.test(e) ? 1 : 0)\n  const email = trouves.sort((a, b) => score(b) - score(a))[0] || ''\n  // Lien vers une page contact ou mentions légales, pour un second essai si rien n'est trouvé\n  const lien = (String(html || '').match(/href=[\"']([^\"'#]*(contact|mentions)[^\"'#]*)[\"']/i) || [])[1] || ''\n  let lien_contact = ''\n  if (lien && !/^(mailto|tel|javascript):/i.test(lien)) {\n    if (/^https?:\\/\\//i.test(lien)) lien_contact = lien\n    else if (lien.startsWith('//')) lien_contact = 'https:' + lien\n    else if (lien.startsWith('/')) lien_contact = origine + lien\n    else lien_contact = String(site).replace(/[^\\/]*$/, '') + lien\n  }\n  return { email, lien_contact }\n}\n\nconst { html, ...base } = $json\nconst r = chercherEmail(html, base.site)\nreturn { json: { ...base, email: r.email, source_email: r.email ? base.site : '', lien_contact: r.lien_contact } }"
+      },
+      "id": "0b10e85c-cbbf-428d-8c16-163718f8c0c0",
+      "name": "Chercher l'e-mail (accueil)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2640,
         200
       ]
     },
@@ -323,7 +339,7 @@
           },
           "conditions": [
             {
-              "id": "bb2760a6-e11c-41a0-8eb4-0431f31b20df",
+              "id": "d46ab445-47d2-442d-a01a-d16fdc297cdc",
               "leftValue": "={{ $json.email }}",
               "operator": {
                 "type": "string",
@@ -333,7 +349,7 @@
               "rightValue": ""
             },
             {
-              "id": "a3bdf891-1923-4ca0-87e6-bd24142a7cf0",
+              "id": "6a0e3534-5d59-4f9a-a997-4ee04c5d81d4",
               "leftValue": "={{ $json.lien_contact }}",
               "operator": {
                 "type": "string",
@@ -347,12 +363,12 @@
         },
         "options": {}
       },
-      "id": "325efa3d-db5d-45bd-96e2-73e50daddc68",
+      "id": "e2f3dfeb-46a7-4107-927f-d89f9ea02e32",
       "name": "Essayer la page contact ?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2640,
+        2860,
         200
       ]
     },
@@ -375,12 +391,12 @@
           }
         }
       },
-      "id": "c0a0d0f5-4668-4b8f-be13-c10aa67cef38",
+      "id": "c9f930f0-3ae0-4300-8f2b-060af9bdff7f",
       "name": "Lire la page contact",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2860,
+        3080,
         100
       ],
       "onError": "continueRegularOutput"
@@ -390,12 +406,12 @@
         "mode": "runOnceForEachItem",
         "jsCode": "function chercherEmail(html, site) {\n  const origine = (String(site || '').match(/^https?:\\/\\/[^\\/?#]+/i) || [''])[0]\n  const domaine = origine.replace(/^https?:\\/\\/(www\\.)?/i, '').replace(/:\\d+$/, '').toLowerCase()\n  const texte = String(html || '')\n    .replace(/&#64;|&#x40;|\\[at\\]|\\(at\\)| arobase /gi, '@')\n    .replace(/%40/g, '@')\n  const trouves = [...new Set((texte.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}/gi) || []).map(e => e.toLowerCase()))]\n    .filter(e => !/\\.(png|jpe?g|gif|svg|webp|css|js)$/.test(e))          // noms d'images du type logo@2x.png\n    .filter(e => !/(sentry|wixpress|example|exemple|domain|votre|email@|nom@|user@)/.test(e))\n  const generique = /^(contact|info|infos|accueil|bonjour|hello|devis|commercial|secretariat|administration|agence|atelier)@/\n  const score = e => (domaine && e.endsWith('@' + domaine) ? 2 : 0) + (generique.test(e) ? 1 : 0)\n  const email = trouves.sort((a, b) => score(b) - score(a))[0] || ''\n  // Lien vers une page contact ou mentions légales, pour un second essai si rien n'est trouvé\n  const lien = (String(html || '').match(/href=[\"']([^\"'#]*(contact|mentions)[^\"'#]*)[\"']/i) || [])[1] || ''\n  let lien_contact = ''\n  if (lien && !/^(mailto|tel|javascript):/i.test(lien)) {\n    if (/^https?:\\/\\//i.test(lien)) lien_contact = lien\n    else if (lien.startsWith('//')) lien_contact = 'https:' + lien\n    else if (lien.startsWith('/')) lien_contact = origine + lien\n    else lien_contact = String(site).replace(/[^\\/]*$/, '') + lien\n  }\n  return { email, lien_contact }\n}\n\nconst base = $('Chercher l\\'e-mail (accueil)').item.json\nconst r = chercherEmail($json.html, base.lien_contact)\nreturn { json: { ...base, email: r.email, source_email: r.email ? base.lien_contact : '' } }"
       },
-      "id": "aea5ece6-77c2-41c4-847c-3d3339e78e50",
+      "id": "cddbce28-90e6-4512-ad91-b0f9b853cda9",
       "name": "Chercher l'e-mail (page contact)",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3080,
+        3300,
         100
       ]
     },
@@ -427,6 +443,8 @@
             "email": "={{ $json.email ?? '' }}",
             "source_email": "={{ $json.source_email ?? '' }}",
             "nom_google": "={{ $json.nom_google ?? '' }}",
+            "outils": "={{ $json.outils ?? '' }}",
+            "pistes": "={{ $json.pistes ?? '' }}",
             "statut": "={{ $json.email ? 'nouveau' : 'sans e-mail' }}",
             "date_collecte": "={{ $now.toFormat('yyyy-MM-dd') }}"
           },
@@ -584,6 +602,24 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true
+            },
+            {
+              "id": "outils",
+              "displayName": "outils",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "pistes",
+              "displayName": "pistes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -591,12 +627,12 @@
         },
         "options": {}
       },
-      "id": "652d99af-9d43-4cdc-832a-792a7b77d5be",
+      "id": "bd5742ee-fbb5-436d-beed-0da1cde2ec30",
       "name": "Enregistrer dans la feuille",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
       "position": [
-        3300,
+        3520,
         300
       ],
       "credentials": {
@@ -708,6 +744,17 @@
       ]
     },
     "Lire la page d'accueil": {
+      "main": [
+        [
+          {
+            "node": "Repérer les outils du site",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Repérer les outils du site": {
       "main": [
         [
           {

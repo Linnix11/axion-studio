@@ -12,7 +12,7 @@
           ]
         }
       },
-      "id": "a06bdadf-0023-482e-b5b3-c52324c97f7a",
+      "id": "89282f6b-b71b-4f81-86a6-a8798e2b02cc",
       "name": "Chaque jour ouvré à 9 h 40",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
@@ -23,7 +23,7 @@
     },
     {
       "parameters": {},
-      "id": "333faf1e-ed11-4692-95c5-b2b4a6d73e8c",
+      "id": "eab350bf-983a-4cae-80e1-764691f8ff24",
       "name": "Tester maintenant",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
@@ -54,7 +54,7 @@
         },
         "options": {}
       },
-      "id": "ba90f4e9-4824-4252-90a6-67cb05394cac",
+      "id": "a462e9da-99da-4e9e-b8ed-f265bc1d1f0d",
       "name": "Lire les prospects à contacter",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
@@ -80,7 +80,7 @@
           },
           "conditions": [
             {
-              "id": "c9d2d560-9d7b-4f3e-b244-94c5a36b9a50",
+              "id": "f9ebc2d1-a5f3-47f2-8d34-403212ad49bc",
               "leftValue": "={{ $json.email }}",
               "operator": {
                 "type": "string",
@@ -93,7 +93,7 @@
         },
         "options": {}
       },
-      "id": "eae0a0de-fdf0-4db8-a10a-00f8bdfa45c1",
+      "id": "96908710-54de-4d11-ab6e-82d5749d258b",
       "name": "Avec une adresse e-mail",
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.2,
@@ -106,7 +106,7 @@
       "parameters": {
         "maxItems": 20
       },
-      "id": "78e98b4a-cd59-4cb1-9848-b1cf47b309c2",
+      "id": "a9671443-9ca6-471c-9f08-f2a86dcc487c",
       "name": "20 e-mails par jour au maximum",
       "type": "n8n-nodes-base.limit",
       "typeVersion": 1,
@@ -121,7 +121,7 @@
       "parameters": {
         "options": {}
       },
-      "id": "97aa6f71-d325-4fa8-9d2e-6353ccfabc8f",
+      "id": "8b0442da-8e30-426b-ba17-666474aebe82",
       "name": "Un prospect à la fois",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
@@ -133,9 +133,9 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Tu aides Arthur Champagne-Forterre (Axion Studio, automatisation et IA pour les TPE et PME, basé à Montlignon dans le Val-d'Oise) à écrire le début d'un e-mail de prospection.\n\nEntreprise : {{ $json.nom }}\nMétier : {{ $json.metier }} (code d'activité {{ $json.activite }})\nVille : {{ $json.ville }}\n\nÉcris en français, en vouvoyant :\n- \"objet\" : un objet d'e-mail de 5 à 9 mots, concret, sans emoji ni point d'exclamation ;\n- \"paragraphe\" : 2 phrases au maximum. Cite une tâche administrative répétitive typique de ce métier (demandes de devis, relances de factures, prise de rendez-vous, commandes, réponses aux mêmes questions…) et ce qu'une automatisation simple changerait au quotidien.\n\nRègles : n'invente aucun fait sur cette entreprise, aucun chiffre, aucun client. Pas de flatterie. Pas de jargon technique (API, IA générative, workflow). Ne salue pas et ne signe pas.\n\nRéponds uniquement avec ce JSON : {\"objet\": \"...\", \"paragraphe\": \"...\"}"
+        "text": "=Tu aides Arthur Champagne-Forterre (Axion Studio, automatisation et IA pour les TPE et PME, basé à Montlignon dans le Val-d'Oise) à écrire le début d'un e-mail de prospection.\n\nEntreprise : {{ $json.nom }}\nMétier : {{ $json.metier }} (code d'activité {{ $json.activite }})\nVille : {{ $json.ville }}\nOutils repérés sur son site : {{ $json.outils || 'aucun' }}\nPistes d'automatisation possibles : {{ $json.pistes || 'aucune repérée' }}\n\nÉcris en français, en vouvoyant :\n- \"objet\" : un objet d'e-mail de 5 à 9 mots, concret, sans emoji ni point d'exclamation ;\n- \"paragraphe\" : 2 phrases au maximum. S'il y a une piste, appuie-toi sur la plus concrète et, si c'est naturel, cite l'outil repéré correspondant (par exemple « vous prenez déjà vos rendez-vous sur Planity »). Sinon, cite une tâche administrative répétitive typique de ce métier (demandes de devis, relances de factures, rendez-vous, commandes, réponses aux mêmes questions…). Dans les deux cas, dis ce qu'une automatisation simple changerait au quotidien.\n\nRègles : n'invente aucun fait sur cette entreprise, aucun chiffre, aucun client ; ne cite que les outils listés ci-dessus. Pas de flatterie. Pas de jargon technique (API, IA générative, workflow). Ne salue pas et ne signe pas.\n\nRéponds uniquement avec ce JSON : {\"objet\": \"...\", \"paragraphe\": \"...\"}"
       },
-      "id": "236359cb-24f2-4cb4-accf-9fd96f0e6839",
+      "id": "e8f09ce6-4b99-48ba-9116-6f18edcb4fc5",
       "name": "Rédiger l'accroche (IA)",
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
@@ -151,7 +151,7 @@
           "temperature": 0.4
         }
       },
-      "id": "55c394c9-7848-4091-b474-bccdb0d7bb19",
+      "id": "b9cd04af-2174-453a-963d-f60a71e5913f",
       "name": "Gemini",
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
@@ -171,7 +171,7 @@
         "mode": "runOnceForEachItem",
         "jsCode": "const p = $('Un prospect à la fois').item.json\nlet ia = {}\ntry { ia = JSON.parse(String($json.text || '').replace(/```(json)?/g, '').trim()) } catch { /* réponse illisible : texte de secours ci-dessous */ }\n\nconst objet = ia.objet || `Moins de saisie et de relances chez ${p.nom}`\nconst accroche = ia.paragraphe || \"Dans beaucoup d'entreprises comme la vôtre, les devis, les relances et les réponses aux mêmes questions prennent plusieurs heures chaque semaine.\"\nconst message = [\n  'Bonjour,',\n  accroche,\n  \"Je suis Arthur et j'automatise ce type de tâches pour les TPE et PME, avec les outils qu'elles utilisent déjà. Je vous propose un audit gratuit de 30 minutes, par téléphone ou en visio, pour voir ce qui peut l'être chez vous. Le prix est fixé avant de commencer et vous restez libre ensuite.\",\n  'Auriez-vous 30 minutes la semaine prochaine ?',\n  \"Bien cordialement,\\nArthur Champagne-Forterre\\nAxion Studio · 06 48 61 23 50\\nhttps://axionstudio.fr\",\n  \"Vous recevez ce message car votre entreprise figure dans l'annuaire public des entreprises (base SIRENE) et que cette adresse est publiée sur votre site. Pour ne plus recevoir de message de ma part, répondez simplement « STOP ».\",\n].join('\\n\\n')\n\nreturn { json: { ...p, objet, message } }"
       },
-      "id": "c47d2a43-2d0a-4b8c-ba14-5415beedb76e",
+      "id": "44ec9e43-f9c0-4cef-9645-4eb741c96cd8",
       "name": "Composer l'e-mail",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -191,7 +191,7 @@
           "appendAttribution": false
         }
       },
-      "id": "03693030-76ba-4051-af7c-6e073f151491",
+      "id": "3027cedf-fdfb-4a33-8075-ab5ff38c0915",
       "name": "Envoyer l'e-mail",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
@@ -385,6 +385,24 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true
+            },
+            {
+              "id": "outils",
+              "displayName": "outils",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "pistes",
+              "displayName": "pistes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -392,7 +410,7 @@
         },
         "options": {}
       },
-      "id": "833f896c-25ff-48e7-9bed-d657b5b978f0",
+      "id": "400e1255-ceca-42c8-8634-69cdbfb2aec9",
       "name": "Marquer « envoyé »",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
@@ -585,6 +603,24 @@
               "display": true,
               "type": "string",
               "canBeUsedToMatch": true
+            },
+            {
+              "id": "outils",
+              "displayName": "outils",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "pistes",
+              "displayName": "pistes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -592,7 +628,7 @@
         },
         "options": {}
       },
-      "id": "e0e0ea9b-3f34-4110-aa60-3abd940c3598",
+      "id": "c54db3de-b080-448d-a172-f418fba96a24",
       "name": "Marquer « erreur d'envoi »",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
@@ -612,7 +648,7 @@
         "amount": "={{ 120 + Math.floor(Math.random() * 120) }}",
         "unit": "seconds"
       },
-      "id": "8a01666c-3683-4186-b317-532cbee5b05f",
+      "id": "6af209b2-108c-4730-8000-5c7afdfda913",
       "name": "Pause de 2 à 4 minutes",
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
@@ -620,7 +656,7 @@
         1980,
         380
       ],
-      "webhookId": "39ea9c6b-30c1-4fc9-a603-fe781be9f41e",
+      "webhookId": "592805ba-82bc-4035-963f-6690744c4ad6",
       "notes": "Espace les envois comme un envoi à la main.",
       "notesInFlow": true
     }

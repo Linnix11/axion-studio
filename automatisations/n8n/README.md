@@ -3,10 +3,12 @@
 Deux workflows qui travaillent sur la même feuille Google Sheets :
 
 1. **Collecte de prospects** (`axion-1-collecte-prospects.json`), lancé à la main.
-   Annuaire officiel des entreprises (SIRENE) → site et téléphone via Google → e-mail générique
+   Plusieurs métiers et départements en un seul lancement → annuaire officiel des entreprises (SIRENE) →
+   site et téléphone via Google → **outils repérés sur le site** (WordPress, Wix, Shopify, Calendly, Planity,
+   Doctolib, HubSpot, Brevo, WhatsApp, formulaire…) et 1 ou 2 pistes d'automatisation → e-mail générique
    trouvé sur le site (accueil, puis page contact) → une ligne par entreprise dans la feuille.
 2. **Envoi des e-mails** (`axion-2-envoi-emails.json`), chaque jour ouvré à 9 h 40.
-   20 prospects « nouveau » au maximum → accroche rédigée par Gemini pour leur métier →
+   20 prospects « nouveau » au maximum → accroche rédigée par Gemini à partir du métier, des outils repérés et des pistes →
    e-mail en texte simple depuis votre adresse iCloud → statut « envoyé » dans la feuille →
    pause de 2 à 4 minutes avant le suivant.
 
@@ -22,6 +24,23 @@ Deux workflows qui travaillent sur la même feuille Google Sheets :
 
 Colonne **statut** : `nouveau` (à contacter), `sans e-mail`, `envoyé`, `erreur d'envoi`, `désinscrit`.
 Vous pouvez la modifier à la main ; seules les lignes `nouveau` reçoivent un e-mail.
+
+### Choisir les métiers et les départements
+
+Dans le nœud « Critères de recherche » du workflow 1 :
+- **metiers** : une ligne par métier, au format `code d'activité = métier en mots`, par exemple
+  `43.22A = plombiers et chauffagistes`. Le métier en mots est repris dans l'e-mail. Codes utiles : 43.22A plomberie,
+  43.21A électricité, 43.32A menuiserie, 69.20Z experts-comptables, 56.10A restaurants, 96.02A coiffure, 47.71Z vêtements.
+- **departements** : séparés par des virgules, par exemple `95, 78, 92`.
+- **pages** : 25 entreprises par page, pour chaque métier et chaque département.
+- **max_entreprises** : plafond par lancement (80 par défaut), pour maîtriser le coût de Google Places.
+
+### Mettre à jour une installation existante
+
+1. Dans la feuille, ajoutez deux colonnes à la fin de la ligne 1 : `outils` et `pistes`.
+2. Dans n8n, importez les deux nouveaux workflows (Import from URL, mêmes adresses), puis dans chacun :
+   choisissez vos accès dans les nœuds marqués d'un triangle et collez l'adresse de la feuille.
+3. Supprimez les deux anciens workflows (ou désactivez-les) pour ne pas envoyer d'e-mails en double.
 
 ## 2. Les accès à créer dans n8n (Credentials)
 
@@ -72,6 +91,8 @@ Les workflows appliquent déjà :
 
 - Google Places renvoie parfois une entreprise voisine au nom proche : la colonne `nom_google`
   sert à le repérer.
+- Les outils sont repérés sur la page d'accueil seulement, d'après les traces visibles dans son code :
+  un outil utilisé en interne (logiciel de facturation, tableur…) ne se voit pas. Les pistes sont des hypothèses à confirmer à l'audit.
 - Certains sites n'affichent l'e-mail qu'en image ou via un formulaire : la ligne reste « sans e-mail ».
   Le téléphone est souvent rempli quand même.
 - Les sites construits entièrement en JavaScript peuvent ne rien montrer à n8n.

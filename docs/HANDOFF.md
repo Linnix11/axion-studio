@@ -100,12 +100,12 @@ automatisations/n8n/             workflows n8n de prospection (collecte SIRENE +
 
 ## 8 bis. Prospection avec n8n (`automatisations/n8n/`)
 
-- `axion-1-collecte-prospects.json` (lancé à la main) : API publique « Recherche d'entreprises » (SIRENE, gratuite) → les entreprises avec `opposition_diffusion_commerciale` ou déjà présentes sont écartées → Google Places (site, téléphone) → e-mail générique trouvé sur la page d'accueil puis la page contact → feuille Google Sheets « Prospects ».
-- `axion-2-envoi-emails.json` (jours ouvrés, 9 h 40) : 20 lignes « nouveau » au maximum → objet et accroche rédigés par Gemini → e-mail texte depuis arthur.champagne@icloud.com (SMTP iCloud, mot de passe pour app) → statut « envoyé » ou « erreur d'envoi » → pause de 2 à 4 min.
+- `axion-1-collecte-prospects.json` (lancé à la main) : plusieurs métiers (lignes « code NAF = métier ») et départements par lancement, plafond `max_entreprises` → API publique « Recherche d'entreprises » (SIRENE, gratuite) → les entreprises avec `opposition_diffusion_commerciale` ou déjà présentes sont écartées → Google Places (site, téléphone) → outils repérés sur la page d'accueil (CMS, prise de rendez-vous, boutique, formulaire, chat, e-mailing) et 1 ou 2 pistes d'automatisation (colonnes `outils`, `pistes`) → e-mail générique trouvé sur l'accueil puis la page contact → feuille Google Sheets « Prospects ».
+- `axion-2-envoi-emails.json` (jours ouvrés, 9 h 40) : 20 lignes « nouveau » au maximum → objet et accroche rédigés par Gemini à partir du métier, des outils repérés et des pistes (consigne : ne citer que les outils listés) → e-mail texte depuis arthur.champagne@icloud.com (SMTP iCloud, mot de passe pour app) → statut « envoyé » ou « erreur d'envoi » → pause de 2 à 4 min.
 - `README.md` : mise en route, accès à créer, coûts, règles CNIL. Les réponses « STOP » se traitent à la main (statut « désinscrit »).
 - Le n8n de l'utilisateur tourne **sur son ordinateur** : une session cloud ne peut pas l'atteindre. Il importe les workflows lui-même par « Import from URL » avec les adresses `https://raw.githubusercontent.com/Linnix11/axion-studio/main/automatisations/n8n/<fichier>.json`.
 - Pièges vus en les construisant : dans un nœud Code n8n, `URL` n'existe pas (utiliser des expressions régulières) ; l'import en ligne de commande (`n8n import:workflow`) exige `active`, `id` et `versionId`, pas l'import par l'interface ; dans le conteneur cloud, les requêtes HTTP de n8n ne passent pas le proxy, donc tester avec un petit serveur local et des données enregistrées.
-- Les workflows ont été testés en exécution réelle dans n8n 1.123 (Google Sheets, Places, Gemini et SMTP simulés) ; les vrais accès n'ont pas encore été essayés.
+- Les workflows ont été testés en exécution réelle dans n8n 1.123 (Google Sheets, Places, Gemini et SMTP simulés). L'utilisateur fait tourner n8n 2.7.5 : la collecte y fonctionne avec ses vrais accès (après avoir nommé l'onglet « Prospects » et partagé la feuille en Éditeur avec le compte Google branché dans n8n). L'envoi réel n'a pas encore été confirmé.
 
 ## 9. Skills installés (`.claude/skills/`)
 
