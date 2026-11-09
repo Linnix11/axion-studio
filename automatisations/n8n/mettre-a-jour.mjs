@@ -82,14 +82,20 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     const complet = ancien ? await api('GET', `/workflows/${ancien.id}`) : null
     const corps = fusionner(nouveau, complet, reserve)
     const manquants = sansAcces(corps.nodes)
+    let id = ancien?.id
     if (ancien) {
       await api('PUT', `/workflows/${ancien.id}`, corps)
       console.log(`✓ « ${nouveau.name} » mis à jour (vos accès sont conservés, ${FEUILLE ? 'nouvelle feuille branchée' : 'même feuille'}).`)
     } else {
-      await api('POST', '/workflows', corps)
+      id = (await api('POST', '/workflows', corps)).id
       console.log(`✓ « ${nouveau.name} » créé.`)
     }
     if (manquants.length) console.log(`  À compléter dans n8n (accès à choisir) : ${manquants.join(', ')}`)
+    // Relecture : ce que n8n a réellement enregistré (pas seulement ce qui a été envoyé)
+    const enregistre = await api('GET', `/workflows/${id}`)
+    const ongletsLus = [...new Set(enregistre.nodes.filter(n => n.type === 'n8n-nodes-base.googleSheets').map(n => n.parameters.sheetName?.value))]
+    const attendus = [...new Set(corps.nodes.filter(n => n.type === 'n8n-nodes-base.googleSheets').map(n => n.parameters.sheetName?.value))]
+    console.log(`  Relu dans n8n : onglet ${ongletsLus.join(', ')} ${String(ongletsLus) === String(attendus) ? '(conforme)' : '⚠ DIFFÉRENT de ce qui a été envoyé'}`)
     const feuilles = [...new Set(corps.nodes.filter(n => n.type === 'n8n-nodes-base.googleSheets').map(n => n.parameters.documentId?.value || '(aucune)'))]
     const onglets = [...new Set(corps.nodes.filter(n => n.type === 'n8n-nodes-base.googleSheets').map(n => n.parameters.sheetName?.value))]
     console.log(`  Feuille branchée : ${feuilles.map(f => (f.match(/\/d\/([\w-]+)/) || [, f])[1]).join(', ')} (onglet ${onglets.join(', ')})`)
