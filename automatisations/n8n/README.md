@@ -13,9 +13,9 @@ Deux workflows qui travaillent sur la même feuille Google Sheets :
 ## 1. La feuille Google Sheets
 
 1. Créez une feuille Google Sheets, par exemple « Prospects Axion ».
-2. Renommez le premier onglet **Prospects** (exactement).
-3. Fichier → Importer → `feuille-prospects-en-tetes.csv` → « Remplacer la feuille actuelle ».
-   La ligne 1 contient alors les 17 colonnes utilisées par les workflows.
+2. Fichier → Importer → `feuille-prospects-en-tetes.csv` → « Remplacer la feuille actuelle ».
+3. **Renommez ensuite l'onglet du bas en `Prospects`** (exactement, avec la majuscule) : double-clic sur l'onglet.
+   L'import lui donne le nom du fichier, et n8n répondrait « Sheet with name Prospects not found ».
 4. Copiez l'adresse de la feuille. Dans chaque nœud Google Sheets des deux workflows
    (« Lire… », « Enregistrer… », « Marquer… »), collez-la à la place de
    `COLLER_ICI_L_ADRESSE_DE_VOTRE_GOOGLE_SHEET`.
