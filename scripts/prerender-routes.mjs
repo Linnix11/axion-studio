@@ -33,6 +33,9 @@ function page(path) {
     `<meta property="og:type" content="website">`,
     `<meta property="og:site_name" content="${BRAND}">`,
     `<meta property="og:locale" content="fr_FR">`,
+    // Public visé : la France. hreflang sur la page elle-même (pas d'autre version) ; geo.* lus par Bing, ignorés par Google.
+    is404 ? '' : `<link rel="alternate" hreflang="fr-FR" href="${url}">`,
+    '<meta name="geo.region" content="FR-95"><meta name="geo.placename" content="Montlignon">',
     `<meta property="og:title" content="${title}">`,
     `<meta property="og:description" content="${desc}">`,
     `<meta property="og:url" content="${url}">`,
@@ -88,7 +91,7 @@ Sitemap: ${SITE_URL}/sitemap.xml
 
 // ——— Référencement dans les IA : llms.txt (résumé) et llms-full.txt (contenu complet) ———
 const { company, services, useCases, steps, offers, faq, guarantees, security, notDoing, tools } = data
-const intro = `> Axion Studio est la micro-entreprise d'${company.owner}, basée à Montlignon (Val-d'Oise, 95). Elle automatise les tâches répétitives des TPE, PME et indépendants : workflows automatisés, intégration d'outils (CRM, messagerie, tableurs, facturation), intelligence artificielle appliquée et création de sites web. Interventions en Île-de-France et à distance partout en France. Audit gratuit de 30 minutes ; projets au forfait à partir de 150 € ; suivi mensuel à partir de 250 € par mois ; TVA non applicable (art. 293 B du CGI).`
+const intro = `> Axion Studio est la micro-entreprise d'${company.owner}, basée à Montlignon (Val-d'Oise, 95). Elle automatise les tâches répétitives des TPE, PME et indépendants : workflows automatisés, intégration d'outils (CRM, messagerie, tableurs, facturation), intelligence artificielle appliquée et création de sites web. Clientèle : entreprises et indépendants situés en France, accompagnés en français. Interventions en Île-de-France et à distance partout en France. Audit gratuit de 30 minutes ; projets au forfait à partir de 150 € ; suivi mensuel à partir de 250 € par mois ; TVA non applicable (art. 293 B du CGI).`
 const links = paths.filter(p => !['/mentions-legales'].includes(p) && !p.startsWith('/blog/')).map(p => `- [${pageMeta[p].name}](${pageUrl(p)}) : ${pageMeta[p].description}`).join('\n')
 writeFileSync(join(dist, 'llms.txt'), `# ${BRAND}
 

@@ -8,7 +8,7 @@ export default function Contact() {
   const infos = [
     ['E-mail', <a href={`mailto:${company.email}`} className="inline-flex min-h-11 items-center text-pen">{company.email.replace('@', '@\u200b')}</a>],
     ['Téléphone', <a href={`tel:${company.phoneHref}`} className="inline-flex min-h-11 items-center text-pen">{company.phone}</a>],
-    ['Zone', `${company.city}, Île-de-France et à distance`],
+    ['Zone', `${company.city}, Île-de-France, et à distance partout en France`],
     ['Délai de réponse', 'Sous 48 heures ouvrées'],
   ]
   return (
