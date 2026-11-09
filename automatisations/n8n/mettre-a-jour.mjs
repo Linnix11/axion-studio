@@ -24,18 +24,17 @@ async function api(method, path, body) {
   return res.json()
 }
 
-/** Reprend, nœud par nœud (même nom), les accès et la feuille Google de l'ancienne version. */
-export function fusionner(nouveau, ancien) {
-  const anciens = Object.fromEntries((ancien?.nodes || []).map(n => [n.name, n]))
-  const feuille = (ancien?.nodes || []).find(n => n.type === 'n8n-nodes-base.googleSheets' && n.parameters?.documentId?.value)
-  const accesParType = {}
-  for (const n of ancien?.nodes || []) for (const [type, cred] of Object.entries(n.credentials || {})) if (cred?.id) accesParType[type] = cred
+/** Reprend les accès et la feuille Google : nœud du même nom dans l'ancienne version, sinon nœud du même type
+ *  dans n'importe quel workflow Axion déjà installé (`reserve`). */
+export function fusionner(nouveau, ancien, reserve = []) {
+  const anciens = [...(ancien?.nodes || []), ...reserve]
+  const feuille = anciens.find(n => n.type === 'n8n-nodes-base.googleSheets' && n.parameters?.documentId?.value)
+  const reel = c => Object.values(c || {}).some(x => x?.id)              // ignore les accès fictifs sans identifiant
   const nodes = nouveau.nodes.map(n => {
     const m = structuredClone(n)
-    for (const type of Object.keys(m.credentials || {})) {
-      const repris = anciens[m.name]?.credentials?.[type] || accesParType[type]
-      if (repris) m.credentials[type] = repris
-    }
+    const source = anciens.find(o => o.name === m.name && o.type === m.type && reel(o.credentials))
+      || anciens.find(o => o.type === m.type && reel(o.credentials) && (o.parameters?.authentication || '') === (m.parameters?.authentication || ''))
+    if (source) m.credentials = structuredClone(source.credentials)
     if (m.type === 'n8n-nodes-base.googleSheets' && feuille) {
       m.parameters.documentId = feuille.parameters.documentId
       if (feuille.parameters.sheetName) m.parameters.sheetName = feuille.parameters.sheetName
@@ -45,15 +44,22 @@ export function fusionner(nouveau, ancien) {
   return { name: nouveau.name, nodes, connections: nouveau.connections, settings: { executionOrder: 'v1' } }
 }
 
+/** Nœuds qui ont besoin d'un accès et n'en ont pas (à choisir dans n8n). */
+const BESOIN = ['n8n-nodes-base.googleSheets', 'n8n-nodes-base.emailSend', '@n8n/n8n-nodes-langchain.lmChatGoogleGemini']
+const sansAcces = nodes => nodes.filter(n => (BESOIN.includes(n.type) || n.parameters?.authentication === 'genericCredentialType')
+  && !Object.values(n.credentials || {}).some(c => c?.id)).map(n => n.name)
+
 if (import.meta.url === `file://${process.argv[1]}`) {
   const existants = (await api('GET', '/workflows?limit=250')).data
+  const axion = await Promise.all(existants.filter(w => w.name.startsWith('Axion')).map(w => api('GET', `/workflows/${w.id}`)))
+  const reserve = axion.flatMap(w => w.nodes)
   for (const fichier of FICHIERS) {
     const nouveau = SOURCE.startsWith('http') ? await (await fetch(SOURCE + fichier + '?v=' + Date.now())).json() : JSON.parse(readFileSync(join(SOURCE, fichier), 'utf8'))
     const prefixe = nouveau.name.split('.')[0]                       // « Axion – 1 » ou « Axion – 2 »
     const ancien = existants.find(w => w.name === nouveau.name) || existants.find(w => w.name.startsWith(prefixe))
     const complet = ancien ? await api('GET', `/workflows/${ancien.id}`) : null
-    const corps = fusionner(nouveau, complet)
-    const manquants = corps.nodes.filter(n => Object.values(n.credentials || {}).some(c => !c.id)).map(n => n.name)
+    const corps = fusionner(nouveau, complet, reserve)
+    const manquants = sansAcces(corps.nodes)
     if (ancien) {
       await api('PUT', `/workflows/${ancien.id}`, corps)
       console.log(`✓ « ${nouveau.name} » mis à jour (vos accès et votre feuille sont conservés).`)
