@@ -12,7 +12,7 @@
           ]
         }
       },
-      "id": "da986209-a055-46f7-af2b-237d10cda91c",
+      "id": "c65df71f-4ed4-4baa-95d9-25bba49fb637",
       "name": "Chaque jour ouvré à 9 h 40",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
@@ -23,7 +23,7 @@
     },
     {
       "parameters": {},
-      "id": "f171e54c-5031-4b94-985a-ba9ddc9f91ad",
+      "id": "6ff7e4c8-27a2-4baf-8ace-83f7eccde5e1",
       "name": "Tester maintenant",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
@@ -54,7 +54,7 @@
         },
         "options": {}
       },
-      "id": "50005036-bb68-483d-b0ac-c5013f07e5b4",
+      "id": "d3b88edb-4c1b-4b45-90c4-1abeb25b6f33",
       "name": "Lire les prospects à contacter",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
@@ -74,7 +74,7 @@
           },
           "conditions": [
             {
-              "id": "f5434f26-d825-4101-a399-8d0012de3b48",
+              "id": "40d1337e-8cec-404b-9c13-1389b2df0001",
               "leftValue": "={{ $json.email }}",
               "operator": {
                 "type": "string",
@@ -87,7 +87,7 @@
         },
         "options": {}
       },
-      "id": "81f6d9b1-be99-452b-a5ba-d5e67b901683",
+      "id": "54ede567-d493-4f6e-86d3-63d34ee7799f",
       "name": "Avec une adresse e-mail",
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.2,
@@ -100,7 +100,7 @@
       "parameters": {
         "maxItems": 20
       },
-      "id": "1c3c06f3-a6cd-40cd-a185-b0b81f3785bb",
+      "id": "4b36ad49-8a06-4ee2-a902-89ee9995cd1e",
       "name": "20 e-mails par jour au maximum",
       "type": "n8n-nodes-base.limit",
       "typeVersion": 1,
@@ -115,7 +115,7 @@
       "parameters": {
         "options": {}
       },
-      "id": "7754005b-a0cb-4bef-8717-fd29aa899af3",
+      "id": "26927626-99a6-404e-b506-9494e80046a3",
       "name": "Un prospect à la fois",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
@@ -129,7 +129,7 @@
         "promptType": "define",
         "text": "=Tu aides Arthur Champagne-Forterre (Axion Studio, automatisation et IA pour les TPE et PME, basé à Montlignon dans le Val-d'Oise) à écrire le début d'un e-mail de prospection.\n\nEntreprise : {{ $json.nom }}\nMétier : {{ $json.metier }} (code d'activité {{ $json.activite }})\nVille : {{ $json.ville }}\nOutils repérés sur son site : {{ $json.outils || 'aucun' }}\nPistes d'automatisation possibles : {{ $json.pistes || 'aucune repérée' }}\n\nÉcris en français, en vouvoyant :\n- \"objet\" : un objet d'e-mail de 5 à 9 mots, concret, sans emoji ni point d'exclamation ;\n- \"paragraphe\" : 2 phrases au maximum. S'il y a une piste, appuie-toi sur la plus concrète et, si c'est naturel, cite l'outil repéré correspondant (par exemple « vous prenez déjà vos rendez-vous sur Planity »). Sinon, cite une tâche administrative répétitive typique de ce métier (demandes de devis, relances de factures, rendez-vous, commandes, réponses aux mêmes questions…). Dans les deux cas, dis ce qu'une automatisation simple changerait au quotidien.\n\nRègles : n'invente aucun fait sur cette entreprise, aucun chiffre, aucun client ; ne cite que les outils listés ci-dessus. Pas de flatterie. Pas de jargon technique (API, IA générative, workflow). Ne salue pas et ne signe pas.\n\nRéponds uniquement avec ce JSON : {\"objet\": \"...\", \"paragraphe\": \"...\"}"
       },
-      "id": "e15c4b8a-771f-4a3e-b232-01daa4e360fd",
+      "id": "7738caab-734a-450e-8fe8-772832f6382b",
       "name": "Rédiger l'accroche (IA)",
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
@@ -145,7 +145,7 @@
           "temperature": 0.4
         }
       },
-      "id": "e5456d5f-37b8-413e-991b-91a7352ece05",
+      "id": "b7654dd7-302e-45a1-a172-841720199d4c",
       "name": "Gemini",
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
@@ -159,7 +159,7 @@
         "mode": "runOnceForEachItem",
         "jsCode": "const p = $('Un prospect à la fois').item.json\nlet ia = {}\ntry { ia = JSON.parse(String($json.text || '').replace(/```(json)?/g, '').trim()) } catch { /* réponse illisible : texte de secours ci-dessous */ }\n\nconst objet = ia.objet || `Moins de saisie et de relances chez ${p.nom}`\nconst accroche = ia.paragraphe || \"Dans beaucoup d'entreprises comme la vôtre, les devis, les relances et les réponses aux mêmes questions prennent plusieurs heures chaque semaine.\"\nconst message = [\n  'Bonjour,',\n  accroche,\n  \"Je suis Arthur et j'automatise ce type de tâches pour les TPE et PME, avec les outils qu'elles utilisent déjà. Je vous propose un audit gratuit de 30 minutes, par téléphone ou en visio, pour voir ce qui peut l'être chez vous. Le prix est fixé avant de commencer et vous restez libre ensuite.\",\n  'Auriez-vous 30 minutes la semaine prochaine ?',\n  \"Bien cordialement,\\nArthur Champagne-Forterre\\nAxion Studio · 06 48 61 23 50\\nhttps://axionstudio.fr\",\n  \"Vous recevez ce message car votre entreprise figure dans l'annuaire public des entreprises (base SIRENE) et que cette adresse est publiée sur votre site. Pour ne plus recevoir de message de ma part, répondez simplement « STOP ».\",\n].join('\\n\\n')\n\nreturn { json: { ...p, objet, message } }"
       },
-      "id": "25f906f1-75c3-4909-a798-5debf4cca7e6",
+      "id": "7fa6d0e0-012d-4ace-bb7a-b220bf96b52e",
       "name": "Composer l'e-mail",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -179,7 +179,7 @@
           "appendAttribution": false
         }
       },
-      "id": "dda8808e-096b-40f4-bcc2-70bcdf99c15e",
+      "id": "137d6a97-e2f4-4f66-8edf-615b055e24a6",
       "name": "Envoyer l'e-mail",
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
@@ -214,185 +214,13 @@
           "matchingColumns": [
             "siren"
           ],
-          "schema": [
-            {
-              "id": "siren",
-              "displayName": "siren",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "nom",
-              "displayName": "nom",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "metier",
-              "displayName": "metier",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "activite",
-              "displayName": "activite",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "adresse",
-              "displayName": "adresse",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "code_postal",
-              "displayName": "code_postal",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "ville",
-              "displayName": "ville",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "site",
-              "displayName": "site",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "telephone",
-              "displayName": "telephone",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "email",
-              "displayName": "email",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "source_email",
-              "displayName": "source_email",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "nom_google",
-              "displayName": "nom_google",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "statut",
-              "displayName": "statut",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "date_collecte",
-              "displayName": "date_collecte",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "date_envoi",
-              "displayName": "date_envoi",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "objet",
-              "displayName": "objet",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "message",
-              "displayName": "message",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "outils",
-              "displayName": "outils",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "pistes",
-              "displayName": "pistes",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
+          "schema": [],
           "attemptToConvertTypes": false,
           "convertFieldsToString": true
         },
         "options": {}
       },
-      "id": "3c9353b8-f0b1-45ea-bed8-e725173455c0",
+      "id": "6c4b7784-fc91-4cef-8674-0258e10e13ac",
       "name": "Marquer « envoyé »",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
@@ -426,185 +254,13 @@
           "matchingColumns": [
             "siren"
           ],
-          "schema": [
-            {
-              "id": "siren",
-              "displayName": "siren",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "nom",
-              "displayName": "nom",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "metier",
-              "displayName": "metier",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "activite",
-              "displayName": "activite",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "adresse",
-              "displayName": "adresse",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "code_postal",
-              "displayName": "code_postal",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "ville",
-              "displayName": "ville",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "site",
-              "displayName": "site",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "telephone",
-              "displayName": "telephone",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "email",
-              "displayName": "email",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "source_email",
-              "displayName": "source_email",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "nom_google",
-              "displayName": "nom_google",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "statut",
-              "displayName": "statut",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "date_collecte",
-              "displayName": "date_collecte",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "date_envoi",
-              "displayName": "date_envoi",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "objet",
-              "displayName": "objet",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "message",
-              "displayName": "message",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "outils",
-              "displayName": "outils",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "pistes",
-              "displayName": "pistes",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            }
-          ],
+          "schema": [],
           "attemptToConvertTypes": false,
           "convertFieldsToString": true
         },
         "options": {}
       },
-      "id": "cb70a047-654d-4bf9-ae5e-3de9eacea091",
+      "id": "be53322e-7981-4381-b7a6-576379d3e46e",
       "name": "Marquer « erreur d'envoi »",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
@@ -618,7 +274,7 @@
         "amount": "={{ 120 + Math.floor(Math.random() * 120) }}",
         "unit": "seconds"
       },
-      "id": "417dfd62-c474-4e65-8fb3-c37b2cfcedb4",
+      "id": "5a618ee3-3e31-4b03-959f-8c76b938ac54",
       "name": "Pause de 2 à 4 minutes",
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
@@ -626,7 +282,7 @@
         1980,
         380
       ],
-      "webhookId": "de5d51e3-e344-42cc-9894-d0dc17e101ee",
+      "webhookId": "6078683a-ee84-4e33-9195-ff7a0cd4d1f3",
       "notes": "Espace les envois comme un envoi à la main.",
       "notesInFlow": true
     }
