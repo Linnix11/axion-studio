@@ -53,6 +53,7 @@ scripts/            prerender-routes.mjs, indexnow.mjs
 .github/workflows/indexnow.yml   signale les pages modifiées à Bing et aux autres moteurs IndexNow après chaque push
 docs/brand-guidelines.md         charte de marque complète
 marketing/banners/               bannières LinkedIn et Google (PNG + HTML + generate.mjs)
+automatisations/n8n/             workflows n8n de prospection (collecte SIRENE + Google, envoi d'e-mails personnalisés), mode d'emploi dans README.md
 .claude/skills/                  skills installés (voir § 9)
 ```
 
@@ -140,3 +141,4 @@ marketing/banners/               bannières LinkedIn et Google (PNG + HTML + gen
 12. Installation des skills Ponytail.
 13. Revue ui-ux-pro-max et ponytail : bouton du chat rond sur mobile, garanties sur 2 colonnes, espaces insécables avant : ; ? ! » (règle à garder pour tout nouveau texte).
 14. Refonte « le temps rendu » (piste C choisie parmi trois maquettes) : nouvelles polices, nouveaux jetons, fin du cahier Seyès.
+15. Workflows n8n de prospection dans `automatisations/n8n/` : collecte de prospects (annuaire SIRENE, opposition à la prospection respectée) et envoi de 20 e-mails par jour personnalisés par Gemini. À configurer dans n8n (accès listés dans le README) ; les « STOP » se traitent à la main.

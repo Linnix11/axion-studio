@@ -1,0 +1,796 @@
+{
+  "name": "Axion – 1. Collecte de prospects",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "4f1fab0d-e625-4f2f-a97d-ab08084c2270",
+      "name": "Lancer la collecte",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "038d5029-a4c5-4ecb-9850-462ade593325",
+              "name": "naf",
+              "value": "43.22A",
+              "type": "string"
+            },
+            {
+              "id": "2adedcad-bccc-411b-af6b-4a29d6263c5a",
+              "name": "metier",
+              "value": "plombiers et chauffagistes",
+              "type": "string"
+            },
+            {
+              "id": "82f9933b-52bb-49b0-8913-fb37ccdcbd34",
+              "name": "departement",
+              "value": "95",
+              "type": "string"
+            },
+            {
+              "id": "33cb4f13-73fc-4eb9-a720-e891ecda5cee",
+              "name": "pages",
+              "value": 2,
+              "type": "number"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "57b4b33e-57bf-47d2-b49e-38e1c6491d1f",
+      "name": "Critères de recherche",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        300
+      ],
+      "notes": "À modifier avant chaque lancement :\n• naf : code d'activité (43.22A plomberie, 43.21A électricité, 69.20Z comptables, 56.10A restaurants, 47.71Z boutiques de vêtements…)\n• metier : le même métier en mots, utilisé dans l'e-mail\n• departement : 95, 78, 75…\n• pages : 25 entreprises par page",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "COLLER_ICI_L_ADRESSE_DE_VOTRE_GOOGLE_SHEET"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Prospects"
+        },
+        "options": {}
+      },
+      "id": "cb236313-2196-44d2-b929-4e2047c47fc5",
+      "name": "Lire les prospects déjà connus",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        440,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "",
+          "name": "Google Sheets (à connecter)"
+        }
+      },
+      "alwaysOutputData": true,
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Une ligne par page de résultats de l'annuaire (25 entreprises par page)\nconst { pages } = $('Critères de recherche').first().json\nreturn Array.from({ length: pages }, (_, i) => ({ json: { page: i + 1 } }))"
+      },
+      "id": "8979d06b-be36-4ad6-b13a-570272a66189",
+      "name": "Pages à lire",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://recherche-entreprises.api.gouv.fr/search",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "activite_principale",
+              "value": "={{ $('Critères de recherche').first().json.naf }}"
+            },
+            {
+              "name": "departement",
+              "value": "={{ $('Critères de recherche').first().json.departement }}"
+            },
+            {
+              "name": "etat_administratif",
+              "value": "A"
+            },
+            {
+              "name": "per_page",
+              "value": "25"
+            },
+            {
+              "name": "page",
+              "value": "={{ $json.page }}"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 400
+            }
+          },
+          "timeout": 20000
+        }
+      },
+      "id": "105d5d22-74ce-4c20-80ca-297c940b9b39",
+      "name": "Chercher les entreprises (annuaire de l'État)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        300
+      ],
+      "notes": "API publique et gratuite de l'État (données SIRENE), sans clé. Limite : 7 appels par seconde.",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "results",
+        "options": {}
+      },
+      "id": "0633cf07-b98a-4cc7-95de-e201409cde56",
+      "name": "Une ligne par entreprise",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Écarte : les entreprises qui refusent la prospection commerciale (droit d'opposition SIRENE),\n// celles à diffusion restreinte, celles déjà dans la feuille, et les doublons.\nconst deja = new Set($('Lire les prospects déjà connus').all().map(i => String(i.json.siren || '')).filter(Boolean))\nconst { metier } = $('Critères de recherche').first().json\nconst vus = new Set()\nconst prospects = []\nfor (const { json: e } of $input.all()) {\n  if (e.opposition_diffusion_commerciale || e.statut_diffusion !== 'O') continue\n  if (deja.has(e.siren) || vus.has(e.siren)) continue\n  const etab = (e.matching_etablissements || []).find(x => x.etat_administratif === 'A')   // établissement ouvert dans le département\n  if (!etab) continue\n  vus.add(e.siren)\n  prospects.push({ json: {\n    siren: e.siren,\n    nom: etab.nom_commercial || (etab.liste_enseignes || [])[0] || e.nom_complet,\n    metier,\n    activite: e.activite_principale,\n    adresse: etab.adresse,\n    code_postal: etab.code_postal,\n    ville: etab.libelle_commune,\n  } })\n}\nreturn prospects"
+      },
+      "id": "868cb34a-56d1-4a50-8635-3a1b9c1d11c5",
+      "name": "Garder les prospects utilisables",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://places.googleapis.com/v1/places:searchText",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Goog-FieldMask",
+              "value": "places.displayName,places.websiteUri,places.nationalPhoneNumber"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ textQuery: $json.nom + ' ' + $json.ville, languageCode: 'fr', regionCode: 'FR', pageSize: 1 }) }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 200
+            }
+          },
+          "timeout": 15000
+        }
+      },
+      "id": "103f9179-917d-4de9-a1ec-db28e01cd3ae",
+      "name": "Trouver le site et le téléphone (Google)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1540,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "",
+          "name": "Google Places (clé d'API)"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "notes": "Google Places API (New). Payant au-delà du quota gratuit mensuel : environ 3 à 4 centimes par entreprise.",
+      "notesInFlow": true
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const lieu = ($json.places || [])[0] || {}\nreturn { json: {\n  ...$('Garder les prospects utilisables').item.json,\n  site: lieu.websiteUri || '',\n  telephone: lieu.nationalPhoneNumber || '',\n  nom_google: lieu.displayName?.text || '',   // à comparer au nom : Google peut renvoyer une autre entreprise\n} }"
+      },
+      "id": "1cbf30e1-6e63-4889-a8fc-e53a627f065a",
+      "name": "Ajouter site et téléphone",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1760,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "e84996ba-6d75-476e-bfd3-effc395e0c20",
+              "leftValue": "={{ $json.site }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              },
+              "rightValue": ""
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "2ee4ef8d-a9b2-4f2b-8d88-ffcd3c7153a3",
+      "name": "Site trouvé ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1980,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.site }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 500
+            }
+          },
+          "timeout": 10000,
+          "response": {
+            "response": {
+              "responseFormat": "text",
+              "outputPropertyName": "html"
+            }
+          }
+        }
+      },
+      "id": "2ebb8c6d-33fe-4028-b498-2ebe050a4f6e",
+      "name": "Lire la page d'accueil",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2200,
+        200
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "function chercherEmail(html, site) {\n  const origine = (String(site || '').match(/^https?:\\/\\/[^\\/?#]+/i) || [''])[0]\n  const domaine = origine.replace(/^https?:\\/\\/(www\\.)?/i, '').replace(/:\\d+$/, '').toLowerCase()\n  const texte = String(html || '')\n    .replace(/&#64;|&#x40;|\\[at\\]|\\(at\\)| arobase /gi, '@')\n    .replace(/%40/g, '@')\n  const trouves = [...new Set((texte.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}/gi) || []).map(e => e.toLowerCase()))]\n    .filter(e => !/\\.(png|jpe?g|gif|svg|webp|css|js)$/.test(e))          // noms d'images du type logo@2x.png\n    .filter(e => !/(sentry|wixpress|example|exemple|domain|votre|email@|nom@|user@)/.test(e))\n  const generique = /^(contact|info|infos|accueil|bonjour|hello|devis|commercial|secretariat|administration|agence|atelier)@/\n  const score = e => (domaine && e.endsWith('@' + domaine) ? 2 : 0) + (generique.test(e) ? 1 : 0)\n  const email = trouves.sort((a, b) => score(b) - score(a))[0] || ''\n  // Lien vers une page contact ou mentions légales, pour un second essai si rien n'est trouvé\n  const lien = (String(html || '').match(/href=[\"']([^\"'#]*(contact|mentions)[^\"'#]*)[\"']/i) || [])[1] || ''\n  let lien_contact = ''\n  if (lien && !/^(mailto|tel|javascript):/i.test(lien)) {\n    if (/^https?:\\/\\//i.test(lien)) lien_contact = lien\n    else if (lien.startsWith('//')) lien_contact = 'https:' + lien\n    else if (lien.startsWith('/')) lien_contact = origine + lien\n    else lien_contact = String(site).replace(/[^\\/]*$/, '') + lien\n  }\n  return { email, lien_contact }\n}\n\nconst base = $('Ajouter site et téléphone').item.json\nconst r = chercherEmail($json.html, base.site)\nreturn { json: { ...base, email: r.email, source_email: r.email ? base.site : '', lien_contact: r.lien_contact } }"
+      },
+      "id": "353451aa-9aae-47e6-8275-a41c853f6011",
+      "name": "Chercher l'e-mail (accueil)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2420,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "bb2760a6-e11c-41a0-8eb4-0431f31b20df",
+              "leftValue": "={{ $json.email }}",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              },
+              "rightValue": ""
+            },
+            {
+              "id": "a3bdf891-1923-4ca0-87e6-bd24142a7cf0",
+              "leftValue": "={{ $json.lien_contact }}",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              },
+              "rightValue": ""
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "325efa3d-db5d-45bd-96e2-73e50daddc68",
+      "name": "Essayer la page contact ?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2640,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.lien_contact }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 500
+            }
+          },
+          "timeout": 10000,
+          "response": {
+            "response": {
+              "responseFormat": "text",
+              "outputPropertyName": "html"
+            }
+          }
+        }
+      },
+      "id": "c0a0d0f5-4668-4b8f-be13-c10aa67cef38",
+      "name": "Lire la page contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2860,
+        100
+      ],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "function chercherEmail(html, site) {\n  const origine = (String(site || '').match(/^https?:\\/\\/[^\\/?#]+/i) || [''])[0]\n  const domaine = origine.replace(/^https?:\\/\\/(www\\.)?/i, '').replace(/:\\d+$/, '').toLowerCase()\n  const texte = String(html || '')\n    .replace(/&#64;|&#x40;|\\[at\\]|\\(at\\)| arobase /gi, '@')\n    .replace(/%40/g, '@')\n  const trouves = [...new Set((texte.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}/gi) || []).map(e => e.toLowerCase()))]\n    .filter(e => !/\\.(png|jpe?g|gif|svg|webp|css|js)$/.test(e))          // noms d'images du type logo@2x.png\n    .filter(e => !/(sentry|wixpress|example|exemple|domain|votre|email@|nom@|user@)/.test(e))\n  const generique = /^(contact|info|infos|accueil|bonjour|hello|devis|commercial|secretariat|administration|agence|atelier)@/\n  const score = e => (domaine && e.endsWith('@' + domaine) ? 2 : 0) + (generique.test(e) ? 1 : 0)\n  const email = trouves.sort((a, b) => score(b) - score(a))[0] || ''\n  // Lien vers une page contact ou mentions légales, pour un second essai si rien n'est trouvé\n  const lien = (String(html || '').match(/href=[\"']([^\"'#]*(contact|mentions)[^\"'#]*)[\"']/i) || [])[1] || ''\n  let lien_contact = ''\n  if (lien && !/^(mailto|tel|javascript):/i.test(lien)) {\n    if (/^https?:\\/\\//i.test(lien)) lien_contact = lien\n    else if (lien.startsWith('//')) lien_contact = 'https:' + lien\n    else if (lien.startsWith('/')) lien_contact = origine + lien\n    else lien_contact = String(site).replace(/[^\\/]*$/, '') + lien\n  }\n  return { email, lien_contact }\n}\n\nconst base = $('Chercher l\\'e-mail (accueil)').item.json\nconst r = chercherEmail($json.html, base.lien_contact)\nreturn { json: { ...base, email: r.email, source_email: r.email ? base.lien_contact : '' } }"
+      },
+      "id": "aea5ece6-77c2-41c4-847c-3d3339e78e50",
+      "name": "Chercher l'e-mail (page contact)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3080,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "url",
+          "value": "COLLER_ICI_L_ADRESSE_DE_VOTRE_GOOGLE_SHEET"
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "name",
+          "value": "Prospects"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "siren": "={{ $json.siren ?? '' }}",
+            "nom": "={{ $json.nom ?? '' }}",
+            "metier": "={{ $json.metier ?? '' }}",
+            "activite": "={{ $json.activite ?? '' }}",
+            "adresse": "={{ $json.adresse ?? '' }}",
+            "code_postal": "={{ $json.code_postal ?? '' }}",
+            "ville": "={{ $json.ville ?? '' }}",
+            "site": "={{ $json.site ?? '' }}",
+            "telephone": "={{ $json.telephone ?? '' }}",
+            "email": "={{ $json.email ?? '' }}",
+            "source_email": "={{ $json.source_email ?? '' }}",
+            "nom_google": "={{ $json.nom_google ?? '' }}",
+            "statut": "={{ $json.email ? 'nouveau' : 'sans e-mail' }}",
+            "date_collecte": "={{ $now.toFormat('yyyy-MM-dd') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "siren",
+              "displayName": "siren",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "nom",
+              "displayName": "nom",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "metier",
+              "displayName": "metier",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "activite",
+              "displayName": "activite",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "adresse",
+              "displayName": "adresse",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "code_postal",
+              "displayName": "code_postal",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "ville",
+              "displayName": "ville",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "site",
+              "displayName": "site",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "telephone",
+              "displayName": "telephone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "source_email",
+              "displayName": "source_email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "nom_google",
+              "displayName": "nom_google",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "statut",
+              "displayName": "statut",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date_collecte",
+              "displayName": "date_collecte",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date_envoi",
+              "displayName": "date_envoi",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "objet",
+              "displayName": "objet",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "id": "652d99af-9d43-4cdc-832a-792a7b77d5be",
+      "name": "Enregistrer dans la feuille",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        3300,
+        300
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "",
+          "name": "Google Sheets (à connecter)"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Lancer la collecte": {
+      "main": [
+        [
+          {
+            "node": "Critères de recherche",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Critères de recherche": {
+      "main": [
+        [
+          {
+            "node": "Lire les prospects déjà connus",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire les prospects déjà connus": {
+      "main": [
+        [
+          {
+            "node": "Pages à lire",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pages à lire": {
+      "main": [
+        [
+          {
+            "node": "Chercher les entreprises (annuaire de l'État)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chercher les entreprises (annuaire de l'État)": {
+      "main": [
+        [
+          {
+            "node": "Une ligne par entreprise",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Une ligne par entreprise": {
+      "main": [
+        [
+          {
+            "node": "Garder les prospects utilisables",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Garder les prospects utilisables": {
+      "main": [
+        [
+          {
+            "node": "Trouver le site et le téléphone (Google)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trouver le site et le téléphone (Google)": {
+      "main": [
+        [
+          {
+            "node": "Ajouter site et téléphone",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ajouter site et téléphone": {
+      "main": [
+        [
+          {
+            "node": "Site trouvé ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire la page d'accueil": {
+      "main": [
+        [
+          {
+            "node": "Chercher l'e-mail (accueil)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chercher l'e-mail (accueil)": {
+      "main": [
+        [
+          {
+            "node": "Essayer la page contact ?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire la page contact": {
+      "main": [
+        [
+          {
+            "node": "Chercher l'e-mail (page contact)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chercher l'e-mail (page contact)": {
+      "main": [
+        [
+          {
+            "node": "Enregistrer dans la feuille",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Site trouvé ?": {
+      "main": [
+        [
+          {
+            "node": "Lire la page d'accueil",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enregistrer dans la feuille",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Essayer la page contact ?": {
+      "main": [
+        [
+          {
+            "node": "Lire la page contact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Enregistrer dans la feuille",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}
