@@ -16,11 +16,10 @@ Deux workflows qui travaillent sur la même feuille Google Sheets :
 
 1. Créez une feuille Google Sheets, par exemple « Prospects Axion ».
 2. Fichier → Importer → `feuille-prospects-en-tetes.csv` → « Remplacer la feuille actuelle ».
-3. **Renommez ensuite l'onglet du bas en `Prospects`** (exactement, avec la majuscule) : double-clic sur l'onglet.
-   L'import lui donne le nom du fichier, et n8n répondrait « Sheet with name Prospects not found ».
-4. Copiez l'adresse de la feuille. Dans chaque nœud Google Sheets des deux workflows
-   (« Lire… », « Enregistrer… », « Marquer… »), collez-la à la place de
-   `COLLER_ICI_L_ADRESSE_DE_VOTRE_GOOGLE_SHEET`.
+3. Le nom de l'onglet n'a pas d'importance : les workflows utilisent toujours le **premier onglet** de la feuille.
+4. Partagez la feuille en **Éditeur** avec le compte Google branché dans n8n (pour un compte de service, son adresse
+   en `…iam.gserviceaccount.com`), puis collez l'adresse de la feuille dans chaque nœud Google Sheets des deux workflows,
+   ou laissez le script le faire : `FEUILLE="https://docs.google.com/spreadsheets/d/…" node mettre-a-jour.mjs`.
 
 Colonne **statut** : `nouveau` (à contacter), `sans e-mail`, `envoyé`, `erreur d'envoi`, `désinscrit`.
 Vous pouvez la modifier à la main ; seules les lignes `nouveau` reçoivent un e-mail.

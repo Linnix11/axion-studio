@@ -3,7 +3,7 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "f36dcbaa-acbf-4a8c-84bd-2ed0528488b9",
+      "id": "08b7e2c4-3b62-4bc9-8982-3dd8afb39e67",
       "name": "Lancer la collecte",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
@@ -17,25 +17,25 @@
         "assignments": {
           "assignments": [
             {
-              "id": "95fd0243-c505-40e6-b641-90654a42cdfc",
+              "id": "6b5b8b91-7857-42ca-a274-8a73572a7d6e",
               "name": "metiers",
               "value": "43.22A = plombiers et chauffagistes\n43.21A = électriciens\n43.32A = menuisiers\n69.20Z = experts-comptables",
               "type": "string"
             },
             {
-              "id": "aff59912-8c5e-46a1-bb62-68f520a2553d",
+              "id": "a64b1671-7a57-4584-995a-d51576141950",
               "name": "departements",
               "value": "95, 78",
               "type": "string"
             },
             {
-              "id": "73ea06a2-9e41-4512-b6ed-19e57cf88a61",
+              "id": "45eb198c-3c81-4628-be0e-c754d575761d",
               "name": "pages",
               "value": 1,
               "type": "number"
             },
             {
-              "id": "55ff0d84-4267-41b9-aeef-e9e64c1e9863",
+              "id": "d86f17b1-8ae6-4d88-92d8-833b12bd4368",
               "name": "max_entreprises",
               "value": 80,
               "type": "number"
@@ -44,7 +44,7 @@
         },
         "options": {}
       },
-      "id": "08cdee98-934c-4e2d-a5ea-e30696e92210",
+      "id": "d49d306d-4749-4233-935f-164ed4701b7d",
       "name": "Critères de recherche",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -64,12 +64,12 @@
         },
         "sheetName": {
           "__rl": true,
-          "mode": "name",
-          "value": "Prospects"
+          "mode": "id",
+          "value": "gid=0"
         },
         "options": {}
       },
-      "id": "d44335bd-11c4-4ee4-a37a-7501addf397e",
+      "id": "cccf430c-fa0e-487b-a56c-bdadf37b1249",
       "name": "Lire les prospects déjà connus",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
@@ -84,7 +84,7 @@
       "parameters": {
         "jsCode": "// Une ligne par recherche : chaque métier × chaque département × chaque page (25 entreprises par page)\nconst c = $('Critères de recherche').first().json\nconst metiers = String(c.metiers || '').split('\\n').map(l => l.split('=')).filter(([naf]) => naf && naf.trim())\n  .map(([naf, metier]) => ({ naf: naf.trim().toUpperCase(), metier: (metier || '').trim() }))\nconst departements = String(c.departements || '').split(/[,;\\s]+/).filter(Boolean)\nconst recherches = []\nfor (const m of metiers) for (const departement of departements) for (let page = 1; page <= (c.pages || 1); page++)\n  recherches.push({ json: { ...m, departement, page } })\nreturn recherches"
       },
-      "id": "2636379f-ff91-4c7f-9c2f-1e8285e4c391",
+      "id": "2b5bb859-3362-4e47-83ff-157e9da254a9",
       "name": "Pages à lire",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -131,7 +131,7 @@
           "timeout": 20000
         }
       },
-      "id": "ad363b50-93b5-4507-9634-a6275776845a",
+      "id": "4502cef0-e972-4e64-a3e8-0683c293311d",
       "name": "Chercher les entreprises (annuaire de l'État)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -147,7 +147,7 @@
         "fieldToSplitOut": "results",
         "options": {}
       },
-      "id": "f62e6d94-6049-48ee-a880-1ab8850d24b7",
+      "id": "4a1e13fb-9e93-4ca6-840c-eb52a28112f9",
       "name": "Une ligne par entreprise",
       "type": "n8n-nodes-base.splitOut",
       "typeVersion": 1,
@@ -160,7 +160,7 @@
       "parameters": {
         "jsCode": "// Écarte : les entreprises qui refusent la prospection commerciale (droit d'opposition SIRENE),\n// celles à diffusion restreinte, celles déjà dans la feuille, et les doublons.\nconst deja = new Set($('Lire les prospects déjà connus').all().map(i => String(i.json.siren || '')).filter(Boolean))\nconst metierDe = Object.fromEntries($('Pages à lire').all().map(i => [i.json.naf, i.json.metier]))\nconst { max_entreprises } = $('Critères de recherche').first().json\nconst vus = new Set()\nconst prospects = []\nfor (const { json: e } of $input.all()) {\n  if (e.opposition_diffusion_commerciale || e.statut_diffusion !== 'O') continue\n  if (deja.has(e.siren) || vus.has(e.siren)) continue\n  // établissement ouvert dans le département, et diffusible (un entrepreneur peut masquer son adresse : « [NON-DIFFUSIBLE] »)\n  const etab = (e.matching_etablissements || []).find(x => x.etat_administratif === 'A' && (x.statut_diffusion_etablissement || 'O') === 'O')\n  if (!etab || /NON-DIFFUSIBLE/.test(JSON.stringify(etab))) continue\n  vus.add(e.siren)\n  prospects.push({ json: {\n    siren: e.siren,\n    nom: etab.nom_commercial || (etab.liste_enseignes || [])[0] || e.nom_complet,\n    metier: metierDe[e.activite_principale] || '',\n    activite: e.activite_principale,\n    adresse: etab.adresse,\n    code_postal: etab.code_postal,\n    ville: etab.libelle_commune,\n  } })\n}\nreturn prospects.slice(0, max_entreprises || 80)"
       },
-      "id": "98464d0c-ac04-489d-bbdc-ea4bdb5e64fe",
+      "id": "cd8866a9-38aa-4576-82ca-9f1f5b69aec3",
       "name": "Garder les prospects utilisables",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -197,7 +197,7 @@
           "timeout": 15000
         }
       },
-      "id": "1af1a47c-fba7-4fd9-8b08-675b8e315ddb",
+      "id": "8111a0cf-cef2-4a2f-846b-b078d553ae81",
       "name": "Trouver le site et le téléphone (Google)",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -214,7 +214,7 @@
         "mode": "runOnceForEachItem",
         "jsCode": "const lieu = ($json.places || [])[0] || {}\nreturn { json: {\n  ...$('Garder les prospects utilisables').item.json,\n  site: lieu.websiteUri || '',\n  telephone: lieu.nationalPhoneNumber || '',\n  nom_google: lieu.displayName?.text || '',   // à comparer au nom : Google peut renvoyer une autre entreprise\n} }"
       },
-      "id": "f6860065-bab1-436a-9eba-ca412ea36413",
+      "id": "8bb8ac5d-8928-44d6-8f4e-bbe3ef26b6e6",
       "name": "Ajouter site et téléphone",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -234,7 +234,7 @@
           },
           "conditions": [
             {
-              "id": "e73f7da0-984c-4d46-ac25-f7b90c53aa03",
+              "id": "275e2faa-0b4d-4712-9a6e-69ccf97ce0b2",
               "leftValue": "={{ $json.site }}",
               "operator": {
                 "type": "string",
@@ -248,7 +248,7 @@
         },
         "options": {}
       },
-      "id": "c7ff2ab2-ca19-4cff-9ba1-b63421d9c959",
+      "id": "d5274520-191a-4531-97f4-7bef7fc14392",
       "name": "Site trouvé ?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -276,7 +276,7 @@
           }
         }
       },
-      "id": "05a69450-52ac-4c12-88c3-cb6c72939493",
+      "id": "d70d5fea-72c1-428b-af43-8a3ebcc4361c",
       "name": "Lire la page d'accueil",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -291,7 +291,7 @@
         "mode": "runOnceForEachItem",
         "jsCode": "function reperer(html) {\n  const h = String(html || '').toLowerCase()\n  const OUTILS = [\n    ['WordPress', /wp-content|wp-includes/], ['Wix', /wixstatic|wix\\.com/], ['Shopify', /cdn\\.shopify|myshopify/],\n    ['Squarespace', /squarespace/], ['Webflow', /website-files\\.com|webflow\\.js/], ['Jimdo', /jimdo/],\n    ['PrestaShop', /prestashop/], ['WooCommerce', /woocommerce/], ['Google Sites', /sites\\.google\\.com/],\n    ['Calendly', /calendly\\.com/], ['Doctolib', /doctolib\\.fr/], ['Planity', /planity\\.com/], ['Resalib', /resalib\\.fr/],\n    ['Treatwell', /treatwell/], ['Zenchef', /zenchef/], ['TheFork', /thefork|lafourchette/], ['Google Agenda', /calendar\\.google\\.com|calendar\\.app\\.google/],\n    ['HubSpot', /hs-scripts|hubspot/], ['Brevo', /sendinblue|brevo\\.com|sibforms/], ['Mailchimp', /mailchimp|list-manage\\.com/],\n    ['Stripe', /js\\.stripe\\.com/], ['PayPal', /paypal\\.com/], ['SumUp', /sumup/],\n    ['Crisp', /crisp\\.chat/], ['Tawk.to', /tawk\\.to/], ['Intercom', /intercom/], ['Zendesk', /zdassets|zendesk/], ['WhatsApp', /wa\\.me\\/|api\\.whatsapp\\.com/],\n    ['Typeform', /typeform/], ['Google Forms', /docs\\.google\\.com\\/forms|forms\\.gle/], ['Jotform', /jotform/],\n  ]\n  const outils = OUTILS.filter(([, re]) => re.test(h)).map(([nom]) => nom)\n  const a = noms => noms.filter(n => outils.includes(n))\n  const rdv = a(['Calendly', 'Doctolib', 'Planity', 'Resalib', 'Treatwell', 'Zenchef', 'TheFork', 'Google Agenda'])\n  const crm = a(['HubSpot', 'Brevo', 'Mailchimp'])\n  const chat = a(['Crisp', 'Tawk.to', 'Intercom', 'Zendesk', 'WhatsApp'])\n  const boutique = a(['Shopify', 'WooCommerce', 'PrestaShop']).length > 0 || /ajouter au panier|add to cart/.test(h)\n  const formulaire = /<form[\\s>]/.test(h.replace(/<form[^>]*(search|recherche)[^>]*>/g, '')) || a(['Typeform', 'Google Forms', 'Jotform']).length > 0\n  const devis = /demande de devis|devis gratuit|devis en ligne|demander un devis/.test(h)\n  if (formulaire) outils.push('formulaire de contact')\n\n  const pistes = []\n  if (boutique) pistes.push('mettre à jour commandes, stock et suivi client automatiquement')\n  if (devis) pistes.push('préparer automatiquement les demandes de devis reçues par le site')\n  if (rdv.length) pistes.push(`relier les rendez-vous pris sur ${rdv[0]} au fichier client et aux rappels`)\n  if (formulaire && !crm.length && !devis) pistes.push('faire arriver les demandes du formulaire directement dans un fichier client')\n  if (chat.length) pistes.push('répondre automatiquement aux questions les plus fréquentes')\n  if (!formulaire && !rdv.length && !boutique) pistes.push('ajouter un formulaire ou une prise de rendez-vous en ligne reliés à vos outils')\n  return { outils: outils.join(', '), pistes: pistes.slice(0, 2).join(' ; ') }\n}\n\nconst r = reperer($json.html)\nreturn { json: { ...$('Ajouter site et téléphone').item.json, html: $json.html, outils: r.outils, pistes: r.pistes } }"
       },
-      "id": "f8446c4d-1314-4bf2-b1eb-bed7f97b5d18",
+      "id": "a287a5b1-42ca-41fd-ab62-e611c00fdb36",
       "name": "Repérer les outils du site",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -307,7 +307,7 @@
         "mode": "runOnceForEachItem",
         "jsCode": "function chercherEmail(html, site) {\n  const origine = (String(site || '').match(/^https?:\\/\\/[^\\/?#]+/i) || [''])[0]\n  const domaine = origine.replace(/^https?:\\/\\/(www\\.)?/i, '').replace(/:\\d+$/, '').toLowerCase()\n  const texte = String(html || '')\n    .replace(/&#64;|&#x40;|\\[at\\]|\\(at\\)| arobase /gi, '@')\n    .replace(/%40/g, '@')\n  const trouves = [...new Set((texte.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}/gi) || []).map(e => e.toLowerCase()))]\n    .filter(e => !/\\.(png|jpe?g|gif|svg|webp|css|js)$/.test(e))          // noms d'images du type logo@2x.png\n    .filter(e => !/(sentry|wixpress|example|exemple|domain|votre|email@|nom@|user@)/.test(e))\n  const generique = /^(contact|info|infos|accueil|bonjour|hello|devis|commercial|secretariat|administration|agence|atelier)@/\n  const score = e => (domaine && e.endsWith('@' + domaine) ? 2 : 0) + (generique.test(e) ? 1 : 0)\n  const email = trouves.sort((a, b) => score(b) - score(a))[0] || ''\n  // Lien vers une page contact ou mentions légales, pour un second essai si rien n'est trouvé\n  const lien = (String(html || '').match(/href=[\"']([^\"'#]*(contact|mentions)[^\"'#]*)[\"']/i) || [])[1] || ''\n  let lien_contact = ''\n  if (lien && !/^(mailto|tel|javascript):/i.test(lien)) {\n    if (/^https?:\\/\\//i.test(lien)) lien_contact = lien\n    else if (lien.startsWith('//')) lien_contact = 'https:' + lien\n    else if (lien.startsWith('/')) lien_contact = origine + lien\n    else lien_contact = String(site).replace(/[^\\/]*$/, '') + lien\n  }\n  return { email, lien_contact }\n}\n\nconst { html, ...base } = $json\nconst r = chercherEmail(html, base.site)\nreturn { json: { ...base, email: r.email, source_email: r.email ? base.site : '', lien_contact: r.lien_contact } }"
       },
-      "id": "f79c7495-c17b-42c8-81ed-c29db5b2a5d4",
+      "id": "93fb391c-c1d5-4436-9655-98a5821cecdc",
       "name": "Chercher l'e-mail (accueil)",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -327,7 +327,7 @@
           },
           "conditions": [
             {
-              "id": "4d7d99a3-53da-48ce-bccc-bf979504dc85",
+              "id": "95bf46bd-3015-4653-80fb-4e8f1d9670e1",
               "leftValue": "={{ $json.email }}",
               "operator": {
                 "type": "string",
@@ -337,7 +337,7 @@
               "rightValue": ""
             },
             {
-              "id": "aeb43705-95c2-42f6-ab12-cd8e768bf035",
+              "id": "768bb9f7-f0d4-4dbf-9d50-abc3065fef17",
               "leftValue": "={{ $json.lien_contact }}",
               "operator": {
                 "type": "string",
@@ -351,7 +351,7 @@
         },
         "options": {}
       },
-      "id": "5376e917-5e57-4d24-ad80-52986075d704",
+      "id": "f950f550-c36e-4112-99dc-2351c4374e31",
       "name": "Essayer la page contact ?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
@@ -379,7 +379,7 @@
           }
         }
       },
-      "id": "f2da9f16-45ed-434d-add9-e38017423361",
+      "id": "5acdef83-abd8-43f3-95cd-e44913675d21",
       "name": "Lire la page contact",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
@@ -394,7 +394,7 @@
         "mode": "runOnceForEachItem",
         "jsCode": "function chercherEmail(html, site) {\n  const origine = (String(site || '').match(/^https?:\\/\\/[^\\/?#]+/i) || [''])[0]\n  const domaine = origine.replace(/^https?:\\/\\/(www\\.)?/i, '').replace(/:\\d+$/, '').toLowerCase()\n  const texte = String(html || '')\n    .replace(/&#64;|&#x40;|\\[at\\]|\\(at\\)| arobase /gi, '@')\n    .replace(/%40/g, '@')\n  const trouves = [...new Set((texte.match(/[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}/gi) || []).map(e => e.toLowerCase()))]\n    .filter(e => !/\\.(png|jpe?g|gif|svg|webp|css|js)$/.test(e))          // noms d'images du type logo@2x.png\n    .filter(e => !/(sentry|wixpress|example|exemple|domain|votre|email@|nom@|user@)/.test(e))\n  const generique = /^(contact|info|infos|accueil|bonjour|hello|devis|commercial|secretariat|administration|agence|atelier)@/\n  const score = e => (domaine && e.endsWith('@' + domaine) ? 2 : 0) + (generique.test(e) ? 1 : 0)\n  const email = trouves.sort((a, b) => score(b) - score(a))[0] || ''\n  // Lien vers une page contact ou mentions légales, pour un second essai si rien n'est trouvé\n  const lien = (String(html || '').match(/href=[\"']([^\"'#]*(contact|mentions)[^\"'#]*)[\"']/i) || [])[1] || ''\n  let lien_contact = ''\n  if (lien && !/^(mailto|tel|javascript):/i.test(lien)) {\n    if (/^https?:\\/\\//i.test(lien)) lien_contact = lien\n    else if (lien.startsWith('//')) lien_contact = 'https:' + lien\n    else if (lien.startsWith('/')) lien_contact = origine + lien\n    else lien_contact = String(site).replace(/[^\\/]*$/, '') + lien\n  }\n  return { email, lien_contact }\n}\n\nconst base = $('Chercher l\\'e-mail (accueil)').item.json\nconst r = chercherEmail($json.html, base.lien_contact)\nreturn { json: { ...base, email: r.email, source_email: r.email ? base.lien_contact : '' } }"
       },
-      "id": "d9199389-bc84-49aa-bdd1-e1e5b0557eef",
+      "id": "d57f8d7d-7098-402f-bf33-c1b513637dfe",
       "name": "Chercher l'e-mail (page contact)",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -413,8 +413,8 @@
         },
         "sheetName": {
           "__rl": true,
-          "mode": "name",
-          "value": "Prospects"
+          "mode": "id",
+          "value": "gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",
@@ -615,7 +615,7 @@
         },
         "options": {}
       },
-      "id": "4b3a452e-8770-4f4f-9bb3-e016cb48584e",
+      "id": "fbac1c27-f4e5-4682-a33d-1e6b320400cc",
       "name": "Enregistrer dans la feuille",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,

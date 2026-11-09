@@ -1,6 +1,7 @@
 // Met à jour les deux workflows Axion dans votre n8n, en gardant vos accès (credentials) et l'adresse de votre feuille.
 // À lancer sur l'ordinateur où tourne n8n :  node mettre-a-jour.mjs
 // Il faut une clé d'API n8n : dans n8n, Settings → n8n API → Create an API key (la clé n'est ni affichée ni enregistrée ici).
+// Pour changer de feuille Google : FEUILLE="https://docs.google.com/spreadsheets/d/…" node mettre-a-jour.mjs
 import { createInterface } from 'node:readline/promises'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
@@ -8,6 +9,7 @@ import { join } from 'node:path'
 const N8N = (process.env.N8N_URL || 'http://localhost:5678').replace(/\/$/, '')
 const SOURCE = process.env.AXION_SOURCE || 'https://raw.githubusercontent.com/Linnix11/axion-studio/main/automatisations/n8n/'   // ou un dossier local
 const FICHIERS = ['axion-1-collecte-prospects.json', 'axion-2-envoi-emails.json']
+const FEUILLE = process.env.FEUILLE?.trim()                        // nouvelle feuille (sinon : celle déjà utilisée)
 
 let key = process.env.N8N_API_KEY
 if (!key) {
@@ -28,17 +30,16 @@ async function api(method, path, body) {
  *  dans n'importe quel workflow Axion déjà installé (`reserve`). */
 export function fusionner(nouveau, ancien, reserve = []) {
   const anciens = [...(ancien?.nodes || []), ...reserve]
-  const feuille = anciens.find(n => n.type === 'n8n-nodes-base.googleSheets' && n.parameters?.documentId?.value)
+  const feuille = FEUILLE ? { __rl: true, mode: 'url', value: FEUILLE }
+    : anciens.find(n => n.type === 'n8n-nodes-base.googleSheets' && n.parameters?.documentId?.value)?.parameters.documentId
   const reel = c => Object.values(c || {}).some(x => x?.id)              // ignore les accès fictifs sans identifiant
   const nodes = nouveau.nodes.map(n => {
     const m = structuredClone(n)
     const source = anciens.find(o => o.name === m.name && o.type === m.type && reel(o.credentials))
       || anciens.find(o => o.type === m.type && reel(o.credentials) && (o.parameters?.authentication || '') === (m.parameters?.authentication || ''))
     if (source) m.credentials = structuredClone(source.credentials)
-    if (m.type === 'n8n-nodes-base.googleSheets' && feuille) {
-      m.parameters.documentId = feuille.parameters.documentId
-      if (feuille.parameters.sheetName) m.parameters.sheetName = feuille.parameters.sheetName
-    }
+    // la feuille vient de l'ancienne version ; l'onglet reste celui du dépôt : le premier, quel que soit son nom
+    if (m.type === 'n8n-nodes-base.googleSheets' && feuille) m.parameters.documentId = feuille
     return m
   })
   return { name: nouveau.name, nodes, connections: nouveau.connections, settings: { executionOrder: 'v1' } }
@@ -62,12 +63,12 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     const manquants = sansAcces(corps.nodes)
     if (ancien) {
       await api('PUT', `/workflows/${ancien.id}`, corps)
-      console.log(`✓ « ${nouveau.name} » mis à jour (vos accès et votre feuille sont conservés).`)
+      console.log(`✓ « ${nouveau.name} » mis à jour (vos accès sont conservés, ${FEUILLE ? 'nouvelle feuille branchée' : 'même feuille'}).`)
     } else {
       await api('POST', '/workflows', corps)
       console.log(`✓ « ${nouveau.name} » créé.`)
     }
     if (manquants.length) console.log(`  À compléter dans n8n (accès à choisir) : ${manquants.join(', ')}`)
   }
-  console.log('\nDernière étape : ajoutez les colonnes « outils » et « pistes » à la fin de la ligne 1 de votre feuille Google.')
+  if (!FEUILLE) console.log('\nSi ce n’est pas déjà fait : la ligne 1 de votre feuille doit contenir les 19 colonnes du fichier feuille-prospects-en-tetes.csv.')
 }
