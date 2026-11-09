@@ -12,7 +12,7 @@
           ]
         }
       },
-      "id": "8a3a9724-9542-4c84-b06b-2a70e6aada23",
+      "id": "8fda2959-f835-4876-b42f-78815a5b0b89",
       "name": "Chaque jour ouvré à 9 h 40",
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
@@ -23,7 +23,7 @@
     },
     {
       "parameters": {},
-      "id": "bdb62c04-deec-4a72-a2f5-ade5707cfb1e",
+      "id": "b9e661e2-e789-4614-aa9c-7ea1ba1fe668",
       "name": "Tester maintenant",
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
@@ -54,7 +54,7 @@
         },
         "options": {}
       },
-      "id": "485d0655-43b8-4388-a2c2-2e65a52de7bf",
+      "id": "becb06a7-c93c-4838-947c-61c9761e0efb",
       "name": "Lire les prospects à contacter",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
@@ -74,7 +74,7 @@
           },
           "conditions": [
             {
-              "id": "48b761d4-9b76-4f47-bc46-c2217079393d",
+              "id": "69896019-9132-4610-b597-23aee00c9449",
               "leftValue": "={{ $json.email }}",
               "operator": {
                 "type": "string",
@@ -87,7 +87,7 @@
         },
         "options": {}
       },
-      "id": "48a4f35b-406e-4fff-a92a-4f00487dd131",
+      "id": "82a3f42b-af38-4eb7-8618-fc3a9b2502a2",
       "name": "Avec une adresse e-mail",
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2.2,
@@ -100,7 +100,7 @@
       "parameters": {
         "maxItems": 20
       },
-      "id": "c28e649f-04f9-408e-ab6c-f2342f4ee197",
+      "id": "062b0ca0-e5b8-4cfa-ae97-d986871351f6",
       "name": "20 e-mails par jour au maximum",
       "type": "n8n-nodes-base.limit",
       "typeVersion": 1,
@@ -115,7 +115,7 @@
       "parameters": {
         "options": {}
       },
-      "id": "1a7944be-030f-46fd-beb6-bb7321be61e1",
+      "id": "6f86d0ed-b469-4e9c-af56-24a385d9f76b",
       "name": "Un prospect à la fois",
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
@@ -129,7 +129,7 @@
         "promptType": "define",
         "text": "=Tu aides Arthur Champagne-Forterre (Axion Studio, automatisation et IA pour les TPE et PME, basé à Montlignon dans le Val-d'Oise) à écrire le début d'un e-mail de prospection.\n\nEntreprise : {{ $json.nom }}\nMétier : {{ $json.metier }} (code d'activité {{ $json.activite }})\nVille : {{ $json.ville }}\nOutils repérés sur son site : {{ $json.outils || 'aucun' }}\nPistes d'automatisation possibles : {{ $json.pistes || 'aucune repérée' }}\n\nÉcris en français, en vouvoyant :\n- \"objet\" : un objet d'e-mail de 5 à 9 mots, concret, sans emoji ni point d'exclamation ;\n- \"paragraphe\" : 2 phrases au maximum. S'il y a une piste, appuie-toi sur la plus concrète et, si c'est naturel, cite l'outil repéré correspondant (par exemple « vous prenez déjà vos rendez-vous sur Planity »). Sinon, cite une tâche administrative répétitive typique de ce métier (demandes de devis, relances de factures, rendez-vous, commandes, réponses aux mêmes questions…). Dans les deux cas, dis ce qu'une automatisation simple changerait au quotidien.\n\nRègles : n'invente aucun fait sur cette entreprise, aucun chiffre, aucun client ; ne cite que les outils listés ci-dessus. Pas de flatterie. Pas de jargon technique (API, IA générative, workflow). Ne salue pas et ne signe pas.\n\nRéponds uniquement avec ce JSON : {\"objet\": \"...\", \"paragraphe\": \"...\"}"
       },
-      "id": "7404f534-03b8-440e-81ab-49aa121c208e",
+      "id": "2dafa1af-15df-426e-b14c-75dfbac0fc6d",
       "name": "Rédiger l'accroche (IA)",
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
@@ -145,7 +145,7 @@
           "temperature": 0.4
         }
       },
-      "id": "cbb760bd-4382-4c76-88fd-214c26fb8924",
+      "id": "ebff1290-5626-43e3-988c-1495c79fe41f",
       "name": "Gemini",
       "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
       "typeVersion": 1,
@@ -159,7 +159,7 @@
         "mode": "runOnceForEachItem",
         "jsCode": "const p = $('Un prospect à la fois').item.json\nlet ia = {}\ntry { ia = JSON.parse(String($json.text || '').replace(/```(json)?/g, '').trim()) } catch { /* réponse illisible : texte de secours ci-dessous */ }\n\nconst objet = ia.objet || `Moins de saisie et de relances chez ${p.nom}`\nconst accroche = ia.paragraphe || \"Dans beaucoup d'entreprises comme la vôtre, les devis, les relances et les réponses aux mêmes questions prennent plusieurs heures chaque semaine.\"\nconst message = [\n  'Bonjour,',\n  accroche,\n  \"Je suis Arthur et j'automatise ce type de tâches pour les TPE et PME, avec les outils qu'elles utilisent déjà. Je vous propose un audit gratuit de 30 minutes, par téléphone ou en visio, pour voir ce qui peut l'être chez vous. Le prix est fixé avant de commencer et vous restez libre ensuite.\",\n  'Auriez-vous 30 minutes la semaine prochaine ?',\n  \"Bien cordialement,\\nArthur Champagne-Forterre\\nAxion Studio · 06 48 61 23 50\\nhttps://axionstudio.fr\",\n  \"Vous recevez ce message car votre entreprise figure dans l'annuaire public des entreprises (base SIRENE) et que cette adresse est publiée sur votre site. Pour ne plus recevoir de message de ma part, répondez simplement « STOP ».\",\n].join('\\n\\n')\n\nreturn { json: { ...p, objet, message } }"
       },
-      "id": "a45ec004-b5e5-4fb9-bd52-b57f54afd975",
+      "id": "37848b01-eddf-4c68-9a18-14f7c9d33f5e",
       "name": "Composer l'e-mail",
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -184,7 +184,7 @@
         "to": "={{ $json.email }}",
         "text": "={{ $json.message }}"
       },
-      "id": "59cc48ac-56e3-4622-b5e4-41bd2bc2777b",
+      "id": "b6e4a2f6-0a6b-46e5-8b5d-9b60fdf8134f",
       "name": "Créer le brouillon (iCloud)",
       "type": "n8n-nodes-imap.imap",
       "typeVersion": 1,
@@ -227,7 +227,7 @@
         },
         "options": {}
       },
-      "id": "56261a9b-9606-4b6d-b6b4-f2b2eb631eac",
+      "id": "c474d69f-f480-4f99-b1e7-ffd95256c045",
       "name": "Marquer « brouillon »",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
@@ -267,7 +267,7 @@
         },
         "options": {}
       },
-      "id": "6a086e6a-5976-4b21-9ca7-6a4ad281c1ed",
+      "id": "004ccc02-443b-4fef-9851-26906fa5d5f1",
       "name": "Marquer « erreur brouillon »",
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.5,
