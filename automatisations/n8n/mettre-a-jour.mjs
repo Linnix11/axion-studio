@@ -35,9 +35,15 @@ export function fusionner(nouveau, ancien, reserve = []) {
   const reel = c => Object.values(c || {}).some(x => x?.id)              // ignore les accès fictifs sans identifiant
   const nodes = nouveau.nodes.map(n => {
     const m = structuredClone(n)
+    // une requête HTTP ne reprend que l'accès d'une requête du même genre (la clé Places ne va pas sur l'annuaire)
+    const memeGenre = o => m.type !== 'n8n-nodes-base.httpRequest' || (o.parameters?.authentication || '') === (m.parameters?.authentication || '')
     const source = anciens.find(o => o.name === m.name && o.type === m.type && reel(o.credentials))
-      || anciens.find(o => o.type === m.type && reel(o.credentials) && (o.parameters?.authentication || '') === (m.parameters?.authentication || ''))
-    if (source) m.credentials = structuredClone(source.credentials)
+      || anciens.find(o => o.type === m.type && reel(o.credentials) && memeGenre(o))
+    if (source) {
+      m.credentials = structuredClone(source.credentials)
+      // le mode d'accès va avec l'accès (ex. Google Sheets en « Service Account » plutôt qu'en connexion OAuth)
+      if (source.parameters?.authentication) m.parameters.authentication = source.parameters.authentication
+    }
     // la feuille vient de l'ancienne version ; l'onglet reste celui du dépôt : le premier, quel que soit son nom
     if (m.type === 'n8n-nodes-base.googleSheets' && feuille) m.parameters.documentId = feuille
     return m

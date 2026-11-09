@@ -54,7 +54,7 @@ choisissez vos accès et collez l'adresse de la feuille, puis supprimez les anci
 
 | Nom dans le workflow | Type n8n | Ce qu'il faut |
 |---|---|---|
-| Google Sheets (à connecter) | Google Sheets OAuth2 API | Se connecter avec votre compte Google |
+| Google Sheets | Google Sheets OAuth2 API, **ou** Google Service Account | Connexion avec votre compte Google, ou un compte de service (`…iam.gserviceaccount.com`). Avec un compte de service, mettez **Authentication = Service Account** dans chaque nœud Google Sheets et partagez la feuille en Éditeur avec son adresse |
 | Google Places (clé d'API) | Header Auth | Nom : `X-Goog-Api-Key`, valeur : une clé Google Cloud avec « Places API (New) » activée |
 | Google Gemini (clé d'API) | Google Gemini (PaLM) API | La même clé Gemini que le chatbot du site convient |
 | iCloud SMTP (mot de passe d'app) | SMTP | Hôte `smtp.mail.me.com`, port `587`, SSL/TLS désactivé (STARTTLS), utilisateur `arthur.champagne@icloud.com`, mot de passe : un **mot de passe pour app** créé sur account.apple.com (pas votre mot de passe Apple) |
