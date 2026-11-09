@@ -7,10 +7,10 @@ Deux workflows qui travaillent sur la même feuille Google Sheets :
    site et téléphone via Google → **outils repérés sur le site** (WordPress, Wix, Shopify, Calendly, Planity,
    Doctolib, HubSpot, Brevo, WhatsApp, formulaire…) et 1 ou 2 pistes d'automatisation → e-mail générique
    trouvé sur le site (accueil, puis page contact) → une ligne par entreprise dans la feuille.
-2. **Envoi des e-mails** (`axion-2-envoi-emails.json`), chaque jour ouvré à 9 h 40.
+2. **Brouillons des e-mails** (`axion-2-envoi-emails.json`), chaque jour ouvré à 9 h 40. **Rien n'est envoyé.**
    20 prospects « nouveau » au maximum → accroche rédigée par Gemini à partir du métier, des outils repérés et des pistes →
-   e-mail en texte simple depuis votre adresse iCloud → statut « envoyé » dans la feuille →
-   pause de 2 à 4 minutes avant le suivant.
+   e-mail en texte simple déposé dans le dossier **Brouillons** de votre boîte iCloud → statut « brouillon » dans la feuille.
+   Vous relisez et envoyez chaque brouillon vous-même depuis Mail (puis passez la ligne en « envoyé » si vous voulez suivre).
 
 ## 1. La feuille Google Sheets
 
@@ -21,7 +21,7 @@ Deux workflows qui travaillent sur la même feuille Google Sheets :
    en `…iam.gserviceaccount.com`), puis collez l'adresse de la feuille dans chaque nœud Google Sheets des deux workflows,
    ou laissez le script le faire : `FEUILLE="<adresse copiée dans la barre du navigateur, avec #gid=…>" node mettre-a-jour.mjs` (le `gid` désigne l'onglet ; une feuille créée par import n'a pas forcément un premier onglet au numéro 0).
 
-Colonne **statut** : `nouveau` (à contacter), `sans e-mail`, `envoyé`, `erreur d'envoi`, `désinscrit`.
+Colonne **statut** : `nouveau` (à contacter), `sans e-mail`, `brouillon` (dans Brouillons, à relire et envoyer), `erreur brouillon`, `envoyé` (à mettre vous-même), `désinscrit`.
 Vous pouvez la modifier à la main ; seules les lignes `nouveau` reçoivent un e-mail.
 
 ### Choisir les métiers et les départements
@@ -59,7 +59,7 @@ choisissez vos accès et collez l'adresse de la feuille, puis supprimez les anci
 | Google Sheets | Google Sheets OAuth2 API, **ou** Google Service Account | Connexion avec votre compte Google, ou un compte de service (`…iam.gserviceaccount.com`). Avec un compte de service, mettez **Authentication = Service Account** dans chaque nœud Google Sheets et partagez la feuille en Éditeur avec son adresse |
 | Google Places (clé d'API) | Header Auth | Nom : `X-Goog-Api-Key`, valeur : une clé Google Cloud avec « Places API (New) » activée |
 | Google Gemini (clé d'API) | Google Gemini (PaLM) API | La même clé Gemini que le chatbot du site convient |
-| iCloud SMTP (mot de passe d'app) | SMTP | Hôte `smtp.mail.me.com`, port `587`, SSL/TLS désactivé (STARTTLS), utilisateur `arthur.champagne@icloud.com`, mot de passe : un **mot de passe pour app** créé sur account.apple.com (pas votre mot de passe Apple) |
+| iCloud (IMAP) | IMAP (accès standard de n8n) | Hôte `imap.mail.me.com`, port `993`, SSL activé, utilisateur `arthur.champagne@icloud.com`, mot de passe : un **mot de passe pour app** créé sur account.apple.com. Le nœud « Créer le brouillon (iCloud) » vient du module communautaire **`n8n-nodes-imap`** : à installer une fois dans n8n (Settings → Community nodes → Install → `n8n-nodes-imap`) |
 
 Après l'import, ouvrez chaque nœud marqué d'un triangle et choisissez l'accès correspondant.
 

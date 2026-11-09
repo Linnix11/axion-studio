@@ -67,7 +67,7 @@ export function fusionner(nouveau, ancien, reserve = []) {
 }
 
 /** Nœuds qui ont besoin d'un accès et n'en ont pas (à choisir dans n8n). */
-const BESOIN = ['n8n-nodes-base.googleSheets', 'n8n-nodes-base.emailSend', '@n8n/n8n-nodes-langchain.lmChatGoogleGemini']
+const BESOIN = ['n8n-nodes-base.googleSheets', 'n8n-nodes-base.emailSend', '@n8n/n8n-nodes-langchain.lmChatGoogleGemini', 'n8n-nodes-imap.imap']
 const sansAcces = nodes => nodes.filter(n => (BESOIN.includes(n.type) || n.parameters?.authentication === 'genericCredentialType')
   && !Object.values(n.credentials || {}).some(c => c?.id)).map(n => n.name)
 
