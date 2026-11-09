@@ -2,7 +2,8 @@
 // À lancer sur l'ordinateur où tourne n8n :  node mettre-a-jour.mjs
 // Il faut une clé d'API n8n : dans n8n, Settings → n8n API → Create an API key. Collée une première fois, elle est gardée
 // dans ~/.config/axion/n8n-api-key (lisible par vous seul) ; si n8n la refuse, elle est oubliée et redemandée.
-// Pour changer de feuille Google : FEUILLE="https://docs.google.com/spreadsheets/d/…" node mettre-a-jour.mjs
+// Pour changer de feuille Google : FEUILLE="<adresse copiée dans le navigateur, avec #gid=…>" node mettre-a-jour.mjs
+// (le numéro gid désigne l'onglet ; sans lui, l'onglet déjà utilisé est gardé)
 import { createInterface } from 'node:readline/promises'
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs'
 import { join, dirname } from 'node:path'
@@ -40,8 +41,11 @@ async function api(method, path, body) {
  *  dans n'importe quel workflow Axion déjà installé (`reserve`). */
 export function fusionner(nouveau, ancien, reserve = []) {
   const anciens = [...(ancien?.nodes || []), ...reserve]
-  const feuille = FEUILLE ? { __rl: true, mode: 'url', value: FEUILLE }
-    : anciens.find(n => n.type === 'n8n-nodes-base.googleSheets' && n.parameters?.documentId?.value)?.parameters.documentId
+  const ancienneFeuille = anciens.find(n => n.type === 'n8n-nodes-base.googleSheets' && n.parameters?.documentId?.value)?.parameters
+  const feuille = FEUILLE ? { __rl: true, mode: 'url', value: FEUILLE } : ancienneFeuille?.documentId
+  // onglet : le numéro gid de l'adresse collée, sinon celui déjà utilisé, sinon celui du dépôt (premier onglet, gid 0)
+  const gid = FEUILLE?.match(/gid=(\d+)/)?.[1]
+  const onglet = gid ? { __rl: true, mode: 'id', value: gid } : !FEUILLE ? ancienneFeuille?.sheetName : undefined
   const reel = c => Object.values(c || {}).some(x => x?.id)              // ignore les accès fictifs sans identifiant
   const nodes = nouveau.nodes.map(n => {
     const m = structuredClone(n)
@@ -56,6 +60,7 @@ export function fusionner(nouveau, ancien, reserve = []) {
     }
     // la feuille vient de l'ancienne version ; l'onglet reste celui du dépôt : le premier, quel que soit son nom
     if (m.type === 'n8n-nodes-base.googleSheets' && feuille) m.parameters.documentId = feuille
+    if (m.type === 'n8n-nodes-base.googleSheets' && onglet) m.parameters.sheetName = onglet
     return m
   })
   return { name: nouveau.name, nodes, connections: nouveau.connections, settings: { executionOrder: 'v1' } }
@@ -86,7 +91,8 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     }
     if (manquants.length) console.log(`  À compléter dans n8n (accès à choisir) : ${manquants.join(', ')}`)
     const feuilles = [...new Set(corps.nodes.filter(n => n.type === 'n8n-nodes-base.googleSheets').map(n => n.parameters.documentId?.value || '(aucune)'))]
-    console.log(`  Feuille branchée : ${feuilles.map(f => (f.match(/\/d\/([\w-]+)/) || [, f])[1]).join(', ')}`)
+    const onglets = [...new Set(corps.nodes.filter(n => n.type === 'n8n-nodes-base.googleSheets').map(n => n.parameters.sheetName?.value))]
+    console.log(`  Feuille branchée : ${feuilles.map(f => (f.match(/\/d\/([\w-]+)/) || [, f])[1]).join(', ')} (onglet ${onglets.join(', ')})`)
   }
   console.log('\nDans n8n, rechargez la page du workflow avant de le tester : un éditeur resté ouvert garde l’ancienne version,')
   console.log('et un clic sur « Save » dans cet éditeur l’écrirait par-dessus la nouvelle.')

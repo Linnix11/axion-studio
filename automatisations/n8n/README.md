@@ -19,7 +19,7 @@ Deux workflows qui travaillent sur la même feuille Google Sheets :
 3. Le nom de l'onglet n'a pas d'importance : les workflows utilisent toujours le **premier onglet** de la feuille.
 4. Partagez la feuille en **Éditeur** avec le compte Google branché dans n8n (pour un compte de service, son adresse
    en `…iam.gserviceaccount.com`), puis collez l'adresse de la feuille dans chaque nœud Google Sheets des deux workflows,
-   ou laissez le script le faire : `FEUILLE="https://docs.google.com/spreadsheets/d/…" node mettre-a-jour.mjs`.
+   ou laissez le script le faire : `FEUILLE="<adresse copiée dans la barre du navigateur, avec #gid=…>" node mettre-a-jour.mjs` (le `gid` désigne l'onglet ; une feuille créée par import n'a pas forcément un premier onglet au numéro 0).
 
 Colonne **statut** : `nouveau` (à contacter), `sans e-mail`, `envoyé`, `erreur d'envoi`, `désinscrit`.
 Vous pouvez la modifier à la main ; seules les lignes `nouveau` reçoivent un e-mail.
