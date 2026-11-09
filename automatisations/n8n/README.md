@@ -44,7 +44,9 @@ en gardant vos accès et l'adresse de votre feuille.
    ```bash
    curl -fsSL https://raw.githubusercontent.com/Linnix11/axion-studio/main/automatisations/n8n/mettre-a-jour.mjs -o mettre-a-jour.mjs && node mettre-a-jour.mjs
    ```
-   Collez la clé quand elle est demandée. Le script affiche « mis à jour » pour chaque workflow.
+   Collez la clé quand elle est demandée (la première fois seulement : elle est ensuite gardée sur votre ordinateur,
+   dans `~/.config/axion/n8n-api-key`). Le script affiche « mis à jour » et la feuille branchée pour chaque workflow.
+   Rechargez ensuite la page du workflow dans n8n avant de le tester.
 3. Dans la feuille, ajoutez deux colonnes à la fin de la ligne 1 : `outils` et `pistes`.
 
 **À la main** : ajoutez les colonnes `outils` et `pistes`, réimportez les deux workflows (Import from URL),
