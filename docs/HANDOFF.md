@@ -141,7 +141,7 @@ automatisations/n8n/             workflows n8n de prospection (collecte SIRENE +
 - [ ] Faire relire les CGV.
 - [ ] Recueillir de vrais avis clients avant d'en afficher.
 - [ ] Gemini : la facturation étant active, passer `geminiFreeTier` à `false` dans `src/chatbot.js` si l'avis « version gratuite » ne doit plus s'afficher (l'assistant peut le faire).
-- [ ] Prospection n8n : sa version installée est la première (un seul métier, sans repérage des outils). Pour passer à la nouvelle : ajouter les colonnes `outils` et `pistes` à la fin de la ligne 1 de la feuille, réimporter les deux workflows par URL, y choisir ses accès et l'adresse de la feuille, puis supprimer les anciens (sinon envoi en double). Ensuite : un essai sur sa propre adresse, puis activer l'envoi.
+- [ ] Prospection n8n : sa version installée est la première (un seul métier, sans repérage des outils). Pour passer à la nouvelle : créer une clé d'API n8n et lancer `automatisations/n8n/mettre-a-jour.mjs` sur son Mac (commande dans le README ; garde ses accès et sa feuille, testé sur n8n 1.123), puis ajouter les colonnes `outils` et `pistes` à la fin de la ligne 1 de la feuille. Ensuite : un essai sur sa propre adresse, puis activer l'envoi.
 - [ ] Supprimer la branche `gh-pages` sur GitHub (ancienne copie du site).
 
 ## 12. Historique résumé

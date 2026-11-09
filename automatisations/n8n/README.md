@@ -37,10 +37,19 @@ Dans le nœud « Critères de recherche » du workflow 1 :
 
 ### Mettre à jour une installation existante
 
-1. Dans la feuille, ajoutez deux colonnes à la fin de la ligne 1 : `outils` et `pistes`.
-2. Dans n8n, importez les deux nouveaux workflows (Import from URL, mêmes adresses), puis dans chacun :
-   choisissez vos accès dans les nœuds marqués d'un triangle et collez l'adresse de la feuille.
-3. Supprimez les deux anciens workflows (ou désactivez-les) pour ne pas envoyer d'e-mails en double.
+**En une commande (recommandé)** : le script `mettre-a-jour.mjs` remplace les deux workflows dans votre n8n
+en gardant vos accès et l'adresse de votre feuille.
+
+1. Dans n8n : Settings → n8n API → Create an API key. Copiez la clé.
+2. Ouvrez le Terminal sur l'ordinateur où tourne n8n et collez :
+   ```bash
+   curl -fsSL https://raw.githubusercontent.com/Linnix11/axion-studio/main/automatisations/n8n/mettre-a-jour.mjs -o mettre-a-jour.mjs && node mettre-a-jour.mjs
+   ```
+   Collez la clé quand elle est demandée. Le script affiche « mis à jour » pour chaque workflow.
+3. Dans la feuille, ajoutez deux colonnes à la fin de la ligne 1 : `outils` et `pistes`.
+
+**À la main** : ajoutez les colonnes `outils` et `pistes`, réimportez les deux workflows (Import from URL),
+choisissez vos accès et collez l'adresse de la feuille, puis supprimez les anciens pour éviter les envois en double.
 
 ## 2. Les accès à créer dans n8n (Credentials)
 
