@@ -55,6 +55,7 @@ scripts/            prerender-routes.mjs, indexnow.mjs
 .github/workflows/indexnow.yml   signale les pages à Bing (IndexNow) 2 min après un push qui modifie les textes (data, blog, CGV, SEO, pages)
 docs/brand-guidelines.md         charte de marque complète
 docs/plan-seo-ia.md              plan SEO et IA validé (10 nov. 2026) et son avancement
+docs/kit-profils.md              textes prêts à coller pour les fiches (Google Business, LinkedIn, Malt, annuaires) et étapes Search Console, Bing, Hostinger
 marketing/banners/               bannières LinkedIn et Google, style « le temps rendu » (PNG + @2x + HTML + generate.mjs)
 automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs, README.md ; source/ = générateur (build.py) et tests (*.test.cjs)
 .claude/skills/                  skills installés (voir § 9)
@@ -62,7 +63,7 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 
 ## 4. Contenu et offre
 
-- Pages : Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Sécurité, Blog (4 articles), CGV, Mentions légales, Confidentialité, 404. Plus 6 pages « Automatisation pour … » par métier (artisans du bâtiment, experts-comptables, agences immobilières, boutiques en ligne, professions libérales, commerces et restaurants).
+- Pages : Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Sécurité, Blog (5 articles), CGV, Mentions légales, Confidentialité, 404. Plus 6 pages « Automatisation pour … » par métier (artisans du bâtiment, experts-comptables, agences immobilières, boutiques en ligne, professions libérales, commerces et restaurants).
 - **Prix** : Projet **à partir de 150 €** au forfait, prix exact sur devis ; Suivi **à partir de 250 €/mois**. Prestations réservées aux professionnels (la FAQ précise ce qui est possible pour les particuliers).
 - Arguments : audit gratuit de 30 min, prix fixé avant de commencer, le client garde tout, un mois de suivi inclus.
 - **Pas de photos. Pas de faux témoignages ni de chiffres inventés** (les gains sont présentés comme des ordres de grandeur).
@@ -177,3 +178,4 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 21. Script `mettre-a-jour.mjs` : mise à jour des workflows n8n en une commande, testée sur un vrai serveur n8n (accès et feuille conservés, pas de doublon). L'utilisateur ne l'a pas encore lancé.
 22. Workflow 2 en brouillons iCloud (rien n'est envoyé) ; workflow 1 : arrêt si Google Places refuse, entreprises jamais traitées par Google retentées et mises à jour par SIREN.
 23. Plan SEO et IA validé (`docs/plan-seo-ia.md`) ; 6 pages métier, logo PNG et `sameAs` prêt ; lien vers la page métier dans les e-mails du workflow 2 ; générateur des workflows et tests rangés dans `automatisations/n8n/source/`.
+24. Article « Facture électronique 2026-2027 » (calendrier vérifié sur les sites officiels) ; kit des fiches `docs/kit-profils.md` pour les actions que seul l'utilisateur peut faire (comptes Google, Bing, LinkedIn, annuaires).

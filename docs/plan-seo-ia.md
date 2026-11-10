@@ -115,7 +115,9 @@ inventés (ordres de grandeur), pas de faux avis, titres ≤ 60 caractères, des
 - [x] Étape 2 : 6 pages « Automatisation pour … » (`/automatisation/<slug>`), contenu dans `src/data.js` (`metiers`), page `src/pages/Metier.jsx`, JSON-LD `Service` + `FAQPage` + fil d'Ariane, liens depuis l'accueil, Services et le pied de page, présentes dans `sitemap.xml`, `llms.txt` et `llms-full.txt` (10 nov. 2026).
 - [x] Logo PNG (`public/logo.png`) dans le JSON-LD ; champ `company.profils` prêt pour `sameAs` (vide tant que les profils n'existent pas).
 - [x] Workflow n8n 2 : l'e-mail contient le lien vers la page du métier du prospect (code d'activité → page).
+- [x] Kit des fiches et textes prêts à coller : `docs/kit-profils.md`.
 - [ ] Étape 1 : Search Console, Bing Webmaster Tools, anti-robots Hostinger, fiche Google Business, mesure d'audience (utilisateur).
-- [ ] Étape 3 : articles du calendrier, 2 par mois (prochain : facture électronique 2026-2027).
+- [x] Étape 3, article 1 : « Facture électronique 2026-2027 » (`/blog/facture-electronique-tpe-2026-2027`, 10 nov. 2026, calendrier vérifié sur impots.gouv.fr et economie.gouv.fr).
+- [ ] Étape 3 : suite du calendrier, 2 articles par mois (prochain : relances de factures impayées).
 - [ ] Étape 4 : fiches dans les annuaires, avis réels, LinkedIn ; ajouter chaque profil créé dans `company.profils`.
 - [ ] Étape 5 : liste des 20 questions IA et tableau de suivi mensuel.
