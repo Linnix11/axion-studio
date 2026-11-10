@@ -5,7 +5,7 @@ export default function Exemples() {
   usePageMeta('/exemples')
   return (
     <>
-      <PageHeader title="Exemples" note="5 cas types, 5 métiers">
+      <PageHeader title="Exemples d’automatisation pour TPE et PME" note="5 cas types, 5 métiers">
         Des cas types, inspirés de situations courantes dans les petites entreprises. Ils montrent ce qui change
         concrètement au quotidien. Les gains de temps sont des ordres de grandeur.
       </PageHeader>

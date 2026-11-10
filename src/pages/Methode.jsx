@@ -13,7 +13,7 @@ export default function Methode() {
   usePageMeta('/methode')
   return (
     <>
-      <PageHeader title="Méthode" note="4 étapes, aucune surprise">
+      <PageHeader title="Méthode : de l’audit gratuit au suivi" note="4 étapes, aucune surprise">
         Quatre étapes, un prix fixé à l’avance et aucune surprise. Vous validez chaque étape avant de passer à la
         suivante.
       </PageHeader>

@@ -3,11 +3,12 @@ import { PageHeader, Section, SectionHead, btn, usePageMeta } from '../component
 import ContactForm from '../components/ContactForm'
 import { CheckIcon } from '../components/Icons'
 import { company, guarantees } from '../data'
+import { contactFaq } from '../n8n'
 
 export default function Contact() {
   usePageMeta('/contact')
   const infos = [
-    ['E-mail', <a href={`mailto:${company.email}`} className="inline-flex min-h-11 items-center text-pen">{company.email.replace('@', '@\u200b')}</a>],
+    ['E-mail', <a href={`mailto:${company.email}`} className="inline-flex min-h-11 items-center text-pen">{company.email.split('@')[0]}@<wbr />{company.email.split('@')[1]}</a>],
     ['Téléphone', <a href={`tel:${company.phoneHref}`} className="inline-flex min-h-11 items-center text-pen">{company.phone}</a>],
     ['Zone', `${company.city}, Île-de-France, et à distance partout en France`],
     ['Délai de réponse', `Sous ${company.delai}`],
@@ -62,22 +63,17 @@ export default function Contact() {
       <Section tone="alt" note="Avant de m’écrire">
         <SectionHead title="Questions fréquentes" />
         <dl className="max-w-3xl space-y-8 text-lg leading-[1.6]">
-          <div>
-            <dt className="text-xl leading-tight font-medium">L’audit est-il vraiment gratuit ?</dt>
-            <dd className="mt-2 text-muted">Oui. Il dure 30 minutes et ne vous engage à rien. Si rien chez vous ne vaut la peine d’être automatisé, je vous le dis.</dd>
-          </div>
-          <div>
-            <dt className="text-xl leading-tight font-medium">Que préparer avant l’audit ?</dt>
-            <dd className="mt-2 text-muted">Rien d’obligatoire. Pour gagner du temps : la liste des tâches qui reviennent chaque semaine, les logiciels que vous utilisez et une idée du temps qu’elles vous prennent.</dd>
-          </div>
-          <div>
-            <dt className="text-xl leading-tight font-medium">Travaillez-vous hors d’Île-de-France ?</dt>
-            <dd className="mt-2 text-muted">Oui. L’audit et la mise en place se font à distance, partout en France. Les prestations sont réservées aux professionnels : entreprises, indépendants, professions libérales et associations.</dd>
-          </div>
-          <div>
-            <dt className="text-xl leading-tight font-medium">Que deviennent les informations de ce formulaire ?</dt>
-            <dd className="mt-2 text-muted">Elles servent uniquement à répondre à votre demande et, si vous le souhaitez, à préparer une proposition. Elles ne sont pas enregistrées sur ce site. Le détail est dans la <Link to="/confidentialite/" className="text-pen underline underline-offset-4">politique de confidentialité</Link>, et mes règles pour les données de vos projets sur la page <Link to="/securite/" className="text-pen underline underline-offset-4">sécurité et données</Link>.</dd>
-          </div>
+          {contactFaq.map(f => (
+            <div key={f.q}>
+              <dt className="text-xl leading-tight font-medium">{f.q}</dt>
+              <dd className="mt-2 text-muted">
+                {f.a.split(/(\[[^\]]+\]\([^)]+\))/).map((part, i) => {
+                  const m = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
+                  return m ? <Link key={i} to={m[2]} className="text-pen underline underline-offset-4">{m[1]}</Link> : part
+                })}
+              </dd>
+            </div>
+          ))}
         </dl>
       </Section>
     </>

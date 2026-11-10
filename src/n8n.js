@@ -50,3 +50,14 @@ export const tarifsFaq = typo([
   { q: 'Le suivi mensuel est-il obligatoire ?', a: 'Non. Un mois de suivi est inclus dans chaque projet. Ensuite, le suivi à partir de 250 € par mois est sans engagement, ou vous pouvez me solliciter ponctuellement.' },
   { q: 'Comment savoir si c’est rentable ?', a: 'L’audit gratuit sert à ça : on estime le temps passé chaque semaine sur la tâche et le temps rendu. Si le gain ne justifie pas le prix, je vous le dis.' },
 ])
+
+// FAQ de la page Contact. Les liens s'écrivent [texte](/chemin/) ; ils sont retirés dans les données structurées.
+export const contactFaq = typo([
+  { q: 'L’audit est-il vraiment gratuit ?', a: 'Oui. Il dure 30 minutes et ne vous engage à rien. Si rien chez vous ne vaut la peine d’être automatisé, je vous le dis.' },
+  { q: 'Que préparer avant l’audit ?', a: 'Rien d’obligatoire. Pour gagner du temps : la liste des tâches qui reviennent chaque semaine, les logiciels que vous utilisez et une idée du temps qu’elles vous prennent.' },
+  { q: 'Travaillez-vous hors d’Île-de-France ?', a: 'Oui. L’audit et la mise en place se font à distance, partout en France. Les prestations sont réservées aux professionnels : entreprises, indépendants, professions libérales et associations.' },
+  { q: 'Que deviennent les informations de ce formulaire ?', a: 'Elles servent uniquement à répondre à votre demande et, si vous le souhaitez, à préparer une proposition. Elles ne sont pas enregistrées sur ce site. Le détail est dans la [politique de confidentialité](/confidentialite/), et mes règles pour les données de vos projets sur la page [sécurité et données](/securite/).' },
+])
+
+/** Retire la syntaxe [texte](/chemin/) pour ne garder que le texte. */
+export const sansLiens = t => t.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')

@@ -3,7 +3,7 @@
 // pour Google, Bing et les moteurs de réponse des IA (ChatGPT, Gemini, Perplexity, Claude…).
 import { posts, wordCount } from './blog.js'
 import { metiers } from './data.js'
-import { n8n, tarifsFaq } from './n8n.js'
+import { n8n, tarifsFaq, contactFaq, sansLiens } from './n8n.js'
 
 export const SITE_URL = 'https://axionstudio.fr'
 export const BRAND = 'Axion Studio'
@@ -88,7 +88,7 @@ export function schemaFor(path, data) {
   if (path === '/blog') out.push({ '@type': 'Blog', '@id': `${pageUrl('/blog')}#blog`, name: 'Blog Axion Studio', url: pageUrl('/blog'), inLanguage: 'fr-FR', publisher: { '@id': `${SITE_URL}/#entreprise` },
     blogPost: posts.map(p => ({ '@type': 'BlogPosting', headline: p.title, url: pageUrl(`/blog/${p.slug}`), datePublished: p.date })) })
   if (post) out.push({
-    '@type': 'BlogPosting', headline: post.title, description: post.description, datePublished: post.date, dateModified: post.updated || post.date,
+    '@type': 'BlogPosting', headline: post.title, description: post.lead || post.description, datePublished: post.date, dateModified: post.updated || post.date,
     inLanguage: 'fr-FR', articleSection: post.category, wordCount: wordCount(post), image: `${SITE_URL}/og.png`,
     mainEntityOfPage: pageUrl(path), url: pageUrl(path), isPartOf: { '@id': `${pageUrl('/blog')}#blog` },
     author: { '@type': 'Person', '@id': `${SITE_URL}/a-propos/#arthur`, name: data.company.owner, url: pageUrl('/a-propos') },
@@ -100,24 +100,26 @@ export function schemaFor(path, data) {
     provider: { '@id': `${SITE_URL}/#entreprise` }, areaServed: { '@type': 'Country', name: 'France' }, url: pageUrl(path),
     audience: { '@type': 'BusinessAudience', audienceType: metier.cible },
     hasOfferCatalog: { '@type': 'OfferCatalog', name: `Automatisations pour ${metier.nom.toLowerCase()}`, itemListElement: metier.taches.map(t => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: t.titre, description: t.texte } })) },
-    offers: { '@type': 'Offer', priceCurrency: 'EUR', priceSpecification: { '@type': 'PriceSpecification', minPrice: 150, priceCurrency: 'EUR' } },
+    // prix seulement si la page l'affiche (dans sa FAQ)
+    ...(metier.faq.some(f => f.a.includes('150')) ? { offers: { '@type': 'Offer', priceCurrency: 'EUR', priceSpecification: { '@type': 'PriceSpecification', minPrice: 150, priceCurrency: 'EUR' } } } : {}),
   }, { '@type': 'FAQPage', mainEntity: metier.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
   if (path === '/agence-n8n') out.push({
-    '@type': 'Service', name: n8n.title, description: n8n.description, serviceType: 'Création de workflows n8n',
+    '@type': 'Service', name: n8n.title, description: n8n.intro, serviceType: 'Création de workflows n8n',
     provider: { '@id': `${SITE_URL}/#entreprise` }, areaServed: { '@type': 'Country', name: 'France' }, url: pageUrl(path),
+    offers: { '@type': 'Offer', priceCurrency: 'EUR', priceSpecification: { '@type': 'PriceSpecification', minPrice: 150, priceCurrency: 'EUR' } },
   }, { '@type': 'FAQPage', mainEntity: n8n.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
   if (path === '/tarifs') out.push({ '@type': 'FAQPage', mainEntity: tarifsFaq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
   if (path === '/faq') out.push({ '@type': 'FAQPage', mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
   if (path === '/services') out.push(...services.map(s => ({
     '@type': 'Service', name: s.title, description: s.intro, serviceType: s.title, provider: { '@id': `${SITE_URL}/#entreprise` },
-    areaServed: 'France', url: `${SITE_URL}/services/#${s.slug}`,
-    offers: { '@type': 'Offer', priceCurrency: 'EUR', priceSpecification: { '@type': 'PriceSpecification', minPrice: 150, priceCurrency: 'EUR' } },
+    areaServed: { '@type': 'Country', name: 'France' }, url: `${SITE_URL}/services/#${s.slug}`,
   })))
   if (path === '/tarifs') out.push({ '@type': 'OfferCatalog', name: 'Formules Axion Studio', itemListElement: offers.map(o => ({
     '@type': 'Offer', name: o.name, description: o.text, priceCurrency: 'EUR',
     ...(o.price === 'Offert' ? { price: 0 } : { priceSpecification: { '@type': 'UnitPriceSpecification', minPrice: parseInt(o.price, 10), priceCurrency: 'EUR', ...(o.name.includes('mensuel') ? { unitText: 'mois' } : {}) } }),
   })) })
-  if (path === '/a-propos') out.push(person, { '@type': 'AboutPage', url: pageUrl(path), about: { '@id': `${SITE_URL}/#entreprise` } })
-  if (path === '/contact') out.push({ '@type': 'ContactPage', url: pageUrl(path), about: { '@id': `${SITE_URL}/#entreprise` } })
+  if (path === '/a-propos') out.push(person, { '@type': 'AboutPage', name: pageMeta[path].title, url: pageUrl(path), about: { '@id': `${SITE_URL}/#entreprise` } })
+  if (path === '/contact') out.push({ '@type': 'ContactPage', name: pageMeta[path].title, url: pageUrl(path), about: { '@id': `${SITE_URL}/#entreprise` } },
+    { '@type': 'FAQPage', mainEntity: contactFaq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: sansLiens(f.a) } })) })
   return { '@context': 'https://schema.org', '@graph': out }
 }

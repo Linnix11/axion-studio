@@ -6,7 +6,7 @@ export default function APropos() {
   usePageMeta('/a-propos')
   return (
     <>
-      <PageHeader title="À propos" note="Un seul interlocuteur" />
+      <PageHeader title="À propos d’Axion Studio et de son fondateur" note="Un seul interlocuteur" />
       <Section note="Le fondateur">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,7fr)_minmax(0,4fr)] lg:gap-16">
           <div className="max-w-[62ch]">

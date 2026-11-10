@@ -30,7 +30,7 @@ export default function Footer() {
         <div>
           <h2 className="mb-2 text-base">Contact</h2>
           <ul className="space-y-2">
-            <li><a className={link} href={`mailto:${company.email}`}>{company.email.replace('@', '@\u200b')}</a></li>
+            <li><a className={link} href={`mailto:${company.email}`}>{company.email.split('@')[0]}@<wbr />{company.email.split('@')[1]}</a></li>
             <li><a className={link} href={`tel:${company.phoneHref}`}>{company.phone}</a></li>
             <li className="flex min-h-11 items-center text-muted">{company.city}</li>
           </ul>

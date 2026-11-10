@@ -7,7 +7,7 @@ export default function Blog() {
   const list = [...posts].sort((a, b) => b.date.localeCompare(a.date))
   return (
     <>
-      <PageHeader title="Blog" note="Conseils concrets, sans jargon">
+      <PageHeader title="Blog sur l’automatisation et l’IA pour TPE" note="Conseils concrets, sans jargon">
         Des articles courts et pratiques pour gagner du temps dans votre entreprise : quoi automatiser, avec
         quels outils, et comment utiliser l’IA sans risque.
       </PageHeader>

@@ -84,7 +84,7 @@ export const posts = [
         "h2": "Pour aller plus loin"
       },
       {
-        "p": "Voir la page consacrée à l’[automatisation pour les artisans du bâtiment](/automatisation/artisans-batiment/), et l’article sur les [relances de factures impayées](/blog/relances-factures-impayees/), l’autre tâche qui pèse le plus sur les artisans."
+        "p": "Voir la page consacrée à l’[automatisation pour les artisans du bâtiment](/automatisation/artisans-batiment/), et l’article sur les [relances de factures impayées](/blog/relances-factures-impayees/), l’autre tâche qui pèse le plus sur les artisans. D’autres cas concrets figurent parmi les [exemples d’automatisation commentés](/exemples/)."
       },
       { "p": "Sources : [Fédération française du bâtiment, ce qui a changé le 1er avril 2017](https://www.ffbatiment.fr/actualites-batiment/actualite-ba/ce-qui-a-change-le-1er-avril), [Institut national de la consommation, prestations de dépannage, de réparation et d’entretien](https://www.inc-conso.fr/content/prestations-de-depannage-de-reparation-et-dentretien-une-meilleure-information-sur-les-prix)." }
     ],
@@ -151,7 +151,7 @@ export const posts = [
         "h2": "Ce que dit la règle (RGPD)"
       },
       {
-        "p": "Un rappel de rendez-vous demandé par le client est un message lié au service, pas de la prospection : il n’exige pas de consentement marketing. Il faut en revanche informer le client de l’usage de son numéro, par une mention courte sur la page de réservation."
+        "p": "Un rappel de rendez-vous demandé par le client est un message lié au service, pas de la prospection : il n’exige pas de consentement marketing. Il faut en revanche informer le client de l’usage de son numéro, par une mention courte sur la page de réservation. Les [précautions prises sur les données de vos clients](/securite/) sont détaillées à part."
       },
       {
         "p": "Attention : dès qu’un message contient une promotion ou une offre, il bascule dans la prospection commerciale, avec des règles plus strictes (consentement préalable pour les particuliers). Gardez les rappels purement pratiques."
@@ -163,7 +163,7 @@ export const posts = [
         "h2": "Avec quels outils"
       },
       {
-        "p": "Les outils de réservation spécialisés (Planity, Doctolib, TheFork, Calendly, la page de réservation de Google Agenda…) font déjà une partie du travail. L’automatisation sert à les relier au reste : votre fichier clients, votre facturation, les demandes d’avis, ou une liste d’attente. Je pars de l’outil que vous utilisez déjà, et je n’en propose un nouveau que s’il manque une brique."
+        "p": "Les outils de réservation spécialisés (Planity, Doctolib, TheFork, Calendly, la page de réservation de Google Agenda…) font déjà une partie du travail. L’automatisation sert à les [relier au reste de vos outils](/services/) : votre fichier clients, votre facturation, les demandes d’avis, ou une liste d’attente. Je pars de l’outil que vous utilisez déjà, et je n’en propose un nouveau que s’il manque une brique."
       },
       {
         "p": "Ordre de grandeur : ce type de circuit se met en place en quelques jours, et les projets démarrent à 150 € au forfait ([voir les tarifs](/tarifs/))."
@@ -212,11 +212,11 @@ export const posts = [
       { h2: 'Ce que dit la loi entre professionnels' },
       { ul: [
         'Délai de paiement : 30 jours après la réception des marchandises ou la fin de la prestation si rien n’est prévu. Il peut être porté par contrat jusqu’à 60 jours après la date de la facture, ou 45 jours fin de mois (article L. 441-10 du Code de commerce).',
-        'Pénalités de retard : dues sans qu’un rappel soit nécessaire. Leur taux est fixé dans vos conditions de vente ; à défaut, c’est le taux de la Banque centrale européenne majoré de 10 points.',
+        'Pénalités de retard : dues sans qu’un rappel soit nécessaire. Leur taux est fixé dans vos conditions de vente ; à défaut, c’est le taux de la Banque centrale européenne majoré de 10 points. Il ne peut pas être inférieur à trois fois le taux d’intérêt légal.',
         'Indemnité forfaitaire pour frais de recouvrement : 40 € par facture payée en retard (article D. 441-5 du Code de commerce), en plus des pénalités.',
         'Le taux des pénalités et l’indemnité de 40 € doivent figurer sur vos factures et dans vos conditions générales de vente.',
       ] },
-      { note: 'Pour les ventes aux particuliers, les règles sont différentes : les pénalités ne s’appliquent que si elles sont prévues au contrat. En cas de doute, vérifiez sur entreprendre.service-public.fr ou auprès de votre expert-comptable. Cet article ne remplace pas un conseil juridique.' },
+      { note: 'Pour les ventes aux particuliers, les règles sont différentes : les pénalités ne s’appliquent que si elles sont prévues au contrat. Même sans clause, les intérêts au taux légal sont dus à partir de la mise en demeure (article 1231-6 du Code civil), mais l’indemnité forfaitaire de 40 € ne s’applique pas. En cas de doute, vérifiez sur entreprendre.service-public.fr ou auprès de votre expert-comptable. Cet article ne remplace pas un conseil juridique.' },
 
       { h2: 'Le calendrier de relance qui marche' },
       { ol: [
@@ -292,20 +292,21 @@ export const posts = [
         'Créer la facture à partir d’un devis accepté ou d’une commande, puis l’envoyer par la plateforme, sans ressaisie.',
         'Être prévenu quand une facture est rejetée, pour la corriger tout de suite.',
       ] },
-      { p: 'La plupart des plateformes et des logiciels de facturation proposent des connexions (API) : c’est ce qui permet de les relier à votre messagerie, à votre tableur ou à votre CRM. Je le vérifie au cas par cas pendant l’[audit gratuit de 30 minutes](/contact/).' },
+      { p: 'La plupart des plateformes et des logiciels de facturation proposent des connexions (API) : c’est ce qui permet de les relier à votre messagerie, à votre tableur ou à votre CRM, par exemple avec un [workflow n8n relié à votre facturation](/agence-n8n/). Je le vérifie au cas par cas pendant l’[audit gratuit de 30 minutes](/contact/).' },
 
       { h2: 'Par où commencer' },
       { ol: [
         'Demandez à votre logiciel de facturation ou à votre expert-comptable quelle plateforme agréée ils proposent.',
         'Choisissez et désignez votre plateforme : la réception est déjà obligatoire.',
         'Vérifiez les informations de vos clients professionnels, en particulier leur numéro SIREN.',
-        'Listez les tâches répétitives autour de vos factures : téléchargement, classement, envoi au comptable, relances.',
+        'Listez les tâches répétitives autour de vos factures : téléchargement, classement, envoi au comptable, relances (voir l’exemple du [traitement automatique des factures fournisseurs](/exemples/)).',
         'Testez l’émission bien avant septembre 2027, sur quelques factures, pour ne pas découvrir les problèmes à l’échéance.',
       ] },
       { note: 'Les règles détaillées (cas particuliers, sanctions) évoluent : vérifiez-les sur impots.gouv.fr, rubrique « facturation électronique », ou auprès de votre expert-comptable. Cet article ne remplace pas un conseil fiscal.' },
 
       { h2: 'Pour aller plus loin' },
       { p: 'Selon votre métier, les tâches à automatiser ne sont pas les mêmes : voir par exemple les pages consacrées aux [artisans du bâtiment](/automatisation/artisans-batiment/) et aux [experts-comptables](/automatisation/experts-comptables/), ou l’article sur les [relances et autres tâches à automatiser en priorité](/blog/taches-a-automatiser-tpe/).' },
+      { p: "Sources : [impots.gouv.fr, je passe à la facturation électronique](https://www.impots.gouv.fr/professionnel/je-passe-la-facturation-electronique), [entreprendre.service-public.gouv.fr, facturation électronique entre entreprises](https://entreprendre.service-public.gouv.fr/actualites/A15683)." },
     ],
     faq: [
       { q: "La facture électronique est-elle obligatoire pour les TPE en 2026 ?", a: "Depuis le 1er septembre 2026, toutes les entreprises assujetties à la TVA, TPE et micro-entrepreneurs compris, doivent pouvoir recevoir des factures électroniques. L’obligation d’en émettre arrive le 1er septembre 2027 pour les PME, TPE et micro-entreprises." },
@@ -327,19 +328,19 @@ export const posts = [
       { h2: 'Ce qui fait varier le prix' },
       { p: 'Le prix d’une automatisation dépend moins de la technologie que du nombre d’étapes et d’outils à relier. Quatre critères comptent surtout :' },
       { ul: [
-        'Le nombre d’outils à connecter : relier une boîte mail à un tableur est plus simple que relier un site, un CRM et un logiciel de facturation.',
+        'Le nombre d’outils à connecter : relier une boîte mail à un tableur est plus simple que relier un site, un CRM et un logiciel de facturation (voir l’[intégration d’outils entre eux](/services/)).',
         'Le nombre de cas particuliers : une tâche toujours identique coûte moins cher qu’une tâche avec beaucoup d’exceptions.',
         'L’usage de l’intelligence artificielle : lire des PDF ou rédiger des brouillons demande plus de réglages et de tests.',
         'Le niveau de fiabilité attendu : alertes en cas d’erreur, reprise automatique, documentation.',
       ] },
 
       { h2: 'Le coût de mise en place' },
-      { p: 'Chez Axion Studio, chaque projet est chiffré au forfait après un audit gratuit de 30 minutes, et démarre à 150 €. Une automatisation simple, qui relie deux outils sur une tâche répétitive, se situe dans le bas de la fourchette ; un projet qui combine plusieurs logiciels et de l’IA demande davantage de travail. Le prix exact figure dans la proposition, avant tout engagement, et il ne bouge pas en cours de route. Le détail est sur la page [Tarifs](/tarifs/).' },
+      { p: 'Chez Axion Studio, chaque projet est chiffré au forfait après un audit gratuit de 30 minutes, et démarre à 150 €. Une automatisation simple, qui relie deux outils sur une tâche répétitive, se situe dans le bas de la fourchette ; un projet qui combine plusieurs logiciels et de l’IA demande davantage de travail. Le prix exact figure dans la proposition ([voir comment elle est construite](/methode/)), avant tout engagement, et il ne bouge pas en cours de route. Le détail est sur la page [Tarifs](/tarifs/).' },
 
       { h2: 'Les coûts récurrents à prévoir' },
       { p: 'Une fois en place, une automatisation a généralement deux types de coûts mensuels :' },
       { ul: [
-        'L’abonnement aux outils : outil d’automatisation (n8n, Make, Zapier…) et, le cas échéant, service d’IA. Il est souscrit à votre nom ; certains usages restent dans les offres gratuites, d’autres non.',
+        'L’abonnement aux outils : outil d’automatisation (n8n, Make, Zapier…) et, le cas échéant, service d’IA. Il est [souscrit à votre nom, sur vos propres comptes](/securite/) ; certains usages restent dans les offres gratuites, d’autres non.',
         'Le suivi, si vous le souhaitez : surveillance, corrections et petites évolutions. Il est facultatif et sans engagement.',
       ] },
       { note: 'Les tarifs des outils évoluent souvent : la proposition indique toujours leur coût estimé, vérifié au moment du projet.' },
@@ -357,7 +358,7 @@ export const posts = [
       { p: 'Le temps gagné n’est pas le seul bénéfice : moins d’oublis (une relance qui part toujours à l’heure), moins d’erreurs de recopie, des clients qui reçoivent une réponse plus vite, et l’esprit plus libre pour le travail qui compte vraiment.' },
 
       { h2: 'Le bon réflexe' },
-      { p: 'Commencez par la tâche qui vous coûte le plus de temps, et faites-la chiffrer. Si le gain ne justifie pas le coût, un bon prestataire doit vous le dire. C’est l’objet de l’[audit gratuit de 30 minutes](/contact/) : repartir avec une liste claire de ce qui vaut la peine d’être automatisé, et de ce qui ne l’est pas.' },
+      { p: 'Commencez par la tâche qui vous coûte le plus de temps, et faites-la chiffrer. Si le gain ne justifie pas le coût, un bon prestataire doit vous le dire. C’est l’objet de l’[audit gratuit de 30 minutes](/contact/) : repartir avec une liste claire de ce qui vaut la peine d’être automatisé, et de ce qui ne l’est pas. Délais, outils, pannes : les autres réponses sont dans la [foire aux questions](/faq/).' },
     ],
   },
   {
@@ -381,16 +382,16 @@ export const posts = [
       { p: 'Relancer est désagréable, donc on le reporte. Une automatisation envoie un rappel courtois à J+7, puis une relance plus ferme à J+15, avec le ton que vous avez choisi. Elle s’arrête dès que le paiement est enregistré. Résultat : moins d’oublis, et une trésorerie plus régulière.' },
 
       { h2: '3. Le classement des factures et justificatifs' },
-      { p: 'Les PDF s’accumulent dans la boîte mail et sont rangés à la main en fin de mois. Ici, l’intelligence artificielle est vraiment utile : elle lit chaque document, en extrait le fournisseur, la date et le montant, le renomme, le range dans le bon dossier et reporte les montants dans votre tableau de suivi ou celui de votre comptable.' },
+      { p: 'Les PDF s’accumulent dans la boîte mail et sont rangés à la main en fin de mois. Ici, l’intelligence artificielle est vraiment utile : elle lit chaque document, en extrait le fournisseur, la date et le montant, le renomme, le range dans le bon dossier et reporte les montants dans votre tableau de suivi ou celui de votre comptable. Le circuit complet figure parmi les [exemples d’automatisation pour TPE](/exemples/).' },
 
       { h2: '4. Le reporting hebdomadaire' },
       { p: 'Le lundi matin, beaucoup de dirigeants assemblent les chiffres de trois outils différents : ventes, rendez-vous, devis en cours. Un récapitulatif automatique arrive à la place dans votre boîte mail, toujours au même format. Vous gardez l’analyse, la machine fait la collecte.' },
 
       { h2: '5. Les réponses aux questions qui reviennent' },
-      { p: 'Horaires, délais, documents à fournir, suivi de commande : une bonne partie des e-mails reçus posent les mêmes questions. Une automatisation peut classer les messages entrants par type de demande et préparer une réponse que vous relisez avant envoi. Le client est servi plus vite, et vous gardez la main.' },
+      { p: 'Horaires, délais, documents à fournir, suivi de commande : une bonne partie des e-mails reçus posent les mêmes questions. Une automatisation peut classer les messages entrants par type de demande et préparer une réponse que vous relisez avant envoi. Le client est servi plus vite, et vous gardez la main. C’est l’un des usages de l’[intelligence artificielle pour TPE et PME](/services/) que je mets en place.' },
 
       { h2: 'Par où commencer ?' },
-      { p: 'Commencez par une seule tâche, celle qui vous agace le plus. Une première automatisation simple se met en place en une à deux semaines, tests compris, et sert ensuite de base aux suivantes. Vous ne savez pas laquelle choisir ? C’est exactement l’objet de l’[audit gratuit de 30 minutes](/contact/) : on regarde votre semaine type et on fixe ensemble l’ordre de priorité.' },
+      { p: 'Commencez par une seule tâche, celle qui vous agace le plus. Une première automatisation simple se met en place en une à deux semaines, tests compris, et sert ensuite de base aux suivantes. Les [étapes, de l’audit gratuit au suivi](/methode/) sont détaillées à part. Vous ne savez pas laquelle choisir ? C’est exactement l’objet de l’[audit gratuit de 30 minutes](/contact/) : on regarde votre semaine type et on fixe ensemble l’ordre de priorité.' },
     ],
   },
   {
@@ -415,14 +416,14 @@ export const posts = [
       { ul: ['Idéal pour : des scénarios de complexité moyenne, avec plusieurs étapes et conditions.', 'Points d’attention : un peu plus d’apprentissage au départ.'] },
 
       { h2: 'n8n : le plus libre' },
-      { p: 'n8n peut s’utiliser en ligne ou être installé sur votre propre serveur. Cette seconde option est précieuse quand vos données sont sensibles : elles restent sous votre contrôle, et le coût ne dépend plus du nombre d’exécutions. n8n est aussi très à l’aise avec l’intelligence artificielle et les appels d’API.' },
+      { p: 'n8n peut s’utiliser en ligne ou être installé sur votre propre serveur. Cette seconde option est précieuse quand vos données sont sensibles : elles restent sous votre contrôle, et le coût ne dépend plus du nombre d’exécutions. n8n est aussi très à l’aise avec l’intelligence artificielle et les appels d’API. Je détaille ces usages sur la page [agence n8n pour TPE et PME](/agence-n8n/).' },
       { ul: ['Idéal pour : des volumes importants, des données à garder chez soi, des workflows avec de l’IA.', 'Points d’attention : un hébergement à prévoir et à maintenir si vous l’installez vous-même.'] },
 
       { h2: 'Comment choisir' },
       { ol: [
         'Partez de vos outils actuels : vérifiez que ceux que vous utilisez chaque jour sont bien pris en charge.',
         'Estimez le volume : quelques dizaines d’exécutions par mois ou plusieurs milliers ? Le modèle de prix change tout.',
-        'Regardez la sensibilité des données : données clients, santé, finances… plus elles sont sensibles, plus l’hébergement compte.',
+        'Regardez la sensibilité des données : données clients, santé, finances… plus elles sont sensibles, plus l’hébergement compte (voir mes règles d’[hébergement en Europe quand c’est possible](/securite/)).',
         'Pensez à la reprise : choisissez un outil que vous ou quelqu’un d’autre pourrez comprendre et faire évoluer.',
       ] },
       { note: 'Les tarifs de ces outils évoluent souvent : consultez toujours leur page de prix à jour avant de vous décider.' },
@@ -458,7 +459,7 @@ export const posts = [
       { p: 'Les comptes, les clés d’accès et les automatisations doivent être à votre nom. Vous devez pouvoir retirer un accès ou couper un service en quelques minutes, sans dépendre de personne.' },
 
       { note: 'Ces conseils sont des bonnes pratiques générales, pas un avis juridique. Pour une situation particulière, rapprochez-vous de la CNIL (cnil.fr) ou d’un professionnel du droit.' },
-      { p: 'Ce sont exactement les règles appliquées sur chaque projet Axion Studio : elles sont détaillées sur la page [Sécurité et données](/securite/). Une question sur votre cas ? [Écrivez-moi](/contact/).' },
+      { p: 'Ce sont exactement les règles appliquées sur chaque projet Axion Studio : elles sont détaillées sur la page [Sécurité et données](/securite/). Les [questions fréquentes sur l’automatisation et l’IA](/faq/) répondent aux cas les plus courants. Une question sur votre cas ? [Écrivez-moi](/contact/).' },
     ],
   },
 ]

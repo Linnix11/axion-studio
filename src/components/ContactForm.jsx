@@ -175,7 +175,7 @@ export default function ContactForm() {
           <div className="drop mt-5 rounded-md border border-error p-4">
             <p className="font-medium text-error">{failure}</p>
             <p className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
-              <a href={`mailto:${company.email}`} className={`${textLink} inline-flex min-h-11 items-center`}>{company.email.replace('@', '@​')}</a>
+              <a href={`mailto:${company.email}`} className={`${textLink} inline-flex min-h-11 items-center`}>{company.email.split('@')[0]}@<wbr />{company.email.split('@')[1]}</a>
               <button type="button" onClick={copyEmail} className="inline-flex min-h-11 items-center text-sm text-pen underline-offset-4 hover:underline">
                 {copied ? 'Adresse copiée' : 'Copier l’adresse'}
               </button>
