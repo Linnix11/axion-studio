@@ -1,5 +1,5 @@
 import { Link, useParams } from 'react-router'
-import { PageHeader, Section, SectionHead, CtaBand, btn, standaloneLink, usePageMeta } from '../components/ui'
+import { PageHeader, Section, SectionHead, CtaBand, AuditLink, btn, standaloneLink, usePageMeta } from '../components/ui'
 import { metiers } from '../data'
 import NotFound from './NotFound'
 
@@ -26,8 +26,8 @@ export default function Metier() {
           ))}
         </ul>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link to="/contact" className={btn.primary}>Réserver un audit gratuit</Link>
-          <Link to="/tarifs" className={btn.ghost}>Voir les tarifs</Link>
+          <AuditLink className={btn.primary} demande={`Bonjour,\n\nMon activité : ${m.nom.toLowerCase()}. La tâche qui me prend le plus de temps : `} />
+          <Link to="/tarifs/" className={btn.ghost}>Voir les tarifs</Link>
         </div>
       </Section>
 
@@ -68,7 +68,7 @@ export default function Metier() {
       <Section note="Autres métiers">
         <SectionHead title="L’automatisation dans d’autres métiers" />
         <ul className="grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">
-          {autres.map(x => <li key={x.slug}><Link to={`/automatisation/${x.slug}`} className={standaloneLink}>{x.nom}</Link></li>)}
+          {autres.map(x => <li key={x.slug}><Link to={`/automatisation/${x.slug}/`} className={standaloneLink}>{x.nom}</Link></li>)}
         </ul>
       </Section>
 

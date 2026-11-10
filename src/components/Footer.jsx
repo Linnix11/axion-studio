@@ -17,15 +17,15 @@ export default function Footer() {
         </div>
         <div>
           <h2 className="mb-2 text-base">Services</h2>
-          <ul className="space-y-2">{services.map(s => <li key={s.slug}><Link className={link} to={`/services#${s.slug}`}>{s.title}</Link></li>)}</ul>
+          <ul className="space-y-2">{services.map(s => <li key={s.slug}><Link className={link} to={`/services/#${s.slug}`}>{s.title}</Link></li>)}</ul>
         </div>
         <div>
           <h2 className="mb-2 text-base">Par métier</h2>
-          <ul className="space-y-2">{metiers.map(m => <li key={m.slug}><Link className={link} to={`/automatisation/${m.slug}`}>{m.nom}</Link></li>)}</ul>
+          <ul className="space-y-2">{metiers.map(m => <li key={m.slug}><Link className={link} to={`/automatisation/${m.slug}/`}>{m.nom}</Link></li>)}</ul>
         </div>
         <div>
           <h2 className="mb-2 text-base">Le studio</h2>
-          <ul className="space-y-2">{nav.filter(n => n.to !== '/services').map(n => <li key={n.to}><Link className={link} to={n.to}>{n.label}</Link></li>)}<li><Link className={link} to="/securite">Sécurité et données</Link></li></ul>
+          <ul className="space-y-2">{nav.filter(n => n.to !== '/services/').map(n => <li key={n.to}><Link className={link} to={n.to}>{n.label}</Link></li>)}<li><Link className={link} to="/securite/">Sécurité et données</Link></li></ul>
         </div>
         <div>
           <h2 className="mb-2 text-base">Contact</h2>
@@ -40,9 +40,9 @@ export default function Footer() {
         <Container className="flex flex-wrap justify-between gap-x-8 gap-y-1 pt-4 pb-24 text-muted sm:pb-28">
           <p className="flex min-h-11 items-center">© {new Date().getFullYear()} {company.owner}, EI en micro-entreprise. TVA non applicable, art. 293 B du CGI.</p>
           <p className="flex gap-6">
-            <Link className="inline-flex min-h-11 items-center text-muted hover:text-pen" to="/mentions-legales">Mentions légales</Link>
-            <Link className="inline-flex min-h-11 items-center text-muted hover:text-pen" to="/cgv">CGV</Link>
-            <Link className="inline-flex min-h-11 items-center text-muted hover:text-pen" to="/confidentialite">Confidentialité</Link>
+            <Link className="inline-flex min-h-11 items-center text-muted hover:text-pen" to="/mentions-legales/">Mentions légales</Link>
+            <Link className="inline-flex min-h-11 items-center text-muted hover:text-pen" to="/cgv/">CGV</Link>
+            <Link className="inline-flex min-h-11 items-center text-muted hover:text-pen" to="/confidentialite/">Confidentialité</Link>
           </p>
         </Container>
       </div>

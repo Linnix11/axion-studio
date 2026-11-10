@@ -1,6 +1,9 @@
 import { reducedMotion } from '../prefs'
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router'
 import { tasks } from '../data'
+import { btn } from './ui'
+import { preparerDemande } from '../demande'
 
 const WEEKS_PER_YEAR = 47
 const DAYS = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven']
@@ -65,6 +68,19 @@ export default function TaskList() {
         <span className="inline-flex items-center gap-2"><span aria-hidden="true" className="hatch size-3.5 rounded-sm border border-rule" />automatisé</span>
         <span className="inline-flex items-center gap-2"><span aria-hidden="true" className="size-3.5 rounded-sm border border-rule bg-paper-2" />reste à vous</span>
       </p>
+      {/* Le calcul débouche sur une demande déjà rédigée (tâches cochées + total) */}
+      <Link
+        to="/contact/"
+        onClick={() => {
+          const choisies = tasks.filter((t, i) => checked[i]).map(t => `- ${t.label.toLowerCase()} (${t.minutes} min)`)
+          preparerDemande(choisies.length
+            ? `Bonjour,\n\nD’après la semaine type de votre site, ces tâches me prennent du temps :\n${choisies.join('\n')}\n\nSoit environ ${fmt(total)} par semaine. Pouvons-nous en parler lors de l’audit gratuit ?`
+            : 'Bonjour,\n\nJ’aimerais savoir quelles tâches de ma semaine peuvent être automatisées. Pouvons-nous en parler lors de l’audit gratuit ?')
+        }}
+        className={`${btn.primary} mt-5 w-full sm:w-auto`}
+      >
+        {total ? `Parler de mes ${fmt(total)}` : 'Parler de mes tâches'}
+      </Link>
     </div>
   )
 }

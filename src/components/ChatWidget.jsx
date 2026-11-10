@@ -2,15 +2,15 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router'
 import { assistantName, welcome, suggestions, geminiFreeTier } from '../chatbot'
 import { company } from '../data'
+import { preparerDemande } from '../demande'
 
 const ENDPOINT = '/api/chat.php'
 const STORE = 'axion-chat'
-export const DRAFT_KEY = 'axion-contact-draft'
 const PAGES = ['/services', '/exemples', '/methode', '/tarifs', '/a-propos', '/faq', '/securite', '/contact']
 
 const errorText = {
   rate: 'Vous avez envoyé beaucoup de messages. Réessayez dans un moment, ou écrivez directement à Arthur.',
-  quota: 'L’assistant a atteint sa limite du jour. Écrivez directement à Arthur, il vous répond sous 48 heures ouvrées.',
+  quota: 'L’assistant a atteint sa limite du jour. Écrivez directement à Arthur, il vous répond sous ' + company.delai + '.',
   busy: 'L’assistant est très sollicité. Réessayez dans quelques secondes.',
   default: 'L’assistant n’a pas pu répondre. Réessayez, ou écrivez directement à Arthur.',
 }
@@ -21,7 +21,7 @@ function Rich({ text, onNavigate }) {
   const out = []; let last = 0; let m
   while ((m = re.exec(text))) {
     if (m.index > last) out.push(text.slice(last, m.index))
-    if (m[1]) out.push(<Link key={m.index} to={m[1]} onClick={onNavigate} className="text-pen underline underline-offset-2">{m[1]}</Link>)
+    if (m[1]) out.push(<Link key={m.index} to={m[1] + '/'} onClick={onNavigate} className="text-pen underline underline-offset-2">{m[1]}</Link>)
     else if (m[2]) out.push(<a key={m.index} href={`mailto:${m[2]}`} className="break-all text-pen underline underline-offset-2">{m[2]}</a>)
     else out.push(<a key={m.index} href={`tel:${m[3].replace(/\D/g, '')}`} className="whitespace-nowrap text-pen underline underline-offset-2">{m[3]}</a>)
     last = m.index + m[0].length
@@ -88,10 +88,9 @@ export default function ChatWidget() {
   const handOff = () => {
     const said = messages.filter(m => m.role === 'user').map(m => `- ${m.text}`).join('\n')
     const draft = `Bonjour Arthur,\n\nVoici ce que j’ai décrit à l’assistant du site :\n${said}\n\nJe souhaite en parler lors de l’audit gratuit.`
-    try { sessionStorage.setItem(DRAFT_KEY, draft) } catch { /* stockage indisponible */ }
+    preparerDemande(draft)
     setOpen(false)
-    navigate('/contact')
-    window.dispatchEvent(new Event('axion-draft'))
+    navigate('/contact/')
   }
 
   const reset = () => { setMessages([]); setError(''); inputRef.current?.focus() }
@@ -155,7 +154,7 @@ export default function ChatWidget() {
             {error && (
               <div className="rounded-lg border border-error px-3 py-2 text-sm">
                 <p className="text-error">{error}</p>
-                <p className="mt-1"><Link to="/contact" onClick={() => setOpen(false)} className="text-pen underline">Écrire à Arthur</Link> ou {company.phone}</p>
+                <p className="mt-1"><Link to="/contact/" onClick={() => setOpen(false)} className="text-pen underline">Écrire à Arthur</Link> ou {company.phone}</p>
               </div>
             )}
           </div>
@@ -187,7 +186,7 @@ export default function ChatWidget() {
             </div>
           </form>
           <p className="border-t border-rule px-4 py-2 text-xs text-muted">
-            Réponses générées par l’IA Gemini de Google, à vérifier.{geminiFreeTier && ' Offre gratuite : Google peut utiliser ces échanges.'} <Link to="/confidentialite" onClick={() => setOpen(false)} className="underline">Confidentialité</Link>
+            Réponses générées par l’IA Gemini de Google, à vérifier.{geminiFreeTier && ' Offre gratuite : Google peut utiliser ces échanges.'} <Link to="/confidentialite/" onClick={() => setOpen(false)} className="underline">Confidentialité</Link>
           </p>
         </section>
       )}

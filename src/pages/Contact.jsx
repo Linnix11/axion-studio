@@ -1,4 +1,4 @@
-import { PageHeader, Section, usePageMeta } from '../components/ui'
+import { PageHeader, Section, btn, usePageMeta } from '../components/ui'
 import ContactForm from '../components/ContactForm'
 import { CheckIcon } from '../components/Icons'
 import { company, guarantees } from '../data'
@@ -9,12 +9,12 @@ export default function Contact() {
     ['E-mail', <a href={`mailto:${company.email}`} className="inline-flex min-h-11 items-center text-pen">{company.email.replace('@', '@\u200b')}</a>],
     ['Téléphone', <a href={`tel:${company.phoneHref}`} className="inline-flex min-h-11 items-center text-pen">{company.phone}</a>],
     ['Zone', `${company.city}, Île-de-France, et à distance partout en France`],
-    ['Délai de réponse', 'Sous 48 heures ouvrées'],
+    ['Délai de réponse', `Sous ${company.delai}`],
   ]
   return (
     <>
-      <PageHeader title="Parlons de votre semaine" note="Réponse sous 48 h ouvrées">
-        Décrivez la tâche qui vous fait perdre du temps. Je vous réponds sous 48 heures ouvrées pour fixer l’audit
+      <PageHeader title="Parlons de votre semaine" note={`Réponse sous ${company.delai}`}>
+        Décrivez la tâche qui vous fait perdre du temps. Je vous réponds sous {company.delai} pour fixer l’audit
         gratuit de 30 minutes.
       </PageHeader>
       <Section note="Audit gratuit, sans engagement">
@@ -35,7 +35,16 @@ export default function Contact() {
               <li>3. Vous recevez une proposition chiffrée sous 72 heures, sans engagement.</li>
             </ol>
           </div>
-          <div>
+          {/* Sur mobile, le formulaire passe avant les coordonnées */}
+          <div className="order-first lg:order-none">
+            {company.rdv && (
+              <div className="mb-8 rounded-xl border-2 border-pen bg-paper p-6">
+                <h2 className="text-2xl leading-tight">Choisir un créneau</h2>
+                <p className="mt-2 text-muted">Réservez directement l’audit gratuit de 30 minutes dans mon agenda.</p>
+                <a href={company.rdv} target="_blank" rel="noopener" className={`${btn.primary} mt-4`}>Voir les créneaux libres</a>
+                <p className="mt-4 text-sm text-muted">Ou décrivez votre besoin ci-dessous, je vous réponds sous {company.delai}.</p>
+              </div>
+            )}
             <ContactForm />
             <ul className="mt-6 space-y-3">
               {guarantees.slice(0, 3).map(g => (

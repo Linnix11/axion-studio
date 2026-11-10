@@ -1,4 +1,5 @@
 import { Link } from 'react-router'
+import { preparerDemande } from '../demande'
 import { PageHeader, Section, CtaBand, btn, textLink, usePageMeta } from '../components/ui'
 import { offers } from '../data'
 
@@ -25,18 +26,18 @@ export default function Tarifs() {
               <ul className="mt-6 mb-8 border-t border-rule">
                 {o.items.map(i => <li key={i} className="border-b border-rule py-3">{i}</li>)}
               </ul>
-              <Link to="/contact" className={`${o.featured ? btn.primary : btn.ghost} mt-auto`}>{o.cta}</Link>
+              <Link to="/contact/" onClick={() => preparerDemande(`Bonjour,\n\nJe m’intéresse à la formule ${o.name}. Mon besoin : `)} className={`${o.featured ? btn.primary : btn.ghost} mt-auto`}>{o.cta}</Link>
             </article>
           ))}
         </div>
         <div className="mt-10 max-w-[64ch] space-y-3 leading-[1.6] text-muted">
           <p className="font-sans font-medium text-ink">Prestations réservées aux professionnels : entreprises, indépendants, professions libérales et associations.</p>
           <p>TVA non applicable, article 293 B du CGI : les prix indiqués sur les devis sont les prix que vous payez.
-            Acompte, paiement et conditions détaillés dans les <Link to="/cgv" className={textLink}>conditions générales de vente</Link>.</p>
+            Acompte, paiement et conditions détaillés dans les <Link to="/cgv/" className={textLink}>conditions générales de vente</Link>.</p>
           <p>
             Les abonnements aux outils d’automatisation ou d’IA (par exemple n8n, Make ou une API d’IA) restent à votre
             nom et à votre charge. Je vous indique leur coût dans la proposition.
-            {' '}<Link to="/faq" className={textLink}>Voir les questions fréquentes</Link>
+            {' '}<Link to="/faq/" className={textLink}>Voir les questions fréquentes</Link>
           </p>
         </div>
       </Section>

@@ -1,5 +1,6 @@
+import { Fragment } from 'react'
 import { Link, useParams } from 'react-router'
-import { Container, CtaBand, usePageMeta } from '../components/ui'
+import { Container, CtaBand, AuditLink, btn, usePageMeta } from '../components/ui'
 import { posts, readingMinutes, formatDate } from '../blog'
 import { company } from '../data'
 import NotFound from './NotFound'
@@ -37,6 +38,7 @@ export default function Article() {
   if (!post) return <NotFound />
   const others = posts.filter(p => p.slug !== slug).slice(0, 2)
   const toc = post.body.filter(b => b.h2)
+  const milieu = post.body.findIndex((b, i) => b.h2 && post.body.slice(0, i).some(x => x.h2))   // 2ᵉ intertitre
 
   return (
     <>
@@ -47,7 +49,7 @@ export default function Article() {
               <nav aria-label="Fil d’Ariane" className="text-sm text-muted">
                 <ol className="flex flex-wrap gap-x-2">
                   <li><Link to="/" className="inline-flex min-h-11 items-center hover:text-pen">Accueil</Link> /</li>
-                  <li><Link to="/blog" className="inline-flex min-h-11 items-center hover:text-pen">Blog</Link> /</li>
+                  <li><Link to="/blog/" className="inline-flex min-h-11 items-center hover:text-pen">Blog</Link> /</li>
                   <li aria-current="page" className="inline-flex min-h-11 items-center">{post.category}</li>
                 </ol>
               </nav>
@@ -63,7 +65,18 @@ export default function Article() {
           <div className="grid gap-12 py-12 md:py-16 xl:grid-cols-[minmax(0,1fr)_15rem]">
             <div className="min-w-0 max-w-[68ch] text-lg leading-[1.7]">
               <p className="text-xl leading-[1.6] text-muted">{post.lead}</p>
-              {post.body.map((b, i) => <Block key={i} b={b} />)}
+              {post.body.map((b, i) => (
+                <Fragment key={i}>
+                  {i === milieu && (
+                    <aside className="mt-10 rounded-xl border border-rule bg-paper p-6 font-sans text-base">
+                      <p className="font-medium">Vous vous reconnaissez dans ces tâches ?</p>
+                      <p className="mt-1 text-muted">En 30 minutes, je vous dis lesquelles peuvent être automatisées chez vous. Gratuit, sans engagement.</p>
+                      <AuditLink className={`${btn.primary} mt-4`} demande={`Bonjour,\n\nJ’ai lu votre article « ${post.title} ». Chez moi : `} />
+                    </aside>
+                  )}
+                  <Block b={b} />
+                </Fragment>
+              ))}
             </div>
             {toc.length > 2 && (
               <nav aria-label="Sommaire de l’article" className="hidden min-w-0 self-start xl:sticky xl:top-24 xl:block">
@@ -85,7 +98,7 @@ export default function Article() {
               {others.map(p => (
                 <li key={p.slug} className="lift rounded-lg border border-rule bg-paper p-6">
                   <p className="text-sm text-muted">{p.category}, {readingMinutes(p)} min</p>
-                  <Link to={`/blog/${p.slug}`} className="mt-1 block text-xl leading-tight font-medium text-ink no-underline hover:text-pen">{p.title}</Link>
+                  <Link to={`/blog/${p.slug}/`} className="mt-1 block text-xl leading-tight font-medium text-ink no-underline hover:text-pen">{p.title}</Link>
                 </li>
               ))}
             </ul>

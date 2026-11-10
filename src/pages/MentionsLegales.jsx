@@ -29,7 +29,7 @@ export default function MentionsLegales() {
           <h2 className="font-sans text-xl text-ink">Propriété intellectuelle</h2>
           <p>Les textes et éléments graphiques de ce site sont la propriété de {company.owner}. Toute reproduction sans autorisation est interdite.</p>
           <h2 className="pt-4 font-sans text-xl text-ink">Données personnelles</h2>
-          <p>Voir la <Link to="/confidentialite" className={textLink}>politique de confidentialité</Link>.</p>
+          <p>Voir la <Link to="/confidentialite/" className={textLink}>politique de confidentialité</Link>.</p>
         </div>
       </Section>
     </>

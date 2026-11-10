@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import { Container, Section, SectionHead, CtaBand, btn, eyebrow, standaloneLink, usePageMeta } from '../components/ui'
+import { Container, Section, SectionHead, CtaBand, AuditLink, btn, eyebrow, standaloneLink, usePageMeta } from '../components/ui'
 import TaskList from '../components/TaskList'
 import Demo from '../components/Demo'
 import { CheckIcon } from '../components/Icons'
@@ -24,7 +24,7 @@ export default function Home() {
               réponses récurrentes. Vous gardez vos outils, ils travaillent ensemble.
             </p>
             <div className="no-anim mt-8 flex flex-wrap gap-3">
-              <Link to="/contact" className={btn.primary}>Réserver un audit gratuit</Link>
+              <AuditLink className={btn.primary} />
               <a href="#demo" className={btn.ghost}>Voir une démonstration</a>
             </div>
             <ul className="mt-8 flex flex-wrap gap-x-6 gap-y-2">
@@ -56,7 +56,7 @@ export default function Home() {
           {services.map(s => (
             <div key={s.slug} className="grid gap-2 border-b border-rule py-6 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] md:gap-8">
               <dt className="text-2xl leading-tight font-medium">
-                <Link to={`/services#${s.slug}`} className="inline-flex min-h-11 items-center text-ink no-underline hover:text-pen">{s.title}</Link>
+                <Link to={`/services/#${s.slug}`} className="inline-flex min-h-11 items-center text-ink no-underline hover:text-pen">{s.title}</Link>
               </dt>
               <dd className="max-w-[60ch] text-lg leading-[1.6] text-muted">{s.short}</dd>
             </div>
@@ -64,9 +64,9 @@ export default function Home() {
         </dl>
         <p className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1">
           <span className="text-muted">Par métier :</span>
-          {metiers.map(m => <Link key={m.slug} to={`/automatisation/${m.slug}`} className={standaloneLink}>{m.nom}</Link>)}
+          {metiers.map(m => <Link key={m.slug} to={`/automatisation/${m.slug}/`} className={standaloneLink}>{m.nom}</Link>)}
         </p>
-        <p className="mt-2"><Link to="/services" className={standaloneLink}>Voir le détail des services</Link></p>
+        <p className="mt-2"><Link to="/services/" className={standaloneLink}>Voir le détail des services</Link></p>
       </Section>
 
       <Section note="3 cas types sur 5">
@@ -82,7 +82,10 @@ export default function Home() {
             </article>
           ))}
         </div>
-        <p className="mt-6"><Link to="/exemples" className={standaloneLink}>Voir les 5 exemples</Link></p>
+        <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
+          <AuditLink className={btn.primary}>Estimer mon temps gagné</AuditLink>
+          <Link to="/exemples/" className={standaloneLink}>Voir les 5 exemples</Link>
+        </div>
       </Section>
 
       <Section tone="alt" note="Identité, garanties, limites">
@@ -108,7 +111,7 @@ export default function Home() {
             </li>
           ))}
         </ol>
-        <p className="mt-8"><Link to="/methode" className={standaloneLink}>Voir la méthode et un exemple de proposition</Link></p>
+        <p className="mt-8"><Link to="/methode/" className={standaloneLink}>Voir la méthode et un exemple de proposition</Link></p>
       </Section>
 
       <CtaBand />

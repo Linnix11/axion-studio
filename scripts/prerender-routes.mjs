@@ -102,7 +102,7 @@ ${intro}
 - E-mail : ${company.email}
 - Téléphone : ${company.phone}
 - Zone : Montlignon (95), Val-d'Oise, Île-de-France, et à distance partout en France
-- Prise de contact : ${pageUrl('/contact')} (réponse sous 48 heures ouvrées)
+- Prise de contact : ${pageUrl('/contact')} (réponse sous 24 heures ouvrées)
 
 ## Pages
 ${links}

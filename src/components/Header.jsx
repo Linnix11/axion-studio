@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router'
-import { Container, btn } from './ui'
+import { Container, AuditLink, btn } from './ui'
 import { LogoMark } from './Logo'
 import DisplayTools from './DisplayTools'
 import { nav, company } from '../data'
@@ -25,13 +25,13 @@ const C = {
     wrap: 'lg:gap-6',
     nav: 'lg:static lg:flex lg:flex-row lg:items-center lg:gap-5 lg:border-0 lg:p-0 xl:gap-6',
     link: 'lg:border-0', active: 'lg:underline lg:decoration-2 lg:underline-offset-8',
-    phone: 'lg:hidden 2xl:flex 2xl:border-l 2xl:border-rule 2xl:pl-6', contact: 'lg:mt-0', burger: 'lg:hidden', brand: '',
+    phone: 'lg:hidden 2xl:flex 2xl:border-l 2xl:border-rule 2xl:pl-6', contact: 'lg:mt-0', burger: 'lg:hidden', brand: 'max-[480px]:sr-only', audit: 'max-[359px]:hidden',
   },
   big: {
     wrap: '2xl:gap-6',
     nav: '2xl:static 2xl:flex 2xl:flex-row 2xl:items-center 2xl:gap-6 2xl:border-0 2xl:p-0',
     link: '2xl:border-0', active: '2xl:underline 2xl:decoration-2 2xl:underline-offset-8',
-    phone: '2xl:hidden', contact: '2xl:mt-0', burger: '2xl:hidden', brand: 'max-[460px]:sr-only',
+    phone: '2xl:hidden', contact: '2xl:mt-0', burger: '2xl:hidden', brand: 'max-[600px]:sr-only', audit: 'max-[479px]:hidden',
   },
 }
 
@@ -71,9 +71,11 @@ export default function Header() {
               <NavLink key={item.to} to={item.to} className={linkClass}>{item.label}</NavLink>
             ))}
             <a href={`tel:${company.phoneHref}`} className={`flex min-h-11 items-center whitespace-nowrap text-base text-ink no-underline hover:text-pen ${c.phone}`}>{company.phone}</a>
-            <Link to="/contact" className={`${btn.primary} mt-3 min-h-11 whitespace-nowrap ${c.contact}`}>Contact</Link>
+            <Link to="/contact/" className={`${btn.primary} mt-3 min-h-11 whitespace-nowrap ${c.contact}`}>Contact</Link>
           </nav>
 
+          {/* Sur mobile, le bouton d'audit reste visible sans ouvrir le menu */}
+          <AuditLink className={`${btn.primary} min-h-11 px-4 text-sm whitespace-nowrap ${c.burger} ${c.audit}`}>Audit gratuit</AuditLink>
           <DisplayTools />
 
           <button

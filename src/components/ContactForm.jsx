@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react'
 import { btn, textLink } from './ui'
 import { CheckIcon } from './Icons'
 import { company, needs } from '../data'
+import { DRAFT_KEY } from '../demande'
 
 const ENDPOINT = '/api/contact.php'
-const DRAFT_KEY = 'axion-contact-draft'
 
 function takeDraft() {
   try { const d = sessionStorage.getItem(DRAFT_KEY); if (d) sessionStorage.removeItem(DRAFT_KEY); return d || '' } catch { return '' }
@@ -14,6 +14,7 @@ const rules = {
   nom: v => (v.trim() ? '' : 'Indiquez votre nom.'),
   email: v => (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? '' : 'Indiquez une adresse e-mail valide, par ex. nom@exemple.fr.'),
   message: v => (v.trim().length >= 10 ? '' : 'Décrivez votre projet en quelques mots (10 caractères minimum).'),
+  telephone: v => (!v.trim() || /^\+?[\d .-]{9,20}$/.test(v.trim()) ? '' : 'Indiquez un numéro valide, par ex. 06 12 34 56 78, ou laissez vide.'),
 }
 
 const input = 'w-full min-h-12 rounded-md border bg-paper px-3 py-3 text-base text-ink'
@@ -35,7 +36,7 @@ const failureText = {
 }
 
 export default function ContactForm() {
-  const empty = { nom: '', entreprise: '', email: '', type: needs[0], message: '', site: '' }
+  const empty = { nom: '', entreprise: '', email: '', telephone: '', type: needs[0], message: '', site: '' }
   const [values, setValues] = useState(empty)
   const [fromChat, setFromChat] = useState(false)
 
@@ -93,8 +94,13 @@ export default function ContactForm() {
           Message envoyé
         </p>
         <p className="mt-4 text-lg leading-[1.6]">
-          Merci {values.nom.split(' ')[0]}. Je vous réponds sous 48 heures ouvrées à l’adresse {values.email}.
+          Merci {values.nom.split(' ')[0]}. Je vous réponds sous {company.delai} à l’adresse {values.email}.
         </p>
+        {company.rdv && (
+          <p className="mt-4 text-lg leading-[1.6]">
+            Pour aller plus vite, <a href={company.rdv} target="_blank" rel="noopener" className={textLink}>choisissez dès maintenant un créneau pour l’audit</a>.
+          </p>
+        )}
         <button type="button" className={`${btn.ghost} mt-6`} onClick={() => { setValues(empty); setState('idle') }}>
           Écrire un autre message
         </button>
@@ -126,7 +132,7 @@ export default function ContactForm() {
       )}
       {fromChat && (
         <p className="drop mb-5 rounded-md bg-marker px-3 py-2 text-sm text-on-marker">
-          Votre échange avec l’assistant a été repris dans le message. Complétez votre nom et votre e-mail, puis envoyez.
+          Votre demande est déjà rédigée dans le message ci-dessous. Complétez votre nom et votre e-mail, puis envoyez.
         </p>
       )}
       <div className="grid gap-x-5 sm:grid-cols-2">
@@ -137,9 +143,15 @@ export default function ContactForm() {
           <input {...fieldProps('entreprise')} autoComplete="organization" />
         </Field>
       </div>
-      <Field id="email" label="E-mail" error={errors.email}>
-        <input {...fieldProps('email')} type="email" autoComplete="email" required />
-      </Field>
+      <div className="grid gap-x-5 sm:grid-cols-2">
+        <Field id="email" label="E-mail" error={errors.email}>
+          <input {...fieldProps('email')} type="email" autoComplete="email" required />
+        </Field>
+        <Field id="telephone" label="Téléphone (facultatif)" hint="Si vous préférez être rappelé." error={errors.telephone}>
+          <input {...fieldProps('telephone')} type="tel" autoComplete="tel" inputMode="tel"
+                 aria-describedby={errors.telephone ? 'telephone-err' : 'telephone-hint'} />
+        </Field>
+      </div>
       <Field id="type" label="Besoin">
         <select {...fieldProps('type')}>
           {needs.map(n => <option key={n}>{n}</option>)}

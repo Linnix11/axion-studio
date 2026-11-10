@@ -22,11 +22,11 @@ export default function Blog() {
                 </p>
                 <div>
                   <h2 className="text-2xl leading-tight md:text-[1.75rem]">
-                    <Link to={`/blog/${p.slug}`} className="text-ink no-underline hover:text-pen">{p.title}</Link>
+                    <Link to={`/blog/${p.slug}/`} className="text-ink no-underline hover:text-pen">{p.title}</Link>
                   </h2>
                   <p className="mt-3 max-w-[62ch] text-lg leading-[1.6] text-muted">{p.description}</p>
                   <p className="mt-3">
-                    <Link to={`/blog/${p.slug}`} className="inline-flex min-h-11 items-center text-pen underline decoration-1 underline-offset-4 hover:decoration-2" aria-label={`Lire l’article : ${p.title}`}>
+                    <Link to={`/blog/${p.slug}/`} className="inline-flex min-h-11 items-center text-pen underline decoration-1 underline-offset-4 hover:decoration-2" aria-label={`Lire l’article : ${p.title}`}>
                       Lire l’article
                     </Link>
                   </p>

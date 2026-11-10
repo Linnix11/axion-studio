@@ -51,7 +51,7 @@ export function NotDoing() {
           <li key={n} className="border-b border-rule py-3 leading-[1.5] last:border-0">{n}</li>
         ))}
       </ul>
-      <p className="mt-2"><Link to="/securite" className={standaloneLink}>Comment je protège vos données</Link></p>
+      <p className="mt-2"><Link to="/securite/" className={standaloneLink}>Comment je protège vos données</Link></p>
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import { PageHeader, Section, CtaBand, usePageMeta } from '../components/ui'
+import { PageHeader, Section, CtaBand, AuditLink, standaloneLink, usePageMeta } from '../components/ui'
 import { useCases } from '../data'
 
 export default function Exemples() {
@@ -29,6 +29,7 @@ export default function Exemples() {
                 <div className="p-6">
                   <h3 className="text-base font-medium text-pen">Après</h3>
                   <p className="mt-2 text-lg leading-[1.6]">{u.after}</p>
+                  <AuditLink className={`${standaloneLink} mt-2`} demande={`Bonjour,\n\nJ’ai le même besoin que votre exemple « ${u.task} ». Chez moi : `}>J’ai la même tâche, parlons-en</AuditLink>
                 </div>
               </div>
             </article>

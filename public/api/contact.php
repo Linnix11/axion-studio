@@ -34,12 +34,14 @@ if (!empty($data['site'])) reply(200, ['ok' => true]);
 $nom        = clean($data['nom'] ?? '', 120);
 $entreprise = clean($data['entreprise'] ?? '', 160);
 $email      = clean($data['email'] ?? '', 200);
+$telephone  = clean($data['telephone'] ?? '', 30);   // facultatif
 $type       = clean($data['type'] ?? '', 80);
 $message    = clean($data['message'] ?? '', 5000, true);
 
 $errors = [];
 if ($nom === '') $errors['nom'] = 'Indiquez votre nom.';
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) $errors['email'] = 'Indiquez une adresse e-mail valide, par ex. nom@exemple.fr.';
+if ($telephone !== '' && !preg_match('/^\+?[0-9 .\-]{9,20}$/', $telephone)) $errors['telephone'] = 'Indiquez un numéro valide, par ex. 06 12 34 56 78, ou laissez vide.';
 if ((function_exists('mb_strlen') ? mb_strlen($message) : strlen($message)) < 10) $errors['message'] = 'Décrivez votre projet en quelques mots (10 caractères minimum).';
 if ($errors) reply(422, ['ok' => false, 'error' => 'validation', 'fields' => $errors]);
 
@@ -51,6 +53,7 @@ $body = "Nouvelle demande depuis axionstudio.fr\n\n"
       . "Nom : $nom\n"
       . "Entreprise : " . ($entreprise !== '' ? $entreprise : '-') . "\n"
       . "E-mail : $email\n"
+      . "Téléphone : " . ($telephone !== '' ? $telephone : '-') . "\n"
       . "Besoin : $type\n\n"
       . "Message :\n$message\n\n"
       . "--\nRépondez directement à cet e-mail pour écrire à $nom.\n";

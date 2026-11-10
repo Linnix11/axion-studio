@@ -90,6 +90,16 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 ## 7. Formulaire de contact
 
 - `public/api/contact.php` envoie la demande à arthur.champagne@icloud.com. Testé : l'utilisateur a bien reçu les e-mails.
+- Téléphone facultatif (validé côté navigateur et dans `contact.php`, repris dans l'e-mail reçu).
+- **Demande pré-remplie** : `preparerDemande(texte)` (`src/demande.js`) range le texte dans `sessionStorage` (`axion-contact-draft`) et prévient le formulaire, qui le reprend dans « Message ». Utilisé par le chatbot, le bouton « Parler de mes 2 h 15 » de la semaine type, les formules de Tarifs, les pages métier, les missions de Services, les cas d'Exemples et l'encadré au milieu des articles.
+
+## 7 bis. Appels à l'action (audit business du 10 novembre 2026)
+
+- Tous les boutons « Réserver un audit gratuit » passent par `AuditLink` (`src/components/ui.jsx`). **`company.rdv`** (`src/data.js`) : adresse de la page de réservation Google Agenda (« Planning de rendez-vous »). Vide pour l'instant : les boutons mènent au formulaire. Dès que l'utilisateur l'envoie, la coller là : tous les boutons et la page Contact (bloc « Choisir un créneau ») l'utilisent.
+- **`company.delai`** : délai de réponse affiché partout (24 heures ouvrées, choix de l'utilisateur). Ne jamais l'écrire en dur.
+- Mobile : bouton « Audit gratuit » dans l'en-tête à côté du menu (le nom « Axion Studio » est masqué sous 480 px pour laisser la place, logo seul ; bouton masqué sous 360 px). Formulaire avant les coordonnées sur la page Contact.
+- Pas de mesure d'audience pour l'instant (choix de l'utilisateur).
+- Liens internes toujours avec « / » final (`/contact/`, `/services/#…`), comme les adresses canoniques : sans lui, Hostinger répond par une redirection 301.
 - Côté navigateur, la validation se fait à la sortie de chaque champ, et un résumé des erreurs s'affiche (`role=alert`).
 
 ## 8. SEO et référencement dans les IA
@@ -150,6 +160,7 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 - [ ] Gemini : la facturation étant active, passer `geminiFreeTier` à `false` dans `src/chatbot.js` si l'avis « version gratuite » ne doit plus s'afficher (l'assistant peut le faire).
 - [ ] Prospection n8n : sa version installée est la première (un seul métier, sans repérage des outils). Pour passer à la nouvelle : créer une clé d'API n8n et lancer `automatisations/n8n/mettre-a-jour.mjs` sur son Mac (commande dans le README ; garde ses accès et sa feuille, testé sur n8n 1.123), puis ajouter les colonnes `outils` et `pistes` à la fin de la ligne 1 de la feuille. Ensuite : un essai sur sa propre adresse, puis activer l'envoi.
 - [ ] Supprimer la branche `gh-pages` sur GitHub (ancienne copie du site).
+- [ ] Créer la page de réservation Google Agenda de l'audit gratuit (Agenda → Créer → Planning de rendez-vous, 30 min, Meet ou téléphone) et envoyer son adresse pour `company.rdv`.
 - [ ] Plan SEO/IA, étape 1 (`docs/plan-seo-ia.md`) : Search Console, Bing Webmaster Tools, anti-robots Hostinger, fiche Google Business, choix d'une mesure d'audience sans cookie.
 - [ ] Plan SEO/IA, étape 4 : fiches LinkedIn, Malt, Codeur.com, PagesJaunes, annuaires n8n/Make et CCI, avis Google réels ; envoyer chaque adresse de profil pour `company.profils`.
 
@@ -179,3 +190,4 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 22. Workflow 2 en brouillons iCloud (rien n'est envoyé) ; workflow 1 : arrêt si Google Places refuse, entreprises jamais traitées par Google retentées et mises à jour par SIREN.
 23. Plan SEO et IA validé (`docs/plan-seo-ia.md`) ; 6 pages métier, logo PNG et `sameAs` prêt ; lien vers la page métier dans les e-mails du workflow 2 ; générateur des workflows et tests rangés dans `automatisations/n8n/source/`.
 24. Article « Facture électronique 2026-2027 » (calendrier vérifié sur les sites officiels) ; kit des fiches `docs/kit-profils.md` pour les actions que seul l'utilisateur peut faire (comptes Google, Bing, LinkedIn, annuaires).
+25. Audit business (appels à l'action) et corrections : bouton d'audit visible sur mobile, boutons en milieu de page, demandes pré-remplies selon la page, téléphone facultatif, réponse sous 24 h ouvrées, réservation Google Agenda prête à brancher (`company.rdv`), liens internes avec « / » final.

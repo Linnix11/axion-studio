@@ -30,7 +30,7 @@ export default function Securite() {
               Ce site ne dépose aucun cookie et ne mesure pas votre navigation. Le formulaire de contact m’envoie votre
               message par e-mail : il n’est pas enregistré sur le site. Les questions posées à l’assistant IA sont
               transmises à Google Gemini pour y répondre, sans être conservées ici.{geminiFreeTier && ` ${freeTierNotice}`} Détails dans la{' '}
-              <Link to="/confidentialite" className={textLink}>politique de confidentialité</Link>.
+              <Link to="/confidentialite/" className={textLink}>politique de confidentialité</Link>.
             </p>
           </div>
           <NotDoing />

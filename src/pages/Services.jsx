@@ -1,5 +1,5 @@
 import { Link } from 'react-router'
-import { PageHeader, Section, SectionHead, CtaBand, textLink, usePageMeta } from '../components/ui'
+import { PageHeader, Section, SectionHead, CtaBand, AuditLink, btn, textLink, usePageMeta } from '../components/ui'
 import { services, tools, metiers } from '../data'
 
 export default function Services() {
@@ -25,6 +25,7 @@ export default function Services() {
             <div>
               <h2 className="text-[2rem] leading-tight md:text-[2.5rem]">{s.title}</h2>
               <p className="mt-4 max-w-[52ch] text-lg leading-[1.6] text-muted">{s.intro}</p>
+              <AuditLink className={`${btn.ghost} mt-6`} demande={`Bonjour,\n\nJe m’intéresse à la mission « ${s.title} ». Mon besoin : `}>Parler de mon projet</AuditLink>
             </div>
             <div className="grid gap-8 sm:grid-cols-2">
               <div>
@@ -51,7 +52,7 @@ export default function Services() {
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {metiers.map(m => (
             <li key={m.slug}>
-              <Link to={`/automatisation/${m.slug}`} className="lift flex h-full flex-col rounded-xl border border-rule bg-paper p-5 text-ink no-underline hover:text-ink">
+              <Link to={`/automatisation/${m.slug}/`} className="lift flex h-full flex-col rounded-xl border border-rule bg-paper p-5 text-ink no-underline hover:text-ink">
                 <span className="text-lg leading-tight font-semibold">{m.nom}</span>
                 <span className="mt-1 text-sm leading-[1.5] text-muted">{m.cible}</span>
               </Link>
@@ -69,7 +70,7 @@ export default function Services() {
         </ul>
         <p className="mt-8 max-w-[60ch] leading-[1.6] text-muted">
           Votre logiciel n’est pas dans la liste ? S’il dispose d’une API ou d’un export, il peut presque toujours être
-          relié. <Link to="/contact" className={textLink}>Posez-moi la question</Link>.
+          relié. <Link to="/contact/" className={textLink}>Posez-moi la question</Link>.
         </p>
       </Section>
 

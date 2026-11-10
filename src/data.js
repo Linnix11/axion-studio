@@ -13,17 +13,20 @@ export const company = {
   // Profils publics de l'entreprise (LinkedIn, fiche Google Business, Malt…) : repris par Google et les IA (sameAs).
   // Ajouter chaque adresse dès que le profil existe, avec le même nom et la même description que le site.
   profils: [],
+  // Page de réservation Google Agenda de l'audit gratuit (Planning de rendez-vous). Vide : les boutons mènent au formulaire.
+  rdv: '',
+  delai: '24 heures ouvrées',   // délai de réponse annoncé partout (contact, assistant, bandeaux)
   host: 'Hostinger International Ltd., 61 Lordou Vironos Street, 6023 Larnaca, Chypre (hostinger.fr)',
 }
 
 export const nav = [
-  { to: '/services', label: 'Services' },
-  { to: '/exemples', label: 'Exemples' },
-  { to: '/methode', label: 'Méthode' },
-  { to: '/tarifs', label: 'Tarifs' },
-  { to: '/blog', label: 'Blog' },
-  { to: '/a-propos', label: 'À propos' },
-  { to: '/faq', label: 'FAQ' },
+  { to: '/services/', label: 'Services' },
+  { to: '/exemples/', label: 'Exemples' },
+  { to: '/methode/', label: 'Méthode' },
+  { to: '/tarifs/', label: 'Tarifs' },
+  { to: '/blog/', label: 'Blog' },
+  { to: '/a-propos/', label: 'À propos' },
+  { to: '/faq/', label: 'FAQ' },
 ]
 
 export const services = [

@@ -3,6 +3,14 @@ import { useReveal } from './useReveal'
 import { Link } from 'react-router'
 import { company } from '../data'
 import { pageMeta, fullTitle } from '../seo'
+import { preparerDemande } from '../demande'
+
+/** Bouton d’audit gratuit : page de réservation Google Agenda si `company.rdv` est rempli, sinon formulaire
+ *  de contact, pré-rempli avec `demande` (le contexte du visiteur : formule, métier, temps calculé…). */
+export function AuditLink({ className, demande, children = 'Réserver un audit gratuit' }) {
+  if (company.rdv) return <a href={company.rdv} target="_blank" rel="noopener" className={className}>{children}</a>
+  return <Link to="/contact/" onClick={() => demande && preparerDemande(demande)} className={className}>{children}</Link>
+}
 
 export function Container({ className = '', children }) {
   return <div className={`mx-auto max-w-[1180px] px-4 md:px-8 ${className}`}>{children}</div>
@@ -47,7 +55,7 @@ export function PageHeader({ title, note, children }) {
 }
 
 /** Bandeau d’appel à l’action placé en bas des pages. */
-export function CtaBand({ title = 'Une tâche vous fait perdre du temps ?', text = 'Décrivez-la en quelques lignes. Je vous dis sous 48 heures ouvrées ce qui peut être automatisé, gratuitement et sans engagement.' }) {
+export function CtaBand({ title = 'Une tâche vous fait perdre du temps ?', text = `Décrivez-la en quelques lignes. Je vous dis sous ${company.delai} ce qui peut être automatisé, gratuitement et sans engagement.` }) {
   return (
     <section className="bg-pen text-on-pen">
       <Container className="flex flex-col items-start justify-between gap-6 py-14 md:flex-row md:items-center">
@@ -56,9 +64,7 @@ export function CtaBand({ title = 'Une tâche vous fait perdre du temps ?', te
           <p className="mt-3 text-lg leading-[1.6] opacity-90">{text}</p>
         </div>
         <div className="flex shrink-0 flex-col items-start gap-2">
-          <Link to="/contact" className="inline-flex min-h-12 items-center rounded-full bg-marker px-6 font-medium text-on-marker no-underline hover:opacity-90 focus-visible:outline-on-pen">
-            Réserver un audit gratuit
-          </Link>
+          <AuditLink className="inline-flex min-h-12 items-center rounded-full bg-marker px-6 font-medium text-on-marker no-underline hover:opacity-90 focus-visible:outline-on-pen" />
           <a href={`tel:${company.phoneHref}`} className="inline-flex min-h-11 items-center text-on-pen underline-offset-4 hover:underline focus-visible:outline-on-pen">
             ou appeler le {company.phone}
           </a>

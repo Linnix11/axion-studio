@@ -10,7 +10,7 @@ export default function NotFound() {
       </PageHeader>
       <Container className="flex flex-wrap gap-3 py-12">
         <Link to="/" className={btn.primary}>Retour à l’accueil</Link>
-        <Link to="/contact" className={btn.ghost}>Me contacter</Link>
+        <Link to="/contact/" className={btn.ghost}>Me contacter</Link>
       </Container>
     </>
   )

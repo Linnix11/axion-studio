@@ -5,7 +5,7 @@ import { cgv, cgvSettings } from '../legal'
 /** Texte avec renvoi automatique vers les pages du site (/confidentialite…). */
 function Text({ t }) {
   const parts = t.split(/(\/confidentialite)/)
-  return <>{parts.map((p, i) => p === '/confidentialite' ? <Link key={i} to="/confidentialite" className={textLink}>politique de confidentialité</Link> : p)}</>
+  return <>{parts.map((p, i) => p === '/confidentialite' ? <Link key={i} to="/confidentialite/" className={textLink}>politique de confidentialité</Link> : p)}</>
 }
 
 export default function Cgv() {
@@ -41,8 +41,8 @@ export default function Cgv() {
           ))}
         </div>
         <p className="mt-8 max-w-[68ch] text-sm text-muted">
-          Une question sur ces conditions ? <Link to="/contact" className={textLink}>Écrivez-moi</Link> avant de passer commande.
-          Voir aussi les <Link to="/mentions-legales" className={textLink}>mentions légales</Link>.
+          Une question sur ces conditions ? <Link to="/contact/" className={textLink}>Écrivez-moi</Link> avant de passer commande.
+          Voir aussi les <Link to="/mentions-legales/" className={textLink}>mentions légales</Link>.
         </p>
       </Section>
     </>
