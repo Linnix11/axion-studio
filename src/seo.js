@@ -60,13 +60,17 @@ export function schemaFor(path, data) {
       { '@type': 'AdministrativeArea', name: 'Île-de-France' },
       { '@type': 'Country', name: 'France' },
     ],
-    knowsAbout: ['Automatisation des processus', 'Workflows automatisés', 'Intégration d’outils et API', 'Intelligence artificielle en entreprise', 'n8n', 'Make', 'Zapier', 'Création de sites web'],
+    slogan: 'Vos tâches répétitives, faites sans vous.',
+    knowsAbout: ['Automatisation des processus', 'Workflows automatisés', 'Agence n8n', 'Facture électronique', 'Intégration d’outils et API', 'Intelligence artificielle en entreprise', 'n8n', 'Make', 'Zapier', 'Création de sites web'],
     makesOffer: services.map(s => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.title, description: s.short } })),
     ...(company.profils?.length ? { sameAs: company.profils } : {}),
   }
   const person = {
     '@type': 'Person', '@id': `${SITE_URL}/a-propos/#arthur`, name: company.owner,
     jobTitle: 'Consultant en automatisation et intelligence artificielle', worksFor: { '@id': `${SITE_URL}/#entreprise` }, knowsLanguage: 'fr',
+    description: 'Fondateur d’Axion Studio, agence d’automatisation et d’IA indépendante pour les TPE et PME, spécialiste de n8n.',
+    knowsAbout: ['Automatisation des processus', 'n8n', 'Make', 'Zapier', 'Intégration d’API', 'Intelligence artificielle en entreprise', 'Facture électronique', 'RGPD et automatisation'],
+    url: pageUrl('/a-propos'),
     address: { '@type': 'PostalAddress', addressLocality: 'Montlignon', postalCode: '95680', addressCountry: 'FR' },
   }
   const website = { '@type': 'WebSite', '@id': `${SITE_URL}/#site`, url: `${SITE_URL}/`, name: BRAND, inLanguage: 'fr-FR', publisher: { '@id': `${SITE_URL}/#entreprise` } }

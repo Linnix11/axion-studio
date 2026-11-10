@@ -85,7 +85,8 @@ export const posts = [
       },
       {
         "p": "Voir la page consacrée à l’[automatisation pour les artisans du bâtiment](/automatisation/artisans-batiment/), et l’article sur les [relances de factures impayées](/blog/relances-factures-impayees/), l’autre tâche qui pèse le plus sur les artisans."
-      }
+      },
+      { "p": "Sources : [Fédération française du bâtiment, ce qui a changé le 1er avril 2017](https://www.ffbatiment.fr/actualites-batiment/actualite-ba/ce-qui-a-change-le-1er-avril), [Institut national de la consommation, prestations de dépannage, de réparation et d’entretien](https://www.inc-conso.fr/content/prestations-de-depannage-de-reparation-et-dentretien-une-meilleure-information-sur-les-prix)." }
     ],
     "faq": [
       {
@@ -172,7 +173,8 @@ export const posts = [
       },
       {
         "p": "Les rendez-vous sont au cœur des pages consacrées aux [commerces et restaurants](/automatisation/commerces-restaurants/), aux [professions libérales](/automatisation/professions-liberales/) et aux [agences immobilières](/automatisation/agences-immobilieres/) pour les visites. Voir aussi les [5 tâches à automatiser en priorité](/blog/taches-a-automatiser-tpe/)."
-      }
+      },
+      { "p": "Sources : [CNIL, la prospection commerciale par SMS et MMS](https://www.cnil.fr/fr/la-prospection-commerciale-par-sms-mms), [CNIL, communications électroniques aux prospects et clients](https://www.cnil.fr/fr/communication-electronique-quelles-regles)." }
     ],
     "faq": [
       {
@@ -244,6 +246,7 @@ export const posts = [
 
       { h2: 'Pour aller plus loin' },
       { p: 'Les relances sont souvent la première tâche automatisée chez les [artisans du bâtiment](/automatisation/artisans-batiment/) et dans les [professions libérales](/automatisation/professions-liberales/). Avec la [facture électronique obligatoire en 2026-2027](/blog/facture-electronique-tpe-2026-2027/), le suivi des paiements devient aussi plus simple à brancher.' },
+      { "p": "Sources : [Bpifrance Création, taux des pénalités de retard](https://bpifrance-creation.fr/boiteaoutils/taux-penalites-retard), [CCI Paris Île-de-France, l’injonction de payer](https://entreprises.cci-paris-idf.fr/fiches-pratiques/linjonction-de-payer), [justice.fr, recouvrement judiciaire et injonction de payer](https://www.justice.fr/fiche/recouvrement-judiciaire-injonction-payer-france-europe)." }
     ],
     faq: [
       { q: 'Quand faut-il relancer une facture impayée ?', a: 'Dès le lendemain de l’échéance, après un rappel aimable envoyé quelques jours avant. Plus la relance est tardive, plus le paiement est difficile à obtenir.' },
