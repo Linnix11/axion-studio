@@ -3,7 +3,7 @@
 // Les valeurs à adapter sont regroupées ci-dessous ; le texte des articles les reprend automatiquement.
 
 export const cgvSettings = {
-  version: '4\u00a0novembre 2026',
+  version: '10\u00a0novembre 2026',
   depositPercent: 30,        // acompte à la commande (%)
   paymentDays: 30,           // délai de paiement des factures (jours, 60 maximum en B2B)
   quoteValidityDays: 30,     // durée de validité d'une proposition (jours)
@@ -18,7 +18,7 @@ export const cgv = [
   {
     title: 'Objet et champ d’application',
     text: [
-      'Les présentes conditions générales de vente (CGV) s’appliquent à toutes les prestations réalisées par Axion Studio, nom commercial d’Arthur Champagne-Forterre, entrepreneur individuel (micro-entreprise), dont le siège est situé 5 allée des Pommiers, 95680 Montlignon, ci-après « Axion Studio », pour le compte de ses clients professionnels, ci-après « le Client ».',
+      'Les présentes conditions générales de vente (CGV) s’appliquent à toutes les prestations réalisées par Arthur Champagne-Forterre, entrepreneur individuel (micro-entreprise) exerçant sous le nom commercial « axionstudio » et la marque Axion Studio, dont le siège est situé 5 allée des Pommiers, 95680 Montlignon, ci-après « Axion Studio », pour le compte de ses clients professionnels, ci-après « le Client ».',
       'Les prestations concernées sont : l’audit, la conception et la mise en place d’automatisations, l’intégration d’outils, l’intégration de solutions d’intelligence artificielle, la création de sites web et le suivi mensuel.',
       'Les prestations s’adressent aux professionnels (entreprises, indépendants, associations dans le cadre de leur activité). Toute commande implique l’acceptation sans réserve des présentes CGV, qui prévalent sur tout autre document du Client, sauf accord écrit contraire.',
     ],
