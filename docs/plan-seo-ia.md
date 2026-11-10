@@ -123,4 +123,5 @@ inventés (ordres de grandeur), pas de faux avis, titres ≤ 60 caractères, des
 - [ ] Étape 4 : fiches dans les annuaires, avis réels, LinkedIn ; ajouter chaque profil créé dans `company.profils`.
 - [x] Étape 5 : liste des 20 questions IA et tableau de suivi mensuel dans `docs/suivi-seo-ia.md`, avec le premier relevé Semrush (10 nov. 2026 : 1 mot-clé dans le top 100).
 - [x] Titres alignés sur les recherches suivies : « Automatisation d'agence immobilière », « Automatisation cabinet d'expertise comptable ».
+- [x] Audit Semrush du 10 nov. 2026 traité : maillage interne (aucun article sous 6 liens), pages métier enrichies, page Contact complétée.
 - [ ] Étape 5 : relevé mensuel (Semrush et 20 questions IA), à faire chaque mois.

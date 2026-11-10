@@ -1,4 +1,5 @@
-import { PageHeader, Section, btn, usePageMeta } from '../components/ui'
+import { Link } from 'react-router'
+import { PageHeader, Section, SectionHead, btn, usePageMeta } from '../components/ui'
 import ContactForm from '../components/ContactForm'
 import { CheckIcon } from '../components/Icons'
 import { company, guarantees } from '../data'
@@ -30,9 +31,9 @@ export default function Contact() {
             </ul>
             <h2 className="mt-10 text-2xl leading-tight">Ce qui se passe ensuite</h2>
             <ol className="mt-4 space-y-3 text-lg leading-[1.6] text-muted">
-              <li>1. Je lis votre message et vous propose un créneau pour l’audit.</li>
-              <li>2. On échange 30 minutes sur votre semaine et vos outils.</li>
-              <li>3. Vous recevez une proposition chiffrée sous 72 heures, sans engagement.</li>
+              <li>1. Je lis votre message et vous propose un créneau pour l’audit, sous {company.delai}.</li>
+              <li>2. On échange 30 minutes, en visio ou par téléphone, sur votre semaine et vos outils. Je vous dis ce qui peut être automatisé, et ce qui ne vaut pas la peine de l’être.</li>
+              <li>3. Si vous le souhaitez, vous recevez une proposition chiffrée au forfait sous 72 heures : ce qui sera construit, le prix, le délai et le temps gagné estimé. Sans engagement ni relance insistante.</li>
             </ol>
           </div>
           {/* Sur mobile, le formulaire passe avant les coordonnées */}
@@ -56,6 +57,28 @@ export default function Contact() {
             </ul>
           </div>
         </div>
+      </Section>
+
+      <Section tone="alt" note="Avant de m’écrire">
+        <SectionHead title="Questions fréquentes" />
+        <dl className="max-w-3xl space-y-8 text-lg leading-[1.6]">
+          <div>
+            <dt className="text-xl leading-tight font-medium">L’audit est-il vraiment gratuit ?</dt>
+            <dd className="mt-2 text-muted">Oui. Il dure 30 minutes et ne vous engage à rien. Si rien chez vous ne vaut la peine d’être automatisé, je vous le dis.</dd>
+          </div>
+          <div>
+            <dt className="text-xl leading-tight font-medium">Que préparer avant l’audit ?</dt>
+            <dd className="mt-2 text-muted">Rien d’obligatoire. Pour gagner du temps : la liste des tâches qui reviennent chaque semaine, les logiciels que vous utilisez et une idée du temps qu’elles vous prennent.</dd>
+          </div>
+          <div>
+            <dt className="text-xl leading-tight font-medium">Travaillez-vous hors d’Île-de-France ?</dt>
+            <dd className="mt-2 text-muted">Oui. L’audit et la mise en place se font à distance, partout en France. Les prestations sont réservées aux professionnels : entreprises, indépendants, professions libérales et associations.</dd>
+          </div>
+          <div>
+            <dt className="text-xl leading-tight font-medium">Que deviennent les informations de ce formulaire ?</dt>
+            <dd className="mt-2 text-muted">Elles servent uniquement à répondre à votre demande et, si vous le souhaitez, à préparer une proposition. Elles ne sont pas enregistrées sur ce site. Le détail est dans la <Link to="/confidentialite/" className="text-pen underline underline-offset-4">politique de confidentialité</Link>, et mes règles pour les données de vos projets sur la page <Link to="/securite/" className="text-pen underline underline-offset-4">sécurité et données</Link>.</dd>
+          </div>
+        </dl>
       </Section>
     </>
   )

@@ -36,7 +36,10 @@ export default function Article() {
   const post = posts.find(p => p.slug === slug)
   usePageMeta(post ? `/blog/${slug}` : '/404')
   if (!post) return <NotFound />
-  const others = posts.filter(p => p.slug !== slug).slice(0, 2)
+  // Articles liés : même catégorie d'abord, puis les suivants en rotation (aucun article ne reste sans lien)
+  const idx = posts.indexOf(post)
+  const others = [...posts.slice(idx + 1), ...posts.slice(0, idx)]
+    .sort((a, b) => (b.category === post.category) - (a.category === post.category)).slice(0, 3)
   const toc = post.body.filter(b => b.h2)
   const milieu = post.body.findIndex((b, i) => b.h2 && post.body.slice(0, i).some(x => x.h2))   // 2ᵉ intertitre
 
@@ -55,7 +58,7 @@ export default function Article() {
               </nav>
               <h1 className="mt-2 max-w-4xl text-[2.25rem] leading-[1.08] tracking-[-0.02em] sm:text-6xl">{post.title}</h1>
               <p className="mt-6 text-sm text-muted">
-                Par {company.owner} · <time dateTime={post.date}>{formatDate(post.date)}</time> · {readingMinutes(post)} min de lecture
+                Par <Link to="/a-propos/" className="underline decoration-1 underline-offset-4 hover:text-pen">{company.owner}</Link> · <time dateTime={post.date}>{formatDate(post.date)}</time> · {readingMinutes(post)} min de lecture
               </p>
             </div>
           </Container>
@@ -105,7 +108,7 @@ export default function Article() {
         <section className="border-t border-rule bg-paper">
           <Container className="py-14">
             <h2 className="text-2xl leading-tight">À lire aussi</h2>
-            <ul className="mt-6 grid gap-5 md:grid-cols-2">
+            <ul className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
               {others.map(p => (
                 <li key={p.slug} className="lift rounded-lg border border-rule bg-paper p-6">
                   <p className="text-sm text-muted">{p.category}, {readingMinutes(p)} min</p>
