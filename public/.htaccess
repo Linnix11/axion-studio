@@ -5,7 +5,12 @@ ErrorDocument 404 /404.html
   RewriteEngine On
   RewriteCond %{HTTP_HOST} ^www\.axionstudio\.fr$ [NC]
   RewriteRule ^(.*)$ https://axionstudio.fr/$1 [R=301,L]
+
+  # Agents d'IA : l'accueil en Markdown quand ils le demandent (Accept: text/markdown)
+  RewriteCond %{HTTP_ACCEPT} text/markdown [NC]
+  RewriteRule ^$ /index.md [L]
 </IfModule>
+AddType text/markdown .md
 
 # En-têtes de sécurité
 <IfModule mod_headers.c>
@@ -14,6 +19,9 @@ ErrorDocument 404 /404.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  # Signale aux agents d'IA le résumé du site (llms.txt) et que l'accueil change selon le format demandé
+  Header always set Link "</llms.txt>; rel=\"alternate\"; type=\"text/plain\"; title=\"llms.txt\""
+  Header always append Vary "Accept"
 
   # Fichiers versionnés (leur nom change à chaque publication) : un an en cache
   <FilesMatch "\.(js|css|woff2)$">

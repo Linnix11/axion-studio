@@ -84,6 +84,8 @@ const aiBots = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-
 writeFileSync(join(dist, 'robots.txt'), `# Moteurs de recherche et moteurs de réponse des IA : bienvenue.
 ${aiBots.map(b => `User-agent: ${b}\nAllow: /\nDisallow: /api/\n`).join('\n')}
 User-agent: *
+# Usages autorisés du contenu (Content Signals) : recherche, réponses des IA et entraînement
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 Disallow: /api/
 
@@ -127,6 +129,7 @@ ${posts.map(p => `- [${p.title}](${pageUrl(`/blog/${p.slug}`)}) : ${p.descripti
 ## Pour aller plus loin
 - [Contenu complet du site en texte](${SITE_URL}/llms-full.txt)
 `)
+writeFileSync(join(dist, 'index.md'), readFileSync(join(dist, 'llms.txt'), 'utf-8'))
 const md = []
 md.push(`# ${BRAND} : contenu complet du site\n\n${intro}\n`)
 md.push(`## Services\n` + services.map(s => `### ${s.title}\n${s.intro}\n\nCe qui est inclus :\n${s.includes.map(i => `- ${i}`).join('\n')}\n\nExemples :\n${s.examples.map(i => `- ${i}`).join('\n')}\n`).join('\n'))

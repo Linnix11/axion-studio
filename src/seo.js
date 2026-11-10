@@ -39,7 +39,7 @@ export const pageUrl = path => `${SITE_URL}${path === '/' ? '/' : path + '/'}`
 export function schemaFor(path, data) {
   const { company, services, offers, faq } = data
   const org = {
-    '@type': 'ProfessionalService',
+    '@type': ['ProfessionalService', 'Organization'],
     '@id': `${SITE_URL}/#entreprise`,
     name: BRAND,
     alternateName: company.tradeName,
@@ -75,6 +75,7 @@ export function schemaFor(path, data) {
   }
   const website = { '@type': 'WebSite', '@id': `${SITE_URL}/#site`, url: `${SITE_URL}/`, name: BRAND, inLanguage: 'fr-FR', publisher: { '@id': `${SITE_URL}/#entreprise` } }
   const out = [org, website]
+  if (path === '/') out.push(person)
   const post = pageMeta[path]?.post
   const metier = pageMeta[path]?.metier
   if (path !== '/' && pageMeta[path]) {
