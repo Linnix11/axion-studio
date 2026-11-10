@@ -10,8 +10,69 @@
 //   { ul: ['élément', 'élément'] }   liste à puces
 //   { ol: ['étape', 'étape'] }       liste numérotée
 //   { note: 'Encadré à retenir.' }
+//
+// faq (facultatif) : [{ q: 'Question', a: 'Réponse' }], affichée en fin d'article et reprise en FAQPage (Google, IA).
 
 export const posts = [
+  {
+    slug: 'relances-factures-impayees',
+    seoTitle: 'Relancer une facture impayée : guide TPE',
+    seoDescription: 'Quand relancer, quoi écrire, quelles pénalités appliquer et comment automatiser les relances de factures impayées sans braquer vos clients.',
+    title: 'Relances de factures impayées : comment les automatiser sans braquer vos clients',
+    description: 'Le calendrier de relance qui marche, les règles à connaître (délais, pénalités, 40 € d’indemnité) et ce qu’une automatisation peut faire à votre place.',
+    date: '2026-11-10',
+    category: 'Facturation',
+    lead: 'Pour relancer une facture impayée sans abîmer la relation, il faut relancer tôt, à date fixe, avec un ton qui monte progressivement : un rappel aimable avant l’échéance, une relance le lendemain, puis une relance ferme et enfin une mise en demeure. Ces étapes se répètent à l’identique d’un client à l’autre : c’est exactement ce qu’une automatisation sait faire, pendant que vous gardez la main sur les cas sensibles.',
+    body: [
+      { h2: 'Pourquoi les relances sont souvent oubliées' },
+      { p: 'Relancer un client est désagréable, prend du temps et passe toujours après le travail urgent. Résultat : la relance part trop tard, ou pas du tout, et le retard s’installe. Plus une facture est ancienne, plus elle est difficile à récupérer.' },
+      { p: 'Le problème n’est presque jamais de savoir quoi écrire. C’est de penser à le faire, au bon moment, pour chaque facture. Une tâche régulière, répétitive et basée sur des dates : le cas idéal pour l’automatisation.' },
+
+      { h2: 'Ce que dit la loi entre professionnels' },
+      { ul: [
+        'Délai de paiement : 30 jours après la réception des marchandises ou la fin de la prestation si rien n’est prévu. Il peut être porté par contrat jusqu’à 60 jours après la date de la facture, ou 45 jours fin de mois (article L. 441-10 du Code de commerce).',
+        'Pénalités de retard : dues sans qu’un rappel soit nécessaire. Leur taux est fixé dans vos conditions de vente ; à défaut, c’est le taux de la Banque centrale européenne majoré de 10 points.',
+        'Indemnité forfaitaire pour frais de recouvrement : 40 € par facture payée en retard (article D. 441-5 du Code de commerce), en plus des pénalités.',
+        'Le taux des pénalités et l’indemnité de 40 € doivent figurer sur vos factures et dans vos conditions générales de vente.',
+      ] },
+      { note: 'Pour les ventes aux particuliers, les règles sont différentes : les pénalités ne s’appliquent que si elles sont prévues au contrat. En cas de doute, vérifiez sur entreprendre.service-public.fr ou auprès de votre expert-comptable. Cet article ne remplace pas un conseil juridique.' },
+
+      { h2: 'Le calendrier de relance qui marche' },
+      { ol: [
+        'Avant l’échéance (environ 5 jours avant) : un rappel aimable avec la facture en pièce jointe et le lien de paiement. Beaucoup de retards sont de simples oublis.',
+        'Le lendemain de l’échéance : une première relance courte et neutre, du type « Sauf erreur de notre part, la facture n° X n’a pas encore été réglée ».',
+        'Environ 10 jours après : une deuxième relance plus ferme, qui rappelle les pénalités et l’indemnité de 40 € prévues aux conditions de vente.',
+        'Environ 20 jours après : un appel téléphonique. C’est souvent là que le vrai problème apparaît (litige, trésorerie, mauvais destinataire).',
+        'Environ 30 jours après : une mise en demeure par lettre recommandée avec avis de réception, qui fixe un dernier délai.',
+        'Ensuite : procédure d’injonction de payer auprès du tribunal compétent, ou recours à un service de recouvrement.',
+      ] },
+      { p: 'Ces délais sont des ordres de grandeur à adapter à vos clients : un client fidèle qui paie toujours avec une semaine de retard ne se traite pas comme un nouveau client silencieux.' },
+
+      { h2: 'Ce que l’automatisation fait à votre place' },
+      { ul: [
+        'Surveiller chaque jour les factures arrivées à échéance, à partir de votre logiciel de facturation, d’un tableur ou de votre plateforme de facture électronique.',
+        'Envoyer le rappel et les relances au bon moment, avec vos mots, la facture en pièce jointe et le lien de paiement.',
+        'Arrêter les relances dès que le paiement est reçu, grâce au rapprochement avec la banque ou le logiciel de facturation. Aucun client ne reçoit de relance pour une facture déjà réglée.',
+        'Calculer les pénalités et l’indemnité de 40 € pour les relances fermes.',
+        'Vous prévenir pour l’appel téléphonique et la mise en demeure, avec un brouillon de courrier prêt : ces étapes restent les vôtres.',
+        'Tenir un tableau de suivi : qui doit quoi, depuis quand, quelle relance est partie.',
+      ] },
+      { p: 'Deux réglages évitent les maladresses : une liste de clients à ne jamais relancer automatiquement (grands comptes, litiges en cours), et, si vous le souhaitez, votre validation avant toute relance ferme.' },
+
+      { h2: 'Avec quels outils' },
+      { p: 'Beaucoup de logiciels de facturation proposent des relances intégrées : vérifiez d’abord ce que le vôtre sait faire. Une automatisation sur mesure (avec [n8n, Make ou Zapier](/blog/n8n-make-zapier-comparatif/)) devient utile quand les factures sont dans un tableur, quand plusieurs outils doivent se parler (facturation, banque, messagerie, CRM) ou quand vous voulez un ton et un calendrier qui vous ressemblent.' },
+      { p: 'Ordre de grandeur : une telle automatisation se met en place en quelques jours, et les projets démarrent à 150 € au forfait ([voir les tarifs](/tarifs/)). Le gain se mesure en heures rendues chaque mois et, surtout, en factures payées plus tôt.' },
+
+      { h2: 'Pour aller plus loin' },
+      { p: 'Les relances sont souvent la première tâche automatisée chez les [artisans du bâtiment](/automatisation/artisans-batiment/) et dans les [professions libérales](/automatisation/professions-liberales/). Avec la [facture électronique obligatoire en 2026-2027](/blog/facture-electronique-tpe-2026-2027/), le suivi des paiements devient aussi plus simple à brancher.' },
+    ],
+    faq: [
+      { q: 'Quand faut-il relancer une facture impayée ?', a: 'Dès le lendemain de l’échéance, après un rappel aimable envoyé quelques jours avant. Plus la relance est tardive, plus le paiement est difficile à obtenir.' },
+      { q: 'Peut-on facturer 40 € de frais à un client professionnel en retard ?', a: 'Oui. L’indemnité forfaitaire de 40 € pour frais de recouvrement est due pour chaque facture payée en retard entre professionnels, en plus des pénalités. Elle doit figurer sur vos factures et vos conditions de vente.' },
+      { q: 'Une relance automatique peut-elle froisser un bon client ?', a: 'Pas si elle est bien réglée : ton aimable au début, arrêt dès le paiement reçu, et liste de clients exclus des relances automatiques. Les étapes fermes peuvent rester soumises à votre validation.' },
+      { q: 'Que faire si le client ne paie toujours pas après les relances ?', a: 'Envoyer une mise en demeure par lettre recommandée avec avis de réception, puis engager une procédure d’injonction de payer ou confier le dossier à un service de recouvrement.' },
+    ],
+  },
   {
     slug: 'facture-electronique-tpe-2026-2027',
     seoTitle: 'Facture électronique 2026-2027 : guide TPE',

@@ -118,6 +118,9 @@ inventés (ordres de grandeur), pas de faux avis, titres ≤ 60 caractères, des
 - [x] Kit des fiches et textes prêts à coller : `docs/kit-profils.md`.
 - [ ] Étape 1 : Search Console, Bing Webmaster Tools, anti-robots Hostinger, fiche Google Business, mesure d'audience (utilisateur).
 - [x] Étape 3, article 1 : « Facture électronique 2026-2027 » (`/blog/facture-electronique-tpe-2026-2027`, 10 nov. 2026, calendrier vérifié sur impots.gouv.fr et economie.gouv.fr).
-- [ ] Étape 3 : suite du calendrier, 2 articles par mois (prochain : relances de factures impayées).
+- [x] Étape 3, article 2 : « Relances de factures impayées » (`/blog/relances-factures-impayees`, 10 nov. 2026, règles vérifiées : L. 441-10 et D. 441-5 du Code de commerce). Les articles acceptent désormais une `faq` (affichée, en `FAQPage` et dans `llms-full.txt`).
+- [ ] Étape 3 : suite du calendrier, 2 articles par mois (prochain : devis d'artisan en 5 minutes).
 - [ ] Étape 4 : fiches dans les annuaires, avis réels, LinkedIn ; ajouter chaque profil créé dans `company.profils`.
-- [ ] Étape 5 : liste des 20 questions IA et tableau de suivi mensuel.
+- [x] Étape 5 : liste des 20 questions IA et tableau de suivi mensuel dans `docs/suivi-seo-ia.md`, avec le premier relevé Semrush (10 nov. 2026 : 1 mot-clé dans le top 100).
+- [x] Titres alignés sur les recherches suivies : « Automatisation d'agence immobilière », « Automatisation cabinet d'expertise comptable ».
+- [ ] Étape 5 : relevé mensuel (Semrush et 20 questions IA), à faire chaque mois.

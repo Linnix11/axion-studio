@@ -35,7 +35,7 @@ et les règles à respecter. Dernière mise à jour : 10 novembre 2026.
 ```
 src/
   data.js        contenus : entreprise (dont profils publics pour sameAs), menu, services, offres, FAQ, garanties, pages métier (metiers), etc.
-  blog.js        4 articles (blocs h2/p/ul/ol/note, seoTitle/seoDescription)
+  blog.js        6 articles (faq facultative en fin d'article) (blocs h2/p/ul/ol/note, seoTitle/seoDescription)
   legal.js       CGV (réglages en haut : acompte 30 %, paiement 30 j, etc.)
   chatbot.js     règles et textes de l'assistant IA (geminiFreeTier = true)
   seo.js         titres, descriptions, données structurées JSON-LD par page
@@ -56,6 +56,7 @@ scripts/            prerender-routes.mjs, indexnow.mjs
 .github/workflows/indexnow.yml   signale les pages à Bing (IndexNow) 2 min après un push qui modifie les textes (data, blog, CGV, SEO, pages)
 docs/brand-guidelines.md         charte de marque complète
 docs/plan-seo-ia.md              plan SEO et IA validé (10 nov. 2026) et son avancement
+docs/suivi-seo-ia.md             suivi mensuel : relevés Semrush, 20 questions à poser aux IA, tableau
 docs/kit-profils.md              textes prêts à coller pour les fiches (Google Business, LinkedIn, Malt, annuaires) et étapes Search Console, Bing, Hostinger
 marketing/banners/               bannières LinkedIn et Google, style « le temps rendu » (PNG + @2x + HTML + generate.mjs)
 automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs, README.md ; source/ = générateur (build.py) et tests (*.test.cjs)
@@ -64,7 +65,7 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 
 ## 4. Contenu et offre
 
-- Pages : Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Sécurité, Blog (5 articles), CGV, Mentions légales, Confidentialité, 404. Plus 6 pages « Automatisation pour … » par métier (artisans du bâtiment, experts-comptables, agences immobilières, boutiques en ligne, professions libérales, commerces et restaurants).
+- Pages : Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Sécurité, Blog (6 articles), CGV, Mentions légales, Confidentialité, 404. Plus 6 pages « Automatisation pour … » par métier (artisans du bâtiment, experts-comptables, agences immobilières, boutiques en ligne, professions libérales, commerces et restaurants).
 - **Prix** : Projet **à partir de 150 €** au forfait, prix exact sur devis ; Suivi **à partir de 250 €/mois**. Prestations réservées aux professionnels (la FAQ précise ce qui est possible pour les particuliers).
 - Arguments : audit gratuit de 30 min, prix fixé avant de commencer, le client garde tout, un mois de suivi inclus.
 - **Pas de photos. Pas de faux témoignages ni de chiffres inventés** (les gains sont présentés comme des ordres de grandeur).
@@ -174,7 +175,7 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 - [ ] Plan SEO/IA, étape 4 : fiches LinkedIn, Malt, Codeur.com, PagesJaunes, annuaires n8n/Make et CCI, avis Google réels ; envoyer chaque adresse de profil pour `company.profils`.
 - [ ] Search Console : envoyer la balise `<meta name="google-site-verification" …>` pour qu'elle soit ajoutée au site.
 - [ ] Facultatif : créer une adresse contact@axionstudio.fr chez Hostinger ; elle remplacerait alors l'adresse iCloud affichée sur le site (sinon on garde iCloud).
-- [ ] Synchroniser la documentation dans Obsidian depuis le Mac (section 8 ter).
+- [x] Synchroniser la documentation dans Obsidian depuis le Mac (fait le 10 novembre, à relancer après chaque mise à jour de la doc).
 
 ## 12. Historique résumé
 
@@ -204,3 +205,5 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 24. Article « Facture électronique 2026-2027 » (calendrier vérifié sur les sites officiels) ; kit des fiches `docs/kit-profils.md` pour les actions que seul l'utilisateur peut faire (comptes Google, Bing, LinkedIn, annuaires).
 25. Audit business (appels à l'action) et corrections : bouton d'audit visible sur mobile, boutons en milieu de page, demandes pré-remplies selon la page, téléphone facultatif, réponse sous 24 h ouvrées, réservation Google Agenda prête à brancher (`company.rdv`), liens internes avec « / » final.
 26. Synchronisation Obsidian demandée : impossible depuis une session cloud ; marche à suivre sur le Mac documentée (section 8 ter).
+27. Session sur le Mac : documentation copiée dans Obsidian (`~/Desktop/Obsidian/Mac/projects/axion-studio`, mode copie). n8n local : workflow 1 déjà en v2 mais installé deux fois ; workflow 2 encore en version « envoi » ; le nœud `n8n-nodes-imap` n'est pas installé, la mise à jour attend son installation et l'accès IMAP iCloud.
+28. Premier relevé Semrush (1 mot-clé sur 10 dans le top 100) ; article « Relances de factures impayées » avec FAQ ; FAQ possible sur tous les articles ; titres de 2 pages métier alignés sur les recherches ; `docs/suivi-seo-ia.md` (20 questions IA).

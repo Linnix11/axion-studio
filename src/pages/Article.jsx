@@ -77,6 +77,17 @@ export default function Article() {
                   <Block b={b} />
                 </Fragment>
               ))}
+              {post.faq?.length > 0 && (
+                <section aria-labelledby="questions-frequentes">
+                  <h2 id="questions-frequentes" className="mt-12 scroll-mt-24 text-[1.75rem] leading-tight">Questions fréquentes</h2>
+                  {post.faq.map(f => (
+                    <Fragment key={f.q}>
+                      <h3 className="mt-6 font-sans text-xl leading-tight font-medium">{f.q}</h3>
+                      <p className="mt-2">{f.a}</p>
+                    </Fragment>
+                  ))}
+                </section>
+              )}
             </div>
             {toc.length > 2 && (
               <nav aria-label="Sommaire de l’article" className="hidden min-w-0 self-start xl:sticky xl:top-24 xl:block">

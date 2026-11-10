@@ -125,7 +125,7 @@ md.push(`## Garanties\n` + guarantees.map(g => `- ${g.title} : ${g.text}`).join
 md.push(`## Ce qu'Axion Studio ne fait pas\n` + notDoing.map(n => `- ${n}`).join('\n') + '\n')
 md.push(`## Sécurité des données\n` + security.map(s => `- ${s.title} : ${s.text}`).join('\n') + '\n')
 md.push(`## Questions fréquentes\n` + faq.map(f => `### ${f.q}\n${f.a}\n`).join('\n'))
-md.push(`## Articles du blog\n` + posts.map(p => `### ${p.title}\n${pageUrl(`/blog/${p.slug}`)} (${p.date})\n\n${p.lead}\n\n` + p.body.map(b => b.h2 ? `#### ${b.h2}` : b.p ? b.p : b.note ? `> ${b.note}` : (b.ul || b.ol).map((x, i) => (b.ol ? `${i + 1}. ` : '- ') + x).join('\n')).join('\n\n')).join('\n\n') + '\n')
+md.push(`## Articles du blog\n` + posts.map(p => `### ${p.title}\n${pageUrl(`/blog/${p.slug}`)} (${p.date})\n\n${p.lead}\n\n` + p.body.map(b => b.h2 ? `#### ${b.h2}` : b.p ? b.p : b.note ? `> ${b.note}` : (b.ul || b.ol).map((x, i) => (b.ol ? `${i + 1}. ` : '- ') + x).join('\n')).join('\n\n') + (p.faq?.length ? '\n\n#### Questions fréquentes\n\n' + p.faq.map(f => `**${f.q}**\n${f.a}`).join('\n\n') : '')).join('\n\n') + '\n')
 md.push(`## Conditions générales de vente (version du ${cgvSettings.version})\n` + cgv.map((a, i) => `### Article ${i + 1}. ${a.title}\n` + a.text.join('\n')).join('\n\n') + '\n')
 md.push(`## Contact\n- E-mail : ${company.email}\n- Téléphone : ${company.phone}\n- Adresse : ${company.siege}\n- Formulaire : ${pageUrl('/contact')}\n`)
 writeFileSync(join(dist, 'llms-full.txt'), md.join('\n'))

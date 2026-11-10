@@ -87,6 +87,7 @@ export function schemaFor(path, data) {
     author: { '@type': 'Person', '@id': `${SITE_URL}/a-propos/#arthur`, name: data.company.owner, url: pageUrl('/a-propos') },
     publisher: { '@id': `${SITE_URL}/#entreprise` },
   })
+  if (post?.faq?.length) out.push({ '@type': 'FAQPage', mainEntity: post.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
   if (metier) out.push({
     '@type': 'Service', name: metier.title, description: metier.probleme, serviceType: 'Automatisation des tâches administratives',
     provider: { '@id': `${SITE_URL}/#entreprise` }, areaServed: { '@type': 'Country', name: 'France' }, url: pageUrl(path),
