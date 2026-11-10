@@ -20,7 +20,7 @@ AddType text/markdown .md
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
   # Signale aux agents d'IA le résumé du site (llms.txt) et que l'accueil change selon le format demandé
-  Header always set Link "</llms.txt>; rel=\"alternate\"; type=\"text/plain\"; title=\"llms.txt\""
+  Header always set Link '</llms.txt>; rel="alternate"; type="text/plain"; title="llms.txt"'
   Header always append Vary "Accept"
 
   # Fichiers versionnés (leur nom change à chaque publication) : un an en cache
