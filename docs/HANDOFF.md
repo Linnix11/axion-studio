@@ -62,6 +62,8 @@ docs/kit-profils.md              textes prêts à coller pour les fiches (Google
 marketing/banners/               bannières LinkedIn et Google, style « le temps rendu » (PNG + @2x + HTML + generate.mjs)
 automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs, README.md ; source/ = générateur (build.py) et tests (*.test.cjs)
 .claude/skills/                  skills installés (voir § 9)
+.claude/agents/                  25 agents de référencement seo-* et geo-* (voir docs/agents-seo.md)
+docs/agents-seo.md               règles communes et rôle de chacun des 25 agents
 ```
 
 ## 4. Contenu et offre
@@ -161,7 +163,7 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 ## 11. Reste à faire par l'utilisateur
 
 - [ ] **Supprimer le jeton API Hostinger** utilisé pendant la session (hPanel → Profil → API). C'est le plus urgent.
-- [ ] Google Search Console : ajouter le site et envoyer `https://axionstudio.fr/sitemap.xml`.
+- [x] Google Search Console : propriété `https://axionstudio.fr/` vérifiée, sitemap envoyé (renvoyé le 10 nov. après passage à 28 pages), indexation demandée le 10 nov. pour 10 pages (accueil, Agence n8n, Services, Tarifs, agences immobilières, experts-comptables, articles facture électronique, relances, devis, rendez-vous). Limite : une dizaine de demandes par jour.
 - [ ] Bing Webmaster Tools : ajouter le site (import possible depuis Search Console).
 - [ ] hPanel : assouplir la protection anti-robots, qui bloque Bingbot et GPTBot.
 - [ ] Créer la fiche Google Business Profile (zone desservie : France, ou Île-de-France pour les déplacements). Les visuels sont prêts dans `marketing/banners/` (nouveau style).
@@ -175,7 +177,7 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 - [ ] Créer la page de réservation Google Agenda de l'audit gratuit (Agenda → Créer → Planning de rendez-vous, 30 min, Meet ou téléphone) et envoyer son adresse pour `company.rdv`.
 - [ ] Plan SEO/IA, étape 1 (`docs/plan-seo-ia.md`) : Search Console, Bing Webmaster Tools, anti-robots Hostinger, fiche Google Business, choix d'une mesure d'audience sans cookie.
 - [ ] Plan SEO/IA, étape 4 : fiches LinkedIn, Malt, Codeur.com, PagesJaunes, annuaires n8n/Make et CCI, avis Google réels ; envoyer chaque adresse de profil pour `company.profils`.
-- [ ] Search Console : envoyer la balise `<meta name="google-site-verification" …>` pour qu'elle soit ajoutée au site.
+- [x] Search Console : propriété déjà vérifiée, aucune balise à ajouter.
 - [ ] Facultatif : créer une adresse contact@axionstudio.fr chez Hostinger ; elle remplacerait alors l'adresse iCloud affichée sur le site (sinon on garde iCloud).
 - [x] Synchroniser la documentation dans Obsidian depuis le Mac (fait le 10 novembre, à relancer après chaque mise à jour de la doc).
 
@@ -214,3 +216,4 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 31. Analyse SEO externe (mots-clés Semrush) : accueil recentré sur « agence d'automatisation et d'IA », page « Agence n8n » (Service + FAQPage, liée depuis Services, Tarifs et le pied de page), H1 explicites sur Services et Tarifs, Tarifs complétée (ce qui fait le prix, ce qui est inclus, 6 questions en FAQPage), article facture électronique retitré « Facture électronique 2026 : le guide TPE » avec FAQ. Point « liens redirigés » de l'analyse : déjà corrigé (vérifié sur le site en ligne). Adresse iCloud gardée (choix de l'utilisateur, § 1).
 32. GEO : réponses courtes dans `llms.txt`, `llms-full.txt` complété (métiers, n8n, tarifs), JSON-LD enrichi (Person.description, knowsAbout), sources officielles en fin des articles relances, devis et rendez-vous. Accès des robots testé : GPTBot bloqué (429) par Hostinger, à régler dans le hPanel.
 33. Correctifs de l'analyse : lien « Agence n8n » dans la section « Ce que je fais » de l'accueil ; champ `heading` des services (titres de section de la page Services) : « Intelligence artificielle pour les PME et TPE », « Création de site web pour TPE et PME ».
+34. Search Console faite depuis le navigateur Dia (propriété déjà vérifiée, sitemap renvoyé, indexation demandée pour 10 pages). 25 agents Claude Code de référencement créés dans `.claude/agents/` (pilotage, technique, mots-clés, contenu, GEO, notoriété), avec des règles communes dans `docs/agents-seo.md` : aucune manipulation (faux clics, liens en masse, faux avis), rien publié sans accord.
