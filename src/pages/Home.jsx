@@ -66,7 +66,7 @@ export default function Home() {
           <span className="text-muted">Par métier :</span>
           {metiers.map(m => <Link key={m.slug} to={`/automatisation/${m.slug}/`} className={standaloneLink}>{m.nom}</Link>)}
         </p>
-        <p className="mt-2"><Link to="/services/" className={standaloneLink}>Voir le détail des services</Link></p>
+        <p className="mt-2 flex flex-wrap gap-x-6"><Link to="/services/" className={standaloneLink}>Voir le détail des services</Link><Link to="/agence-n8n/" className={standaloneLink}>Agence n8n : workflows sur mesure</Link></p>
       </Section>
 
       <Section note="3 cas types sur 5">

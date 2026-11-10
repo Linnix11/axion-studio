@@ -60,8 +60,9 @@ export const services = [
   {
     slug: 'ia',
     title: 'Intelligence artificielle',
+    heading: 'Intelligence artificielle pour les PME et TPE',
     short: "Tri d’e-mails, extraction de documents, assistants internes, réponses clients assistées.",
-    intro: "L’IA est utile là où une tâche demande de lire et de comprendre un texte : trier, résumer, extraire, rédiger un premier jet. Je l’intègre dans vos workflows, avec une validation humaine quand c’est nécessaire.",
+    intro: "Pour une PME ou une TPE, l’intelligence artificielle est utile là où une tâche demande de lire et de comprendre un texte : trier, résumer, extraire, rédiger un premier jet. Je l’intègre dans vos workflows, avec une validation humaine quand c’est nécessaire.",
     includes: [
       'Choix du bon usage : là où l’IA fait vraiment gagner du temps',
       'Extraction de données depuis des PDF, e-mails ou formulaires',
@@ -74,8 +75,9 @@ export const services = [
   {
     slug: 'sites-web',
     title: 'Sites web',
+    heading: 'Création de site web pour TPE et PME',
     short: 'Sites vitrines rapides et clairs, reliés directement à vos automatisations.',
-    intro: "Un site vitrine sert à être trouvé et contacté. Je réalise des sites rapides, lisibles sur mobile et faciles à mettre à jour, dont les formulaires alimentent directement vos outils.",
+    intro: "Pour une TPE ou une PME, un site vitrine sert à être trouvé et contacté. Je réalise des sites rapides, lisibles sur mobile et faciles à mettre à jour, dont les formulaires alimentent directement vos outils.",
     includes: [
       'Structure des pages et rédaction avec vous',
       'Design sur mesure, adapté au mobile',

@@ -24,7 +24,7 @@ export default function Services() {
         <Section key={s.slug} id={s.slug} tone={i % 2 ? 'alt' : 'paper'} note={`Mission ${i + 1} sur 4`}>
           <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
             <div>
-              <h2 className="text-[2rem] leading-tight md:text-[2.5rem]">{s.title}</h2>
+              <h2 className="text-[2rem] leading-tight md:text-[2.5rem]">{s.heading || s.title}</h2>
               <p className="mt-4 max-w-[52ch] text-lg leading-[1.6] text-muted">{s.intro}</p>
               <AuditLink className={`${btn.ghost} mt-6`} demande={`Bonjour,\n\nJe m’intéresse à la mission « ${s.title} ». Mon besoin : `}>Parler de mon projet</AuditLink>
             </div>
