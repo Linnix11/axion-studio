@@ -18,6 +18,7 @@ et les règles à respecter. Dernière mise à jour : 10 novembre 2026.
 - **Déploiement automatique** : chaque push sur `main` est reconstruit et publié par Hostinger en 1 à 3 minutes (souvent moins d'une minute). Il n'y a rien d'autre à faire. Pour un changement visible du site, montrer le résultat (captures) et attendre l'accord de l'utilisateur avant de pousser sur `main`.
 - Vérifier une mise en ligne : comparer le nom du fichier `dist/assets/index-XXXX.css` du build local avec celui que sert `https://axionstudio.fr/`.
 - L'ancienne copie GitHub Pages a été supprimée et ses réglages retirés du code (`BASE_PATH`, `basename`). Seule reste la branche `gh-pages` sur GitHub, que l'utilisateur peut supprimer.
+- Pré-rendu : chaque page est rendue à son adresse réelle, avec « / » final (`scripts/prerender-routes.mjs`, `render(path + '/')`). Sans lui, l'onglet actif du menu manque au premier affichage.
 
 ## 3. Technique
 
@@ -105,7 +106,7 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 ## 8. SEO et référencement dans les IA
 
 - `src/seo.js` : titres de 60 caractères maximum, descriptions de 160 caractères maximum. JSON-LD : ProfessionalService, Person, WebSite, BreadcrumbList, Service, OfferCatalog, FAQPage, Blog, BlogPosting.
-- `sitemap.xml` (date `lastmod` seulement sur les articles, leur vraie date de publication), `robots.txt` (robots des IA autorisés), `llms.txt`, `llms-full.txt` et `og.png` sont générés au build.
+- `sitemap.xml` (date `lastmod` seulement sur les articles, leur vraie date de publication ; décision du 10 novembre : pas de `lastmod` sur les pages principales, une date qui change à chaque build sans vrai changement finit ignorée par Google), `robots.txt` (robots des IA autorisés), `llms.txt`, `llms-full.txt` et `og.png` sont générés au build.
 - IndexNow est automatisé par GitHub Actions, seulement quand les textes changent (un changement de style ne déclenche rien).
 - **Cible : la France entière** (ni seulement le Val-d'Oise, ni l'international). Signaux en place : titre de l'accueil « Automatisation IA pour TPE et PME en France », descriptions « partout en France », `lang="fr-FR"` et `hreflang="fr-FR"` sur la page elle-même (il n'existe pas d'autre version), `geo.region FR-95` (lu par Bing), JSON-LD avec `areaServed` France, coordonnées de Montlignon et `contactPoint` en français, `llms.txt` « clientèle en France, accompagnée en français ». Garder « France » dans le titre et la description de l'accueil lors de toute retouche.
 - Google ne propose plus de réglage « pays ciblé » dans Search Console : le domaine en .fr et ces signaux suffisent. Pour des publicités Google (SEA), choisir la zone « France » dans la campagne.
@@ -125,6 +126,14 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 - Pièges vus en les construisant : dans un nœud Code n8n, `URL` n'existe pas (utiliser des expressions régulières) ; l'import en ligne de commande (`n8n import:workflow`) exige `active`, `id` et `versionId`, pas l'import par l'interface ; dans le conteneur cloud, les requêtes HTTP de n8n ne passent pas le proxy, donc tester avec un petit serveur local et des données enregistrées ; ne jamais mettre d'accès fictif (`credentials` avec `id` vide) dans un workflow livré : n8n l'affiche comme choisi, aucun triangle n'alerte, et l'exécution échoue avec « Found credential with no ID » (arrivé chez l'utilisateur).
 - Feuille Google : les workflows visent par défaut l'onglet `gid=0` (premier onglet d'une feuille créée à la main). Une feuille créée par import CSV a un autre numéro : il faut passer au script l'adresse copiée dans le navigateur (`FEUILLE=…#gid=…`), qu'il lit pour régler l'onglet. n8n y écrit avec un compte de service Google (`n8nauto@…iam.gserviceaccount.com`) qui doit être Éditeur de la feuille ; dans n8n, ses nœuds Google Sheets sont donc en `authentication: serviceAccount` (accès de type `googleApi`), et le script recopie ce réglage avec l'accès. Le connecteur Google Drive de Claude peut lire les feuilles et en créer (import CSV), pas modifier des cellules ni (sans accord) partager. Le 9 novembre, une nouvelle feuille « Prospects » vide aux 19 colonnes a été créée dans le Drive de l'utilisateur pour remplacer « Prospets » (colonnes incomplètes, 29 lignes sans site, lisible par lien).
 - Les workflows ont été testés en exécution réelle dans n8n 1.123 (Google Sheets, Places, Gemini et SMTP simulés). L'utilisateur fait tourner n8n 2.7.5 : la collecte y fonctionne avec ses vrais accès (après avoir nommé l'onglet « Prospects » et partagé la feuille en Éditeur avec le compte Google branché dans n8n). L'envoi réel n'a pas encore été confirmé.
+
+## 8 ter. Travailler sur le Mac de l'utilisateur
+
+- L'utilisateur travaille sur un **Mac** (le chemin `D:\Obsidian` des instructions du skill obsidian-sync vient d'un PC Windows, ne pas s'y fier).
+- Une session cloud **n'atteint pas le Mac** (aucun dossier proposé par Remote Control au 10 novembre). Pour tout ce qui est sur le Mac (n8n local, Obsidian), il faut une session qui y tourne :
+  1. Terminal du Mac, chercher le projet : `find ~ -maxdepth 4 -type d -name axion-studio 2>/dev/null` ; s'il n'y est pas : `mkdir -p ~/Projets && cd ~/Projets && git clone https://github.com/Linnix11/axion-studio.git`.
+  2. `cd` dans le dossier trouvé, `git pull`, puis `claude remote-control` (ou application Claude, onglet Code, sur ce dossier).
+- **Obsidian** : lancer le skill obsidian-sync **avec `--mode copy`**. Le mode par défaut déplace les `.md` dans le coffre et laisse des liens symboliques dans le projet, que Git ne suit pas comme de vrais fichiers : la documentation sortirait du dépôt. Le script trouve seul le coffre ouvert (Obsidian doit l'avoir ouvert au moins une fois sur le Mac).
 
 ## 9. Skills installés (`.claude/skills/`)
 
@@ -163,6 +172,9 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 - [ ] Créer la page de réservation Google Agenda de l'audit gratuit (Agenda → Créer → Planning de rendez-vous, 30 min, Meet ou téléphone) et envoyer son adresse pour `company.rdv`.
 - [ ] Plan SEO/IA, étape 1 (`docs/plan-seo-ia.md`) : Search Console, Bing Webmaster Tools, anti-robots Hostinger, fiche Google Business, choix d'une mesure d'audience sans cookie.
 - [ ] Plan SEO/IA, étape 4 : fiches LinkedIn, Malt, Codeur.com, PagesJaunes, annuaires n8n/Make et CCI, avis Google réels ; envoyer chaque adresse de profil pour `company.profils`.
+- [ ] Search Console : envoyer la balise `<meta name="google-site-verification" …>` pour qu'elle soit ajoutée au site.
+- [ ] Facultatif : créer une adresse contact@axionstudio.fr chez Hostinger ; elle remplacerait alors l'adresse iCloud affichée sur le site (sinon on garde iCloud).
+- [ ] Synchroniser la documentation dans Obsidian depuis le Mac (section 8 ter).
 
 ## 12. Historique résumé
 
@@ -191,3 +203,4 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 23. Plan SEO et IA validé (`docs/plan-seo-ia.md`) ; 6 pages métier, logo PNG et `sameAs` prêt ; lien vers la page métier dans les e-mails du workflow 2 ; générateur des workflows et tests rangés dans `automatisations/n8n/source/`.
 24. Article « Facture électronique 2026-2027 » (calendrier vérifié sur les sites officiels) ; kit des fiches `docs/kit-profils.md` pour les actions que seul l'utilisateur peut faire (comptes Google, Bing, LinkedIn, annuaires).
 25. Audit business (appels à l'action) et corrections : bouton d'audit visible sur mobile, boutons en milieu de page, demandes pré-remplies selon la page, téléphone facultatif, réponse sous 24 h ouvrées, réservation Google Agenda prête à brancher (`company.rdv`), liens internes avec « / » final.
+26. Synchronisation Obsidian demandée : impossible depuis une session cloud ; marche à suivre sur le Mac documentée (section 8 ter).
