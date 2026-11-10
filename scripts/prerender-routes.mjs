@@ -46,7 +46,7 @@ function page(path) {
     `<meta name="twitter:card" content="summary_large_image">`,
     `<script type="application/ld+json">${jsonld}</script>`,
   ].join('\n  ')
-  const body = render(is404 ? '/page-introuvable' : path)
+  const body = render(is404 ? '/page-introuvable' : path === '/' ? '/' : path + '/')   // adresse réelle, avec « / » final (liens actifs du menu)
   return template
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`)
     .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${desc}">`)
