@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 import { PageHeader, Section, SectionHead, CtaBand, textLink, usePageMeta } from '../components/ui'
-import { services, tools } from '../data'
+import { services, tools, metiers } from '../data'
 
 export default function Services() {
   usePageMeta('/services')
@@ -44,7 +44,23 @@ export default function Services() {
         </Section>
       ))}
 
-      <Section note="Vos outils d’abord">
+      <Section note={`${metiers.length} métiers`}>
+        <SectionHead title="Par métier">
+          Ce que l’automatisation change concrètement dans votre activité, avec des exemples de votre métier.
+        </SectionHead>
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {metiers.map(m => (
+            <li key={m.slug}>
+              <Link to={`/automatisation/${m.slug}`} className="lift flex h-full flex-col rounded-xl border border-rule bg-paper p-5 text-ink no-underline hover:text-ink">
+                <span className="text-lg leading-tight font-semibold">{m.nom}</span>
+                <span className="mt-1 text-sm leading-[1.5] text-muted">{m.cible}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section tone="alt" note="Vos outils d’abord">
         <SectionHead title="Avec quels outils ?">
           Je pars toujours de ceux que vous utilisez. Selon votre situation, je travaille notamment avec :
         </SectionHead>

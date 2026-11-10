@@ -69,7 +69,7 @@ if (typoWarnings.length) console.warn(`⚠ Espace insécable manquante (à rempl
 writeFileSync(join(dist, '404.html'), page('/404'))
 
 // ——— Plan du site et robots ———
-const priority = p => (p === '/' ? '1.0' : p.startsWith('/blog') ? '0.7' : ['/services', '/tarifs', '/contact', '/exemples'].includes(p) ? '0.8' : p.startsWith('/mentions') || p === '/confidentialite' || p === '/cgv' ? '0.3' : '0.6')
+const priority = p => (p === '/' ? '1.0' : p.startsWith('/blog') ? '0.7' : ['/services', '/tarifs', '/contact', '/exemples'].includes(p) || p.startsWith('/automatisation/') ? '0.8' : p.startsWith('/mentions') || p === '/confidentialite' || p === '/cgv' ? '0.3' : '0.6')
 writeFileSync(join(dist, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${paths.map(p => {
@@ -117,6 +117,7 @@ const md = []
 md.push(`# ${BRAND} : contenu complet du site\n\n${intro}\n`)
 md.push(`## Services\n` + services.map(s => `### ${s.title}\n${s.intro}\n\nCe qui est inclus :\n${s.includes.map(i => `- ${i}`).join('\n')}\n\nExemples :\n${s.examples.map(i => `- ${i}`).join('\n')}\n`).join('\n'))
 md.push(`Outils utilisés selon les besoins : ${tools.join(', ')}.\n`)
+md.push(`## Automatisation par métier\n` + data.metiers.map(m => `### ${m.title}\n${pageUrl(`/automatisation/${m.slug}`)}\n\nPour : ${m.cible}. ${m.probleme}\n\n${m.taches.map(t => `- ${t.titre} : ${t.texte}`).join('\n')}\n\nOrdre de grandeur : ${m.exemple.gain} de temps rendu.\n`).join('\n'))
 md.push(`## Exemples (cas types, gains en ordre de grandeur)\n` + useCases.map(u => `### ${u.task} (${u.sector})\n- Avant : ${u.before}\n- Après : ${u.after}\n- Temps gagné : ${u.gain}\n`).join('\n'))
 md.push(`## Méthode\n` + steps.map((s, i) => `${i + 1}. ${s.title} (${s.duration}) : ${s.text} ${s.detail}`).join('\n') + '\n')
 md.push(`## Tarifs\n` + offers.map(o => `- ${o.name} : ${o.from ? 'à partir de ' : ''}${o.price}, ${o.unit}. ${o.text} (${o.items.join(' ; ')})`).join('\n') + '\n\nTVA non applicable, article 293 B du CGI.\n')

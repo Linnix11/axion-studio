@@ -1,0 +1,17 @@
+const assert = require('assert'); const f = require('./extract.cjs')
+const html = `<img src="logo@2x.png"><a href="/nous-contacter">Contact</a> Écrivez à jean.dupont@gmail.com ou contact&#64;plomberie-durand.fr <script>sentry@sentry.io</script>`
+assert.deepStrictEqual(f(html, 'https://www.plomberie-durand.fr/'), { email: 'contact@plomberie-durand.fr', lien_contact: 'https://www.plomberie-durand.fr/nous-contacter' })
+assert.deepStrictEqual(f('<p>Rien ici</p>', 'https://a.fr'), { email: '', lien_contact: '' })
+assert.strictEqual(f('mail : devis@autre.fr et paul@autre.fr', 'https://autre.fr').email, 'devis@autre.fr')
+assert.strictEqual(f('<a href="mailto:info@x.fr">', 'https://x.fr').lien_contact, '')
+assert.strictEqual(f(null, '').email, '')
+console.log('ok')
+assert.strictEqual(f('<a href="contact.html">', 'https://x.fr/pages/accueil.html').lien_contact, 'https://x.fr/pages/contact.html')
+assert.strictEqual(f('<a href="//x.fr/contact">', 'https://x.fr').lien_contact, 'https://x.fr/contact')
+assert.strictEqual(f('<a href="https://autre.fr/mentions-legales">', 'https://x.fr').lien_contact, 'https://autre.fr/mentions-legales')
+assert.strictEqual(f('a@gmail.com et info@x.fr', 'https://www.x.fr:443/').email, 'info@x.fr')
+// même code sans URL global, comme dans n8n
+const vm = require('vm'); const src = require('fs').readFileSync(__dirname + '/extract.cjs', 'utf8').replace('module.exports = chercherEmail', '')
+const ctx = vm.createContext({}); vm.runInContext(src + '\nthis.f = chercherEmail', ctx)
+assert.deepStrictEqual({ ...ctx.f('<a href="/nous-contacter/">', 'http://127.0.0.1:8765/site-b/') }, { email: '', lien_contact: 'http://127.0.0.1:8765/nous-contacter/' })
+console.log('ok sans URL global aussi')

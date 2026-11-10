@@ -16,6 +16,7 @@ import Securite from './pages/Securite'
 import Cgv from './pages/Cgv'
 import Blog from './pages/Blog'
 import Article from './pages/Article'
+import Metier from './pages/Metier'
 import ChatWidget from './components/ChatWidget'
 import NotFound from './pages/NotFound'
 
@@ -66,6 +67,7 @@ export default function App() {
           <Route path="/cgv" element={<Cgv />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<Article />} />
+          <Route path="/automatisation/:slug" element={<Metier />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/confidentialite" element={<Confidentialite />} />
           <Route path="*" element={<NotFound />} />

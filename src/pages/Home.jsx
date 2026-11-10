@@ -4,7 +4,7 @@ import TaskList from '../components/TaskList'
 import Demo from '../components/Demo'
 import { CheckIcon } from '../components/Icons'
 import { IdentityCard, Guarantees, NotDoing } from '../components/Trust'
-import { services, useCases, steps } from '../data'
+import { services, useCases, steps, metiers } from '../data'
 
 const heroFacts = ['Audit gratuit de 30 min', 'Prix fixé avant de commencer', 'Vous gardez tout']
 
@@ -62,7 +62,11 @@ export default function Home() {
             </div>
           ))}
         </dl>
-        <p className="mt-6"><Link to="/services" className={standaloneLink}>Voir le détail des services</Link></p>
+        <p className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1">
+          <span className="text-muted">Par métier :</span>
+          {metiers.map(m => <Link key={m.slug} to={`/automatisation/${m.slug}`} className={standaloneLink}>{m.nom}</Link>)}
+        </p>
+        <p className="mt-2"><Link to="/services" className={standaloneLink}>Voir le détail des services</Link></p>
       </Section>
 
       <Section note="3 cas types sur 5">

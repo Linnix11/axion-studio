@@ -79,7 +79,7 @@ export default function Article() {
 
       {others.length > 0 && (
         <section className="border-t border-rule bg-paper">
-          <Container className="py-14 lg:pl-[13.5rem]">
+          <Container className="py-14">
             <h2 className="text-2xl leading-tight">À lire aussi</h2>
             <ul className="mt-6 grid gap-5 md:grid-cols-2">
               {others.map(p => (

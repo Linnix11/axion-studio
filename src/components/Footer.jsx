@@ -1,14 +1,14 @@
 import { Link } from 'react-router'
 import { Container } from './ui'
 import { LogoMark } from './Logo'
-import { company, nav, services } from '../data'
+import { company, nav, services, metiers } from '../data'
 
 const link = 'inline-flex min-h-11 items-center text-ink no-underline hover:text-pen'
 
 export default function Footer() {
   return (
     <footer className="border-t border-rule bg-paper text-sm">
-      <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <Container className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
         <div className="max-w-xs">
           <p className="flex items-center gap-2.5 text-lg font-semibold"><LogoMark className="h-7 w-auto text-ink" />{company.brand}</p>
           <p className="mt-2 text-base leading-[1.6] text-muted">
@@ -18,6 +18,10 @@ export default function Footer() {
         <div>
           <h2 className="mb-2 text-base">Services</h2>
           <ul className="space-y-2">{services.map(s => <li key={s.slug}><Link className={link} to={`/services#${s.slug}`}>{s.title}</Link></li>)}</ul>
+        </div>
+        <div>
+          <h2 className="mb-2 text-base">Par métier</h2>
+          <ul className="space-y-2">{metiers.map(m => <li key={m.slug}><Link className={link} to={`/automatisation/${m.slug}`}>{m.nom}</Link></li>)}</ul>
         </div>
         <div>
           <h2 className="mb-2 text-base">Le studio</h2>

@@ -2,6 +2,7 @@
 // Utilisé par les pages (onglet du navigateur) ET écrit dans le HTML au build (scripts/prerender-routes.mjs),
 // pour Google, Bing et les moteurs de réponse des IA (ChatGPT, Gemini, Perplexity, Claude…).
 import { posts, wordCount } from './blog.js'
+import { metiers } from './data.js'
 
 export const SITE_URL = 'https://axionstudio.fr'
 export const BRAND = 'Axion Studio'
@@ -18,6 +19,7 @@ export const pageMeta = {
   '/securite': { title: 'Sécurité des données et usage de l’IA', name: 'Sécurité et données', description: 'Comptes à votre nom, accès révocables, IA utilisée avec précaution, fin de projet propre : les règles d’Axion Studio pour protéger vos données.' },
   '/blog': { title: 'Blog : automatisation et IA', name: 'Blog', description: 'Conseils concrets pour gagner du temps : tâches à automatiser, choix des outils (n8n, Make, Zapier) et usage de l’IA sans risque pour vos données.' },
   ...Object.fromEntries(posts.map(p => [`/blog/${p.slug}`, { title: p.seoTitle || p.title, name: p.title, description: p.seoDescription || p.description, post: p }])),
+  ...Object.fromEntries(metiers.map(m => [`/automatisation/${m.slug}`, { title: m.seoTitle, name: m.nom, description: m.description, metier: m }])),
   '/cgv': { title: 'Conditions générales de vente', name: 'CGV', description: 'Conditions générales de vente d’Axion Studio : commande, prix au forfait, paiement, livraison, propriété des livrables, responsabilité et données.' },
   '/mentions-legales': { title: 'Mentions légales', name: 'Mentions légales', description: 'Mentions légales du site axionstudio.fr : éditeur, statut de micro-entreprise, hébergeur et contact d’Axion Studio.' },
   '/confidentialite': { title: 'Politique de confidentialité', name: 'Confidentialité', description: 'Données collectées, durée de conservation, assistant IA, cookies : la politique de confidentialité du site axionstudio.fr.' },
@@ -40,7 +42,7 @@ export function schemaFor(path, data) {
     name: BRAND,
     alternateName: company.tradeName,
     url: `${SITE_URL}/`,
-    logo: `${SITE_URL}/favicon.svg`,
+    logo: `${SITE_URL}/logo.png`,
     image: `${SITE_URL}/og.png`,
     description: 'Automatisation des processus, intelligence artificielle et création de sites web pour les TPE, PME et indépendants.',
     founder: { '@id': `${SITE_URL}/a-propos/#arthur` },
@@ -58,6 +60,7 @@ export function schemaFor(path, data) {
     ],
     knowsAbout: ['Automatisation des processus', 'Workflows automatisés', 'Intégration d’outils et API', 'Intelligence artificielle en entreprise', 'n8n', 'Make', 'Zapier', 'Création de sites web'],
     makesOffer: services.map(s => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: s.title, description: s.short } })),
+    ...(company.profils?.length ? { sameAs: company.profils } : {}),
   }
   const person = {
     '@type': 'Person', '@id': `${SITE_URL}/a-propos/#arthur`, name: company.owner,
@@ -67,9 +70,11 @@ export function schemaFor(path, data) {
   const website = { '@type': 'WebSite', '@id': `${SITE_URL}/#site`, url: `${SITE_URL}/`, name: BRAND, inLanguage: 'fr-FR', publisher: { '@id': `${SITE_URL}/#entreprise` } }
   const out = [org, website]
   const post = pageMeta[path]?.post
+  const metier = pageMeta[path]?.metier
   if (path !== '/' && pageMeta[path]) {
     const crumbs = [{ name: 'Accueil', item: `${SITE_URL}/` }]
     if (post) crumbs.push({ name: 'Blog', item: pageUrl('/blog') })
+    if (metier) crumbs.push({ name: 'Services', item: pageUrl('/services') })
     crumbs.push({ name: pageMeta[path].name, item: pageUrl(path) })
     out.push({ '@type': 'BreadcrumbList', itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, ...c })) })
   }
@@ -82,6 +87,13 @@ export function schemaFor(path, data) {
     author: { '@type': 'Person', '@id': `${SITE_URL}/a-propos/#arthur`, name: data.company.owner, url: pageUrl('/a-propos') },
     publisher: { '@id': `${SITE_URL}/#entreprise` },
   })
+  if (metier) out.push({
+    '@type': 'Service', name: metier.title, description: metier.probleme, serviceType: 'Automatisation des tâches administratives',
+    provider: { '@id': `${SITE_URL}/#entreprise` }, areaServed: { '@type': 'Country', name: 'France' }, url: pageUrl(path),
+    audience: { '@type': 'BusinessAudience', audienceType: metier.cible },
+    hasOfferCatalog: { '@type': 'OfferCatalog', name: `Automatisations pour ${metier.nom.toLowerCase()}`, itemListElement: metier.taches.map(t => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: t.titre, description: t.texte } })) },
+    offers: { '@type': 'Offer', priceCurrency: 'EUR', priceSpecification: { '@type': 'PriceSpecification', minPrice: 150, priceCurrency: 'EUR' } },
+  }, { '@type': 'FAQPage', mainEntity: metier.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
   if (path === '/faq') out.push({ '@type': 'FAQPage', mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
   if (path === '/services') out.push(...services.map(s => ({
     '@type': 'Service', name: s.title, description: s.intro, serviceType: s.title, provider: { '@id': `${SITE_URL}/#entreprise` },
