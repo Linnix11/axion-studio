@@ -340,7 +340,7 @@ export const metiers = [
     ],
     exemple: { avant: 'Le lundi matin, vous assemblez les chiffres de trois outils et relancez les factures en retard une par une.', apres: 'Le récapitulatif arrive seul dans votre boîte mail et les relances partent automatiquement, avec un ton que vous avez choisi.', gain: '1 h 30 par semaine' },
     outils: ['Calendly ou Google Agenda', 'Gmail ou Outlook', 'logiciel de facturation', 'Google Drive ou OneDrive', 'Notion ou tableur'],
-    articles: ["prise-rendez-vous-en-ligne-rappels", "relances-factures-impayees"],
+    articles: ["chatbot-site-tpe-utile-ou-gadget", "prise-rendez-vous-en-ligne-rappels"],
     etapes: ["Un prospect accepte votre proposition par e-mail.", "La lettre de mission part pour signature électronique, avec le questionnaire de démarrage.", "Les documents demandés sont relancés jusqu’à réception, puis rangés dans un dossier client créé automatiquement.", "Le premier rendez-vous est proposé à partir de vos disponibilités, avec un rappel la veille.", "En fin de mois, la facture est préparée à partir de votre suivi d’activité, et les retards sont relancés à date fixe."],
     audit: ["Vos outils : agenda, messagerie, facturation, stockage des documents.", "Le parcours d’un nouveau client, de l’accord au premier rendez-vous.", "Le temps passé chaque semaine sur l’administratif non facturé.", "Les règles de confidentialité de votre profession."],
     limites: ["Le conseil, la relation client et tout ce qui engage votre responsabilité professionnelle.", "Les données couvertes par le secret professionnel, qui ne sont jamais envoyées à un service d’IA sans votre accord.", "Les cas particuliers, qui vous sont signalés."],

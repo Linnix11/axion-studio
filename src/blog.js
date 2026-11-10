@@ -15,6 +15,135 @@
 
 export const posts = [
   {
+    "slug": "chatbot-site-tpe-utile-ou-gadget",
+    "seoTitle": "Chatbot pour TPE : utile ou gadget ?",
+    "seoDescription": "Ce qu’un chatbot peut faire sur le site d’une petite entreprise, ses limites, les règles (AI Act, RGPD), le coût et un exemple réel.",
+    "title": "Chatbot sur le site d’une TPE : utile ou gadget ?",
+    "description": "Quand un chatbot rend service, quand il fait perdre du temps, ce que disent l’AI Act et le RGPD, ce qu’il coûte, et l’exemple de l’assistant d’axionstudio.fr.",
+    "date": "2026-11-10",
+    "category": "IA et sécurité",
+    "lead": "Un chatbot est utile sur le site d’une TPE quand les visiteurs posent souvent les mêmes questions, à des heures où personne ne peut répondre, et qu’il sait passer la main à un humain. Il devient un gadget quand il cache votre téléphone, répond à côté ou invente. Depuis le 2 août 2026, le visiteur doit aussi savoir clairement qu’il échange avec une IA.",
+    "body": [
+      {
+        "h2": "Ce qu’un chatbot sait bien faire"
+      },
+      {
+        "p": "Les chatbots actuels s’appuient sur un modèle d’IA (Gemini, ChatGPT, Claude…) à qui l’on donne le contenu de votre site comme référence. Bien réglés, ils rendent trois services concrets."
+      },
+      {
+        "ul": [
+          "Répondre aux questions fréquentes : horaires, zone d’intervention, prix de départ, délais, documents à prévoir. Y compris le soir et le week-end.",
+          "Prendre une demande : le visiteur décrit son besoin en quelques phrases, et le chatbot le transmet sous forme de message ou de formulaire pré-rempli, au lieu de le laisser repartir.",
+          "Orienter vers le bon endroit : la page de réservation, le bon service, la bonne personne de l’équipe, ou le formulaire de contact quand la question dépasse ses informations."
+        ]
+      },
+      {
+        "h2": "Quand c’est un gadget"
+      },
+      {
+        "ul": [
+          "Le site reçoit peu de visites, ou peu de questions : le chatbot n’aura presque rien à faire.",
+          "Vos clients ont surtout besoin d’un humain : diagnostic, devis précis, conseil qui engage votre responsabilité.",
+          "Personne ne lit les demandes qu’il recueille, ou elles arrivent dans une boîte que vous ne consultez pas.",
+          "Il se place entre le client et vous : téléphone introuvable, formulaire caché, questions en boucle.",
+          "Il n’est pas cadré et répond à côté, ou donne un prix que vous n’avez jamais annoncé."
+        ]
+      },
+      {
+        "note": "Un test simple : listez les dix questions qu’on vous pose le plus souvent. Si une page de questions fréquentes bien faite y répond, commencez par elle. Le chatbot vient ensuite, s’il apporte quelque chose de plus."
+      },
+      {
+        "h2": "Ses limites"
+      },
+      {
+        "p": "Un modèle d’IA peut se tromper avec beaucoup d’assurance. Il faut donc le limiter à vos propres informations, lui interdire d’inventer des prix, des délais ou des garanties, et lui faire dire « je ne sais pas » plutôt que deviner. Il ne doit pas non plus prendre seul une décision importante pour la personne : la CNIL rappelle qu’une conversation sans intervention humaine ne peut pas, à elle seule, fonder une telle décision (article 22 du RGPD)."
+      },
+      {
+        "p": "Enfin, il faut une sortie vers un humain, visible à tout moment : un bouton, un numéro, un formulaire. Un chatbot qui garde le client captif coûte plus de clients qu’il n’en rapporte."
+      },
+      {
+        "h2": "Ce que disent les règles : AI Act et RGPD"
+      },
+      {
+        "p": "Le règlement européen sur l’intelligence artificielle (AI Act) prévoit que les personnes soient informées qu’elles échangent avec un système d’IA, de façon claire et au plus tard lors du premier échange, sauf si c’est évident pour une personne raisonnablement attentive. Ces règles de transparence s’appliquent depuis le 2 août 2026. L’« omnibus » adopté en 2026 a repoussé les règles sur les IA dites à haut risque, pas celle-ci. En pratique : une mention visible dès l’ouverture de la fenêtre, du type « assistant IA », et pas de prénom humain qui laisserait croire à une vraie personne."
+      },
+      {
+        "p": "Côté RGPD, les questions posées au chatbot sont des données personnelles dès qu’elles permettent d’identifier quelqu’un. Les points à vérifier :"
+      },
+      {
+        "ul": [
+          "Informer dans votre politique de confidentialité : quelles données, pour quoi faire, avec quel prestataire d’IA.",
+          "Avertir avant l’usage de ne pas saisir de données sensibles (santé, opinions…), comme le conseille la CNIL.",
+          "Ne conserver les conversations que le temps utile, et les effacer à la fin de l’échange quand rien ne justifie de les garder.",
+          "Le cookie éventuel du chatbot n’exige pas de consentement s’il n’est déposé qu’à l’ouverture du chat et ne sert qu’à son fonctionnement.",
+          "Lire les conditions du fournisseur : certaines offres gratuites réutilisent les échanges pour améliorer leurs services."
+        ]
+      },
+      {
+        "note": "Ces repères sont généraux et ne remplacent pas un conseil juridique. Le détail des précautions prises sur chaque projet figure sur la page [Sécurité et données](/securite/)."
+      },
+      {
+        "h2": "Combien ça coûte"
+      },
+      {
+        "p": "Deux postes, à ne pas confondre. Le premier est l’usage du modèle d’IA, facturé au volume : Google affiche par exemple ses prix par million de « tokens » (des morceaux de mots). Il existe une offre gratuite limitée, mais Google peut alors utiliser les échanges pour améliorer ses services, ce qui n’est pas le cas des offres payantes. Pour un site de petite entreprise, le volume reste faible, et un plafond quotidien évite toute surprise."
+      },
+      {
+        "p": "Le second poste est le temps : écrire les consignes, tester les questions pièges, relire les premières conversations, mettre à jour le chatbot quand vos prix ou vos horaires changent. C’est souvent lui qui pèse le plus. Les outils de chat prêts à l’emploi, eux, fonctionnent en abonnement mensuel, dont le prix varie selon le nombre de conversations."
+      },
+      {
+        "p": "Un assistant de ce type fait partie des projets d’IA proposés par Axion Studio, qui démarrent à partir de 150 € au forfait, avec un suivi possible à partir de 250 € par mois ([voir les tarifs](/tarifs/))."
+      },
+      {
+        "h2": "Un exemple réel : l’assistant de ce site"
+      },
+      {
+        "p": "Le site que vous lisez a son propre assistant, derrière le bouton « Une question ? » en bas à droite. Voici comment il est construit."
+      },
+      {
+        "ul": [
+          "Il utilise Gemini, le modèle d’IA de Google, appelé depuis le serveur du site. La clé d’accès est rangée sur le serveur, jamais dans le code publié.",
+          "Ses consignes lui demandent de répondre uniquement à partir du contenu du site, sans inventer de prix, de délai ni de client, et de proposer un échange avec moi quand il ne sait pas.",
+          "Il se présente comme « Assistant IA » dès l’ouverture, et indique que les réponses sont générées par Gemini et sont à vérifier.",
+          "Il rappelle de ne saisir aucune donnée sensible. La conversation n’est pas enregistrée sur le site : elle reste dans le navigateur du visiteur.",
+          "Il est plafonné, par visiteur et pour l’ensemble du site, pour garder les coûts sous contrôle.",
+          "Il passe la main : le bouton « Envoyer ma demande à Arthur » pré-remplit le formulaire de contact avec ce que le visiteur a décrit, et c’est lui qui décide de l’envoyer.",
+          "Il fonctionne aujourd’hui avec l’offre gratuite de Gemini, ce qui est signalé dans la fenêtre du chat et dans la [politique de confidentialité](/confidentialite/)."
+        ]
+      },
+      {
+        "p": "Ce n’est pas un vendeur automatique : son rôle est de répondre aux premières questions et d’orienter vers l’audit gratuit, pas de conclure à ma place."
+      },
+      {
+        "h2": "Pour aller plus loin"
+      },
+      {
+        "p": "Les questions répétitives et la prise de demande sont au cœur des pages consacrées aux [professions libérales](/automatisation/professions-liberales/) et aux [commerces et restaurants](/automatisation/commerces-restaurants/). Avant de brancher une IA sur les échanges de vos clients, lisez aussi les [6 règles pour utiliser l’IA avec des données clients](/blog/ia-donnees-clients-regles/). Un doute sur l’intérêt d’un chatbot pour votre activité ? [Écrivez-moi](/contact/), l’audit de 30 minutes sert à ça."
+      },
+      {
+        "p": "Sources : [Commission européenne, cadre réglementaire sur l’IA](https://digital-strategy.ec.europa.eu/fr/policies/regulatory-framework-ai), [Commission européenne, règles de transparence des systèmes d’IA](https://digital-strategy.ec.europa.eu/en/factpages/quick-facts-transparency-rules-ai-systems), [AI Act Service Desk, article 50](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50), [CNIL, chatbots : les conseils pour respecter les droits des personnes](https://www.cnil.fr/fr/chatbots-les-conseils-de-la-cnil-pour-respecter-les-droits-des-personnes), [Google AI Studio, tarifs de l’API Gemini](https://aistudio.google.com/docs/pricing)."
+      }
+    ],
+    "faq": [
+      {
+        "q": "Un chatbot est-il utile pour une petite entreprise ?",
+        "a": "Oui si les visiteurs posent souvent les mêmes questions, hors des heures d’ouverture, et si le chatbot transmet les demandes à un humain. Avec peu de visites ou des questions qui demandent toujours un conseil personnalisé, une bonne page de questions fréquentes suffit."
+      },
+      {
+        "q": "Faut-il dire aux visiteurs qu’ils parlent à une IA ?",
+        "a": "Oui. Depuis le 2 août 2026, l’AI Act prévoit que les personnes soient informées clairement, au plus tard au premier échange, qu’elles interagissent avec un système d’IA, sauf si c’est évident. Une mention « assistant IA » visible dès l’ouverture du chat répond à cet objectif."
+      },
+      {
+        "q": "Un chatbot peut-il prendre des demandes de rendez-vous ou de devis ?",
+        "a": "Il peut recueillir la demande, poser les questions utiles et la transmettre, ou renvoyer vers votre page de réservation. Le prix, la date confirmée et toute décision importante restent validés par vous."
+      },
+      {
+        "q": "Combien coûte un chatbot sur le site d’une TPE ?",
+        "a": "L’usage du modèle d’IA est facturé au volume et reste faible pour un petit site ; une offre gratuite limitée existe, avec réutilisation possible des échanges par le fournisseur. Le poste principal est le temps de mise en place et de suivi. Chez Axion Studio, les projets démarrent à partir de 150 € au forfait."
+      }
+    ]
+  },
+  {
     "slug": "devis-artisan-automatiser",
     "seoTitle": "Devis d’artisan : le préparer en 5 minutes",
     "seoDescription": "De la demande au devis prêt à relire en quelques minutes : ce qu’un artisan peut automatiser, ce qui reste à faire soi-même et les règles à respecter.",

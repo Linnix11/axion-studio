@@ -120,7 +120,8 @@ inventés (ordres de grandeur), pas de faux avis, titres ≤ 60 caractères, des
 - [x] Étape 3, article 1 : « Facture électronique 2026-2027 » (`/blog/facture-electronique-tpe-2026-2027`, 10 nov. 2026, calendrier vérifié sur impots.gouv.fr et economie.gouv.fr).
 - [x] Étape 3, article 2 : « Relances de factures impayées » (`/blog/relances-factures-impayees`, 10 nov. 2026, règles vérifiées : L. 441-10 et D. 441-5 du Code de commerce). Les articles acceptent désormais une `faq` (affichée, en `FAQPage` et dans `llms-full.txt`).
 - [x] Étape 3, articles 3 et 4 : « Devis d'artisan en 5 minutes » (`/blog/devis-artisan-automatiser`, devis obligatoire quel que soit le montant pour le dépannage chez les particuliers, arrêté du 24 janvier 2017) et « Prise de rendez-vous en ligne et rappels SMS » (`/blog/prise-rendez-vous-en-ligne-rappels`, règles CNIL message lié au service / prospection), 10 nov. 2026. Reliés depuis les pages artisans, commerces et professions libérales.
-- [ ] Étape 3 : suite du calendrier (prochain : chatbot sur le site d'une TPE, puis RGPD et automatisation).
+- [x] Étape 3, article 5 : « Chatbot sur le site d'une TPE : utile ou gadget ? » (`/blog/chatbot-site-tpe-utile-ou-gadget`, 10 nov. 2026, AI Act art. 50 applicable au 2 août 2026 vérifié sur digital-strategy.ec.europa.eu et l'AI Act Service Desk, conseils CNIL chatbots). Relié depuis la page professions libérales (remplace « relances », toujours reliée depuis artisans).
+- [ ] Étape 3 : suite du calendrier (prochain : RGPD et automatisation).
 - [ ] Étape 4 : fiches dans les annuaires, avis réels, LinkedIn ; ajouter chaque profil créé dans `company.profils`.
 - [x] Étape 5 : liste des 20 questions IA et tableau de suivi mensuel dans `docs/suivi-seo-ia.md`, avec le premier relevé Semrush (10 nov. 2026 : 1 mot-clé dans le top 100).
 - [x] Titres alignés sur les recherches suivies : « Automatisation d'agence immobilière », « Automatisation cabinet d'expertise comptable ».
