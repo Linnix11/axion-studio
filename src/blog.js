@@ -254,7 +254,7 @@ export const posts = [
   },
   {
     slug: 'facture-electronique-tpe-2026-2027',
-    seoTitle: 'Facture électronique 2026-2027 : guide TPE',
+    seoTitle: 'Facture électronique 2026 : le guide TPE',
     seoDescription: 'Réception obligatoire depuis septembre 2026, émission en septembre 2027 pour les TPE : qui est concerné, ce qui change et ce que vous pouvez automatiser.',
     title: 'Facture électronique 2026-2027 : ce qui change pour les TPE et ce que vous pouvez automatiser',
     description: 'Le calendrier de la réforme, qui est concerné, ce qui change concrètement, et les tâches autour des factures que vous pouvez automatiser dès maintenant.',
@@ -303,6 +303,12 @@ export const posts = [
 
       { h2: 'Pour aller plus loin' },
       { p: 'Selon votre métier, les tâches à automatiser ne sont pas les mêmes : voir par exemple les pages consacrées aux [artisans du bâtiment](/automatisation/artisans-batiment/) et aux [experts-comptables](/automatisation/experts-comptables/), ou l’article sur les [relances et autres tâches à automatiser en priorité](/blog/taches-a-automatiser-tpe/).' },
+    ],
+    faq: [
+      { q: "La facture électronique est-elle obligatoire pour les TPE en 2026 ?", a: "Depuis le 1er septembre 2026, toutes les entreprises assujetties à la TVA, TPE et micro-entrepreneurs compris, doivent pouvoir recevoir des factures électroniques. L’obligation d’en émettre arrive le 1er septembre 2027 pour les PME, TPE et micro-entreprises." },
+      { q: "Une facture PDF envoyée par e-mail est-elle une facture électronique ?", a: "Non. Au sens de la réforme, une facture électronique est un fichier structuré (Factur-X, UBL ou CII) transmis par une plateforme agréée par l’État." },
+      { q: "Les micro-entrepreneurs sont-ils concernés ?", a: "Oui, y compris en franchise en base de TVA : ils ne facturent pas la TVA mais restent assujettis, donc concernés pour leurs factures entre entreprises." },
+      { q: "Que peut-on automatiser avec la facture électronique ?", a: "La récupération et le classement des factures reçues, leur transmission au comptable, la création des factures à partir des devis acceptés, le rapprochement avec les paiements et les relances des impayés." },
     ],
   },
   {

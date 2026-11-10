@@ -125,4 +125,5 @@ inventés (ordres de grandeur), pas de faux avis, titres ≤ 60 caractères, des
 - [x] Étape 5 : liste des 20 questions IA et tableau de suivi mensuel dans `docs/suivi-seo-ia.md`, avec le premier relevé Semrush (10 nov. 2026 : 1 mot-clé dans le top 100).
 - [x] Titres alignés sur les recherches suivies : « Automatisation d'agence immobilière », « Automatisation cabinet d'expertise comptable ».
 - [x] Audit Semrush du 10 nov. 2026 traité : maillage interne (aucun article sous 6 liens), pages métier enrichies, page Contact complétée.
+- [x] Mots-clés à volume (Semrush, 10 nov.) : « agence automatisation » (720) sur l'accueil, « agence n8n » (390) sur `/agence-n8n`, « facture électronique 2026 » (1 900) sur l'article dédié ; H1 Services et Tarifs, FAQ prix.
 - [ ] Étape 5 : relevé mensuel (Semrush et 20 questions IA), à faire chaque mois.

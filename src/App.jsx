@@ -17,6 +17,7 @@ import Cgv from './pages/Cgv'
 import Blog from './pages/Blog'
 import Article from './pages/Article'
 import Metier from './pages/Metier'
+import AgenceN8n from './pages/AgenceN8n'
 import ChatWidget from './components/ChatWidget'
 import NotFound from './pages/NotFound'
 
@@ -68,6 +69,7 @@ export default function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<Article />} />
           <Route path="/automatisation/:slug" element={<Metier />} />
+          <Route path="/agence-n8n" element={<AgenceN8n />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/confidentialite" element={<Confidentialite />} />
           <Route path="*" element={<NotFound />} />

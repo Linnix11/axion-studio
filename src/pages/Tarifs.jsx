@@ -2,12 +2,13 @@ import { Link } from 'react-router'
 import { preparerDemande } from '../demande'
 import { PageHeader, Section, CtaBand, btn, textLink, usePageMeta } from '../components/ui'
 import { offers } from '../data'
+import { tarifsFaq } from '../n8n'
 
 export default function Tarifs() {
   usePageMeta('/tarifs')
   return (
     <>
-      <PageHeader title="Tarifs" note="Forfait, jamais à l’heure">
+      <PageHeader title="Tarifs de l’automatisation pour TPE, dès 150 €" note="Forfait, jamais à l’heure">
         Des projets à partir de 150 €, chiffrés au forfait après l’audit gratuit. Pas de facturation à l’heure :
         vous connaissez le prix exact avant de vous engager.
       </PageHeader>
@@ -40,6 +41,42 @@ export default function Tarifs() {
             {' '}<Link to="/faq/" className={textLink}>Voir les questions fréquentes</Link>
           </p>
         </div>
+      </Section>
+
+      <Section tone="alt" note="Ce qui fait le prix">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h2 className="text-[2rem] leading-tight">Ce qui fait varier le prix d’un projet</h2>
+            <ul className="mt-6 list-disc space-y-2 pl-6 text-lg leading-[1.6] marker:text-pen">
+              <li>Le nombre de logiciels à relier, et s’ils proposent une connexion (API) ou non.</li>
+              <li>Les étapes d’intelligence artificielle : lecture de documents, tri, rédaction de brouillons.</li>
+              <li>Le volume de données et les cas particuliers à prévoir.</li>
+              <li>La reprise de l’existant : fichiers à nettoyer, workflows à corriger.</li>
+            </ul>
+          </div>
+          <div>
+            <h2 className="text-[2rem] leading-tight">Ce qui est toujours inclus</h2>
+            <ul className="mt-6 list-disc space-y-2 pl-6 text-lg leading-[1.6] marker:text-pen">
+              <li>L’audit gratuit de 30 minutes et une proposition écrite sous 72 heures.</li>
+              <li>La construction et les tests sur vos données réelles.</li>
+              <li>La documentation en mots simples, et tout reste à votre nom.</li>
+              <li>Un mois de suivi : corrections sans frais si quelque chose ne marche pas.</li>
+            </ul>
+          </div>
+        </div>
+      </Section>
+
+      <Section note="Questions sur les prix">
+        <h2 className="text-[2rem] leading-tight">Questions fréquentes sur les tarifs</h2>
+        <dl className="mt-8 max-w-3xl space-y-8 text-lg leading-[1.6]">
+          {tarifsFaq.map(f => (
+            <div key={f.q}>
+              <dt className="text-xl leading-tight font-medium">{f.q}</dt>
+              <dd className="mt-2 text-muted">{f.a}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="mt-8 text-lg">Vous utilisez n8n ? Voir aussi la page <Link to="/agence-n8n/" className={textLink}>agence n8n</Link>.</p>
       </Section>
 
       <CtaBand />

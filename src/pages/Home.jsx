@@ -15,7 +15,7 @@ export default function Home() {
       <section className="border-b border-rule">
         <Container className="grid items-start gap-12 pt-14 pb-20 md:pt-20 md:pb-24 lg:grid-cols-[1fr_1.1fr] lg:gap-14">
           <div className="intro lg:pt-4">
-            <p className={eyebrow}>Automatisation pour TPE, PME et indépendants</p>
+            <p className={eyebrow}>Agence d’automatisation et d’IA pour TPE et PME</p>
             <h1 className="mt-3 text-[2.75rem] leading-[1.02] tracking-[-0.03em] sm:text-7xl lg:text-[5.25rem]">
               Vos tâches répétitives, faites sans vous.
             </h1>

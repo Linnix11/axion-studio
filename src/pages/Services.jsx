@@ -6,9 +6,10 @@ export default function Services() {
   usePageMeta('/services')
   return (
     <>
-      <PageHeader title="Services" note="4 missions, au forfait">
+      <PageHeader title="Services d’automatisation et d’IA pour TPE et PME" note="4 missions, au forfait">
         Quatre types de missions pour vous libérer des tâches répétitives. Elles se combinent souvent : un site dont
-        le formulaire alimente votre CRM, une IA qui lit vos factures et les range.
+        le formulaire alimente votre CRM, une IA qui lit vos factures et les range. Les workflows sont le plus souvent
+        construits avec n8n : voir la page <Link to="/agence-n8n/" className={textLink}>agence n8n</Link>.
       </PageHeader>
 
       <nav aria-label="Dans cette page" className="border-b border-rule">

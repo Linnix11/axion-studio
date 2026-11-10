@@ -17,7 +17,7 @@ export default function Footer() {
         </div>
         <div>
           <h2 className="mb-2 text-base">Services</h2>
-          <ul className="space-y-2">{services.map(s => <li key={s.slug}><Link className={link} to={`/services/#${s.slug}`}>{s.title}</Link></li>)}</ul>
+          <ul className="space-y-2">{services.map(s => <li key={s.slug}><Link className={link} to={`/services/#${s.slug}`}>{s.title}</Link></li>)}<li><Link className={link} to="/agence-n8n/">Agence n8n</Link></li></ul>
         </div>
         <div>
           <h2 className="mb-2 text-base">Par métier</h2>

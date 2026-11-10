@@ -3,16 +3,17 @@
 // pour Google, Bing et les moteurs de réponse des IA (ChatGPT, Gemini, Perplexity, Claude…).
 import { posts, wordCount } from './blog.js'
 import { metiers } from './data.js'
+import { n8n, tarifsFaq } from './n8n.js'
 
 export const SITE_URL = 'https://axionstudio.fr'
 export const BRAND = 'Axion Studio'
 
 export const pageMeta = {
-  '/': { title: 'Automatisation IA pour TPE et PME en France | Axion Studio', name: 'Accueil', description: 'Axion Studio automatise les tâches répétitives des TPE, PME et indépendants en France : workflows, outils connectés, IA, sites web. Audit gratuit.' },
-  '/services': { title: 'Automatisation, IA et sites web', name: 'Services', description: 'Workflows automatisés, connexion de vos logiciels (CRM, Gmail, Excel…), intelligence artificielle et sites web pour TPE, PME et indépendants. Projets dès 150 €.' },
+  '/': { title: 'Agence d’automatisation et d’IA en France | Axion Studio', name: 'Accueil', description: 'Axion Studio, agence d’automatisation et d’IA pour TPE, PME et indépendants partout en France : workflows n8n, outils connectés, IA, sites web. Audit gratuit.' },
+  '/services': { title: 'Services d’automatisation et d’IA', name: 'Services', description: 'Workflows automatisés, connexion de vos logiciels (CRM, Gmail, Excel…), intelligence artificielle et sites web pour TPE, PME et indépendants. Projets dès 150 €.' },
   '/exemples': { title: 'Exemples d’automatisation pour TPE', name: 'Exemples', description: 'Devis, factures, suivi des commandes, relances, reporting : 5 cas concrets d’automatisation pour artisans, cabinets, boutiques en ligne et agences.' },
   '/methode': { title: 'Méthode : audit gratuit, forfait, suivi', name: 'Méthode', description: 'Audit gratuit de 30 minutes, proposition au forfait sous 72 h, mise en place testée sur vos données et un mois de suivi inclus.' },
-  '/tarifs': { title: 'Tarifs : automatisation et site web dès 150 €', name: 'Tarifs', description: 'Audit offert, projets d’automatisation ou de site web au forfait dès 150 €, suivi mensuel dès 250 € par mois, sans engagement. TVA non applicable.' },
+  '/tarifs': { title: 'Tarifs de l’automatisation pour TPE dès 150 €', name: 'Tarifs', description: 'Audit offert, projets d’automatisation ou de site web au forfait dès 150 €, suivi mensuel dès 250 € par mois, sans engagement. TVA non applicable.' },
   '/a-propos': { title: 'Arthur Champagne-Forterre, fondateur d’Axion Studio', name: 'À propos', description: 'Arthur Champagne-Forterre, consultant en automatisation et IA basé à Montlignon (Val-d’Oise), aide les petites entreprises à gagner du temps.' },
   '/faq': { title: 'FAQ : automatisation et IA', name: 'FAQ', description: 'Outils utilisés, sécurité des données, délais, prix, maintenance : les réponses aux questions fréquentes sur l’automatisation avec Axion Studio.' },
   '/contact': { title: 'Contact : audit gratuit de 30 minutes', name: 'Contact', description: 'Décrivez la tâche qui vous fait perdre du temps : audit gratuit de 30 minutes, réponse sous 24 heures ouvrées. Montlignon (95) et à distance partout en France.' },
@@ -20,6 +21,7 @@ export const pageMeta = {
   '/blog': { title: 'Blog : automatisation et IA', name: 'Blog', description: 'Conseils concrets pour gagner du temps : tâches à automatiser, choix des outils (n8n, Make, Zapier) et usage de l’IA sans risque pour vos données.' },
   ...Object.fromEntries(posts.map(p => [`/blog/${p.slug}`, { title: p.seoTitle || p.title, name: p.title, description: p.seoDescription || p.description, post: p }])),
   ...Object.fromEntries(metiers.map(m => [`/automatisation/${m.slug}`, { title: m.seoTitle, name: m.nom, description: m.description, metier: m }])),
+  '/agence-n8n': { title: n8n.seoTitle, name: 'Agence n8n', description: n8n.description },
   '/cgv': { title: 'Conditions générales de vente', name: 'CGV', description: 'Conditions générales de vente d’Axion Studio : commande, prix au forfait, paiement, livraison, propriété des livrables, responsabilité et données.' },
   '/mentions-legales': { title: 'Mentions légales', name: 'Mentions légales', description: 'Mentions légales du site axionstudio.fr : éditeur, statut de micro-entreprise, hébergeur et contact d’Axion Studio.' },
   '/confidentialite': { title: 'Politique de confidentialité', name: 'Confidentialité', description: 'Données collectées, durée de conservation, assistant IA, cookies : la politique de confidentialité du site axionstudio.fr.' },
@@ -44,7 +46,7 @@ export function schemaFor(path, data) {
     url: `${SITE_URL}/`,
     logo: `${SITE_URL}/logo.png`,
     image: `${SITE_URL}/og.png`,
-    description: 'Automatisation des processus, intelligence artificielle et création de sites web pour les TPE, PME et indépendants.',
+    description: 'Agence d’automatisation et d’IA pour les TPE, PME et indépendants : workflows n8n, intégration d’outils, intelligence artificielle et création de sites web.',
     founder: { '@id': `${SITE_URL}/a-propos/#arthur` },
     email: company.email,
     telephone: '+33648612350',
@@ -95,6 +97,11 @@ export function schemaFor(path, data) {
     hasOfferCatalog: { '@type': 'OfferCatalog', name: `Automatisations pour ${metier.nom.toLowerCase()}`, itemListElement: metier.taches.map(t => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: t.titre, description: t.texte } })) },
     offers: { '@type': 'Offer', priceCurrency: 'EUR', priceSpecification: { '@type': 'PriceSpecification', minPrice: 150, priceCurrency: 'EUR' } },
   }, { '@type': 'FAQPage', mainEntity: metier.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
+  if (path === '/agence-n8n') out.push({
+    '@type': 'Service', name: n8n.title, description: n8n.description, serviceType: 'Création de workflows n8n',
+    provider: { '@id': `${SITE_URL}/#entreprise` }, areaServed: { '@type': 'Country', name: 'France' }, url: pageUrl(path),
+  }, { '@type': 'FAQPage', mainEntity: n8n.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
+  if (path === '/tarifs') out.push({ '@type': 'FAQPage', mainEntity: tarifsFaq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
   if (path === '/faq') out.push({ '@type': 'FAQPage', mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
   if (path === '/services') out.push(...services.map(s => ({
     '@type': 'Service', name: s.title, description: s.intro, serviceType: s.title, provider: { '@id': `${SITE_URL}/#entreprise` },
