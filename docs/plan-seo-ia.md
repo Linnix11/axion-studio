@@ -119,7 +119,8 @@ inventés (ordres de grandeur), pas de faux avis, titres ≤ 60 caractères, des
 - [ ] Étape 1 : Search Console, Bing Webmaster Tools, anti-robots Hostinger, fiche Google Business, mesure d'audience (utilisateur).
 - [x] Étape 3, article 1 : « Facture électronique 2026-2027 » (`/blog/facture-electronique-tpe-2026-2027`, 10 nov. 2026, calendrier vérifié sur impots.gouv.fr et economie.gouv.fr).
 - [x] Étape 3, article 2 : « Relances de factures impayées » (`/blog/relances-factures-impayees`, 10 nov. 2026, règles vérifiées : L. 441-10 et D. 441-5 du Code de commerce). Les articles acceptent désormais une `faq` (affichée, en `FAQPage` et dans `llms-full.txt`).
-- [ ] Étape 3 : suite du calendrier, 2 articles par mois (prochain : devis d'artisan en 5 minutes).
+- [x] Étape 3, articles 3 et 4 : « Devis d'artisan en 5 minutes » (`/blog/devis-artisan-automatiser`, devis obligatoire quel que soit le montant pour le dépannage chez les particuliers, arrêté du 24 janvier 2017) et « Prise de rendez-vous en ligne et rappels SMS » (`/blog/prise-rendez-vous-en-ligne-rappels`, règles CNIL message lié au service / prospection), 10 nov. 2026. Reliés depuis les pages artisans, commerces et professions libérales.
+- [ ] Étape 3 : suite du calendrier (prochain : chatbot sur le site d'une TPE, puis RGPD et automatisation).
 - [ ] Étape 4 : fiches dans les annuaires, avis réels, LinkedIn ; ajouter chaque profil créé dans `company.profils`.
 - [x] Étape 5 : liste des 20 questions IA et tableau de suivi mensuel dans `docs/suivi-seo-ia.md`, avec le premier relevé Semrush (10 nov. 2026 : 1 mot-clé dans le top 100).
 - [x] Titres alignés sur les recherches suivies : « Automatisation d'agence immobilière », « Automatisation cabinet d'expertise comptable ».

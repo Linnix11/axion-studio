@@ -15,6 +15,185 @@
 
 export const posts = [
   {
+    "slug": "devis-artisan-automatiser",
+    "seoTitle": "Devis d’artisan : le préparer en 5 minutes",
+    "seoDescription": "De la demande au devis prêt à relire en quelques minutes : ce qu’un artisan peut automatiser, ce qui reste à faire soi-même et les règles à respecter.",
+    "title": "Devis d’artisan : de la demande au devis prêt en 5 minutes",
+    "description": "Comment automatiser la réception des demandes, la fiche client, le brouillon de devis et les relances, sans perdre la main sur le chiffrage.",
+    "date": "2026-11-10",
+    "category": "Artisans",
+    "lead": "Un artisan peut passer de la demande au devis prêt à relire en quelques minutes : la demande crée seule une fiche client, un brouillon de devis est préparé à partir de ses tarifs habituels, et il n’a plus qu’à vérifier, ajuster et envoyer. Le chiffrage reste le sien, mais la saisie, le classement et les relances se font sans lui.",
+    "body": [
+      {
+        "h2": "Où part le temps aujourd’hui"
+      },
+      {
+        "p": "Le devis lui-même ne prend souvent que quelques minutes à chiffrer. Le reste du temps part autour : recopier la demande reçue par téléphone, par e-mail ou par un annuaire, retrouver les coordonnées du client, repartir d’un devis vide, puis relancer quand le client ne répond pas."
+      },
+      {
+        "p": "Ce travail se fait le soir ou le week-end, après le chantier. Et une demande qui attend plusieurs jours est souvent une demande perdue : le client a déjà contacté quelqu’un d’autre."
+      },
+      {
+        "h2": "Le circuit automatisé, étape par étape"
+      },
+      {
+        "ol": [
+          "La demande arrive par le formulaire du site, par e-mail ou par un annuaire. Pour les appels, un formulaire court, rempli en 30 secondes après l’appel, déclenche la même suite.",
+          "Une fiche client est créée automatiquement : nom, adresse du chantier, besoin, photos, délai souhaité.",
+          "Le client reçoit tout de suite un message qui confirme la réception et annonce le délai de réponse.",
+          "Un brouillon de devis est préparé dans votre logiciel à partir de vos lignes habituelles (déplacement, main-d’œuvre, fournitures courantes).",
+          "Vous êtes prévenu sur votre téléphone. Vous relisez, ajustez après la visite si besoin, et envoyez.",
+          "Sans réponse après quelques jours, une relance polie part avec vos mots. Une fois le devis signé, la facture d’acompte est préparée."
+        ]
+      },
+      {
+        "note": "Rien ne part chez le client sans votre relecture : l’automatisation prépare, c’est vous qui décidez."
+      },
+      {
+        "h2": "Ce qui reste à faire vous-même"
+      },
+      {
+        "ul": [
+          "Le chiffrage final, surtout quand il dépend de ce que vous voyez sur le chantier.",
+          "La visite technique et les choix de matériaux.",
+          "Les échanges délicats : client hésitant, réclamation, litige."
+        ]
+      },
+      {
+        "h2": "Les règles à respecter sur un devis"
+      },
+      {
+        "p": "Pour les travaux de dépannage, de réparation et d’entretien chez les particuliers (plomberie, serrurerie, électricité…), le devis détaillé est obligatoire avant toute intervention, quel que soit le montant, depuis l’arrêté du 24 janvier 2017. Il doit notamment indiquer s’il est gratuit ou payant, le taux horaire de main-d’œuvre et les frais de déplacement."
+      },
+      {
+        "p": "Un modèle de devis bien préparé dans votre logiciel reprend ces mentions à chaque fois : c’est un des avantages de partir d’un brouillon plutôt que d’une page blanche."
+      },
+      {
+        "note": "Les mentions exactes dépendent de votre métier et de votre clientèle (particuliers ou professionnels). Vérifiez-les auprès de votre chambre de métiers ou de votre organisation professionnelle. Cet article ne remplace pas un conseil juridique."
+      },
+      {
+        "h2": "Avec quels outils"
+      },
+      {
+        "p": "Les logiciels de devis du bâtiment (Obat, Tolteck, Batappli et d’autres) proposent souvent des modèles et parfois des connexions. Une automatisation relie ce logiciel à votre messagerie, à votre site et à votre agenda, avec un outil comme [n8n, Make ou Zapier](/blog/n8n-make-zapier-comparatif/). Je pars toujours de votre logiciel actuel : en changer n’est proposé que s’il bloque vraiment."
+      },
+      {
+        "p": "Ordre de grandeur : sur ce type de circuit, le gain se compte en heures par semaine, selon le nombre de demandes reçues. Les projets démarrent à 150 € au forfait ([voir les tarifs](/tarifs/))."
+      },
+      {
+        "h2": "Pour aller plus loin"
+      },
+      {
+        "p": "Voir la page consacrée à l’[automatisation pour les artisans du bâtiment](/automatisation/artisans-batiment/), et l’article sur les [relances de factures impayées](/blog/relances-factures-impayees/), l’autre tâche qui pèse le plus sur les artisans."
+      }
+    ],
+    "faq": [
+      {
+        "q": "Peut-on automatiser un devis d’artisan ?",
+        "a": "On automatise tout ce qui l’entoure : réception de la demande, fiche client, brouillon de devis à partir de vos tarifs, notification et relances. Le chiffrage final et l’envoi restent sous votre contrôle."
+      },
+      {
+        "q": "Faut-il changer de logiciel de devis ?",
+        "a": "Non, dans la plupart des cas. L’automatisation se branche sur votre logiciel actuel, ou sur un modèle de document si vous n’en avez pas."
+      },
+      {
+        "q": "Et les demandes reçues par téléphone ?",
+        "a": "Un formulaire très court, rempli sur votre téléphone après l’appel, déclenche la même suite que les demandes écrites."
+      },
+      {
+        "q": "Le devis est-il obligatoire pour un dépannage ?",
+        "a": "Oui, pour les travaux de dépannage, de réparation et d’entretien chez les particuliers dans le bâtiment, un devis détaillé doit être remis avant l’intervention, quel que soit le montant."
+      }
+    ]
+  },
+  {
+    "slug": "prise-rendez-vous-en-ligne-rappels",
+    "seoTitle": "Prise de rendez-vous en ligne et rappels SMS",
+    "seoDescription": "Relier la réservation en ligne à votre agenda, envoyer des rappels par SMS ou e-mail et limiter les absences : comment faire et quelles règles respecter.",
+    "title": "Prise de rendez-vous en ligne : la relier à votre agenda et aux rappels SMS",
+    "description": "Réservation en ligne, agenda à jour, rappel la veille et créneaux libérés à temps : comment automatiser les rendez-vous d’une petite entreprise.",
+    "date": "2026-11-10",
+    "category": "Organisation",
+    "lead": "Pour automatiser vos rendez-vous, il faut trois briques reliées entre elles : une page de réservation qui ne propose que vos vrais créneaux libres, votre agenda mis à jour seul, et un rappel envoyé la veille par SMS ou par e-mail avec un lien pour annuler. Le client réserve à toute heure, vous ne ressaisissez rien, et les absences diminuent.",
+    "body": [
+      {
+        "h2": "Le vrai coût des rendez-vous gérés à la main"
+      },
+      {
+        "ul": [
+          "Les allers-retours par téléphone ou par e-mail pour trouver un créneau.",
+          "La ressaisie dans l’agenda, avec le risque de doublon ou d’oubli.",
+          "Les absences sans prévenir : un créneau perdu, impossible à reproposer.",
+          "Les rappels faits de mémoire, quand on y pense."
+        ]
+      },
+      {
+        "h2": "Le circuit automatisé"
+      },
+      {
+        "ol": [
+          "Le client choisit un créneau sur votre page de réservation, qui ne montre que vos disponibilités réelles.",
+          "Le rendez-vous s’inscrit dans votre agenda (Google Agenda, Outlook…) avec les informations utiles : nom, motif, téléphone, adresse.",
+          "Le client reçoit une confirmation immédiate, avec ce qu’il doit préparer ou apporter.",
+          "La veille, un rappel part par SMS ou par e-mail, avec un lien pour annuler ou déplacer.",
+          "Un créneau annulé redevient disponible tout de suite, et peut être proposé à une liste d’attente.",
+          "Après le rendez-vous, un message peut remercier le client, envoyer un document ou demander un avis."
+        ]
+      },
+      {
+        "h2": "SMS ou e-mail : que choisir ?"
+      },
+      {
+        "p": "Le SMS est lu presque toujours et rapidement : c’est le meilleur canal pour un rappel la veille. Il coûte quelques centimes par message selon le fournisseur. L’e-mail est gratuit et convient à la confirmation, qui peut contenir plus d’informations (plan d’accès, documents à préparer). Beaucoup de petites entreprises combinent les deux : e-mail à la réservation, SMS la veille."
+      },
+      {
+        "h2": "Ce que dit la règle (RGPD)"
+      },
+      {
+        "p": "Un rappel de rendez-vous demandé par le client est un message lié au service, pas de la prospection : il n’exige pas de consentement marketing. Il faut en revanche informer le client de l’usage de son numéro, par une mention courte sur la page de réservation."
+      },
+      {
+        "p": "Attention : dès qu’un message contient une promotion ou une offre, il bascule dans la prospection commerciale, avec des règles plus strictes (consentement préalable pour les particuliers). Gardez les rappels purement pratiques."
+      },
+      {
+        "note": "Les règles détaillées sont sur cnil.fr, rubrique « prospection commerciale par SMS ». Cet article ne remplace pas un conseil juridique."
+      },
+      {
+        "h2": "Avec quels outils"
+      },
+      {
+        "p": "Les outils de réservation spécialisés (Planity, Doctolib, TheFork, Calendly, la page de réservation de Google Agenda…) font déjà une partie du travail. L’automatisation sert à les relier au reste : votre fichier clients, votre facturation, les demandes d’avis, ou une liste d’attente. Je pars de l’outil que vous utilisez déjà, et je n’en propose un nouveau que s’il manque une brique."
+      },
+      {
+        "p": "Ordre de grandeur : ce type de circuit se met en place en quelques jours, et les projets démarrent à 150 € au forfait ([voir les tarifs](/tarifs/))."
+      },
+      {
+        "h2": "Pour aller plus loin"
+      },
+      {
+        "p": "Les rendez-vous sont au cœur des pages consacrées aux [commerces et restaurants](/automatisation/commerces-restaurants/), aux [professions libérales](/automatisation/professions-liberales/) et aux [agences immobilières](/automatisation/agences-immobilieres/) pour les visites. Voir aussi les [5 tâches à automatiser en priorité](/blog/taches-a-automatiser-tpe/)."
+      }
+    ],
+    "faq": [
+      {
+        "q": "Faut-il le consentement du client pour lui envoyer un rappel par SMS ?",
+        "a": "Pas pour un rappel de rendez-vous qu’il a lui-même pris : c’est un message lié au service. Il faut l’informer de l’usage de son numéro, et ne pas glisser de promotion dans le rappel."
+      },
+      {
+        "q": "Combien coûte un rappel par SMS ?",
+        "a": "Quelques centimes par message selon le fournisseur et le volume. L’e-mail est gratuit mais moins lu au dernier moment."
+      },
+      {
+        "q": "Mon outil de réservation envoie déjà des rappels, à quoi sert une automatisation ?",
+        "a": "À relier cet outil au reste : fichier clients, facturation, demandes d’avis, liste d’attente, tableau de suivi. Si votre outil couvre déjà tout, l’audit vous le dira."
+      },
+      {
+        "q": "Les rappels réduisent-ils vraiment les absences ?",
+        "a": "Oui, c’est leur principal intérêt : un client rappelé la veille, avec un lien pour annuler, prévient plus souvent quand il ne peut pas venir, ce qui libère le créneau à temps."
+      }
+    ]
+  },
+  {
     slug: 'relances-factures-impayees',
     seoTitle: 'Relancer une facture impayée : guide TPE',
     seoDescription: 'Quand relancer, quoi écrire, quelles pénalités appliquer et comment automatiser les relances de factures impayées sans braquer vos clients.',

@@ -35,7 +35,7 @@ et les règles à respecter. Dernière mise à jour : 10 novembre 2026.
 ```
 src/
   data.js        contenus : entreprise (dont profils publics pour sameAs), menu, services, offres, FAQ, garanties, pages métier (metiers), etc.
-  blog.js        6 articles (faq facultative en fin d'article) (blocs h2/p/ul/ol/note, seoTitle/seoDescription)
+  blog.js        8 articles (faq facultative en fin d'article) (blocs h2/p/ul/ol/note, seoTitle/seoDescription)
   legal.js       CGV (réglages en haut : acompte 30 %, paiement 30 j, etc.)
   chatbot.js     règles et textes de l'assistant IA (geminiFreeTier = true)
   seo.js         titres, descriptions, données structurées JSON-LD par page
@@ -65,7 +65,7 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 
 ## 4. Contenu et offre
 
-- Pages : Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Sécurité, Blog (6 articles), CGV, Mentions légales, Confidentialité, 404. Plus 6 pages « Automatisation pour … » par métier (artisans du bâtiment, experts-comptables, agences immobilières, boutiques en ligne, professions libérales, commerces et restaurants).
+- Pages : Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Sécurité, Blog (8 articles), CGV, Mentions légales, Confidentialité, 404. Plus 6 pages « Automatisation pour … » par métier (artisans du bâtiment, experts-comptables, agences immobilières, boutiques en ligne, professions libérales, commerces et restaurants).
 - **Prix** : Projet **à partir de 150 €** au forfait, prix exact sur devis ; Suivi **à partir de 250 €/mois**. Prestations réservées aux professionnels (la FAQ précise ce qui est possible pour les particuliers).
 - Arguments : audit gratuit de 30 min, prix fixé avant de commencer, le client garde tout, un mois de suivi inclus.
 - **Pas de photos. Pas de faux témoignages ni de chiffres inventés** (les gains sont présentés comme des ordres de grandeur).
@@ -208,3 +208,4 @@ automatisations/n8n/             workflows n8n de prospection, mettre-a-jour.mjs
 27. Session sur le Mac : documentation copiée dans Obsidian (`~/Desktop/Obsidian/Mac/projects/axion-studio`, mode copie). n8n local : workflow 1 déjà en v2 mais installé deux fois ; workflow 2 encore en version « envoi » ; le nœud `n8n-nodes-imap` n'est pas installé, la mise à jour attend son installation et l'accès IMAP iCloud.
 28. Premier relevé Semrush (1 mot-clé sur 10 dans le top 100) ; article « Relances de factures impayées » avec FAQ ; FAQ possible sur tous les articles ; titres de 2 pages métier alignés sur les recherches ; `docs/suivi-seo-ia.md` (20 questions IA).
 29. Audit Semrush (santé 98 %, IA 99 %) : les 447 redirections viennent d'un passage antérieur à la correction des « / » finaux (aucun lien sans « / » dans le site). Corrections : pages métier enrichies (champs `etapes`, `audit`, `limites`, `articles` dans `metiers`, environ 700 à 840 mots), articles liés par catégorie puis en rotation (3 par article), auteur relié à À propos, page Contact complétée (étapes détaillées, 4 questions). Relancer l'audit Semrush pour confirmer.
+30. Demande de « bots pour monter top 3 » refusée (faux clics, liens en masse et faux avis sont sanctionnés par Google) ; à la place : articles « Devis d'artisan » et « Prise de rendez-vous en ligne », reliés aux pages métier. Pistes proposées : robot n8n de suivi des positions et des citations IA, chaîne de brouillons d'articles, posts LinkedIn, demandes d'avis réels.
