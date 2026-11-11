@@ -6,6 +6,7 @@ import '@fontsource/atkinson-hyperlegible/latin-700.css'
 import '@fontsource/atkinson-hyperlegible/latin-400-italic.css'
 import './index.css'
 import App from './App.jsx'
+import { enregistrerOutils } from './webmcp'
 
 hydrateRoot(
   document.getElementById('root'),
@@ -15,3 +16,5 @@ hydrateRoot(
     </BrowserRouter>
   </StrictMode>,
 )
+
+enregistrerOutils()
