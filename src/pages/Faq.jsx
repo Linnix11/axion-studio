@@ -1,4 +1,5 @@
-import { PageHeader, Section, CtaBand, usePageMeta } from '../components/ui'
+import { Link } from 'react-router'
+import { PageHeader, textLink, Section, CtaBand, usePageMeta } from '../components/ui'
 import { faq } from '../data'
 
 export default function Faq() {
@@ -18,6 +19,10 @@ export default function Faq() {
             </details>
           ))}
         </div>
+        <p className="mt-10 max-w-[62ch] text-lg leading-[1.6] text-muted">
+          À lire aussi : le <Link to="/blog/n8n-make-zapier-comparatif/" className={textLink}>comparatif de n8n, Make et Zapier</Link>,
+          et <Link to="/blog/chatbot-site-tpe-utile-ou-gadget/" className={textLink}>ce qu’un chatbot peut vraiment faire pour une TPE</Link>.
+        </p>
       </Section>
       <CtaBand title="Votre question n’est pas ici ?" text="Écrivez-moi, je vous réponds sous 24 heures ouvrées." />
     </>

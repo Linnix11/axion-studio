@@ -1,4 +1,5 @@
-import { PageHeader, Section, SectionHead, CtaBand, usePageMeta } from '../components/ui'
+import { Link } from 'react-router'
+import { PageHeader, textLink, Section, SectionHead, CtaBand, usePageMeta } from '../components/ui'
 import { IdentityCard, Guarantees } from '../components/Trust'
 import { company } from '../data'
 
@@ -29,6 +30,9 @@ export default function APropos() {
               <p>
                 Je suis basé à Montlignon, dans le Val-d’Oise. Je me déplace en Île-de-France et je travaille à
                 distance partout en France.
+              </p>
+              <p>
+                Pour les entreprises qui utilisent n8n, je propose aussi la <Link to="/agence-n8n/" className={textLink}>conception et la maintenance de workflows n8n</Link>.
               </p>
             </div>
             <p className="mt-8 text-lg font-medium">{company.owner}</p>

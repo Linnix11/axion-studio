@@ -216,6 +216,7 @@ export const metiers = [
     cible: 'Plombiers, chauffagistes, électriciens, menuisiers, peintres, couvreurs',
     naf: ['43.22A', '43.22B', '43.21A', '43.32A', '43.34Z', '43.91B', '41.20A'],
     probleme: 'Sur le chantier toute la journée, vous traitez les demandes de devis, les relances et les factures le soir ou le week-end. Une partie de ce travail se répète à l’identique et peut se faire sans vous.',
+    reponse: 'Axion Studio automatise pour les artisans du bâtiment les tâches administratives qui se répètent : demandes de devis rangées avec un brouillon prêt à relire, relance des devis non signés et des factures impayées, rendez-vous ajoutés à l’agenda avec un rappel au client.',
     taches: [
       { titre: 'Demandes de devis', texte: 'Chaque demande reçue par le site, par e-mail ou par un formulaire crée une fiche client, avec le besoin, l’adresse et le délai. Un brouillon de devis est préparé à partir de vos tarifs et vous êtes prévenu sur votre téléphone.' },
       { titre: 'Relance des devis non signés', texte: 'Sans réponse après quelques jours, le client reçoit une relance polie, écrite avec vos mots. Vous ne relancez plus de mémoire.' },
@@ -245,6 +246,7 @@ export const metiers = [
     cible: 'Cabinets d’expertise comptable, commissaires aux comptes, gestionnaires de paie',
     naf: ['69.20Z'],
     probleme: 'Une grande partie du temps des collaborateurs part dans la collecte des pièces et les relances, surtout en période fiscale. Ce travail se répète d’un client à l’autre et se prête bien à l’automatisation.',
+    reponse: 'Axion Studio automatise pour les cabinets d’expertise comptable la collecte des justificatifs et la relance des pièces manquantes, la lecture et le classement des factures reçues par e-mail, les brouillons de réponse aux questions récurrentes et le suivi des échéances.',
     taches: [
       { titre: 'Collecte des justificatifs', texte: 'Chaque client reçoit à date fixe la liste de ses pièces manquantes, avec un lien pour les déposer. Les relances suivent seules jusqu’à réception.' },
       { titre: 'Lecture des factures', texte: 'Les factures reçues par e-mail sont lues, renommées et rangées dans le bon dossier client, prêtes pour la saisie ou l’import dans votre logiciel.' },
@@ -261,6 +263,7 @@ export const metiers = [
       { q: 'Les données de nos clients sont-elles en sécurité ?', a: 'Les automatisations tournent sur vos comptes, avec des accès limités et révocables. Avant d’utiliser un service d’IA, nous vérifions ensemble quelles données lui sont envoyées.' },
       { q: 'Est-ce compatible avec notre logiciel de production ?', a: 'Le plus souvent, oui : par import de fichiers ou par les connexions que le logiciel propose. Je le vérifie pendant l’audit.' },
       { q: 'L’IA fait-elle la saisie comptable ?', a: 'Elle prépare : lecture, classement, pré-remplissage. La validation reste au cabinet, qui garde la responsabilité de la tenue.' },
+      { q: 'Combien ça coûte ?', a: 'Les projets démarrent à 150 €, au forfait. Le prix exact est fixé après l’audit gratuit de 30 minutes, avant de commencer.' },
       { q: 'Peut-on commencer petit ?', a: 'Oui. On choisit une tâche, souvent la relance des pièces manquantes, on la met en place et on mesure le temps gagné avant d’aller plus loin.' },
       { q: "Et la facture électronique de 2026-2027 ?", a: "Les factures reçues par la plateforme agréée peuvent être récupérées et rangées automatiquement, comme les PDF aujourd’hui. C’est même plus fiable, car les données sont structurées." },
     ],
@@ -274,6 +277,7 @@ export const metiers = [
     cible: 'Agences immobilières, mandataires, administrateurs de biens',
     naf: ['68.31Z'],
     probleme: 'Les demandes des portails arrivent en vrac et chacune demande un rappel pour connaître le projet. Les bons contacts se perdent au milieu des autres.',
+    reponse: 'Axion Studio automatise pour les agences immobilières le tri et la qualification des contacts venus des portails, la prise de rendez-vous de visite dans l’agenda du négociateur, les relances des acquéreurs et des vendeurs et la préparation des comptes rendus de visite.',
     taches: [
       { titre: 'Qualification des contacts', texte: 'Chaque demande est classée (achat, location, estimation), un e-mail pose les premières questions et le contact arrive qualifié dans votre logiciel.' },
       { titre: 'Visites', texte: 'Le contact choisit un créneau, la visite arrive dans l’agenda du négociateur et un rappel part la veille.' },
@@ -303,6 +307,7 @@ export const metiers = [
     cible: 'E-commerçants sur Shopify, WooCommerce, PrestaShop ou une place de marché',
     naf: ['47.91A', '47.91B'],
     probleme: 'Commandes, stock, suivi des colis et questions des clients : chaque vente entraîne une série de petites tâches qui se répètent et prennent des heures chaque semaine.',
+    reponse: 'Axion Studio automatise pour les boutiques en ligne la mise à jour du stock à chaque vente, l’envoi du numéro de suivi, les réponses aux questions « où en est ma commande ? » et l’export des factures pour le comptable.',
     taches: [
       { titre: 'Stock', texte: 'Le stock se met à jour à chaque vente, sur tous vos canaux, et vous recevez une alerte quand un produit passe sous le seuil.' },
       { titre: 'Suivi des colis', texte: 'Le client reçoit son numéro de suivi automatiquement, puis un message à la livraison.' },
@@ -332,6 +337,7 @@ export const metiers = [
     cible: 'Consultants, architectes, avocats, coachs, cabinets de conseil, indépendants',
     naf: ['70.22Z', '71.11Z', '69.10Z', '74.90B'],
     probleme: 'Seul ou en petite équipe, vous facturez votre temps, et chaque heure passée sur l’administratif est une heure non facturée.',
+    reponse: 'Axion Studio automatise pour les professions libérales (consultants, architectes, avocats, indépendants) la prise de rendez-vous avec rappel, l’accueil d’un nouveau client, la facturation avec relance des retards et le récapitulatif de la semaine.',
     taches: [
       { titre: 'Rendez-vous', texte: 'Les rendez-vous pris en ligne arrivent dans votre agenda, avec un rappel au client et les documents à préparer.' },
       { titre: 'Arrivée d’un nouveau client', texte: 'Lettre de mission, questionnaire et demande de documents partent automatiquement dès qu’un client dit oui.' },
@@ -361,6 +367,7 @@ export const metiers = [
     cible: 'Restaurants, commerces de proximité, salons de coiffure et instituts',
     naf: ['56.10A', '56.10C', '96.02A', '96.02B', '47.71Z'],
     probleme: 'Le service ou la boutique occupe la journée, et l’administratif se fait après la fermeture : réservations, avis, commandes, factures.',
+    reponse: 'Axion Studio automatise pour les commerces et les restaurants les rappels de réservation, les demandes d’avis Google après une visite, le regroupement des commandes fournisseurs et la transmission des factures au comptable.',
     taches: [
       { titre: 'Réservations', texte: 'Les réservations prises en ligne déclenchent un rappel au client, ce qui limite les absences.' },
       { titre: 'Avis Google', texte: 'Après une visite, le client reçoit un message simple l’invitant à laisser un avis.' },

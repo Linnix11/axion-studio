@@ -21,6 +21,9 @@ export default function Securite() {
             </li>
           ))}
         </ol>
+        <p className="mt-10 max-w-[62ch] text-lg leading-[1.6] text-muted">
+          Le détail pour l’IA : <Link to="/blog/ia-donnees-clients-regles/" className={textLink}>les règles pour utiliser l’IA avec des données clients</Link>.
+        </p>
       </Section>
       <Section tone="alt" note="Écrit noir sur blanc">
         <div className="grid gap-10 lg:grid-cols-2">

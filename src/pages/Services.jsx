@@ -26,6 +26,7 @@ export default function Services() {
             <div>
               <h2 className="text-[2rem] leading-tight md:text-[2.5rem]">{s.heading || s.title}</h2>
               <p className="mt-4 max-w-[52ch] text-lg leading-[1.6] text-muted">{s.intro}</p>
+              {s.slug === 'ia' && <p className="mt-4 max-w-[52ch] text-lg leading-[1.6] text-muted">Avant d’installer un assistant sur votre site : <Link to="/blog/chatbot-site-tpe-utile-ou-gadget/" className={textLink}>un chatbot sur le site d’une TPE, utile ou gadget ?</Link></p>}
               <AuditLink className={`${btn.ghost} mt-6`} demande={`Bonjour,\n\nJe m’intéresse à la mission « ${s.title} ». Mon besoin : `}>Parler de mon projet</AuditLink>
             </div>
             <div className="grid gap-8 sm:grid-cols-2">

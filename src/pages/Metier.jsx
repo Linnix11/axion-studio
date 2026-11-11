@@ -15,10 +15,10 @@ export default function Metier() {
 
   return (
     <>
-      <PageHeader title={m.title} note={m.cible}>{m.probleme}</PageHeader>
+      <PageHeader title={m.title} note={m.cible}>{m.reponse || m.probleme}</PageHeader>
 
       <Section note={`${m.taches.length} tâches qui se répètent`}>
-        <SectionHead title="Ce qui peut être automatisé" />
+        <SectionHead title="Ce qui peut être automatisé">{m.reponse && m.probleme}</SectionHead>
         <ul className="grid gap-5 md:grid-cols-2">
           {m.taches.map(t => (
             <li key={t.titre} className="rounded-xl border border-rule bg-paper p-6">

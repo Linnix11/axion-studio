@@ -1,4 +1,5 @@
-import { PageHeader, Section, CtaBand, AuditLink, standaloneLink, usePageMeta } from '../components/ui'
+import { Link } from 'react-router'
+import { PageHeader, textLink, Section, CtaBand, AuditLink, standaloneLink, usePageMeta } from '../components/ui'
 import { useCases } from '../data'
 
 export default function Exemples() {
@@ -35,6 +36,10 @@ export default function Exemples() {
             </article>
           ))}
         </div>
+        <p className="mt-10 max-w-[64ch] text-lg leading-[1.6] text-muted">
+          Pour aller plus loin : comment <Link to="/blog/devis-artisan-automatiser/" className={textLink}>préparer un devis d’artisan à partir de la demande</Link>,
+          et comment <Link to="/blog/relances-factures-impayees/" className={textLink}>automatiser les relances de factures impayées</Link>.
+        </p>
       </Section>
 
       <CtaBand title="Votre cas n’est pas dans la liste ?" text="Chaque entreprise a ses propres tâches répétitives. Décrivez la vôtre, je vous dis si elle peut être automatisée." />

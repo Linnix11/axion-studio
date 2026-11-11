@@ -1,4 +1,5 @@
-import { PageHeader, Section, SectionHead, CtaBand, usePageMeta } from '../components/ui'
+import { Link } from 'react-router'
+import { PageHeader, textLink, Section, SectionHead, CtaBand, usePageMeta } from '../components/ui'
 import { steps, proposalSample as ps } from '../data'
 import { Guarantees } from '../components/Trust'
 
@@ -60,6 +61,9 @@ export default function Methode() {
             ))}
           </dl>
         </article>
+        <p className="mt-8 max-w-[62ch] text-lg leading-[1.6] text-muted">
+          Ce qui fait varier le prix : <Link to="/blog/cout-automatisation-petite-entreprise/" className={textLink}>combien coûte une automatisation pour une petite entreprise</Link>.
+        </p>
       </Section>
 
       <Section note="Votre part, mes garanties">

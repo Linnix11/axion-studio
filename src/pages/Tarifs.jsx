@@ -9,8 +9,9 @@ export default function Tarifs() {
   return (
     <>
       <PageHeader title="Tarifs de l’automatisation pour TPE, dès 150 €" note="Forfait, jamais à l’heure">
-        Des projets à partir de 150 €, chiffrés au forfait après l’audit gratuit. Pas de facturation à l’heure :
-        vous connaissez le prix exact avant de vous engager.
+        Chez Axion Studio, l’audit de 30 minutes est offert, les projets sont facturés au forfait à partir de 150 € et
+        le suivi mensuel démarre à 250 € par mois, sans engagement. Pas de facturation à l’heure : vous connaissez le
+        prix exact avant de vous engager.
       </PageHeader>
 
       <Section note="3 formules">
@@ -40,6 +41,7 @@ export default function Tarifs() {
             nom et à votre charge. Je vous indique leur coût dans la proposition.
             {' '}<Link to="/faq/" className={textLink}>Voir les questions fréquentes</Link>
           </p>
+          <p>Comment se déroule un projet : <Link to="/methode/" className={textLink}>les étapes, de l’audit gratuit au suivi</Link>.</p>
         </div>
       </Section>
 
