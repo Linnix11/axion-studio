@@ -64,6 +64,7 @@ Restent 18 pages. **À soumettre demain, 11 novembre (10 pages, dans cet ordre)*
 
 | # | Adresse | Pourquoi maintenant |
 |---|---|---|
+| 0 | https://axionstudio.fr/blog/lire-factures-fournisseurs-ia/ | Ajouté le 11 nov. : nouvel article |
 | 0 | https://axionstudio.fr/blog/rgpd-automatisation-tpe/ | Ajouté le 11 nov. : nouvel article, à soumettre en premier avec l'article chatbot |
 | 1 | https://axionstudio.fr/blog/n8n-make-zapier-comparatif/ | Seule page déjà classée (71e sur « n8n make zapier comparatif ») : la faire revisiter peut l'aider à monter |
 | 2 | https://axionstudio.fr/automatisation/artisans-batiment/ | Première cible commerciale, mot-clé « automatisation artisan » prévu dans le suivi |
