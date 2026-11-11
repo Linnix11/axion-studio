@@ -112,7 +112,7 @@ export const posts = [
     description: 'Formulaires, CRM, e-mails, chatbot : les obligations RGPD à vérifier quand une TPE automatise, avec les règles officielles et une liste de contrôle.',
     date: '2026-11-11',
     category: 'IA et sécurité',
-    lead: 'Automatiser un formulaire, un CRM, des e-mails ou un chatbot ne change pas les règles du RGPD, mais multiplie les endroits où passent les données de vos clients. Avant de brancher un outil, une TPE doit vérifier six points : son registre des traitements, le contrat avec chaque prestataire, la durée de conservation, le lieu d’hébergement des données la façon de répondre aux demandes des personnes et la sécurité des accès. Le plus simple est de le faire au moment où l’on construit l’automatisation.',
+    lead: 'Automatiser un formulaire, un CRM, des e-mails ou un chatbot ne change pas les règles du RGPD, mais multiplie les endroits où passent les données de vos clients. Avant de brancher un outil, une TPE doit vérifier six points : son registre des traitements, le contrat avec chaque prestataire, la durée de conservation, le lieu d’hébergement des données, la façon de répondre aux demandes des personnes et la sécurité des accès. Le plus simple est de le faire au moment où l’on construit l’automatisation.',
     body: [
       { p: 'Une automatisation relie des outils entre eux : le formulaire de contact envoie la demande dans un tableur, le CRM crée la fiche du client, l’outil d’e-mail envoie la confirmation, parfois une IA résume le message. À chaque étape, des données personnelles sont copiées ou stockées chez un prestataire différent. Là où il y avait un fichier, il y en a parfois quatre ou cinq. C’est l’occasion de remettre de l’ordre, pas une raison de renoncer.' },
 
