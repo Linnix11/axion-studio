@@ -282,7 +282,7 @@ export const metiers = [
     ],
     exemple: { avant: 'Les demandes des portails d’annonces arrivent en vrac, et il faut les trier et rappeler chaque contact pour connaître son projet.', apres: 'Chaque demande est classée, un e-mail de bienvenue pose les premières questions et le contact arrive qualifié dans le CRM.', gain: '2 h par semaine' },
     outils: ['portails d’annonces', 'logiciel de transaction (Apimo, Hektor, Netty…)', 'Google Agenda ou Outlook', 'Gmail ou Outlook'],
-    articles: ["ia-donnees-clients-regles", "n8n-make-zapier-comparatif"],
+    articles: ["ia-donnees-clients-regles", "rgpd-automatisation-tpe"],
     etapes: ["Un contact arrive d’un portail d’annonces à 22 h pour un appartement trois pièces.", "La demande est reconnue (achat, location ou estimation) et rattachée au bon bien et au bon négociateur.", "Le contact reçoit tout de suite un e-mail qui pose les questions utiles : budget, financement, délai, critères.", "Ses réponses complètent sa fiche dans votre logiciel de transaction, et il peut choisir un créneau de visite.", "Le négociateur arrive le matin sur des contacts triés, avec les visites déjà dans son agenda et un rappel prévu la veille."],
     audit: ["Le nombre de demandes reçues des portails et le délai moyen avant rappel.", "Votre logiciel de transaction et la façon dont les contacts y entrent aujourd’hui.", "La prise de rendez-vous de visite et les absences.", "Les relances des acquéreurs et des vendeurs : qui les fait, quand, avec quels mots."],
     limites: ["La visite, la négociation et le conseil au vendeur.", "Les messages aux contacts sensibles ou en situation particulière.", "Le choix des biens à proposer, qui reste au négociateur."],

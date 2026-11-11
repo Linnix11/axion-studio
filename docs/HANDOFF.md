@@ -35,7 +35,7 @@ et les règles à respecter. Dernière mise à jour : 10 novembre 2026.
 ```
 src/
   data.js        contenus : entreprise (dont profils publics pour sameAs), menu, services, offres, FAQ, garanties, pages métier (metiers), etc.
-  blog.js        8 articles (faq facultative en fin d'article) (blocs h2/p/ul/ol/note, seoTitle/seoDescription)
+  blog.js        9 articles (faq facultative en fin d'article) (blocs h2/p/ul/ol/note, seoTitle/seoDescription)
   legal.js       CGV (réglages en haut : acompte 30 %, paiement 30 j, etc.)
   n8n.js         contenu de la page « Agence n8n » (/agence-n8n) et FAQ des tarifs (tarifsFaq)
   chatbot.js     règles et textes de l'assistant IA (geminiFreeTier = true)
@@ -68,7 +68,7 @@ docs/agents-seo.md               règles communes et rôle de chacun des 25 agen
 
 ## 4. Contenu et offre
 
-- Pages : Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Sécurité, Blog (8 articles), CGV, Mentions légales, Confidentialité, 404. Plus 6 pages « Automatisation pour … » par métier (artisans du bâtiment, experts-comptables, agences immobilières, boutiques en ligne, professions libérales, commerces et restaurants).
+- Pages : Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Sécurité, Blog (9 articles), CGV, Mentions légales, Confidentialité, 404. Plus 6 pages « Automatisation pour … » par métier (artisans du bâtiment, experts-comptables, agences immobilières, boutiques en ligne, professions libérales, commerces et restaurants).
 - **Prix** : Projet **à partir de 150 €** au forfait, prix exact sur devis ; Suivi **à partir de 250 €/mois**. Prestations réservées aux professionnels (la FAQ précise ce qui est possible pour les particuliers).
 - Arguments : audit gratuit de 30 min, prix fixé avant de commencer, le client garde tout, un mois de suivi inclus.
 - **Pas de photos. Pas de faux témoignages ni de chiffres inventés** (les gains sont présentés comme des ordres de grandeur).

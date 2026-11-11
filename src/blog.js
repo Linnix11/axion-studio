@@ -15,6 +15,97 @@
 
 export const posts = [
   {
+    slug: 'rgpd-automatisation-tpe',
+    seoTitle: 'RGPD et automatisation : le guide TPE',
+    seoDescription: 'Registre, contrats avec les prestataires, durée de conservation, hébergement hors UE, droits des personnes : les points RGPD à vérifier avant d’automatiser.',
+    title: 'RGPD et automatisation : ce qu’une TPE doit vérifier',
+    description: 'Formulaires, CRM, e-mails, chatbot : les obligations RGPD à vérifier quand une TPE automatise, avec les règles officielles et une liste de contrôle.',
+    date: '2026-11-11',
+    category: 'IA et sécurité',
+    lead: 'Automatiser un formulaire, un CRM, des e-mails ou un chatbot ne change pas les règles du RGPD, mais multiplie les endroits où passent les données de vos clients. Avant de brancher un outil, une TPE doit vérifier cinq points : son registre des traitements, le contrat avec chaque prestataire, la durée de conservation, le lieu d’hébergement des données et la façon de répondre aux demandes des personnes. Le plus simple est de le faire au moment où l’on construit l’automatisation.',
+    body: [
+      { p: 'Une automatisation relie des outils entre eux : le formulaire de contact envoie la demande dans un tableur, le CRM crée la fiche du client, l’outil d’e-mail envoie la confirmation, parfois une IA résume le message. À chaque étape, des données personnelles sont copiées ou stockées chez un prestataire différent. Là où il y avait un fichier, il y en a parfois quatre ou cinq. C’est l’occasion de remettre de l’ordre, pas une raison de renoncer.' },
+
+      { h2: 'Tenir un registre des traitements, même court' },
+      { p: 'Le registre est la liste de vos fichiers et de ce que vous en faites (article 30 du RGPD). Le texte prévoit une dispense pour les structures de moins de 250 salariés, mais elle ne s’applique pas dès qu’un traitement n’est pas occasionnel, présente un risque pour les personnes ou porte sur des données sensibles. La gestion des clients et des fournisseurs n’a rien d’occasionnel : la CNIL estime que cette dispense est limitée à des cas très particuliers et qu’une TPE qui traite des données personnelles doit tenir un registre.' },
+      { p: 'Pour chaque traitement, le registre indique notamment :' },
+      { ul: [
+        'l’objectif (répondre aux demandes de devis, envoyer une lettre d’information, facturer…) ;',
+        'les catégories de personnes et de données concernées ;',
+        'les destinataires, y compris les outils et prestataires qui reçoivent les données ;',
+        'les éventuels transferts hors de l’Union européenne ;',
+        'les durées de conservation ;',
+        'une description générale des mesures de sécurité.',
+      ] },
+      { p: 'La forme est libre, papier ou électronique. La CNIL propose un modèle simplifié au format tableur, pensé pour les petites structures. Chaque nouvelle automatisation y ajoute une ligne, ou complète une ligne existante avec les nouveaux outils.' },
+
+      { h2: 'Un contrat avec chaque prestataire qui touche aux données' },
+      { p: 'Votre CRM, votre outil d’e-mailing, votre hébergeur, la plateforme d’automatisation (n8n, Make, Zapier) ou le service d’IA traitent des données pour votre compte : au sens du RGPD, ce sont des sous-traitants. L’article 28 impose de ne choisir que des prestataires qui présentent des garanties suffisantes, et de signer avec chacun un contrat qui prévoit notamment qu’il :' },
+      { ul: [
+        'ne traite les données que sur vos instructions écrites ;',
+        'garantit la confidentialité des personnes autorisées à y accéder ;',
+        'met en place les mesures de sécurité nécessaires ;',
+        'ne fait pas appel à un autre sous-traitant sans votre autorisation écrite préalable ;',
+        'vous aide à répondre aux demandes des personnes et en cas d’incident ;',
+        'supprime ou vous restitue les données à la fin de la prestation, selon votre choix ;',
+        'vous fournit les informations qui prouvent qu’il respecte ses obligations.',
+      ] },
+      { p: 'Chez beaucoup d’éditeurs de logiciels, ce contrat existe déjà sous le nom de « DPA » (Data Processing Agreement) ou d’avenant RGPD, parfois intégré aux conditions générales, parfois à accepter à part. Il suffit de le retrouver, de vérifier qu’il couvre bien l’offre que vous utilisez, et de le ranger avec le registre. Le prestataire qui construit l’automatisation et garde un accès à vos outils entre aussi dans ce cadre.' },
+      { note: 'Le piège classique : un compte gratuit ouvert « pour tester », qui finit par recevoir les vraies données des clients. Vérifiez que l’offre utilisée au quotidien est bien celle couverte par le contrat.' },
+
+      { h2: 'Fixer une durée de conservation, et l’appliquer' },
+      { p: 'Le RGPD interdit de garder les données plus longtemps que nécessaire au regard de l’objectif (article 5). Sauf texte particulier, c’est à vous de fixer la durée. La CNIL donne des repères dans son référentiel sur la gestion des activités commerciales :' },
+      { ul: [
+        'prospects : trois ans à compter de la collecte ou du dernier contact venant du prospect ;',
+        'clients, pour la prospection : pendant la relation commerciale, puis trois ans après sa fin ;',
+        'données de facturation : dix ans, en application du Code de commerce.',
+      ] },
+      { p: 'Ces référentiels ne sont pas contraignants : vous pouvez retenir une autre durée si vous pouvez la justifier. Ici, l’automatisation aide vraiment : une tâche planifiée peut archiver ou supprimer les contacts arrivés au terme de la durée retenue, au lieu de compter sur la mémoire de chacun. Pensez aussi aux copies qu’on oublie : historique des exécutions de la plateforme d’automatisation, pièces jointes restées dans la boîte mail, exports dans un tableur.' },
+
+      { h2: 'Savoir où vont les données' },
+      { p: 'Beaucoup d’outils sont édités hors d’Europe, souvent aux États-Unis. Le RGPD n’interdit pas ces transferts, mais il exige qu’ils soient encadrés. Deux cas reviennent le plus souvent :' },
+      { ul: [
+        'le pays bénéficie d’une décision d’adéquation de la Commission européenne : le transfert est possible sans outil supplémentaire. Pour les États-Unis, la décision du 10 juillet 2023 ne couvre que les entreprises américaines certifiées, inscrites sur la liste tenue par le ministère américain du Commerce ;',
+        'sinon, il faut des garanties appropriées, le plus souvent les clauses contractuelles types adoptées par la Commission européenne, que les éditeurs intègrent en général à leur contrat.',
+      ] },
+      { p: 'À vérifier pour chaque outil : où sont hébergées les données, si l’éditeur est certifié ou fournit ces clauses, et la mention du transfert dans votre registre et votre politique de confidentialité. Ce cadre peut bouger : le précédent accord avec les États-Unis, le Privacy Shield, a été invalidé par la Cour de justice de l’Union européenne en juillet 2020. Quand un hébergement en Europe existe, le choisir limite cette dépendance ; n8n, par exemple, peut être installé sur un serveur situé en Europe.' },
+
+      { h2: 'Informer les personnes et répondre à leurs demandes' },
+      { p: 'Au moment de la collecte (formulaire, chatbot, prise de rendez-vous), les personnes doivent être informées (article 13) : qui vous êtes, pourquoi vous collectez leurs données et sur quelle base, à qui elles sont transmises, combien de temps vous les gardez, quels sont leurs droits, et qu’elles peuvent réclamer auprès de la CNIL. Une mention courte sous le formulaire, qui renvoie vers la politique de confidentialité, est la forme habituelle.' },
+      { p: 'Une personne peut ensuite demander à accéder à ses données, à les corriger, à les effacer ou s’opposer à la prospection. Vous avez un mois pour répondre, délai prolongeable de deux mois si la demande est complexe ou si les demandes sont nombreuses, à condition de prévenir la personne dans le premier mois (article 12). Avec des données réparties dans plusieurs outils, mieux vaut s’y préparer :' },
+      { ul: [
+        'savoir dans quels outils une personne peut figurer (c’est le rôle du registre) ;',
+        'prévoir un scénario « effacer ce contact partout » plutôt que de fouiller chaque outil à la main ;',
+        'transmettre automatiquement une opposition à la prospection à l’outil d’e-mailing.',
+      ] },
+      { p: 'Enfin, si une automatisation prend une décision importante pour quelqu’un (refuser un dossier, écarter une candidature), l’article 22 du RGPD donne le droit de ne pas faire l’objet d’une décision fondée exclusivement sur un traitement automatisé lorsqu’elle produit des effets juridiques ou l’affecte de manière significative. Une validation humaine reste la règle simple à retenir.' },
+
+      { h2: 'Sécuriser les accès et prévoir l’incident' },
+      { p: 'Une automatisation manipule des clés d’accès et des connexions à vos outils. Les bonnes pratiques : comptes à votre nom, accès limités à ce qui est nécessaire, retirés à la fin d’une mission, double authentification quand l’outil la propose, aucune clé copiée dans un e-mail ou un document partagé.' },
+      { p: 'En cas de fuite (formulaire exposé, envoi au mauvais destinataire, compte piraté), le RGPD prévoit de notifier la CNIL dans les meilleurs délais et, si possible, dans les 72 heures après en avoir pris connaissance, dès que l’incident présente un risque pour les personnes. Si le risque est élevé, les personnes concernées doivent aussi être prévenues. Et chaque incident, même sans notification, est consigné dans un registre des violations (article 33).' },
+      { p: 'Avant de mettre une automatisation en service, une liste de contrôle simple :' },
+      { ol: [
+        'le traitement figure au registre, avec les outils utilisés ;',
+        'chaque outil qui reçoit des données a son contrat de sous-traitance ;',
+        'la durée de conservation est fixée, et une tâche l’applique ;',
+        'le lieu d’hébergement est connu, et les transferts hors Union européenne sont encadrés ;',
+        'la mention d’information est en place sur le formulaire ou le chatbot ;',
+        'vous savez retrouver et effacer une personne dans tous les outils.',
+      ] },
+      { note: 'Ces repères sont généraux et ne constituent pas un conseil juridique. Pour une situation particulière, rapprochez-vous de la CNIL (cnil.fr) ou d’un professionnel du droit.' },
+
+      { h2: 'Pour aller plus loin' },
+      { p: 'Les précautions prises sur chaque projet Axion Studio (comptes à votre nom, accès révocables, fin de projet propre) sont détaillées sur la page [Sécurité et données](/securite/). Si vous branchez une IA sur vos échanges, lisez aussi les [6 règles pour utiliser l’IA avec des données clients](/blog/ia-donnees-clients-regles/), et pour un assistant sur votre site, l’article [Chatbot sur le site d’une TPE : utile ou gadget ?](/blog/chatbot-site-tpe-utile-ou-gadget/). Les métiers qui manipulent beaucoup de données personnelles sont concernés au premier chef : voir les pages [professions libérales](/automatisation/professions-liberales/) et [agences immobilières](/automatisation/agences-immobilieres/). Un doute sur une automatisation existante ? [Écrivez-moi](/contact/), ces points font partie de l’audit gratuit de 30 minutes.' },
+      { p: 'Sources : [texte du RGPD, chapitre II (article 5)](https://www.cnil.fr/fr/reglement-europeen-protection-donnees/chapitre2), [chapitre III (articles 12, 13 et 22)](https://www.cnil.fr/fr/reglement-europeen-protection-donnees/chapitre3) et [chapitre IV (articles 28, 30 et 33)](https://www.cnil.fr/fr/reglement-europeen-protection-donnees/chapitre4) sur cnil.fr, [CNIL, le registre des activités de traitement](https://www.cnil.fr/fr/RGPD-le-registre-des-activites-de-traitement), [CNIL, appliquer le RGPD dans une TPE ou PME](https://www.cnil.fr/fr/appliquer-le-rgpd-dans-une-tpe-ou-pme-les-questionsreponses-de-la-cnil), [CNIL, travailler avec un sous-traitant](https://www.cnil.fr/fr/sous-traitant), [CNIL, les durées de conservation des données](https://www.cnil.fr/fr/les-durees-de-conservation-des-donnees), [CNIL, référentiels sur la gestion des activités commerciales](https://www.cnil.fr/fr/questions-reponses-sur-les-referentiels-relatifs-la-gestion-des-activites-commerciales-et-des), [CNIL, transférer des données hors de l’UE](https://www.cnil.fr/fr/les-outils-de-la-conformite/transferer-des-donnees-hors-de-lue), [CNIL, adéquation des États-Unis](https://www.cnil.fr/fr/adequation-des-etats-unis-les-premieres-questions-reponses).' },
+    ],
+    faq: [
+      { q: 'Une TPE doit-elle tenir un registre des traitements ?', a: 'En pratique, oui. Le RGPD dispense les structures de moins de 250 salariés, sauf pour les traitements non occasionnels, à risque ou portant sur des données sensibles. La gestion des clients et des fournisseurs n’étant pas occasionnelle, la CNIL considère qu’une TPE qui traite des données personnelles doit tenir un registre. Un modèle simplifié est disponible sur cnil.fr.' },
+      { q: 'Faut-il un contrat avec un outil comme un CRM ou une plateforme d’automatisation ?', a: 'Oui. Un outil qui traite des données pour votre compte est un sous-traitant au sens du RGPD, et l’article 28 impose un contrat qui encadre ce traitement. Chez beaucoup d’éditeurs, il s’agit d’un accord de traitement des données (DPA) à retrouver dans les conditions de l’offre utilisée.' },
+      { q: 'Peut-on utiliser des outils américains pour automatiser ?', a: 'Oui, à condition que le transfert soit encadré : entreprise certifiée au titre de la décision d’adéquation du 10 juillet 2023, ou clauses contractuelles types de la Commission européenne. Le transfert doit figurer dans le registre et dans la politique de confidentialité. Un hébergement en Europe, quand il existe, simplifie les choses.' },
+      { q: 'Combien de temps garder les données des prospects ?', a: 'La CNIL retient comme repère trois ans à compter de la collecte ou du dernier contact venant du prospect. Ce référentiel n’est pas contraignant : une autre durée est possible si elle est justifiée. Une automatisation peut supprimer ou archiver les contacts au terme de la durée choisie.' },
+    ],
+  },
+  {
     "slug": "chatbot-site-tpe-utile-ou-gadget",
     "seoTitle": "Chatbot pour TPE : utile ou gadget ?",
     "seoDescription": "Ce qu’un chatbot peut faire sur le site d’une petite entreprise, ses limites, les règles (AI Act, RGPD), le coût et un exemple réel.",
@@ -80,7 +171,7 @@ export const posts = [
         ]
       },
       {
-        "note": "Ces repères sont généraux et ne remplacent pas un conseil juridique. Le détail des précautions prises sur chaque projet figure sur la page [Sécurité et données](/securite/)."
+        "note": "Ces repères sont généraux et ne remplacent pas un conseil juridique. Le détail des précautions prises sur chaque projet figure sur la page [Sécurité et données](/securite/), et l’ensemble des vérifications (registre, contrats, durées de conservation) dans [RGPD et automatisation : ce qu’une TPE doit vérifier](/blog/rgpd-automatisation-tpe/)."
       },
       {
         "h2": "Combien ça coûte"
@@ -582,7 +673,7 @@ export const posts = [
       { p: 'L’IA peut se tromper, avec beaucoup d’assurance. Pour tout ce qui part chez un client (une réponse, un devis, une relance), la bonne pratique est de faire préparer un brouillon par l’IA, puis de le relire avant l’envoi.' },
 
       { h2: '5. Informer vos clients' },
-      { p: 'Si vous utilisez un outil d’IA pour traiter leurs demandes, dites-le simplement dans votre politique de confidentialité : quelles données, pour quoi faire, et avec quel prestataire. La transparence rassure, et c’est une exigence du RGPD.' },
+      { p: 'Si vous utilisez un outil d’IA pour traiter leurs demandes, dites-le simplement dans votre politique de confidentialité : quelles données, pour quoi faire, et avec quel prestataire. La transparence rassure, et c’est une exigence du RGPD. Les autres points à vérifier (registre, contrat avec chaque prestataire, durée de conservation) sont détaillés dans [RGPD et automatisation : ce qu’une TPE doit vérifier](/blog/rgpd-automatisation-tpe/).' },
 
       { h2: '6. Pouvoir tout arrêter' },
       { p: 'Les comptes, les clés d’accès et les automatisations doivent être à votre nom. Vous devez pouvoir retirer un accès ou couper un service en quelques minutes, sans dépendre de personne.' },
