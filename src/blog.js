@@ -112,6 +112,7 @@ export const posts = [
     "title": "Chatbot sur le site d’une TPE : utile ou gadget ?",
     "description": "Quand un chatbot rend service, quand il fait perdre du temps, ce que disent l’AI Act et le RGPD, ce qu’il coûte, et l’exemple de l’assistant d’axionstudio.fr.",
     "date": "2026-11-10",
+    "updated": "2026-11-11",
     "category": "IA et sécurité",
     "lead": "Un chatbot est utile sur le site d’une TPE quand les visiteurs posent souvent les mêmes questions, à des heures où personne ne peut répondre, et qu’il sait passer la main à un humain. Il devient un gadget quand il cache votre téléphone, répond à côté ou invente. Depuis le 2 août 2026, le visiteur doit aussi savoir clairement qu’il échange avec une IA.",
     "body": [
@@ -177,7 +178,7 @@ export const posts = [
         "h2": "Combien ça coûte"
       },
       {
-        "p": "Deux postes, à ne pas confondre. Le premier est l’usage du modèle d’IA, facturé au volume : Google affiche par exemple ses prix par million de « tokens » (des morceaux de mots). Il existe une offre gratuite limitée, mais Google peut alors utiliser les échanges pour améliorer ses services, ce qui n’est pas le cas des offres payantes. Pour un site de petite entreprise, le volume reste faible, et un plafond quotidien évite toute surprise."
+        "p": "Deux postes, à ne pas confondre. Le premier est l’usage du modèle d’IA, facturé au volume : Google affiche par exemple ses prix par million de « tokens » (des morceaux de mots). Il existe une offre gratuite limitée, mais les conditions de Google réservent l’offre payante aux services proposés à des utilisateurs situés en Europe (Espace économique européen), ce qui est le cas d’un chatbot sur le site d’une entreprise française. Avec l’offre payante, Google indique ne pas utiliser les échanges pour améliorer ses produits. Pour un site de petite entreprise, le volume reste faible, et un plafond quotidien évite toute surprise."
       },
       {
         "p": "Le second poste est le temps : écrire les consignes, tester les questions pièges, relire les premières conversations, mettre à jour le chatbot quand vos prix ou vos horaires changent. C’est souvent lui qui pèse le plus. Les outils de chat prêts à l’emploi, eux, fonctionnent en abonnement mensuel, dont le prix varie selon le nombre de conversations."
@@ -212,7 +213,7 @@ export const posts = [
         "p": "Les questions répétitives et la prise de demande sont au cœur des pages consacrées aux [professions libérales](/automatisation/professions-liberales/) et aux [commerces et restaurants](/automatisation/commerces-restaurants/). Avant de brancher une IA sur les échanges de vos clients, lisez aussi les [6 règles pour utiliser l’IA avec des données clients](/blog/ia-donnees-clients-regles/). Un doute sur l’intérêt d’un chatbot pour votre activité ? [Écrivez-moi](/contact/), l’audit de 30 minutes sert à ça."
       },
       {
-        "p": "Sources : [Commission européenne, cadre réglementaire sur l’IA](https://digital-strategy.ec.europa.eu/fr/policies/regulatory-framework-ai), [Commission européenne, règles de transparence des systèmes d’IA](https://digital-strategy.ec.europa.eu/en/factpages/quick-facts-transparency-rules-ai-systems), [AI Act Service Desk, article 50](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50), [CNIL, chatbots : les conseils pour respecter les droits des personnes](https://www.cnil.fr/fr/chatbots-les-conseils-de-la-cnil-pour-respecter-les-droits-des-personnes), [Google AI Studio, tarifs de l’API Gemini](https://aistudio.google.com/docs/pricing)."
+        "p": "Sources : [Commission européenne, cadre réglementaire sur l’IA](https://digital-strategy.ec.europa.eu/fr/policies/regulatory-framework-ai), [Commission européenne, règles de transparence des systèmes d’IA](https://digital-strategy.ec.europa.eu/en/factpages/quick-facts-transparency-rules-ai-systems), [AI Act Service Desk, article 50](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50), [CNIL, chatbots : les conseils pour respecter les droits des personnes](https://www.cnil.fr/fr/chatbots-les-conseils-de-la-cnil-pour-respecter-les-droits-des-personnes), [Google AI Studio, tarifs de l’API Gemini](https://aistudio.google.com/docs/pricing), [Google, conditions de l’API Gemini](https://aistudio.google.com/docs/terms)."
       }
     ],
     "faq": [
@@ -230,7 +231,7 @@ export const posts = [
       },
       {
         "q": "Combien coûte un chatbot sur le site d’une TPE ?",
-        "a": "L’usage du modèle d’IA est facturé au volume et reste faible pour un petit site ; une offre gratuite limitée existe, avec réutilisation possible des échanges par le fournisseur. Le poste principal est le temps de mise en place et de suivi. Chez Axion Studio, les projets démarrent à partir de 150 € au forfait."
+        "a": "L’usage du modèle d’IA est facturé au volume et reste faible pour un petit site ; l’offre gratuite n’est pas prévue pour un service proposé à des visiteurs européens ; un plafond quotidien garde le coût sous contrôle. Le poste principal est le temps de mise en place et de suivi. Chez Axion Studio, les projets démarrent à partir de 150 € au forfait."
       }
     ]
   },
@@ -466,7 +467,7 @@ export const posts = [
 
       { h2: 'Pour aller plus loin' },
       { p: 'Les relances sont souvent la première tâche automatisée chez les [artisans du bâtiment](/automatisation/artisans-batiment/) et dans les [professions libérales](/automatisation/professions-liberales/). Avec la [facture électronique obligatoire en 2026-2027](/blog/facture-electronique-tpe-2026-2027/), le suivi des paiements devient aussi plus simple à brancher.' },
-      { "p": "Sources : [Bpifrance Création, taux des pénalités de retard](https://bpifrance-creation.fr/boiteaoutils/taux-penalites-retard), [CCI Paris Île-de-France, l’injonction de payer](https://entreprises.cci-paris-idf.fr/fiches-pratiques/linjonction-de-payer), [justice.fr, recouvrement judiciaire et injonction de payer](https://www.justice.fr/fiche/recouvrement-judiciaire-injonction-payer-france-europe)." }
+      { "p": "Sources : [entreprendre.service-public.gouv.fr, retard de paiement entre professionnels](https://entreprendre.service-public.gouv.fr/vosdroits/F23211), [Bpifrance Création, taux des pénalités de retard](https://bpifrance-creation.fr/boiteaoutils/taux-penalites-retard), [CCI Paris Île-de-France, l’injonction de payer](https://entreprises.cci-paris-idf.fr/fiches-pratiques/linjonction-de-payer), [justice.fr, recouvrement judiciaire et injonction de payer](https://www.justice.fr/fiche/recouvrement-judiciaire-injonction-payer-france-europe)." }
     ],
     faq: [
       { q: 'Quand faut-il relancer une facture impayée ?', a: 'Dès le lendemain de l’échéance, après un rappel aimable envoyé quelques jours avant. Plus la relance est tardive, plus le paiement est difficile à obtenir.' },
@@ -580,6 +581,11 @@ export const posts = [
       { h2: 'Le bon réflexe' },
       { p: 'Commencez par la tâche qui vous coûte le plus de temps, et faites-la chiffrer. Si le gain ne justifie pas le coût, un bon prestataire doit vous le dire. C’est l’objet de l’[audit gratuit de 30 minutes](/contact/) : repartir avec une liste claire de ce qui vaut la peine d’être automatisé, et de ce qui ne l’est pas. Délais, outils, pannes : les autres réponses sont dans la [foire aux questions](/faq/).' },
     ],
+    faq: [
+      { q: 'Combien coûte la mise en place d’une automatisation chez Axion Studio ?', a: 'Chaque projet est chiffré au forfait après un audit gratuit de 30 minutes et démarre à 150 €. Le prix exact figure dans la proposition, avant tout engagement, et ne change pas en cours de projet.' },
+      { q: 'Quels coûts mensuels prévoir après la mise en place ?', a: 'L’abonnement aux outils (n8n, Make, Zapier, service d’IA), souscrit à votre nom, et, si vous le souhaitez, un suivi facultatif et sans engagement, à partir de 250 € par mois.' },
+      { q: 'Comment savoir si une automatisation sera rentable ?', a: 'Estimez le temps passé sur la tâche chaque semaine, multipliez par 47 semaines puis par la valeur d’une heure de votre temps, et comparez au coût de mise en place et des abonnements sur un an. Une tâche de 10 minutes par mois ne mérite souvent pas d’être automatisée.' },
+    ],
   },
   {
     slug: 'taches-a-automatiser-tpe',
@@ -612,6 +618,11 @@ export const posts = [
 
       { h2: 'Par où commencer ?' },
       { p: 'Commencez par une seule tâche, celle qui vous agace le plus. Une première automatisation simple se met en place en une à deux semaines, tests compris, et sert ensuite de base aux suivantes. Les [étapes, de l’audit gratuit au suivi](/methode/) sont détaillées à part. Vous ne savez pas laquelle choisir ? C’est exactement l’objet de l’[audit gratuit de 30 minutes](/contact/) : on regarde votre semaine type et on fixe ensemble l’ordre de priorité.' },
+    ],
+    faq: [
+      { q: 'Quelles tâches automatiser en premier dans une petite entreprise ?', a: 'Le traitement des demandes de devis, les relances de factures impayées, le classement des factures et justificatifs, le reporting hebdomadaire et les réponses aux questions qui reviennent.' },
+      { q: 'Comment savoir si une tâche peut être automatisée ?', a: 'Elle revient au moins chaque semaine, suit toujours les mêmes étapes et ses informations existent déjà sous forme numérique (e-mail, formulaire, tableur, PDF). Recopier une information d’un outil à un autre est presque toujours automatisable.' },
+      { q: 'Combien de temps pour mettre en place une première automatisation ?', a: 'Une automatisation simple se met en place en une à deux semaines, tests compris, et sert ensuite de base aux suivantes.' },
     ],
   },
   {
@@ -649,6 +660,11 @@ export const posts = [
       { note: 'Les tarifs de ces outils évoluent souvent : consultez toujours leur page de prix à jour avant de vous décider.' },
       { p: 'Il n’y a pas de meilleur outil dans l’absolu, seulement un outil adapté à votre situation. Chez Axion Studio, le choix se fait pendant l’audit, en fonction de vos logiciels, de vos volumes et de vos données, et l’abonnement reste toujours à votre nom. [Voir les services](/services/) ou [demander un audit gratuit](/contact/).' },
     ],
+    faq: [
+      { q: 'Quelle est la différence entre n8n, Make et Zapier ?', a: 'Zapier est le plus simple à prendre en main mais son coût grimpe avec le volume. Make présente chaque scénario sous forme de schéma et reste généralement plus économique à volume égal. n8n peut être installé sur votre propre serveur, et son coût ne dépend alors plus du nombre d’exécutions.' },
+      { q: 'Quel outil d’automatisation choisir quand les données sont sensibles ?', a: 'n8n installé sur votre propre serveur garde les données sous votre contrôle. Il faut alors prévoir un hébergement à maintenir.' },
+      { q: 'Sur quels critères choisir son outil d’automatisation ?', a: 'Les logiciels que vous utilisez déjà, le volume d’exécutions par mois, la sensibilité des données et la facilité de reprise par vous ou par quelqu’un d’autre.' },
+    ],
   },
   {
     slug: 'ia-donnees-clients-regles',
@@ -680,6 +696,11 @@ export const posts = [
 
       { note: 'Ces conseils sont des bonnes pratiques générales, pas un avis juridique. Pour une situation particulière, rapprochez-vous de la CNIL (cnil.fr) ou d’un professionnel du droit.' },
       { p: 'Ce sont exactement les règles appliquées sur chaque projet Axion Studio : elles sont détaillées sur la page [Sécurité et données](/securite/). Les [questions fréquentes sur l’automatisation et l’IA](/faq/) répondent aux cas les plus courants. Une question sur votre cas ? [Écrivez-moi](/contact/).' },
+    ],
+    faq: [
+      { q: 'Peut-on utiliser l’IA avec les données de ses clients ?', a: 'Oui, avec des précautions : n’envoyer que les informations utiles à la tâche, choisir des offres professionnelles, tenir les données sensibles à l’écart, relire avant tout envoi au client, informer les clients et garder la possibilité de tout arrêter.' },
+      { q: 'Les versions gratuites des outils d’IA posent-elles un problème ?', a: 'Elles peuvent utiliser vos échanges pour améliorer leurs produits. Les offres professionnelles et les API payantes s’engagent généralement à ne pas le faire : lisez les conditions de chaque service.' },
+      { q: 'Faut-il dire à ses clients qu’on utilise l’IA ?', a: 'Oui, dans la politique de confidentialité : quelles données, pour quoi faire et avec quel prestataire. C’est une exigence du RGPD.' },
     ],
   },
 ]

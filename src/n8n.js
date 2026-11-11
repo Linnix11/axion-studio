@@ -38,6 +38,9 @@ export const n8n = typo({
     { q: 'n8n, Make ou Zapier : lequel choisir ?', a: 'n8n convient bien quand les volumes sont importants, quand les données doivent rester chez vous ou quand il faut des traitements sur mesure. Make et Zapier sont plus simples à prendre en main pour de petits besoins. Je vous recommande l’outil le plus simple à maintenir pour votre cas.' },
     { q: 'Combien coûte un projet n8n ?', a: 'Les projets démarrent à 150 € au forfait, prix exact fixé après l’audit gratuit. L’hébergement de n8n (n8n Cloud ou serveur) reste à votre nom et à votre charge ; son coût est indiqué dans la proposition.' },
     { q: 'Pouvez-vous reprendre des workflows n8n existants ?', a: 'Oui : audit des workflows en place, corrections, mise à jour de version et documentation, puis suivi si vous le souhaitez.' },
+    { q: 'Faut-il installer n8n sur son propre serveur ?', a: 'Non. Axion Studio installe n8n soit sur n8n Cloud, soit sur un serveur à votre nom. L’auto-hébergement garde vos données chez vous et évite une facturation à chaque exécution.' },
+    { q: 'n8n peut-il utiliser l’intelligence artificielle ?', a: 'Oui. Un workflow n8n peut appeler les grands modèles d’IA pour lire un document, classer une demande ou rédiger un brouillon, au milieu d’étapes classiques.' },
+    { q: 'Que faire si mon logiciel n’a pas de connecteur n8n ?', a: 'Il est relié directement par son API : n8n peut appeler n’importe quelle API quand un connecteur manque.' },
     { q: 'Mes workflows m’appartiennent-ils ?', a: 'Oui. Ils tournent sur votre compte ou votre serveur, avec vos accès. Vous pouvez les exporter, les modifier ou changer de prestataire à tout moment.' },
   ],
 })

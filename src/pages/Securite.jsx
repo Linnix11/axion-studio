@@ -8,7 +8,7 @@ export default function Securite() {
   usePageMeta('/securite')
   return (
     <>
-      <PageHeader title="Sécurité et données" note="Vos outils restent les vôtres">
+      <PageHeader title="Sécurité de vos données et usage de l’IA" note="Vos outils restent les vôtres">
         Automatiser, c’est donner accès à vos outils. Voici les règles que j’applique sur chaque projet, sans
         exception.
       </PageHeader>

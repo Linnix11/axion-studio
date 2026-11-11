@@ -15,7 +15,7 @@ export default function Contact() {
   ]
   return (
     <>
-      <PageHeader title="Parlons de votre semaine" note={`Réponse sous ${company.delai}`}>
+      <PageHeader title="Parlons de votre semaine : audit gratuit de 30 minutes" note={`Réponse sous ${company.delai}`}>
         Décrivez la tâche qui vous fait perdre du temps. Je vous réponds sous {company.delai} pour fixer l’audit
         gratuit de 30 minutes.
       </PageHeader>
