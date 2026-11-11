@@ -1,8 +1,6 @@
 import { StrictMode } from 'react'
 import { hydrateRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router'
-import '@fontsource-variable/bricolage-grotesque/wdth.css'
-import '@fontsource-variable/hanken-grotesk/wght.css'
 import '@fontsource/atkinson-hyperlegible/latin-400.css'
 import '@fontsource/atkinson-hyperlegible/latin-700.css'
 import '@fontsource/atkinson-hyperlegible/latin-400-italic.css'

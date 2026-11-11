@@ -42,7 +42,7 @@ export const services = [
       'Tests sur vos vraies données avant la mise en route',
       'Documentation simple pour comprendre et modifier',
     ],
-    examples: ['Relance automatique des factures impayées à J+7 et J+15', 'Création des commandes dans le tableur à partir des e-mails reçus', 'Envoi du récapitulatif hebdomadaire des ventes'],
+    examples: ['Relance automatique des factures impayées, du rappel avant l’échéance à la relance ferme', 'Création des commandes dans le tableur à partir des e-mails reçus', 'Envoi du récapitulatif hebdomadaire des ventes'],
   },
   {
     slug: 'integrations',

@@ -192,7 +192,7 @@ export const posts = [
         "h2": "Les règles à respecter sur un devis"
       },
       {
-        "p": "Pour les travaux de dépannage, de réparation et d’entretien chez les particuliers (plomberie, serrurerie, électricité…), le devis détaillé est obligatoire avant toute intervention, quel que soit le montant, depuis l’arrêté du 24 janvier 2017. Il doit notamment indiquer s’il est gratuit ou payant, le taux horaire de main-d’œuvre et les frais de déplacement."
+        "p": "Pour les travaux de dépannage, de réparation et d’entretien chez les particuliers, dans le bâtiment et l’équipement de la maison (plomberie, serrurerie, électricité, chauffage…), le devis détaillé est obligatoire avant toute intervention, quel que soit le montant, depuis l’arrêté du 24 janvier 2017. Il doit notamment indiquer s’il est gratuit ou payant, le taux horaire de main-d’œuvre et les frais de déplacement."
       },
       {
         "p": "Un modèle de devis bien préparé dans votre logiciel reprend ces mentions à chaque fois : c’est un des avantages de partir d’un brouillon plutôt que d’une page blanche."
@@ -232,7 +232,7 @@ export const posts = [
       },
       {
         "q": "Le devis est-il obligatoire pour un dépannage ?",
-        "a": "Oui, pour les travaux de dépannage, de réparation et d’entretien chez les particuliers dans le bâtiment, un devis détaillé doit être remis avant l’intervention, quel que soit le montant."
+        "a": "Oui, pour les travaux de dépannage, de réparation et d’entretien chez les particuliers, dans le bâtiment et l’équipement de la maison, un devis détaillé doit être remis avant l’intervention, quel que soit le montant."
       }
     ]
   },
@@ -283,10 +283,10 @@ export const posts = [
         "p": "Un rappel de rendez-vous demandé par le client est un message lié au service, pas de la prospection : il n’exige pas de consentement marketing. Il faut en revanche informer le client de l’usage de son numéro, par une mention courte sur la page de réservation. Les [précautions prises sur les données de vos clients](/securite/) sont détaillées à part."
       },
       {
-        "p": "Attention : dès qu’un message contient une promotion ou une offre, il bascule dans la prospection commerciale, avec des règles plus strictes (consentement préalable pour les particuliers). Gardez les rappels purement pratiques."
+        "p": "Attention : dès qu’un message contient une promotion ou une offre, il bascule dans la prospection commerciale, avec des règles plus strictes (en principe, le consentement préalable du particulier, sauf exceptions pour les clients existants). Gardez les rappels purement pratiques."
       },
       {
-        "note": "Les règles détaillées sont sur cnil.fr, rubrique « prospection commerciale par SMS ». Cet article ne remplace pas un conseil juridique."
+        "note": "Les règles détaillées sont sur cnil.fr, page « La prospection commerciale par courrier électronique, SMS-MMS et automate d’appel ». Cet article ne remplace pas un conseil juridique."
       },
       {
         "h2": "Avec quels outils"
@@ -295,7 +295,7 @@ export const posts = [
         "p": "Les outils de réservation spécialisés (Planity, Doctolib, TheFork, Calendly, la page de réservation de Google Agenda…) font déjà une partie du travail. L’automatisation sert à les [relier au reste de vos outils](/services/) : votre fichier clients, votre facturation, les demandes d’avis, ou une liste d’attente. Je pars de l’outil que vous utilisez déjà, et je n’en propose un nouveau que s’il manque une brique."
       },
       {
-        "p": "Ordre de grandeur : ce type de circuit se met en place en quelques jours, et les projets démarrent à 150 € au forfait ([voir les tarifs](/tarifs/))."
+        "p": "Ordre de grandeur : ce type de circuit se met en place en une à deux semaines, tests compris, et les projets démarrent à 150 € au forfait ([voir les tarifs](/tarifs/))."
       },
       {
         "h2": "Pour aller plus loin"
@@ -371,7 +371,7 @@ export const posts = [
 
       { h2: 'Avec quels outils' },
       { p: 'Beaucoup de logiciels de facturation proposent des relances intégrées : vérifiez d’abord ce que le vôtre sait faire. Une automatisation sur mesure (avec [n8n, Make ou Zapier](/blog/n8n-make-zapier-comparatif/)) devient utile quand les factures sont dans un tableur, quand plusieurs outils doivent se parler (facturation, banque, messagerie, CRM) ou quand vous voulez un ton et un calendrier qui vous ressemblent.' },
-      { p: 'Ordre de grandeur : une telle automatisation se met en place en quelques jours, et les projets démarrent à 150 € au forfait ([voir les tarifs](/tarifs/)). Le gain se mesure en heures rendues chaque mois et, surtout, en factures payées plus tôt.' },
+      { p: 'Ordre de grandeur : une telle automatisation se met en place en une à deux semaines, tests compris, et les projets démarrent à 150 € au forfait ([voir les tarifs](/tarifs/)). Le gain se mesure en heures rendues chaque mois et, surtout, en factures payées plus tôt.' },
 
       { h2: 'Pour aller plus loin' },
       { p: 'Les relances sont souvent la première tâche automatisée chez les [artisans du bâtiment](/automatisation/artisans-batiment/) et dans les [professions libérales](/automatisation/professions-liberales/). Avec la [facture électronique obligatoire en 2026-2027](/blog/facture-electronique-tpe-2026-2027/), le suivi des paiements devient aussi plus simple à brancher.' },
@@ -397,7 +397,7 @@ export const posts = [
       { h2: 'Le calendrier en bref' },
       { ul: [
         '1er septembre 2026 : toutes les entreprises doivent pouvoir recevoir des factures électroniques. Les grandes entreprises et les ETI doivent aussi les émettre.',
-        '1er septembre 2027 : les PME, TPE et micro-entreprises doivent à leur tour émettre leurs factures en électronique et transmettre leurs données de transaction à l’administration (le « e-reporting »).',
+        '1er septembre 2027 : les PME, TPE et micro-entreprises doivent à leur tour émettre leurs factures en électronique et transmettre leurs données de transaction et, pour les prestations de services, de paiement à l’administration (le « e-reporting »).',
       ] },
       { note: 'Une facture en PDF envoyée par e-mail n’est pas une facture électronique au sens de la réforme : il faut un format structuré (Factur-X, UBL ou CII), transmis par une plateforme agréée par l’État.' },
 
@@ -508,7 +508,7 @@ export const posts = [
       { p: 'Une demande arrive par le site, une autre par e-mail, une troisième par téléphone. Il faut la noter, créer la fiche du client, puis rédiger le devis. L’automatisation regroupe toutes les demandes au même endroit, crée la fiche client dans votre CRM ou votre tableur, et prépare un brouillon de devis à partir de vos tarifs. Vous n’avez plus qu’à relire et envoyer.' },
 
       { h2: '2. Les relances de factures impayées' },
-      { p: 'Relancer est désagréable, donc on le reporte. Une automatisation envoie un rappel courtois à J+7, puis une relance plus ferme à J+15, avec le ton que vous avez choisi. Elle s’arrête dès que le paiement est enregistré. Résultat : moins d’oublis, et une trésorerie plus régulière.' },
+      { p: 'Relancer est désagréable, donc on le reporte. Une automatisation envoie un rappel aimable quelques jours avant l’échéance, une relance courte le lendemain, puis une relance plus ferme une dizaine de jours après, avec le ton que vous avez choisi. Elle s’arrête dès que le paiement est enregistré. Résultat : moins d’oublis, et une trésorerie plus régulière.' },
 
       { h2: '3. Le classement des factures et justificatifs' },
       { p: 'Les PDF s’accumulent dans la boîte mail et sont rangés à la main en fin de mois. Ici, l’intelligence artificielle est vraiment utile : elle lit chaque document, en extrait le fournisseur, la date et le montant, le renomme, le range dans le bon dossier et reporte les montants dans votre tableau de suivi ou celui de votre comptable. Le circuit complet figure parmi les [exemples d’automatisation pour TPE](/exemples/).' },
