@@ -15,6 +15,96 @@
 
 export const posts = [
   {
+    slug: 'lire-factures-fournisseurs-ia',
+    seoTitle: 'Factures fournisseurs : les lire avec l’IA',
+    seoDescription: 'Ce que l’IA sait lire sur une facture fournisseur, ses erreurs, ce que change la facture électronique, la conservation et le RGPD : le guide TPE.',
+    title: 'Lire ses factures fournisseurs avec l’IA : comment ça marche, quelles limites',
+    description: 'Comment l’IA lit, renomme et classe les factures fournisseurs, ce qu’elle rate, ce que change la facture électronique et les règles de conservation à respecter.',
+    date: '2026-11-11',
+    category: 'Facturation',
+    lead: 'Une IA peut lire une facture fournisseur reçue en PDF ou en photo, en extraire le fournisseur, la date, le numéro et les montants, puis la renommer, la ranger et préparer la saisie. Elle peut se tromper : une vérification humaine reste nécessaire avant que les chiffres partent en comptabilité. Avec la facture électronique, dont la réception est obligatoire depuis le 1er septembre 2026, une partie des factures arrive déjà en données structurées, et la lecture par IA sert surtout pour ce qui reste en PDF ou sur papier.',
+    body: [
+      { p: 'Dans beaucoup de petites entreprises, les factures fournisseurs arrivent par plusieurs chemins : pièce jointe d’un e-mail, espace client où il faut aller les télécharger, papier remis à la livraison. Elles sont rassemblées en fin de mois, renommées, rangées, puis envoyées au comptable. C’est un travail simple et répétitif, et c’est justement ce qui en fait un bon candidat à l’automatisation.' },
+
+      { h2: 'Comment l’IA lit une facture' },
+      { p: 'Deux techniques se complètent. La reconnaissance de caractères (OCR) transforme l’image d’une facture scannée ou photographiée en texte. Un modèle d’IA lit ensuite ce texte, ou directement le PDF, et repère les informations utiles, même quand chaque fournisseur présente sa facture à sa façon. Le résultat est une petite fiche :' },
+      { ul: [
+        'le fournisseur et son numéro SIREN ;',
+        'le numéro et la date de la facture ;',
+        'les montants hors taxes, de TVA et toutes taxes comprises, avec le taux de TVA ;',
+        'la date d’échéance ;',
+        'la nature de l’achat (fournitures, sous-traitance, abonnement…), pour proposer un classement.',
+      ] },
+      { p: 'À partir de cette fiche, une automatisation (par exemple un workflow n8n) renomme le fichier selon une règle fixe, comme « date, fournisseur, montant », le range dans le bon dossier, reporte les montants dans un tableau de suivi ou prépare l’import dans le logiciel comptable, et prévient quand une échéance approche.' },
+
+      { h2: 'Ce que ça change au quotidien' },
+      { p: 'Le gain vient surtout de la disparition des petites manipulations : ouvrir la pièce jointe, l’enregistrer, la renommer, recopier trois montants. Sur le cas type « factures fournisseurs » de la page [Exemples](/exemples/), l’ordre de grandeur est d’une à deux heures par semaine pour un cabinet qui reçoit ses factures par e-mail ; pour un [commerce ou un restaurant](/automatisation/commerces-restaurants/) qui en reçoit moins, on parle plutôt d’une à deux heures par mois. Le gain réel dépend du nombre de factures et de leur diversité : il se mesure pendant les premières semaines.' },
+      { p: 'L’autre bénéfice est la régularité : les factures sont rangées le jour où elles arrivent, pas en fin de mois, et le comptable reçoit des pièces toujours nommées de la même façon.' },
+
+      { h2: 'Ses limites, et comment s’en protéger' },
+      { p: 'Un modèle d’IA peut se tromper, et avec assurance. La lecture est d’autant plus fiable que le document est net ; elle se dégrade sur :' },
+      { ul: [
+        'les photos floues, froissées ou mal cadrées, et les tickets de caisse ;',
+        'les factures de plusieurs pages, avec plusieurs taux de TVA ou des remises ;',
+        'les avoirs, qu’il faut reconnaître pour ne pas les compter comme des factures ;',
+        'les doublons, quand la même facture arrive par e-mail puis par l’espace client.',
+      ] },
+      { p: 'Les garde-fous sont simples : contrôler que le hors taxes plus la TVA donne bien le total, vérifier que le numéro de facture n’existe pas déjà pour ce fournisseur, et envoyer en vérification humaine tout ce qui ne passe pas ces contrôles ou que l’IA signale comme incertain. Rien n’entre en comptabilité sans validation : l’IA prépare, vous ou votre comptable décidez.' },
+      { note: 'L’automatisation lit et range, elle ne modifie jamais le document reçu. Si un montant ou une mention paraît faux, c’est au fournisseur qu’il faut le signaler, pas à l’outil de le corriger.' },
+
+      { h2: 'Et avec la facture électronique ?' },
+      { p: 'Depuis le 1er septembre 2026, toutes les entreprises établies en France et assujetties à la TVA doivent pouvoir recevoir des factures électroniques, par une plateforme agréée par l’État. Une facture électronique n’est pas un simple PDF : c’est un fichier de données structurées (formats UBL ou CII, ou format mixte comme Factur-X, qui associe un PDF lisible et les données). Les informations y sont déjà rangées dans des champs : pour ces factures, il n’y a plus rien à « lire », il suffit de récupérer les données sur la plateforme.' },
+      { p: 'La lecture par IA reste utile pour tout ce qui n’arrive pas par ce circuit :' },
+      { ul: [
+        'les factures des PME, TPE et micro-entreprises, qui ne doivent émettre en électronique qu’à partir du 1er septembre 2027 et peuvent d’ici là envoyer des PDF ou du papier ;',
+        'les factures de fournisseurs établis à l’étranger : ces opérations ne passent pas par la facture électronique, elles relèvent de la transmission de données à l’administration (e-reporting) ;',
+        'les tickets de caisse et autres justificatifs de petites dépenses.',
+      ] },
+      { p: 'Les deux circuits peuvent aboutir au même classement : les factures électroniques récupérées sur la plateforme, les PDF lus par l’IA, et un seul tableau de suivi pour le comptable. Le calendrier complet de la réforme est détaillé dans [Facture électronique 2026-2027 : ce qui change pour les TPE](/blog/facture-electronique-tpe-2026-2027/).' },
+
+      { h2: 'Conservation et mentions : ce que l’automatisation ne doit pas casser' },
+      { p: 'Ranger automatiquement, oui ; supprimer ou transformer les originaux, non. Les règles officielles à garder en tête :' },
+      { ul: [
+        'durée : les factures sont des pièces justificatives à conserver 10 ans à compter de la clôture de l’exercice au titre du Code de commerce (article L123-22), et au moins 6 ans pour l’administration fiscale (article L102 B du Livre des procédures fiscales) ;',
+        'factures électroniques : elles se conservent dans leur format informatique d’origine. Une facture reçue en XML peut être convertie en PDF pour la gestion, à condition de garder aussi le fichier d’origine ;',
+        'factures papier : elles peuvent être numérisées, mais la copie numérique ne peut servir de pièce justificative que si la numérisation respecte des conditions précises (format PDF ou PDF/A-3, cachet, empreinte ou signature électronique, horodatage). À défaut, il faut garder le papier.',
+      ] },
+      { p: 'Concrètement, l’automatisation range le fichier reçu tel quel, sans le réenregistrer ni le compresser, dans un dossier d’archive sauvegardé, sur un compte à votre nom. Les fiches extraites par l’IA servent au suivi ; elles ne remplacent pas la facture.' },
+      { p: 'Côté mentions, une facture comporte notamment la date, un numéro unique, l’identité et le SIREN du vendeur, la désignation des produits ou services, les montants hors taxes et TTC, le taux de TVA, la date de règlement et le taux des pénalités de retard. Avec la réforme, quatre mentions s’ajoutent : le SIREN du client, l’adresse de livraison si elle diffère, la nature des opérations (biens, services ou les deux) et, le cas échéant, l’option pour le paiement de la TVA d’après les débits. Elles s’appliquent depuis le 1er septembre 2026 aux factures des grandes entreprises et des ETI, et s’appliqueront le 1er septembre 2027 à celles des PME et micro-entreprises. L’IA peut signaler une facture où une mention semble manquer ; c’est à vous ou à votre comptable d’en tirer les conséquences.' },
+
+      { h2: 'Données personnelles et choix du service d’IA' },
+      { p: 'Une facture fournisseur contient surtout des données d’entreprise, mais pas seulement : celle d’un entrepreneur individuel porte son nom et son adresse, d’autres mentionnent le nom d’un interlocuteur. Ce sont des données personnelles, puisque la CNIL définit ainsi toute information se rapportant à une personne identifiée ou identifiable. Le service d’IA qui lit ces factures pour votre compte est alors un sous-traitant au sens du RGPD, et un contrat doit encadrer ce traitement.' },
+      { p: 'En pratique :' },
+      { ul: [
+        'lire les conditions du service : certaines offres peuvent réutiliser les documents envoyés pour améliorer leurs produits ; préférer une offre qui l’exclut par écrit ;',
+        'n’envoyer à l’IA que la facture, pas tout l’e-mail ni toute la boîte de réception ;',
+        'savoir où les données sont hébergées, et l’indiquer dans votre registre des traitements ;',
+        'limiter la durée de conservation des copies intermédiaires (historique des exécutions, fichiers temporaires).',
+      ] },
+      { p: 'Le détail de ces vérifications est dans [RGPD et automatisation : ce qu’une TPE doit vérifier](/blog/rgpd-automatisation-tpe/) et dans les [6 règles pour utiliser l’IA avec des données clients](/blog/ia-donnees-clients-regles/).' },
+
+      { h2: 'Par où commencer' },
+      { ol: [
+        'Comptez vos factures fournisseurs sur un mois, et notez par où elles arrivent : e-mail, espace client, papier, plateforme agréée.',
+        'Fixez avec votre comptable une règle de nommage et de classement.',
+        'Démarrez par le circuit le plus simple, souvent les PDF reçus par e-mail, avec une vérification humaine de chaque facture les premières semaines.',
+        'Ajoutez les contrôles automatiques (total, doublons), puis réservez la vérification aux cas signalés.',
+        'Branchez ensuite la récupération des factures électroniques depuis votre plateforme agréée, si elle propose une connexion (API).',
+      ] },
+      { note: 'Ces repères sont généraux et ne remplacent ni l’avis de votre expert-comptable ni un conseil juridique ou fiscal. Les règles détaillées sont publiées sur impots.gouv.fr et entreprendre.service-public.gouv.fr.' },
+
+      { h2: 'Pour aller plus loin' },
+      { p: 'Les cabinets comptables appliquent la même mécanique aux pièces de leurs clients : voir la page [automatisation pour les cabinets d’expertise comptable](/automatisation/experts-comptables/). Pour relier la lecture des factures à votre messagerie, à votre stockage et à votre logiciel, un [workflow n8n](/agence-n8n/) qui tourne sur vos propres comptes suffit le plus souvent ; ce type de projet démarre à partir de 150 € au forfait. Je regarde votre circuit de factures pendant l’[audit gratuit de 30 minutes](/contact/).' },
+      { p: 'Sources : [impots.gouv.fr, je découvre la facturation électronique](https://www.impots.gouv.fr/professionnel/je-decouvre-la-facturation-electronique), [entreprendre.service-public.gouv.fr, mentions obligatoires d’une facture](https://entreprendre.service-public.gouv.fr/vosdroits/F31808), [entreprendre.service-public.gouv.fr, durée de conservation des documents](https://entreprendre.service-public.gouv.fr/vosdroits/F10029), [BOFiP, conservation des documents et des factures (BOI-CF-COM-10-10-30)](https://bofip.impots.gouv.fr/bofip/645-PGP.html/identifiant=BOI-CF-COM-10-10-30-20250903), [CNIL, définition d’une donnée personnelle](https://www.cnil.fr/fr/definition/donnee-personnelle), [CNIL, sous-traitant](https://www.cnil.fr/fr/sous-traitant).' },
+    ],
+    faq: [
+      { q: 'L’IA peut-elle saisir mes factures fournisseurs toute seule ?', a: 'Elle peut lire les informations utiles (fournisseur, date, numéro, montants, TVA) et préparer la saisie ou l’import dans le logiciel comptable. La validation reste humaine : contrôle des totaux et des doublons, puis vérification des cas signalés, avant que les chiffres partent en comptabilité.' },
+      { q: 'La lecture par IA est-elle encore utile avec la facture électronique ?', a: 'Oui, pour ce qui n’arrive pas en données structurées : factures des PME, TPE et micro-entreprises, qui n’émettent en électronique qu’à partir du 1er septembre 2027, factures de fournisseurs étrangers, tickets et petits justificatifs. Les factures électroniques reçues par la plateforme agréée se récupèrent directement, sans lecture.' },
+      { q: 'Combien de temps conserver les factures fournisseurs ?', a: '10 ans à compter de la clôture de l’exercice au titre du Code de commerce, et au moins 6 ans pour l’administration fiscale. Une facture électronique se conserve dans son format d’origine ; une facture papier peut être numérisée si des conditions précises sont respectées, sinon le papier est à garder.' },
+      { q: 'Peut-on envoyer ses factures à un service d’IA en ligne ?', a: 'Oui, avec des précautions : une facture peut contenir des données personnelles (entrepreneur individuel, nom d’un interlocuteur). Le service d’IA est alors un sous-traitant au sens du RGPD : il faut un contrat qui encadre le traitement, une offre qui ne réutilise pas vos documents et un hébergement connu.' },
+    ],
+  },
+  {
     slug: 'rgpd-automatisation-tpe',
     seoTitle: 'RGPD et automatisation : le guide TPE',
     seoDescription: 'Registre, contrats avec les prestataires, durée de conservation, hébergement hors UE, droits des personnes : les points RGPD à vérifier avant d’automatiser.',
@@ -526,7 +616,7 @@ export const posts = [
       { note: 'Les règles détaillées (cas particuliers, sanctions) évoluent : vérifiez-les sur impots.gouv.fr, rubrique « facturation électronique », ou auprès de votre expert-comptable. Cet article ne remplace pas un conseil fiscal.' },
 
       { h2: 'Pour aller plus loin' },
-      { p: 'Selon votre métier, les tâches à automatiser ne sont pas les mêmes : voir par exemple les pages consacrées aux [artisans du bâtiment](/automatisation/artisans-batiment/) et aux [experts-comptables](/automatisation/experts-comptables/), ou l’article sur les [relances et autres tâches à automatiser en priorité](/blog/taches-a-automatiser-tpe/).' },
+      { p: 'Selon votre métier, les tâches à automatiser ne sont pas les mêmes : voir par exemple les pages consacrées aux [artisans du bâtiment](/automatisation/artisans-batiment/) et aux [experts-comptables](/automatisation/experts-comptables/), ou l’article sur les [relances et autres tâches à automatiser en priorité](/blog/taches-a-automatiser-tpe/). Pour les factures fournisseurs qui arrivent encore en PDF ou sur papier, voir [Lire ses factures fournisseurs avec l’IA](/blog/lire-factures-fournisseurs-ia/).' },
       { p: "Sources : [impots.gouv.fr, je passe à la facturation électronique](https://www.impots.gouv.fr/professionnel/je-passe-la-facturation-electronique), [entreprendre.service-public.gouv.fr, facturation électronique entre entreprises](https://entreprendre.service-public.gouv.fr/actualites/A15683)." },
     ],
     faq: [
