@@ -57,7 +57,7 @@ export const posts = [
       { p: 'La lecture par IA reste utile pour tout ce qui n’arrive pas par ce circuit :' },
       { ul: [
         'les factures des PME, TPE et micro-entreprises, qui ne doivent émettre en électronique qu’à partir du 1er septembre 2027 et peuvent d’ici là envoyer des PDF ou du papier ;',
-        'les factures de fournisseurs établis à l’étranger : ces opérations ne passent pas par la facture électronique, elles relèvent de la transmission de données à l’administration (e-reporting) ;',
+        'les factures de fournisseurs établis à l’étranger : ces opérations ne passent pas par la facture électronique, elles relèvent en règle générale de la transmission de données à l’administration (e-reporting), sauf les importations de biens, déclarées en douane ;',
         'les tickets de caisse et autres justificatifs de petites dépenses.',
       ] },
       { p: 'Les deux circuits peuvent aboutir au même classement : les factures électroniques récupérées sur la plateforme, les PDF lus par l’IA, et un seul tableau de suivi pour le comptable. Le calendrier complet de la réforme est détaillé dans [Facture électronique 2026-2027 : ce qui change pour les TPE](/blog/facture-electronique-tpe-2026-2027/).' },
@@ -67,10 +67,10 @@ export const posts = [
       { ul: [
         'durée : les factures sont des pièces justificatives à conserver 10 ans à compter de la clôture de l’exercice au titre du Code de commerce (article L123-22), et au moins 6 ans pour l’administration fiscale (article L102 B du Livre des procédures fiscales) ;',
         'factures électroniques : elles se conservent dans leur format informatique d’origine. Une facture reçue en XML peut être convertie en PDF pour la gestion, à condition de garder aussi le fichier d’origine ;',
-        'factures papier : elles peuvent être numérisées, mais la copie numérique ne peut servir de pièce justificative que si la numérisation respecte des conditions précises (format PDF ou PDF/A-3, cachet, empreinte ou signature électronique, horodatage). À défaut, il faut garder le papier.',
+        'factures papier : elles peuvent être numérisées, mais la copie numérique ne peut servir de pièce justificative que si la numérisation respecte des conditions précises (copie conforme sans retouche, format PDF ou PDF/A-3, cachet, empreinte ou signature électronique, horodatage). À défaut, il faut garder le papier.',
       ] },
       { p: 'Concrètement, l’automatisation range le fichier reçu tel quel, sans le réenregistrer ni le compresser, dans un dossier d’archive sauvegardé, sur un compte à votre nom. Les fiches extraites par l’IA servent au suivi ; elles ne remplacent pas la facture.' },
-      { p: 'Côté mentions, une facture comporte notamment la date, un numéro unique, l’identité et le SIREN du vendeur, la désignation des produits ou services, les montants hors taxes et TTC, le taux de TVA, la date de règlement et le taux des pénalités de retard. Avec la réforme, quatre mentions s’ajoutent : le SIREN du client, l’adresse de livraison si elle diffère, la nature des opérations (biens, services ou les deux) et, le cas échéant, l’option pour le paiement de la TVA d’après les débits. Elles s’appliquent depuis le 1er septembre 2026 aux factures des grandes entreprises et des ETI, et s’appliqueront le 1er septembre 2027 à celles des PME et micro-entreprises. L’IA peut signaler une facture où une mention semble manquer ; c’est à vous ou à votre comptable d’en tirer les conséquences.' },
+      { p: 'Côté mentions, une facture comporte notamment la date, un numéro unique, l’identité et le SIREN du vendeur, la désignation des produits ou services, les montants hors taxes et TTC, le taux de TVA, la date de règlement et le taux des pénalités de retard. Avec la réforme, quatre mentions s’ajoutent : le SIREN du client lorsqu’il s’agit d’une entreprise, l’adresse de livraison si elle diffère, la nature des opérations (biens, services ou les deux) et, le cas échéant, l’option pour le paiement de la TVA d’après les débits. Elles s’appliquent depuis le 1er septembre 2026 aux factures des grandes entreprises et des ETI, et s’appliqueront le 1er septembre 2027 à celles des PME et micro-entreprises. L’IA peut signaler une facture où une mention semble manquer ; c’est à vous ou à votre comptable d’en tirer les conséquences.' },
 
       { h2: 'Données personnelles et choix du service d’IA' },
       { p: 'Une facture fournisseur contient surtout des données d’entreprise, mais pas seulement : celle d’un entrepreneur individuel porte son nom et son adresse, d’autres mentionnent le nom d’un interlocuteur. Ce sont des données personnelles, puisque la CNIL définit ainsi toute information se rapportant à une personne identifiée ou identifiable. Le service d’IA qui lit ces factures pour votre compte est alors un sous-traitant au sens du RGPD, et un contrat doit encadrer ce traitement.' },
@@ -78,7 +78,7 @@ export const posts = [
       { ul: [
         'lire les conditions du service : certaines offres peuvent réutiliser les documents envoyés pour améliorer leurs produits ; préférer une offre qui l’exclut par écrit ;',
         'n’envoyer à l’IA que la facture, pas tout l’e-mail ni toute la boîte de réception ;',
-        'savoir où les données sont hébergées, et l’indiquer dans votre registre des traitements ;',
+        'savoir où les données sont hébergées, et le noter dans votre registre des traitements ;',
         'limiter la durée de conservation des copies intermédiaires (historique des exécutions, fichiers temporaires).',
       ] },
       { p: 'Le détail de ces vérifications est dans [RGPD et automatisation : ce qu’une TPE doit vérifier](/blog/rgpd-automatisation-tpe/) et dans les [6 règles pour utiliser l’IA avec des données clients](/blog/ia-donnees-clients-regles/).' },
