@@ -51,7 +51,7 @@ export const api = {
 export function messageErreur(e) {
   switch (e?.code) {
     case 'identifiants': return 'Adresse e-mail ou mot de passe incorrect. Vérifiez-les, ou demandez un nouveau lien.'
-    case 'rate': return 'Trop de tentatives en peu de temps. Réessayez dans quelques minutes.'
+    case 'rate': return 'Trop de tentatives en peu de temps. Réessayez dans un quart d’heure à une heure.'
     case 'lien': return 'Ce lien n’est plus valable : il a déjà servi ou il a expiré. Demandez-en un nouveau ci-dessous.'
     case 'auth': return 'Votre session a pris fin. Reconnectez-vous.'
     case 'reseau': return 'Le serveur ne répond pas. Vérifiez votre connexion et réessayez.'
