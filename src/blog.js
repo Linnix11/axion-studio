@@ -290,7 +290,7 @@ export const posts = [
           "Il rappelle de ne saisir aucune donnée sensible. La conversation n’est pas enregistrée sur le site : elle reste dans le navigateur du visiteur.",
           "Il est plafonné, par visiteur et pour l’ensemble du site, pour garder les coûts sous contrôle.",
           "Il passe la main : le bouton « Envoyer ma demande à Arthur » pré-remplit le formulaire de contact avec ce que le visiteur a décrit, et c’est lui qui décide de l’envoyer.",
-          "Il fonctionne aujourd’hui avec l’offre gratuite de Gemini, ce qui est signalé dans la fenêtre du chat et dans la [politique de confidentialité](/confidentialite/)."
+          "Il fonctionne avec l’offre payante de l’API Gemini. Le détail est dans la [politique de confidentialité](/confidentialite/)."
         ]
       },
       {

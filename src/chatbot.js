@@ -6,7 +6,7 @@ export const assistantName = 'Assistant Axion Studio'
 
 // Offre de l'API Gemini utilisée. Passez à false une fois la facturation activée sur le projet Google :
 // les mentions « offre gratuite » disparaissent alors du chat, de la page Confidentialité et de la page Sécurité.
-export const geminiFreeTier = true
+export const geminiFreeTier = false
 export const freeTierNotice = 'L’assistant utilise actuellement l’offre gratuite de l’API Gemini : Google peut utiliser ces échanges pour améliorer ses services.'
 
 export const welcome =
