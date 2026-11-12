@@ -8,6 +8,8 @@
 //   'crm_db'          => chemin du fichier SQLite (par défaut : axion-crm.sqlite à côté d'axion-config.php)
 //   'crm_admin_password_hash' => facultatif : empreinte du mot de passe administrateur (password_hash), pour se connecter
 //                        sans passer par l'e-mail ; générée avec : php -r 'echo password_hash(readline("Mot de passe : "), PASSWORD_DEFAULT), "\n";'
+//   'crm_smtp_password' => mot de passe pour app d'Apple (account.apple.com) : les e-mails partent alors par le serveur
+//                        d'iCloud (smtp.mail.me.com, signés par Apple), depuis crm_admin_email. Sans lui : mail() de l'hébergeur.
 // Journal des e-mails : axion-crm-mail.log à côté d'axion-config.php (date, destinataire, objet, résultat ; jamais le contenu).
 // Pour les tests locaux : variables d'environnement CRM_DB, CRM_SITE_URL, CRM_MAIL_LOG (écrit les e-mails dans un fichier).
 
@@ -226,6 +228,12 @@ function find_token(string $raw): ?array {
 // ——— E-mails ———
 
 function send_mail(string $to, string $subject, string $body): bool {
+  $smtpPass = (string) (crm_config()['crm_smtp_password'] ?? getenv('CRM_SMTP_PASSWORD') ?: '');
+  if ($smtpPass !== '') {
+    $err = smtp_send($to, $subject, $body, crm_admin_email(), $smtpPass);
+    mail_log($to, $subject, $err === '', $err);
+    return $err === '';
+  }
   $log = getenv('CRM_MAIL_LOG');
   if ($log) {
     $ok = file_put_contents($log, "À : $to\nObjet : $subject\n\n$body\n-----\n", FILE_APPEND) !== false;
@@ -242,6 +250,65 @@ function send_mail(string $to, string $subject, string $body): bool {
   $ok = @mail($to, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, $headers, '-f' . CRM_FROM);
   mail_log($to, $subject, $ok, $ok ? '' : (string) (error_get_last()['message'] ?? 'mail() a renvoyé false'));
   return $ok;
+}
+
+/**
+ * Envoi par le serveur SMTP d'iCloud (port 587, STARTTLS, AUTH LOGIN). Renvoie '' si l'e-mail est accepté, sinon l'erreur.
+ * L'expéditeur est l'adresse iCloud elle-même (Apple refuse un autre From), affichée « Axion Studio ».
+ */
+function smtp_send(string $to, string $subject, string $body, string $user, string $pass): string {
+  $host = getenv('CRM_SMTP_HOST') ?: 'smtp.mail.me.com';
+  $port = (int) (getenv('CRM_SMTP_PORT') ?: 587);
+  $fp = @stream_socket_client("tcp://$host:$port", $errno, $errstr, 15);
+  if (!$fp) return "connexion à $host:$port impossible ($errstr)";
+  stream_set_timeout($fp, 20);
+  $read = function () use ($fp): array {
+    $data = '';
+    while (($line = fgets($fp, 1024)) !== false) {
+      $data .= $line;
+      if (strlen($line) < 4 || $line[3] === ' ') break;   // dernière ligne d'une réponse multiligne
+    }
+    return [(int) substr($data, 0, 3), trim($data)];
+  };
+  // $etape nomme la commande dans l'erreur : la commande elle-même n'est jamais recopiée (elle peut contenir l'identifiant)
+  $cmd = function (string $c, array $attendu, string $etape) use ($fp, $read): string {
+    fwrite($fp, $c . "\r\n");
+    [$code, $msg] = $read();
+    return in_array($code, $attendu, true) ? '' : "$etape refusé : " . substr($msg, 0, 200);
+  };
+  $fin = function (string $e) use ($fp): string { @fwrite($fp, "QUIT\r\n"); fclose($fp); return $e; };
+
+  [$code, $msg] = $read();
+  if ($code !== 220) return $fin("accueil inattendu : $msg");
+  $ehlo = 'EHLO axionstudio.fr';
+  if ($e = $cmd($ehlo, [250], 'EHLO')) return $fin($e);
+  if (!getenv('CRM_SMTP_SANS_TLS')) {   // CRM_SMTP_SANS_TLS : uniquement pour les tests locaux
+    if ($e = $cmd('STARTTLS', [220], 'STARTTLS')) return $fin($e);
+    if (!@stream_socket_enable_crypto($fp, true, STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT | STREAM_CRYPTO_METHOD_TLSv1_3_CLIENT)) return $fin('chiffrement TLS impossible');
+    if ($e = $cmd($ehlo, [250], 'EHLO')) return $fin($e);
+  }
+  if ($e = $cmd('AUTH LOGIN', [334], 'AUTH')) return $fin($e);
+  if ($e = $cmd(base64_encode($user), [334], 'identifiant')) return $fin($e);
+  if ($e = $cmd(base64_encode($pass), [235], 'mot de passe pour app (vérifiez crm_smtp_password)')) return $fin($e);
+  if ($e = $cmd("MAIL FROM:<$user>", [250], 'MAIL FROM')) return $fin($e);
+  if ($e = $cmd("RCPT TO:<$to>", [250, 251], 'RCPT TO')) return $fin($e);
+  if ($e = $cmd('DATA', [354], 'DATA')) return $fin($e);
+
+  $headers = [
+    'Date: ' . date('r'),
+    'From: =?UTF-8?B?' . base64_encode('Axion Studio') . "?= <$user>",
+    "To: <$to>",
+    'Subject: =?UTF-8?B?' . base64_encode($subject) . '?=',
+    'Message-ID: <' . bin2hex(random_bytes(12)) . '@axionstudio.fr>',
+    'MIME-Version: 1.0',
+    'Content-Type: text/plain; charset=UTF-8',
+    'Content-Transfer-Encoding: quoted-printable',
+  ];
+  $texte = quoted_printable_encode(str_replace(["\r\n", "\r"], "\n", $body));
+  $texte = preg_replace('/^\./m', '..', str_replace("\n", "\r\n", str_replace("\r\n", "\n", $texte)));   // points en début de ligne doublés
+  fwrite($fp, implode("\r\n", $headers) . "\r\n\r\n" . $texte . "\r\n");
+  if ($e = $cmd('.', [250], 'envoi du message')) return $fin($e);
+  return $fin('');
 }
 
 function mail_log_path(): ?string {

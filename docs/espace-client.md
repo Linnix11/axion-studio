@@ -37,6 +37,18 @@ d'`axion-config.php`, hors du dossier public (elle n'est donc pas effacée à ch
 télécharger de temps en temps (sauvegarde). Elle demande l'extension PHP `pdo_sqlite`, active par défaut chez Hostinger ;
 si l'espace client affiche « momentanément indisponible », vérifiez-la dans hPanel → Avancé → Configuration PHP → Extensions.
 
+### 1 bis. L'envoi des e-mails par iCloud (recommandé)
+
+Sans signature DKIM sur le domaine, iCloud écarte les e-mails envoyés par le serveur du site (constaté le 12 nov. 2026 :
+le serveur les accepte, ils n'arrivent jamais). Les e-mails d'accès partent donc par le serveur d'iCloud, depuis votre adresse :
+
+1. account.apple.com → Connexion et sécurité → Mots de passe pour app → créer, nom « Site Axion Studio ».
+2. Dans `axion-config.php`, ajoutez `'crm_smtp_password' => '…le mot de passe pour app…',` puis enregistrez.
+
+Les e-mails partent alors de « Axion Studio <arthur.champagne@icloud.com> » (smtp.mail.me.com, port 587, chiffré).
+Le résultat de chaque envoi s'affiche dans l'administration (« Derniers e-mails envoyés »). Pour révoquer l'accès :
+supprimez ce mot de passe pour app sur account.apple.com.
+
 ### 2. Votre compte administrateur
 
 1. Ouvrez https://axionstudio.fr/espace-client/
