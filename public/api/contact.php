@@ -2,7 +2,7 @@
 // Reçoit le formulaire de contact du site et l'envoie par e-mail.
 // Répond en JSON : {"ok":true} ou {"ok":false,"error":"..."}.
 
-const TO_EMAIL   = 'arthur.champagne@icloud.com';
+const TO_EMAIL   = 'contact@axionstudio.fr';
 const FROM_EMAIL = 'ne-pas-repondre@axionstudio.fr';   // expéditeur technique (aucune boîte nécessaire, autorisé par le SPF du domaine) ; les réponses vont au visiteur (Reply-To)
 const MAX_PER_HOUR = 5;                         // envois maximum par adresse IP et par heure
 

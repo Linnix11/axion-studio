@@ -7,7 +7,7 @@ et les règles à respecter. Dernière mise à jour : 10 novembre 2026.
 
 - **Arthur Champagne-Forterre**, micro-entreprise **Axion Studio** : automatisation, intégration d'IA et sites web pour TPE, PME et indépendants.
 - Adresse : 5 allée des Pommiers, 95680 Montlignon. Téléphone : 06 48 61 23 50.
-- **Seul e-mail à utiliser : arthur.champagne@icloud.com.** Il n'existe pas de boîte contact@. Les e-mails du site partent de `ne-pas-repondre@axionstudio.fr` (expéditeur technique).
+- **E-mail public : contact@axionstudio.fr** (boîte Hostinger, créée le 12 nov. 2026) : affiché sur le site, reçoit le formulaire de contact, expédie les e-mails de l'espace client. L'adresse iCloud arthur.champagne@icloud.com reste celle du compte administrateur et de la prospection. Le formulaire de contact part de `ne-pas-repondre@axionstudio.fr` (expéditeur technique).
 - SIRET : « En cours d'attribution » (à remplacer dans `src/data.js` dès qu'il est connu).
 - L'utilisateur parle français et n'est pas développeur : il faut lui répondre en français simple et faire les choses à sa place quand c'est possible.
 
@@ -94,7 +94,7 @@ docs/agents-seo.md               règles communes et rôle de chacun des 25 agen
 
 ## 7. Formulaire de contact
 
-- `public/api/contact.php` envoie la demande à arthur.champagne@icloud.com. Testé : l'utilisateur a bien reçu les e-mails.
+- `public/api/contact.php` envoie la demande à contact@axionstudio.fr (avant le 12 nov. : à l'adresse iCloud, testé et reçu).
 - Téléphone facultatif (validé côté navigateur et dans `contact.php`, repris dans l'e-mail reçu).
 - **Demande pré-remplie** : `preparerDemande(texte)` (`src/demande.js`) range le texte dans `sessionStorage` (`axion-contact-draft`) et prévient le formulaire, qui le reprend dans « Message ». Utilisé par le chatbot, le bouton « Parler de mes 2 h 15 » de la semaine type, les formules de Tarifs, les pages métier, les missions de Services, les cas d'Exemples et l'encadré au milieu des articles.
 
@@ -154,7 +154,7 @@ docs/agents-seo.md               règles communes et rôle de chacun des 25 agen
 
 1. **Ne jamais committer ni afficher une clé API, un jeton ou un mot de passe** (Gemini, Hostinger…). Ne jamais saisir un mot de passe à la place de l'utilisateur.
 2. Demander l'accord explicite de l'utilisateur avant toute modification DNS, toute modification des réglages Claude ou toute action difficile à annuler.
-3. Utiliser uniquement l'adresse arthur.champagne@icloud.com.
+3. Adresse publique : contact@axionstudio.fr. Administration et prospection : arthur.champagne@icloud.com.
 4. Garder le thème clair par défaut, ne pas mettre de photos ni de témoignages inventés.
 5. Avant chaque push, vérifier que `npm run build` passe. Pousser sur `main` en réessayant en cas d'erreur réseau, puis vérifier la mise en ligne.
 6. Les CGV (`src/legal.js`) sont un modèle : elles doivent être relues par un juriste.
@@ -179,7 +179,7 @@ docs/agents-seo.md               règles communes et rôle de chacun des 25 agen
 - [ ] Plan SEO/IA, étape 1 (`docs/plan-seo-ia.md`) : Search Console, Bing Webmaster Tools, anti-robots Hostinger, fiche Google Business, choix d'une mesure d'audience sans cookie.
 - [ ] Plan SEO/IA, étape 4 : fiches LinkedIn, Malt, Codeur.com, PagesJaunes, annuaires n8n/Make et CCI, avis Google réels ; envoyer chaque adresse de profil pour `company.profils`.
 - [x] Search Console : propriété déjà vérifiée, aucune balise à ajouter.
-- [ ] Facultatif : créer une adresse contact@axionstudio.fr chez Hostinger ; elle remplacerait alors l'adresse iCloud affichée sur le site (sinon on garde iCloud).
+- [x] Adresse contact@axionstudio.fr créée chez Hostinger (12 nov.) ; mettre son mot de passe dans `crm_smtp_password` d'`axion-config.php`.
 - [x] Synchroniser la documentation dans Obsidian depuis le Mac (fait le 10 novembre, à relancer après chaque mise à jour de la doc).
 
 ## 12. Historique résumé
@@ -225,3 +225,4 @@ docs/agents-seo.md               règles communes et rôle de chacun des 25 agen
 39. 11 nov., vague 5 : article « RGPD et automatisation : ce qu'une TPE doit vérifier » (`/blog/rgpd-automatisation-tpe/`, faits vérifiés par seo-verificateur-faits) ; champ `reponse` des métiers (phrase-réponse affichée sous le H1, `probleme` passe sous « Ce qui peut être automatisé ») ; intros citables Agence n8n et Tarifs ; 9 liens internes (rapport `docs/rapports-agents/vague5-audit.md`) ; prix dans la FAQ experts-comptables. Indexation Search Console : quota dépassé le 11 nov., sitemap renvoyé (29 pages) ; à refaire, article RGPD compris.
 40. 11 nov., vague 6 : article « Lire ses factures fournisseurs avec l'IA » (`/blog/lire-factures-fournisseurs-ia/`, faits vérifiés) ; FAQ ajoutées (articles coût, tâches, comparatif n8n, IA et données clients ; 3 de plus sur Agence n8n) ; H1 explicites Contact, FAQ, Sécurité ; llms.txt/llms-full.txt : champ `reponse` des métiers, liens par métier, 3 réponses courtes (RGPD, pas d'audit juridique, déroulé de l'audit) ; rapports `docs/rapports-agents/vague6-*.md` (posts LinkedIn et Google Business prêts). **Gemini : les conditions de Google (23 mars 2026) imposent l'offre payante pour des utilisateurs en Europe ; facturation pas encore activée par l'utilisateur au 11 nov.** Une fois activée : `geminiFreeTier = false` dans `src/chatbot.js` et retirer de l'article chatbot la phrase « Il fonctionne aujourd'hui avec l'offre gratuite de Gemini… » (texte de remplacement dans `docs/rapports-agents/vague6-contenu.md` § 1.1). Non fait : FAQ de la page Services (nouveau bloc + FAQPage), phrase sur le démarchage téléphonique (source à vérifier).
 41. 12 nov. : **espace client (CRM) relié à n8n** (`docs/espace-client.md`) : `/espace-client/` (connexion, choix du mot de passe par lien à usage unique, tableau de bord des automatisations) et `/espace-client/admin/` (création du client à la signature + e-mail d'accès, fiche, rattachement des workflows, suspension, suppression). API PHP `public/api/crm/`, base SQLite hors du dossier public (`domains/axionstudio.fr/axion-crm.sqlite`), jeton `crm_n8n_token` dans `axion-config.php`. Workflow `automatisations/n8n/axion-3-suivi-clients.json` (étiquette n8n `client-<identifiant>`). Pages chargées à part (n'alourdissent pas le site), non indexées. Tests : `scripts/test-espace-client.py` (55 vérifications), `suivi.test.cjs`. Seuil d'alerte Vite relevé à 520 Ko (JS principal ~500 Ko, découpage à faire). Mise en route à faire par l'utilisateur : jeton dans axion-config.php, compte admin par « première connexion », accès n8n et import du workflow.
+42. 12 nov. : l'envoi par iCloud échouait (535, authentification refusée). Les e-mails de l'espace client partent désormais de contact@axionstudio.fr par smtp.hostinger.com:587 (`CRM_CONTACT` dans `public/api/crm/_crm.php`, mot de passe de la boîte dans `crm_smtp_password`). contact@ est aussi l'adresse affichée (site, chatbot, espace client) et la destination du formulaire de contact.

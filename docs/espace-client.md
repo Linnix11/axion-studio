@@ -37,17 +37,17 @@ d'`axion-config.php`, hors du dossier public (elle n'est donc pas effacée à ch
 télécharger de temps en temps (sauvegarde). Elle demande l'extension PHP `pdo_sqlite`, active par défaut chez Hostinger ;
 si l'espace client affiche « momentanément indisponible », vérifiez-la dans hPanel → Avancé → Configuration PHP → Extensions.
 
-### 1 bis. L'envoi des e-mails par iCloud (recommandé)
+### 1 bis. L'envoi des e-mails par la boîte contact@axionstudio.fr (recommandé)
 
-Sans signature DKIM sur le domaine, iCloud écarte les e-mails envoyés par le serveur du site (constaté le 12 nov. 2026 :
-le serveur les accepte, ils n'arrivent jamais). Les e-mails d'accès partent donc par le serveur d'iCloud, depuis votre adresse :
+Sans signature DKIM sur le domaine, iCloud écarte les e-mails envoyés par `mail()` (constaté le 12 nov. 2026 :
+le serveur les accepte, ils n'arrivent jamais). Les e-mails d'accès partent donc de la boîte Hostinger contact@axionstudio.fr :
 
-1. account.apple.com → Connexion et sécurité → Mots de passe pour app → créer, nom « Site Axion Studio ».
-2. Dans `axion-config.php`, ajoutez `'crm_smtp_password' => '…le mot de passe pour app…',` puis enregistrez.
+1. hPanel → E-mails → contact@axionstudio.fr : notez (ou changez) son mot de passe.
+2. Dans `axion-config.php`, ajoutez `'crm_smtp_password' => '…le mot de passe de la boîte…',` puis enregistrez.
 
-Les e-mails partent alors de « Axion Studio <arthur.champagne@icloud.com> » (smtp.mail.me.com, port 587, chiffré).
-Le résultat de chaque envoi s'affiche dans l'administration (« Derniers e-mails envoyés »). Pour révoquer l'accès :
-supprimez ce mot de passe pour app sur account.apple.com.
+Les e-mails partent alors de « Axion Studio <contact@axionstudio.fr> » (smtp.hostinger.com, port 587, chiffré).
+Le résultat de chaque envoi s'affiche dans l'administration (« Derniers e-mails envoyés ») et dans
+`axion-crm-mail.log`. Si vous changez le mot de passe de la boîte, mettez-le aussi à jour ici.
 
 ### 2. Votre compte administrateur
 
@@ -137,7 +137,7 @@ brew install php
 Puis, à la racine du dépôt (dans un premier Terminal) :
 
 ```bash
-mkdir -p /tmp/crm-test && CRM_DB=/tmp/crm-test/crm.sqlite CRM_MAIL_LOG=/tmp/crm-test/mails.txt CRM_SITE_URL=http://localhost:8099 CRM_N8N_TOKEN=test-token-0123456789abcdef0123456789abcdef php -S 127.0.0.1:8099 -t public
+mkdir -p /tmp/crm-test && CRM_MAIL_JOURNAL=/tmp/crm-test/journal.log CRM_DB=/tmp/crm-test/crm.sqlite CRM_MAIL_LOG=/tmp/crm-test/mails.txt CRM_SITE_URL=http://localhost:8099 CRM_N8N_TOKEN=test-token-0123456789abcdef0123456789abcdef php -S 127.0.0.1:8099 -t public
 ```
 
 Dans un second Terminal (base neuve à chaque essai) :

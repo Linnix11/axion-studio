@@ -24,5 +24,5 @@ reply(200, [
   'client' => $client,
   'automatisations' => $autos,
   'derniere_synchro' => last_sync(),
-  'contact' => ['email' => crm_admin_email()],
+  'contact' => ['email' => CRM_CONTACT],
 ]);

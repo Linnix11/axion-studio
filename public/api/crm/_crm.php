@@ -8,8 +8,8 @@
 //   'crm_db'          => chemin du fichier SQLite (par défaut : axion-crm.sqlite à côté d'axion-config.php)
 //   'crm_admin_password_hash' => facultatif : empreinte du mot de passe administrateur (password_hash), pour se connecter
 //                        sans passer par l'e-mail ; générée avec : php -r 'echo password_hash(readline("Mot de passe : "), PASSWORD_DEFAULT), "\n";'
-//   'crm_smtp_password' => mot de passe pour app d'Apple (account.apple.com) : les e-mails partent alors par le serveur
-//                        d'iCloud (smtp.mail.me.com, signés par Apple), depuis crm_admin_email. Sans lui : mail() de l'hébergeur.
+//   'crm_smtp_password' => mot de passe de la boîte contact@axionstudio.fr (hPanel → E-mails) : les e-mails partent alors
+//                        par smtp.hostinger.com, depuis cette adresse. Sans lui : mail() de l'hébergeur.
 // Journal des e-mails : axion-crm-mail.log à côté d'axion-config.php (date, destinataire, objet, résultat ; jamais le contenu).
 // Pour les tests locaux : variables d'environnement CRM_DB, CRM_SITE_URL, CRM_MAIL_LOG (écrit les e-mails dans un fichier).
 
@@ -17,6 +17,7 @@ require_once dirname(__DIR__) . '/_common.php';
 
 const CRM_FROM          = 'ne-pas-repondre@axionstudio.fr';
 const CRM_DEFAULT_ADMIN = 'arthur.champagne@icloud.com';
+const CRM_CONTACT       = 'contact@axionstudio.fr';   // expéditeur SMTP et adresse de contact affichée aux clients
 const CRM_INVITE_TTL    = 7 * 86400;   // lien d'activation : 7 jours
 const CRM_RESET_TTL     = 2 * 86400;   // lien de nouveau mot de passe : 2 jours
 const CRM_SESSION_IDLE  = 8 * 3600;    // déconnexion après 8 h sans activité
@@ -230,7 +231,7 @@ function find_token(string $raw): ?array {
 function send_mail(string $to, string $subject, string $body): bool {
   $smtpPass = (string) (crm_config()['crm_smtp_password'] ?? getenv('CRM_SMTP_PASSWORD') ?: '');
   if ($smtpPass !== '') {
-    $err = smtp_send($to, $subject, $body, crm_admin_email(), $smtpPass);
+    $err = smtp_send($to, $subject, $body, CRM_CONTACT, $smtpPass);
     mail_log($to, $subject, $err === '', $err);
     return $err === '';
   }
@@ -242,7 +243,7 @@ function send_mail(string $to, string $subject, string $body): bool {
   }
   $headers = implode("\r\n", [
     'From: Axion Studio <' . CRM_FROM . '>',
-    'Reply-To: ' . crm_admin_email(),
+    'Reply-To: ' . CRM_CONTACT,
     'MIME-Version: 1.0',
     'Content-Type: text/plain; charset=UTF-8',
     'Content-Transfer-Encoding: 8bit',
@@ -253,11 +254,11 @@ function send_mail(string $to, string $subject, string $body): bool {
 }
 
 /**
- * Envoi par le serveur SMTP d'iCloud (port 587, STARTTLS, AUTH LOGIN). Renvoie '' si l'e-mail est accepté, sinon l'erreur.
- * L'expéditeur est l'adresse iCloud elle-même (Apple refuse un autre From), affichée « Axion Studio ».
+ * Envoi par le serveur SMTP de Hostinger (port 587, STARTTLS, AUTH LOGIN). Renvoie '' si l'e-mail est accepté, sinon l'erreur.
+ * L'expéditeur est la boîte elle-même (le serveur refuse un autre From), affichée « Axion Studio ».
  */
 function smtp_send(string $to, string $subject, string $body, string $user, string $pass): string {
-  $host = getenv('CRM_SMTP_HOST') ?: 'smtp.mail.me.com';
+  $host = getenv('CRM_SMTP_HOST') ?: 'smtp.hostinger.com';
   $port = (int) (getenv('CRM_SMTP_PORT') ?: 587);
   $fp = @stream_socket_client("tcp://$host:$port", $errno, $errstr, 15);
   if (!$fp) return "connexion à $host:$port impossible ($errstr)";
@@ -289,7 +290,7 @@ function smtp_send(string $to, string $subject, string $body, string $user, stri
   }
   if ($e = $cmd('AUTH LOGIN', [334], 'AUTH')) return $fin($e);
   if ($e = $cmd(base64_encode($user), [334], 'identifiant')) return $fin($e);
-  if ($e = $cmd(base64_encode($pass), [235], 'mot de passe pour app (vérifiez crm_smtp_password)')) return $fin($e);
+  if ($e = $cmd(base64_encode($pass), [235], 'mot de passe (vérifiez crm_smtp_password)')) return $fin($e);
   if ($e = $cmd("MAIL FROM:<$user>", [250], 'MAIL FROM')) return $fin($e);
   if ($e = $cmd("RCPT TO:<$to>", [250, 251], 'RCPT TO')) return $fin($e);
   if ($e = $cmd('DATA', [354], 'DATA')) return $fin($e);

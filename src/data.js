@@ -3,7 +3,7 @@ export const company = {
   brand: 'Axion Studio',
   tradeName: 'axionstudio',
   owner: 'Arthur Champagne-Forterre',
-  email: 'arthur.champagne@icloud.com',
+  email: 'contact@axionstudio.fr',
   phone: '06 48 61 23 50',
   phoneHref: '+33648612350',
   city: 'Montlignon (95)',
