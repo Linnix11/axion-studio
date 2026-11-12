@@ -50,7 +50,7 @@ export default function EspaceAdmin() {
           <h1 className="text-3xl leading-tight">
             <button type="button" className="cursor-pointer hover:text-pen" onClick={() => aller({})}>Administration</button>
           </h1>
-          <Synchro synchros={data.synchros} />
+          <Synchro synchros={data.synchros} onChange={charger} />
         </div>
         <div className="flex flex-wrap gap-3">
           {!nouveau && <button type="button" className={btn.primary} onClick={() => aller({ nouveau: '' })}>Nouveau client</button>}
@@ -69,17 +69,25 @@ export default function EspaceAdmin() {
   )
 }
 
-function Synchro({ synchros }) {
+function Synchro({ synchros, onChange }) {
   const now = Date.now() / 1000
+  const oublier = async s => {
+    if (!window.confirm(`Retirer « ${s.instance} » ? Ses ${s.nb} workflows disparaissent de l’administration. S’il renvoie un jour des statuts, il réapparaîtra.`)) return
+    try { await api.admin.oublier(s.instance); onChange() } catch { /* l'erreur réapparaîtra au prochain chargement */ }
+  }
   if (!synchros.length) return <p className="mt-1 text-sm font-medium text-error">n8n n’a encore rien envoyé</p>
   return (
-    <p className="mt-1 text-sm text-muted">
-      {synchros.map((s, i) => (
-        <span key={s.instance} className={now - s.recu_le > SYNC_RETARD ? 'font-medium text-error' : ''}>
-          {i > 0 && ' · '}n8n {s.instance}{' '}: {depuis(s.recu_le)}, {n(s.nb, 'workflow')}
-        </span>
-      ))}
-    </p>
+    <ul className="mt-1 text-sm text-muted">
+      {synchros.map(s => {
+        const retard = now - s.recu_le > SYNC_RETARD
+        return (
+          <li key={s.instance} className={`flex flex-wrap items-center gap-x-2 ${retard ? 'font-medium text-error' : ''}`}>
+            n8n {s.instance}{'\u00a0'}: {depuis(s.recu_le)}, {n(s.nb, 'workflow')}
+            {retard && <button type="button" className={`${textLink} min-h-11 font-normal`} onClick={() => oublier(s)}>Retirer</button>}
+          </li>
+        )
+      })}
+    </ul>
   )
 }
 

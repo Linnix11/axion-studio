@@ -44,6 +44,7 @@ export const api = {
     acces: (id, actif) => call('/admin.php', { action: 'acces', id, actif }),
     automatisation: data => call('/admin.php', { action: 'automatisation', ...data }),
     supprimer: (id, confirmation) => call('/admin.php', { action: 'supprimer', id, confirmation }),
+    oublier: instance => call('/admin.php', { action: 'oublier', instance }),
   },
 }
 

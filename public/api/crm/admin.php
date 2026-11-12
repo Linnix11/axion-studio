@@ -8,6 +8,7 @@
 // POST {"action":"acces", id, actif}           → suspend ou rétablit l'accès du client
 // POST {"action":"automatisation", id, description, visible, client_id}
 // POST {"action":"supprimer", id, confirmation}  → efface le client, son compte et ses liens (confirmation = nom de l'entreprise)
+// POST {"action":"oublier", instance}         → retire un n8n qui n'envoie plus rien : sa synchro et ses workflows
 
 require __DIR__ . '/_crm.php';
 
@@ -141,6 +142,15 @@ if ($action === 'supprimer') {
   $pdo->prepare('UPDATE automations SET client_id = NULL WHERE client_id = ?')->execute([$c['id']]);
   $pdo->prepare('DELETE FROM users WHERE client_id = ?')->execute([$c['id']]);
   $pdo->prepare('DELETE FROM clients WHERE id = ?')->execute([$c['id']]);
+  $pdo->commit();
+  reply(200, ['ok' => true]);
+}
+
+if ($action === 'oublier') {
+  $instance = text($d['instance'] ?? '', 60);
+  $pdo->beginTransaction();
+  $pdo->prepare('DELETE FROM automations WHERE instance = ?')->execute([$instance]);
+  $pdo->prepare('DELETE FROM synchros WHERE instance = ?')->execute([$instance]);
   $pdo->commit();
   reply(200, ['ok' => true]);
 }
