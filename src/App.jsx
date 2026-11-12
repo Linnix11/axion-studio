@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -20,6 +20,10 @@ import Metier from './pages/Metier'
 import AgenceN8n from './pages/AgenceN8n'
 import ChatWidget from './components/ChatWidget'
 import NotFound from './pages/NotFound'
+// Espace client : chargé à part, seulement quand on l'ouvre (n'alourdit pas le site public)
+const EspaceClient = lazy(() => import('./pages/EspaceClient'))
+const EspaceAdmin = lazy(() => import('./pages/EspaceAdmin'))
+const attente = <div className="mx-auto max-w-[1180px] px-4 py-20 text-lg text-muted md:px-8" role="status">Chargement…</div>
 
 /** Remonte en haut à chaque changement de page, ou va à l’ancre (#...) demandée. */
 function ScrollManager() {
@@ -43,6 +47,12 @@ function PageFade() {
     main.classList.remove('page-fade'); void main.offsetWidth; main.classList.add('page-fade')
   }, [pathname])
   return null
+}
+
+/** L'assistant du site n'apparaît pas dans l'espace client. */
+function Chat() {
+  const { pathname } = useLocation()
+  return pathname.startsWith('/espace-client') ? null : <ChatWidget />
 }
 
 export default function App() {
@@ -72,11 +82,13 @@ export default function App() {
           <Route path="/agence-n8n" element={<AgenceN8n />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />
           <Route path="/confidentialite" element={<Confidentialite />} />
+          <Route path="/espace-client" element={<Suspense fallback={attente}><EspaceClient /></Suspense>} />
+          <Route path="/espace-client/admin" element={<Suspense fallback={attente}><EspaceAdmin /></Suspense>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
-      <ChatWidget />
+      <Chat />
     </>
   )
 }

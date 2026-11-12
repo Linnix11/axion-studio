@@ -1,0 +1,231 @@
+{
+  "name": "Axion – 3. Suivi des automatisations clients",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "id": "03a1b4f9-c2e7-4e59-a414-9c2ed6a14960",
+      "name": "Toutes les 15 minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// À adapter si besoin :\n// - n8n_url : adresse de ce n8n (sur le Mac : http://localhost:5678)\n// - crm_url : point d'entrée de l'espace client du site\n// - instance : nom de ce n8n dans l'espace client (utile si plusieurs n8n envoient des statuts)\nreturn [{ json: {\n  n8n_url: 'http://localhost:5678',\n  crm_url: 'https://axionstudio.fr/api/crm/n8n.php',\n  instance: 'mac-arthur',\n} }]"
+      },
+      "id": "0e490ddd-2f56-42c1-a1a8-cbf807eee04f",
+      "name": "Réglages",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.n8n_url }}/api/v1/workflows?limit=250",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "pagination": {
+            "pagination": {
+              "paginationMode": "updateAParameterInEachRequest",
+              "parameters": {
+                "parameters": [
+                  {
+                    "type": "qs",
+                    "name": "cursor",
+                    "value": "={{ $response.body.nextCursor }}"
+                  }
+                ]
+              },
+              "paginationCompleteWhen": "other",
+              "completeExpression": "={{ !$response.body.nextCursor }}",
+              "limitPagesFetched": true,
+              "maxRequests": 20
+            }
+          }
+        }
+      },
+      "id": "e44e233b-b6a2-49fb-8d83-aabcd6a0ad68",
+      "name": "Lister les workflows",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        440,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "function listerWorkflows(pages) {\n  const vus = new Set()\n  const out = []\n  for (const page of pages) {\n    for (const w of (page && page.data) || []) {\n      if (!w || w.id == null || vus.has(String(w.id)) || w.isArchived) continue\n      vus.add(String(w.id))\n      const noms = (w.tags || []).map(t => String((t && t.name) || t || '').trim().toLowerCase())\n      const tag = noms.find(t => /^client-[a-z0-9-]+$/.test(t))\n      out.push({ id: String(w.id), nom: String(w.name || ''), active: !!w.active, client: tag ? tag.slice('client-'.length) : '' })\n    }\n  }\n  return out\n}\n\nreturn listerWorkflows($input.all().map(i => i.json)).map(w => ({ json: w }))"
+      },
+      "id": "a5b7bf8a-c084-4701-8314-5034dd1a01e7",
+      "name": "Préparer la liste",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Réglages').first().json.n8n_url }}/api/v1/executions?workflowId={{ $json.id }}&limit=250",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "pagination": {
+            "pagination": {
+              "paginationMode": "updateAParameterInEachRequest",
+              "parameters": {
+                "parameters": [
+                  {
+                    "type": "qs",
+                    "name": "cursor",
+                    "value": "={{ $response.body.nextCursor }}"
+                  }
+                ]
+              },
+              "paginationCompleteWhen": "other",
+              "completeExpression": "={{ !$response.body.nextCursor || (($response.body.data || []).length > 0 && Date.parse($response.body.data[$response.body.data.length - 1].startedAt) < Date.now() - 7 * 24 * 3600 * 1000) }}",
+              "limitPagesFetched": true,
+              "maxRequests": 4
+            }
+          }
+        }
+      },
+      "id": "efa2bb71-064a-4a09-b8e4-207e92fe293d",
+      "name": "Lire les exécutions (7 jours)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        880,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const SEPT_JOURS = 7 * 24 * 3600 * 1000\n\nfunction construireSynchro(workflows, pagesExecutions, instance, maintenant) {\n  const depuis = maintenant - SEPT_JOURS\n  const stats = {}\n  const vues = new Set()\n  for (const page of pagesExecutions) {\n    for (const e of (page && page.data) || []) {\n      if (!e || e.workflowId == null || vues.has(e.id)) continue\n      vues.add(e.id)\n      const wid = String(e.workflowId)\n      const s = stats[wid] || (stats[wid] = { derniere: null, statut: '', n7: 0, e7: 0 })\n      const debut = Date.parse(e.startedAt || '')\n      if (Number.isNaN(debut)) continue\n      if (!s.derniere || debut > s.derniere) { s.derniere = debut; s.statut = String(e.status || '') }\n      if (debut >= depuis) {\n        s.n7++\n        if (e.status === 'error' || e.status === 'crashed') s.e7++\n      }\n    }\n  }\n  return {\n    action: 'synchro',\n    instance,\n    workflows: workflows.map(w => {\n      const s = stats[w.id]\n      return {\n        id: w.id, nom: w.nom, active: w.active, client: w.client,\n        dernier_statut: s ? s.statut : '',\n        derniere_execution: s && s.derniere ? new Date(s.derniere).toISOString() : '',\n        executions_7j: s ? s.n7 : 0,\n        erreurs_7j: s ? s.e7 : 0,\n      }\n    }),\n  }\n}\n\nconst reglages = $('Réglages').first().json\nconst workflows = $('Préparer la liste').all().map(i => i.json)\nreturn [{ json: construireSynchro(workflows, $input.all().map(i => i.json), reglages.instance, Date.now()) }]"
+      },
+      "id": "ed4edd93-7fce-4ed2-9fff-158bd59722c8",
+      "name": "Construire la synchro",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Réglages').first().json.crm_url }}",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "id": "f0d2185e-99e7-4b10-9320-ab6f916ad2cc",
+      "name": "Envoyer à l'espace client",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        0
+      ]
+    }
+  ],
+  "connections": {
+    "Toutes les 15 minutes": {
+      "main": [
+        [
+          {
+            "node": "Réglages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Réglages": {
+      "main": [
+        [
+          {
+            "node": "Lister les workflows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lister les workflows": {
+      "main": [
+        [
+          {
+            "node": "Préparer la liste",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Préparer la liste": {
+      "main": [
+        [
+          {
+            "node": "Lire les exécutions (7 jours)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lire les exécutions (7 jours)": {
+      "main": [
+        [
+          {
+            "node": "Construire la synchro",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Construire la synchro": {
+      "main": [
+        [
+          {
+            "node": "Envoyer à l'espace client",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": false
+  }
+}

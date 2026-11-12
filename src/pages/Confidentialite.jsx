@@ -7,9 +7,10 @@ const blocks = (c) => [
   ['Données collectées', 'Uniquement celles que vous saisissez dans le formulaire de contact : nom, entreprise, adresse e-mail et message. Elles me sont transmises par e-mail, via le serveur de l’hébergeur Hostinger, et ne sont pas enregistrées sur ce site.'],
   ['Assistant IA', 'Les questions posées à l’assistant du site sont transmises à l’API Gemini de Google (Google LLC) pour générer une réponse. Elles ne sont pas enregistrées sur ce site ; la conversation reste dans votre navigateur et s’efface à la fermeture de l’onglet. N’y saisissez aucune information sensible.' + (geminiFreeTier ? ' ' + freeTierNotice : '')],
   ['Réglages d’affichage', 'Si vous changez le thème ou les réglages d’accessibilité, ces choix sont gardés uniquement dans votre navigateur (stockage local), pour vos prochaines visites. Ils ne sont transmis à personne.'],
+  ['Espace client', 'Réservé aux clients sous contrat. Y sont enregistrés, sur le serveur de l’hébergeur Hostinger : le nom de l’entreprise et du contact, l’adresse e-mail (votre identifiant), le téléphone si vous l’avez donné, votre mot de passe sous forme chiffrée (illisible, même pour moi), la formule souscrite et l’état de vos automatisations (nom, état, nombre d’exécutions et d’erreurs). Ces données servent uniquement à vous donner accès au suivi de vos automatisations. Elles sont conservées pendant la relation contractuelle et supprimées à sa fin ou sur simple demande.'],
   ['Finalité', 'Répondre à votre demande et, si vous le souhaitez, préparer une proposition commerciale.'],
   ['Durée de conservation', 'Les échanges sont conservés 3 ans après le dernier contact, puis supprimés.'],
-  ['Cookies et mesure d’audience', 'Ce site ne dépose aucun cookie et n’utilise aucun outil de mesure d’audience ni de publicité.'],
+  ['Cookies et mesure d’audience', 'Les pages publiques du site ne déposent aucun cookie et le site n’utilise aucun outil de mesure d’audience ni de publicité. Seul l’espace client, une fois connecté, utilise un cookie de session strictement nécessaire à la connexion : il s’efface à la déconnexion ou à la fermeture du navigateur.'],
   ['Vos droits', 'Vous pouvez demander l’accès, la rectification ou la suppression de vos données, ou vous opposer à leur traitement, en écrivant à l’adresse ci-dessous. Vous pouvez aussi saisir la CNIL (cnil.fr).'],
 ]
 
@@ -17,7 +18,7 @@ export default function Confidentialite() {
   usePageMeta('/confidentialite')
   return (
     <>
-      <PageHeader title="Confidentialité" note="Aucun cookie">
+      <PageHeader title="Confidentialité" note="Aucun traceur">
         Ce site collecte le moins de données possible. Voici exactement lesquelles, et ce qu’elles deviennent.
       </PageHeader>
       <Section note="RGPD">

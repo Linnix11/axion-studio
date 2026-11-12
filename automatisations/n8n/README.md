@@ -1,5 +1,8 @@
 # Prospection Axion Studio avec n8n
 
+> Un troisième workflow, **Suivi des automatisations clients** (`axion-3-suivi-clients.json`), envoie toutes les 15 minutes
+> l'état des workflows à l'espace client du site. Mise en route : `docs/espace-client.md`.
+
 Deux workflows qui travaillent sur la même feuille Google Sheets :
 
 1. **Collecte de prospects** (`axion-1-collecte-prospects.json`), lancé à la main.

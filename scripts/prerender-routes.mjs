@@ -69,6 +69,18 @@ for (const path of paths) {
 if (typoWarnings.length) console.warn(`⚠ Espace insécable manquante (à remplacer par \\u00A0 avant « : », \\u202F avant ; ? ! ») :\n  ${typoWarnings.join('\n  ')}`)
 writeFileSync(join(dist, '404.html'), page('/404'))
 
+// Espace client : pages privées (connexion, tableau de bord, administration), hors plan du site et non indexées.
+for (const [path, title] of [['/espace-client', 'Espace client'], ['/espace-client/admin', 'Administration']]) {
+  const dir = join(dist, path)
+  mkdirSync(dir, { recursive: true })
+  const html = template
+    .replace(/<title>[\s\S]*?<\/title>/, `<title>${title} | ${BRAND}</title>`)
+    .replace(/<meta name="description" content="[^"]*">/, '<meta name="description" content="Espace client Axion Studio : suivi de vos automatisations.">')
+    .replace('</head>', `  ${preload}\n  <meta name="robots" content="noindex, nofollow">\n</head>`)
+    .replace('<div id="root"></div>', `<div id="root">${render(path + '/')}</div>`)
+  writeFileSync(join(dir, 'index.html'), html)
+}
+
 // ——— Plan du site et robots ———
 const priority = p => (p === '/' ? '1.0' : p.startsWith('/blog') ? '0.7' : ['/services', '/tarifs', '/contact', '/exemples'].includes(p) || p.startsWith('/automatisation/') ? '0.8' : p.startsWith('/mentions') || p === '/confidentialite' || p === '/cgv' ? '0.3' : '0.6')
 writeFileSync(join(dist, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
@@ -82,12 +94,13 @@ ${paths.map(p => {
 `)
 const aiBots = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User', 'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot-Extended', 'Applebot', 'Bingbot', 'Googlebot', 'DuckAssistBot', 'MistralAI-User', 'meta-externalagent']
 writeFileSync(join(dist, 'robots.txt'), `# Moteurs de recherche et moteurs de réponse des IA : bienvenue.
-${aiBots.map(b => `User-agent: ${b}\nAllow: /\nDisallow: /api/\n`).join('\n')}
+${aiBots.map(b => `User-agent: ${b}\nAllow: /\nDisallow: /api/\nDisallow: /espace-client/\n`).join('\n')}
 User-agent: *
 # Usages autorisés du contenu (Content Signals) : recherche, réponses des IA et entraînement
 Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 Disallow: /api/
+Disallow: /espace-client/
 
 Sitemap: ${SITE_URL}/sitemap.xml
 `)
