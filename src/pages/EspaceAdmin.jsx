@@ -1,27 +1,30 @@
 import { useCallback, useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router'
-import { Container, btn, eyebrow, textLink } from '../components/ui'
+import { Link, useNavigate, useSearchParams } from 'react-router'
+import { Container, btn, textLink } from '../components/ui'
 import { offers } from '../data'
 import { api, messageErreur } from '../espace/api'
-import { Alert, Badge, Field, card, depuis, input, n, usePrivateTitle } from '../espace/ui'
+import { Alert, Badge, Field, card, dateLongue, depuis, input, n, usePrivateTitle } from '../espace/ui'
 
 const COMPTES = {
-  invite: { label: 'Invité', aide: 'E-mail envoyé, mot de passe pas encore choisi' },
-  actif: { label: 'Compte actif', aide: '' },
-  suspendu: { label: 'Accès suspendu', aide: '' },
-  'sans-compte': { label: 'Sans compte', aide: '' },
+  invite: 'Invité',
+  actif: 'Compte actif',
+  suspendu: 'Accès suspendu',
+  'sans-compte': 'Sans compte',
 }
 const STATUTS = { actif: 'En cours', pause: 'En pause', termine: 'Terminé' }
 const FORMULES = offers.filter(o => o.name !== 'Audit').map(o => o.name).concat('Projet + suivi mensuel')
 const SYNC_RETARD = 3600   // au-delà d'une heure sans nouvelles de n8n, on le signale
+const petit = 'inline-flex min-h-11 items-center justify-center rounded-full border border-rule bg-paper px-4 text-sm font-semibold text-ink cursor-pointer hover:border-pen hover:text-pen active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60'
+const etiquette = c => `client-${c.slug}`
 
-/** /espace-client/admin/ : suivi des clients, création des accès, rattachement des workflows n8n. */
+/** /espace-client/admin/ : ce qui demande une action d'abord, puis les clients, puis les workflows à rattacher.
+ *  La vue est dans l'adresse (?client=…, ?nouveau) : le bouton Retour du navigateur fonctionne. */
 export default function EspaceAdmin() {
   usePrivateTitle('Administration')
   const navigate = useNavigate()
+  const [params, setParams] = useSearchParams()
   const [data, setData] = useState(null)
   const [error, setError] = useState('')
-  const [vue, setVue] = useState({ type: 'liste' })   // liste | nouveau | client (id)
   const [flash, setFlash] = useState('')
 
   const charger = useCallback(() => api.admin.tableau().then(d => { setData(d); setError('') }).catch(e => {
@@ -30,108 +33,205 @@ export default function EspaceAdmin() {
   }), [navigate])
   useEffect(() => { charger() }, [charger])
 
+  const aller = (p, msg = '') => { setFlash(msg); setParams(p); charger(); window.scrollTo(0, 0) }
   const logout = async () => { try { await api.deconnexion() } finally { navigate('/espace-client/', { replace: true }) } }
-  const retour = msg => { setFlash(msg || ''); setVue({ type: 'liste' }); charger(); window.scrollTo(0, 0) }
 
   if (!data) {
-    return <Container className="py-20">{error ? <Alert>{error}</Alert> : <p className="text-lg text-muted" role="status">Chargement…</p>}</Container>
+    return <Container className="py-16">{error ? <Alert>{error}</Alert> : <p className="text-lg text-muted" role="status">Chargement…</p>}</Container>
   }
 
-  const totalAutos = data.clients.reduce((s, c) => s + c.nb, 0)
-  const totalErreurs = data.clients.reduce((s, c) => s + c.erreurs, 0)
-  const now = Date.now() / 1000
+  const clientId = Number(params.get('client')) || null
+  const nouveau = params.has('nouveau')
 
   return (
-    <>
-      <section className="border-b border-rule">
-        <Container className="pt-14 pb-10 md:pt-16">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <p className={eyebrow}>Administration</p>
-              <h1 className="mt-3 text-[2.5rem] leading-[1.05] tracking-[-0.03em] sm:text-6xl">Clients et automatisations</h1>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              {vue.type === 'liste' && <button type="button" className={btn.primary} onClick={() => { setFlash(''); setVue({ type: 'nouveau' }) }}>Nouveau client</button>}
-              <button type="button" className={btn.ghost} onClick={logout}>Se déconnecter</button>
-            </div>
-          </div>
-          <dl className="mt-8 grid gap-4 sm:grid-cols-4">
-            <Stat label="Clients" value={data.clients.length} />
-            <Stat label="Automatisations" value={totalAutos} />
-            <Stat label="En erreur" value={totalErreurs} alert={totalErreurs > 0} />
-            <div className={`${card} p-5`}>
-              <dt className="text-sm text-muted">Synchro n8n</dt>
-              {data.synchros.length === 0
-                ? <dd className="mt-1 text-lg font-medium text-error">Jamais reçue</dd>
-                : data.synchros.map(s => (
-                  <dd key={s.instance} className={`mt-1 text-base ${now - s.recu_le > SYNC_RETARD ? 'font-medium text-error' : ''}`}>
-                    {s.instance}{' '}: {depuis(s.recu_le)} ({n(s.nb, 'workflow')})
-                  </dd>
-                ))}
-            </div>
-          </dl>
-        </Container>
-      </section>
+    <Container className="py-8 md:py-10">
+      <header className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-b border-rule pb-5">
+        <div className="min-w-0">
+          <h1 className="text-3xl leading-tight">
+            <button type="button" className="cursor-pointer hover:text-pen" onClick={() => aller({})}>Administration</button>
+          </h1>
+          <Synchro synchros={data.synchros} />
+        </div>
+        <div className="flex flex-wrap gap-3">
+          {!nouveau && <button type="button" className={btn.primary} onClick={() => aller({ nouveau: '' })}>Nouveau client</button>}
+          <button type="button" className={btn.ghost} onClick={logout}>Se déconnecter</button>
+        </div>
+      </header>
 
-      <Container className="py-12 md:py-16">
+      <div className="mt-8">
         {flash && <Alert tone="ok">{flash}</Alert>}
         {error && <Alert>{error}</Alert>}
-        {vue.type === 'nouveau' && <NouveauClient onAnnuler={() => setVue({ type: 'liste' })} onCree={retour} />}
-        {vue.type === 'client' && <FicheClient id={vue.id} clients={data.clients} onRetour={retour} />}
-        {vue.type === 'liste' && (
-          <>
-            <h2 className="text-[2rem] leading-tight">Clients</h2>
-            {data.clients.length === 0 ? (
-              <div className={`${card} mt-6 p-6`}>
-                <p className="text-lg">Aucun client pour l’instant.</p>
-                <p className="mt-2 text-muted">Quand un contrat est signé, créez le client : il reçoit par e-mail le lien de son espace et son identifiant.</p>
-                <button type="button" className={`${btn.primary} mt-5`} onClick={() => setVue({ type: 'nouveau' })}>Créer le premier client</button>
-              </div>
-            ) : (
-              <ul className="mt-6 grid gap-4">
-                {data.clients.map(c => (
-                  <li key={c.id}>
-                    <button type="button" onClick={() => { setFlash(''); setVue({ type: 'client', id: c.id }) }}
-                            className={`${card} lift grid w-full cursor-pointer gap-3 p-5 text-left hover:border-pen md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1.4fr)_minmax(0,1fr)] md:items-center`}>
-                      <span>
-                        <span className="block text-xl font-medium">{c.entreprise}</span>
-                        <span className="block text-sm text-muted">{c.contact || c.email} · étiquette n8n <code>client-{c.slug}</code></span>
-                      </span>
-                      <span className="text-sm">
-                        <span className="block font-medium">{COMPTES[c.compte]?.label}</span>
-                        <span className="block text-muted">{c.compte === 'invite' ? 'Mot de passe pas encore choisi' : c.derniere_connexion ? `Vu ${depuis(c.derniere_connexion)}` : ''}</span>
-                      </span>
-                      <span className="text-sm">
-                        <span className="block font-medium">{n(c.nb, 'automatisation')}</span>
-                        <span className="block text-muted">{c.actives} active{c.actives > 1 ? 's' : ''} · {c.pause} en pause</span>
-                      </span>
-                      <span className="flex flex-wrap items-center gap-2 md:justify-end">
-                        {c.erreurs > 0 ? <Badge etat="erreur" /> : c.nb > 0 ? <Badge etat="ok" /> : null}
-                        {c.statut !== 'actif' && <span className="text-sm text-muted">{STATUTS[c.statut]}</span>}
-                      </span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
-            <NonRattachees autos={data.non_rattachees} clients={data.clients} onChange={charger} />
-            <Emails emails={data.emails || []} />
-            <AideN8n />
-          </>
-        )}
-      </Container>
-    </>
+        {nouveau ? <NouveauClient onAnnuler={() => aller({})} onCree={(id, msg) => aller({ client: String(id) }, msg)} />
+          : clientId ? <FicheClient key={clientId} id={clientId} clients={data.clients} onRetour={msg => aller({}, msg)} onChange={charger} />
+          : <Accueil data={data} ouvrir={id => aller({ client: String(id) })} onChange={charger} />}
+      </div>
+    </Container>
   )
 }
 
-function Stat({ label, value, alert }) {
+function Synchro({ synchros }) {
+  const now = Date.now() / 1000
+  if (!synchros.length) return <p className="mt-1 text-sm font-medium text-error">n8n n’a encore rien envoyé</p>
   return (
-    <div className={`${card} p-5`}>
-      <dt className="text-sm text-muted">{label}</dt>
-      <dd className={`mt-1 font-display text-4xl font-extrabold tabular-nums [font-stretch:85%] ${alert ? 'text-error' : ''}`}>{value}</dd>
+    <p className="mt-1 text-sm text-muted">
+      {synchros.map((s, i) => (
+        <span key={s.instance} className={now - s.recu_le > SYNC_RETARD ? 'font-medium text-error' : ''}>
+          {i > 0 && ' · '}n8n {s.instance}{' '}: {depuis(s.recu_le)}, {n(s.nb, 'workflow')}
+        </span>
+      ))}
+    </p>
+  )
+}
+
+/* ——— Accueil : à traiter, clients, workflows sans client ——— */
+
+function Accueil({ data, ouvrir, onChange }) {
+  const [q, setQ] = useState('')
+  const { clients, non_rattachees: orphelins } = data
+  const emails = data.emails || []
+  const filtre = q.trim().toLowerCase()
+  const liste = filtre ? clients.filter(c => `${c.entreprise} ${c.contact} ${c.email} ${c.slug}`.toLowerCase().includes(filtre)) : clients
+
+  return (
+    <div className="grid gap-12">
+      <ATraiter clients={clients} orphelins={orphelins} emails={emails} ouvrir={ouvrir} onChange={onChange} />
+
+      <section aria-labelledby="clients-titre">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <h2 id="clients-titre" className="text-2xl">Clients <span className="text-muted tabular-nums">({clients.length})</span></h2>
+          {clients.length > 5 && (
+            <label className="w-full sm:w-72">
+              <span className="sr-only">Chercher un client</span>
+              <input type="search" className={input} placeholder="Chercher un client" value={q} onChange={e => setQ(e.target.value)} />
+            </label>
+          )}
+        </div>
+        {clients.length === 0 ? (
+          <p className="mt-4 text-muted">Aucun client pour l’instant. À la signature d’un contrat, « Nouveau client » crée sa fiche et lui envoie son accès.</p>
+        ) : liste.length === 0 ? (
+          <p className="mt-4 text-muted">Aucun client ne correspond à « {q} ».</p>
+        ) : (
+          <ul className={`${card} mt-4 divide-y divide-rule`}>
+            <li aria-hidden="true" className="hidden gap-4 px-5 py-3 text-sm text-muted md:grid md:grid-cols-[minmax(0,2fr)_minmax(0,1.3fr)_minmax(0,1fr)_7rem]">
+              <span>Client</span><span>Accès</span><span>Automatisations</span><span className="text-right">État</span>
+            </li>
+            {liste.map(c => (
+              <li key={c.id}>
+                <button type="button" onClick={() => ouvrir(c.id)}
+                        className="grid w-full cursor-pointer gap-1 px-5 py-4 text-left hover:bg-paper-2 focus-visible:bg-paper-2 md:grid-cols-[minmax(0,2fr)_minmax(0,1.3fr)_minmax(0,1fr)_7rem] md:items-center md:gap-4">
+                  <span className="min-w-0">
+                    <span className="block truncate font-medium">{c.entreprise}</span>
+                    <span className="block truncate text-sm text-muted">{c.contact || c.email}</span>
+                  </span>
+                  <span className="text-sm">
+                    {COMPTES[c.compte]}{c.compte === 'actif' && c.derniere_connexion ? <span className="text-muted">, vu {depuis(c.derniere_connexion)}</span> : null}
+                  </span>
+                  <span className="text-sm tabular-nums">
+                    {c.nb === 0 ? <span className="text-muted">Aucune</span> : <>{c.nb}{c.pause > 0 && <span className="text-muted"> · {c.pause} en pause</span>}</>}
+                  </span>
+                  <span className="flex flex-wrap items-center gap-2 md:justify-end">
+                    {c.statut !== 'actif' ? <span className="text-sm text-muted">{STATUTS[c.statut]}</span>
+                      : c.erreurs > 0 ? <Badge etat="erreur" /> : c.actives > 0 ? <Badge etat="ok" /> : c.pause > 0 ? <Badge etat="pause" /> : null}
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      {orphelins.length > 0 && (
+        <section id="sans-client" aria-labelledby="orph-titre" className="scroll-mt-6">
+          <h2 id="orph-titre" className="text-2xl">Workflows sans client <span className="text-muted tabular-nums">({orphelins.length})</span></h2>
+          <p className="mt-1 max-w-[70ch] text-sm text-muted">Envoyés par n8n sans étiquette <code>client-…</code> connue. Rattachez-les à un client, ou laissez vos workflows internes ici.</p>
+          <ul className={`${card} mt-4 divide-y divide-rule`}>
+            {orphelins.map(a => <Rattacher key={a.id} a={a} clients={clients} onSaved={onChange} />)}
+          </ul>
+        </section>
+      )}
+
+      <div className="grid gap-3">
+        <Emails emails={emails} />
+        <AideN8n />
+      </div>
     </div>
   )
 }
+
+/** Ce qui demande une action, avec le bouton qui la fait. Vide = rien à faire. */
+function ATraiter({ clients, orphelins, emails, ouvrir, onChange }) {
+  const [etat, setEtat] = useState({})
+  const renvoyer = async c => {
+    setEtat(s => ({ ...s, [c.id]: 'Envoi…' }))
+    try {
+      const r = await api.admin.renvoyer(c.id)
+      setEtat(s => ({ ...s, [c.id]: r.mail_envoye ? `Envoyé à ${c.email}` : 'Échec de l’envoi, voir le journal' }))
+      onChange()
+    } catch (e) { setEtat(s => ({ ...s, [c.id]: messageErreur(e) })) }
+  }
+
+  const items = []
+  clients.filter(c => c.erreurs > 0).forEach(c => items.push(
+    <Item key={`e${c.id}`} tone="error" texte={<><b>{c.entreprise}</b>{' '}: {n(c.erreurs, 'automatisation')} en erreur</>}>
+      <button type="button" className={petit} onClick={() => ouvrir(c.id)}>Voir</button>
+    </Item>))
+  clients.filter(c => c.compte === 'invite').forEach(c => items.push(
+    <Item key={`i${c.id}`} texte={<><b>{c.entreprise}</b> n’a pas encore choisi son mot de passe</>}>
+      {etat[c.id] ? <span role="status" className="text-sm text-muted">{etat[c.id]}</span>
+        : <button type="button" className={petit} onClick={() => renvoyer(c)}>Renvoyer l’accès</button>}
+    </Item>))
+  if (orphelins.length) items.push(
+    <Item key="o" texte={<>{n(orphelins.length, 'workflow')} sans client</>}>
+      <a href="#sans-client" className={petit}>Rattacher</a>
+    </Item>)
+  const dernier = emails[0]   // le journal arrive du plus récent au plus ancien
+  if (dernier && !dernier.ok) items.push(
+    <Item key="m" tone="error" texte={<>Dernier e-mail en échec ({dernier.a}){dernier.erreur ? `\u00a0: ${dernier.erreur}` : ''}</>} />)
+
+  return (
+    <section aria-labelledby="todo-titre">
+      <h2 id="todo-titre" className="text-2xl">À traiter</h2>
+      {items.length === 0
+        ? <p className="mt-3 text-muted">Rien à traiter : pas d’erreur, pas d’accès en attente, tous les workflows sont rattachés.</p>
+        : <ul className={`${card} mt-4 divide-y divide-rule`}>{items}</ul>}
+    </section>
+  )
+}
+
+function Item({ tone, texte, children }) {
+  return (
+    <li className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-5 py-3">
+      <span className={`min-w-0 ${tone === 'error' ? 'text-error' : ''}`}>{texte}</span>
+      {children}
+    </li>
+  )
+}
+
+function Rattacher({ a, clients, onSaved }) {
+  const [state, setState] = useState('')
+  const save = async v => {
+    if (v === '') return
+    setState('Rattachement…')
+    try { await api.admin.automatisation({ id: a.id, client_id: Number(v) }); onSaved() } catch (e) { setState(messageErreur(e)) }
+  }
+  return (
+    <li className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-5 py-3">
+      <span className="min-w-0">
+        <span className="block font-medium">{a.nom}</span>
+        <span className="block text-sm text-muted">n8n {a.instance} · dernière exécution {depuis(a.derniere_execution)}</span>
+      </span>
+      <span className="flex items-center gap-3">
+        {state && <span role="status" className="text-sm text-muted">{state}</span>}
+        <select aria-label={`Rattacher ${a.nom} à un client`} className={`${input} min-h-11 w-auto py-2`} value="" onChange={e => save(e.target.value)} disabled={!clients.length}>
+          <option value="">{clients.length ? 'Rattacher à…' : 'Aucun client'}</option>
+          {clients.map(c => <option key={c.id} value={c.id}>{c.entreprise}</option>)}
+        </select>
+      </span>
+    </li>
+  )
+}
+
+/* ——— Création ——— */
 
 function ChampsClient({ v, set, errors, nouveau }) {
   const f = (k, label, props = {}, hint) => (
@@ -145,27 +245,17 @@ function ChampsClient({ v, set, errors, nouveau }) {
       <div className="grid gap-x-5 sm:grid-cols-2">
         {f('entreprise', 'Entreprise')}
         {f('contact', 'Nom du contact', { autoComplete: 'off' })}
-      </div>
-      <div className="grid gap-x-5 sm:grid-cols-2">
         {nouveau ? f('email', 'E-mail (identifiant de connexion)', { type: 'email', autoComplete: 'off' }) : (
-          <Field id="email" label="E-mail (identifiant)" hint="L’identifiant ne se modifie pas ici.">
+          <Field id="email" label="E-mail (identifiant)" hint="L’identifiant ne se modifie pas.">
             <input id="email" className={`${input} text-muted`} value={v.email} readOnly />
           </Field>
         )}
         {f('telephone', 'Téléphone (facultatif)', { type: 'tel' })}
-      </div>
-      <div className="grid gap-x-5 sm:grid-cols-2">
         <Field id="formule" label="Formule">
           <input id="formule" list="formules" className={input} value={v.formule ?? ''} onChange={e => set({ ...v, formule: e.target.value })} />
           <datalist id="formules">{FORMULES.map(x => <option key={x} value={x} />)}</datalist>
         </Field>
         {f('date_contrat', 'Date du contrat', { type: 'date' })}
-      </div>
-      <div className="grid gap-x-5 sm:grid-cols-2">
-        <label className="mb-5 flex min-h-12 items-center gap-3 text-base">
-          <input type="checkbox" className="size-5" checked={!!v.suivi} onChange={e => set({ ...v, suivi: e.target.checked })} />
-          Suivi mensuel souscrit
-        </label>
         {!nouveau && (
           <Field id="statut" label="Statut du client">
             <select id="statut" className={input} value={v.statut} onChange={e => set({ ...v, statut: e.target.value })}>
@@ -173,6 +263,10 @@ function ChampsClient({ v, set, errors, nouveau }) {
             </select>
           </Field>
         )}
+        <label className="mb-5 flex min-h-12 items-center gap-3 self-end text-base">
+          <input type="checkbox" className="size-5" checked={!!v.suivi} onChange={e => set({ ...v, suivi: e.target.checked })} />
+          Suivi mensuel souscrit
+        </label>
       </div>
       <Field id="notes" label="Notes internes (jamais visibles par le client)">
         <textarea id="notes" rows={3} className={`${input} resize-y`} value={v.notes ?? ''} onChange={e => set({ ...v, notes: e.target.value })} />
@@ -197,16 +291,16 @@ function NouveauClient({ onAnnuler, onCree }) {
     setBusy(true)
     try {
       const r = await api.admin.creer(v)
-      onCree(r.mail_envoye
-        ? `${r.client.entreprise} est créé. L’e-mail d’accès est parti à ${v.email}. Étiquette n8n à poser sur ses workflows : client-${r.client.slug}`
-        : `${r.client.entreprise} est créé, sans e-mail envoyé. Étiquette n8n : client-${r.client.slug}`)
+      onCree(r.client.id, r.mail_envoye
+        ? `${r.client.entreprise} est créé et son e-mail d’accès est parti. Posez l’étiquette ${etiquette(r.client)} sur ses workflows n8n.`
+        : `${r.client.entreprise} est créé, sans e-mail envoyé. Posez l’étiquette ${etiquette(r.client)} sur ses workflows n8n.`)
     } catch (err) { setErrors(err.fields || {}); setError(messageErreur(err)) } finally { setBusy(false) }
   }
 
   return (
-    <form noValidate onSubmit={submit} className={`${card} max-w-3xl p-6 sm:p-8`} aria-busy={busy}>
-      <h2 className="mb-2 text-[2rem] leading-tight">Nouveau client</h2>
-      <p className="mb-6 text-muted">À faire quand le contrat est signé. Le client reçoit un e-mail avec l’adresse de son espace, son identifiant et un lien pour choisir son mot de passe (valable 7 jours).</p>
+    <form noValidate onSubmit={submit} className="max-w-3xl" aria-busy={busy}>
+      <h2 className="text-2xl">Nouveau client</h2>
+      <p className="mt-1 mb-6 text-muted">À la signature du contrat. Le client reçoit l’adresse de son espace, son identifiant et un lien pour choisir son mot de passe (valable 7 jours).</p>
       {error && <Alert>{error}</Alert>}
       <ChampsClient v={v} set={set} errors={errors} nouveau />
       <label className="mb-6 flex min-h-12 items-center gap-3 text-base font-medium">
@@ -221,84 +315,150 @@ function NouveauClient({ onAnnuler, onCree }) {
   )
 }
 
-function FicheClient({ id, clients, onRetour }) {
+/* ——— Fiche client ——— */
+
+function FicheClient({ id, clients, onRetour, onChange }) {
   const [d, setD] = useState(null)
-  const [v, set] = useState(null)
-  const [errors, setErrors] = useState({})
   const [msg, setMsg] = useState({ tone: 'ok', text: '' })
-  const [busy, setBusy] = useState('')
-  const [confirmer, setConfirmer] = useState(false)
+  const [edition, setEdition] = useState(false)
 
-  const charger = useCallback(() => api.admin.client(id).then(r => { setD(r); set(r.client) }).catch(e => setMsg({ tone: 'error', text: messageErreur(e) })), [id])
+  const charger = useCallback(() => api.admin.client(id).then(setD).catch(e => setMsg({ tone: 'error', text: messageErreur(e) })), [id])
   useEffect(() => { charger() }, [charger])
+  const recharger = () => { charger(); onChange() }
 
-  if (!d || !v) return msg.text ? <Alert>{msg.text}</Alert> : <p className="text-lg text-muted" role="status">Chargement…</p>
+  if (!d) return msg.text ? <Alert>{msg.text}</Alert> : <p className="text-lg text-muted" role="status">Chargement…</p>
   const c = d.client
-
-  const action = async (nom, fn, ok) => {
-    setBusy(nom); setMsg({ tone: 'ok', text: '' })
-    try { await fn(); setMsg({ tone: 'ok', text: ok }); await charger() }
-    catch (e) { setErrors(e.fields || {}); setMsg({ tone: 'error', text: messageErreur(e) }) }
-    finally { setBusy(''); setConfirmer(false) }
-  }
+  const autos = d.automatisations
+  const presentes = autos.filter(a => a.etat !== 'retiree')
 
   return (
-    <div className="grid gap-10">
-      <div>
-        <button type="button" onClick={() => onRetour()} className="inline-flex min-h-11 items-center text-pen underline-offset-4 hover:underline">← Tous les clients</button>
-        <h2 className="mt-2 text-[2rem] leading-tight md:text-5xl">{c.entreprise}</h2>
-        <p className="mt-2 text-muted">{COMPTES[c.compte]?.label}{c.derniere_connexion ? `, dernière connexion ${depuis(c.derniere_connexion)}` : ''} · étiquette n8n <code>client-{c.slug}</code></p>
+    <div>
+      <button type="button" onClick={() => onRetour()} className={`${textLink} inline-flex min-h-11 items-center`}>← Tous les clients</button>
+      <div className="mt-1 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+        <h2 className="min-w-0 text-3xl [overflow-wrap:anywhere] md:text-4xl">{c.entreprise}</h2>
+        {c.statut !== 'actif' && <span className="text-muted">{STATUTS[c.statut]}</span>}
       </div>
-      {msg.text && <Alert tone={msg.tone}>{msg.text}</Alert>}
+      <p className="mt-1 text-muted">{[c.contact, c.email, c.telephone].filter(Boolean).join(' · ')}</p>
+      {msg.text && <div className="mt-5"><Alert tone={msg.tone}>{msg.text}</Alert></div>}
 
-      <section aria-labelledby="acces-titre" className={`${card} p-6`}>
-        <h3 id="acces-titre" className="text-2xl">Accès à l’espace client</h3>
-        <p className="mt-2 text-muted">{c.compte === 'invite' ? 'Le client n’a pas encore choisi son mot de passe.' : c.compte === 'suspendu' ? 'Le client ne peut plus se connecter.' : 'Le client peut se connecter.'}</p>
-        <div className="mt-4 flex flex-wrap gap-3">
-          {c.compte !== 'suspendu' && (
-            <button type="button" disabled={!!busy} className={btn.ghost}
-                    onClick={() => action('renvoyer', () => api.admin.renvoyer(c.id), `Nouvel e-mail d’accès envoyé à ${c.email}. Le lien précédent ne fonctionne plus.`)}>
-              {busy === 'renvoyer' ? 'Envoi…' : 'Renvoyer l’e-mail d’accès'}
-            </button>
-          )}
-          {c.compte === 'suspendu' ? (
-            <button type="button" disabled={!!busy} className={btn.ghost} onClick={() => action('acces', () => api.admin.acces(c.id, true), 'Accès rétabli.')}>Rétablir l’accès</button>
-          ) : confirmer ? (
-            <span className="flex flex-wrap items-center gap-3">
-              <span className="font-medium">Suspendre l’accès de {c.entreprise}{' '}?</span>
-              <button type="button" disabled={!!busy} className={`${btn.primary} bg-error hover:bg-ink`} onClick={() => action('acces', () => api.admin.acces(c.id, false), 'Accès suspendu : le client est déconnecté.')}>Suspendre l’accès</button>
-              <button type="button" className={btn.ghost} onClick={() => setConfirmer(false)}>Garder l’accès</button>
-            </span>
+      <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
+        <section aria-labelledby="autos-titre" className="min-w-0">
+          <h3 id="autos-titre" className="text-2xl">Automatisations <span className="text-muted tabular-nums">({presentes.length})</span></h3>
+          {autos.length === 0 ? (
+            <div className={`${card} mt-4 p-5`}>
+              <p>Aucune pour l’instant.</p>
+              <p className="mt-1 text-muted">Dans n8n, ajoutez l’étiquette <code>{etiquette(c)}</code> à ses workflows : ils apparaissent ici au plus tard 15 minutes après.</p>
+            </div>
           ) : (
-            <button type="button" className={btn.ghost} onClick={() => setConfirmer(true)}>Suspendre l’accès…</button>
+            <ul className={`${card} mt-4 divide-y divide-rule`}>
+              {autos.map(a => <LigneAutomatisation key={a.id} a={a} clients={clients} onSaved={recharger} />)}
+            </ul>
           )}
-        </div>
-      </section>
+        </section>
 
-      <section aria-labelledby="autos-titre">
-        <h3 id="autos-titre" className="text-2xl">Automatisations ({d.automatisations.filter(a => a.etat !== 'retiree').length})</h3>
-        {d.automatisations.length === 0 ? (
-          <p className="mt-3 text-muted">Aucune pour l’instant. Dans n8n, ajoutez l’étiquette <code>client-{c.slug}</code> aux workflows de ce client : ils apparaîtront ici à la prochaine synchronisation.</p>
-        ) : (
-          <ul className="mt-4 grid gap-4">
-            {d.automatisations.map(a => <LigneAutomatisation key={a.id} a={a} clients={clients} onSaved={charger} />)}
-          </ul>
-        )}
-      </section>
+        <aside className="order-first grid gap-4 lg:order-none">
+          <Acces c={c} onDone={(tone, text) => { setMsg({ tone, text }); recharger() }} />
+          <section aria-labelledby="n8n-titre" className={`${card} p-5`}>
+            <h3 id="n8n-titre" className="font-medium">Étiquette n8n</h3>
+            <Copier texte={etiquette(c)} />
+          </section>
+          <section aria-labelledby="fiche-titre" className={`${card} p-5`}>
+            <div className="flex items-center justify-between gap-3">
+              <h3 id="fiche-titre" className="font-medium">Contrat</h3>
+              {!edition && <button type="button" className={petit} onClick={() => setEdition(true)}>Modifier</button>}
+            </div>
+            <dl className="mt-3 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1 text-sm">
+              <dt className="text-muted">Formule</dt><dd>{c.formule || '-'}</dd>
+              <dt className="text-muted">Signé le</dt><dd>{dateLongue(c.date_contrat) || '-'}</dd>
+              <dt className="text-muted">Suivi</dt><dd>{c.suivi ? 'Mensuel' : 'Non'}</dd>
+            </dl>
+            {c.notes && <p className="mt-3 whitespace-pre-line border-t border-rule pt-3 text-sm">{c.notes}</p>}
+          </section>
+        </aside>
+      </div>
 
-      <form noValidate className={`${card} p-6 sm:p-8`} onSubmit={e => { e.preventDefault(); action('modifier', () => api.admin.modifier(v), 'Fiche enregistrée.') }}>
-        <h3 className="mb-6 text-2xl">Fiche client</h3>
-        <ChampsClient v={v} set={set} errors={errors} />
-        <button type="submit" disabled={!!busy} className={btn.primary}>{busy === 'modifier' ? 'Enregistrement…' : 'Enregistrer la fiche'}</button>
-      </form>
-
-      <Suppression client={c} onDone={() => onRetour(`${c.entreprise} a été supprimé : fiche, compte et liens d’accès effacés.`)} />
+      {edition && <Edition client={c} onFin={(text) => { setEdition(false); if (text) { setMsg({ tone: 'ok', text }); recharger() } }} />}
+      <Suppression client={c} onDone={() => onRetour(`${c.entreprise} a été supprimé : fiche, compte et liens d’accès effacés.`)} />
     </div>
   )
 }
 
+function Copier({ texte }) {
+  const [ok, setOk] = useState(false)
+  const copier = async () => { try { await navigator.clipboard.writeText(texte); setOk(true); setTimeout(() => setOk(false), 2000) } catch { /* sélection manuelle possible */ } }
+  return (
+    <div className="mt-2 flex flex-wrap items-center gap-3">
+      <code className="min-w-0 [overflow-wrap:anywhere]">{texte}</code>
+      <button type="button" className={petit} onClick={copier}>{ok ? 'Copié' : 'Copier'}</button>
+    </div>
+  )
+}
+
+function Acces({ c, onDone }) {
+  const [busy, setBusy] = useState('')
+  const [confirmer, setConfirmer] = useState(false)
+  const go = async (nom, fn, ok) => {
+    setBusy(nom)
+    try { const r = await fn(); onDone(r?.mail_envoye === false ? 'error' : 'ok', r?.mail_envoye === false ? 'L’e-mail n’est pas parti : voir le journal des e-mails.' : ok) }
+    catch (e) { onDone('error', messageErreur(e)) }
+    finally { setBusy(''); setConfirmer(false) }
+  }
+  const etat = c.compte === 'invite' ? 'Mot de passe pas encore choisi.'
+    : c.compte === 'suspendu' ? 'Le client ne peut plus se connecter.'
+    : c.compte === 'actif' ? (c.derniere_connexion ? `Dernière connexion ${depuis(c.derniere_connexion)}.` : 'Jamais connecté.') : 'Aucun compte.'
+  return (
+    <section aria-labelledby="acces-titre" className={`${card} p-5`}>
+      <h3 id="acces-titre" className="font-medium">Accès : {COMPTES[c.compte]}</h3>
+      <p className="mt-1 text-sm text-muted">{etat}</p>
+      {c.compte !== 'sans-compte' && (
+        <div className="mt-3 flex flex-wrap gap-2">
+          {c.compte === 'suspendu' ? (
+            <button type="button" disabled={!!busy} className={petit} onClick={() => go('acces', () => api.admin.acces(c.id, true), 'Accès rétabli.')}>Rétablir l’accès</button>
+          ) : confirmer ? (
+            <>
+              <button type="button" disabled={!!busy} className={`${petit} border-error text-error hover:border-error hover:text-error`}
+                      onClick={() => go('acces', () => api.admin.acces(c.id, false), 'Accès suspendu : le client est déconnecté.')}>Oui, suspendre</button>
+              <button type="button" className={petit} onClick={() => setConfirmer(false)}>Annuler</button>
+            </>
+          ) : (
+            <>
+              <button type="button" disabled={!!busy} className={petit}
+                      onClick={() => go('renvoyer', () => api.admin.renvoyer(c.id), `Nouvel e-mail d’accès envoyé à ${c.email}. Le lien précédent ne fonctionne plus.`)}>
+                {busy === 'renvoyer' ? 'Envoi…' : 'Renvoyer l’accès'}
+              </button>
+              <button type="button" className={petit} onClick={() => setConfirmer(true)}>Suspendre</button>
+            </>
+          )}
+        </div>
+      )}
+    </section>
+  )
+}
+
+function Edition({ client, onFin }) {
+  const [v, set] = useState(client)
+  const [errors, setErrors] = useState({})
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
+  const submit = async e => {
+    e.preventDefault(); setBusy(true); setError('')
+    try { await api.admin.modifier(v); onFin('Fiche enregistrée.') }
+    catch (err) { setErrors(err.fields || {}); setError(messageErreur(err)) } finally { setBusy(false) }
+  }
+  return (
+    <form noValidate onSubmit={submit} className={`${card} mt-10 max-w-3xl p-6`} aria-labelledby="edit-titre">
+      <h3 id="edit-titre" className="mb-5 text-2xl">Modifier la fiche</h3>
+      {error && <Alert>{error}</Alert>}
+      <ChampsClient v={v} set={set} errors={errors} />
+      <div className="flex flex-wrap gap-3">
+        <button type="submit" disabled={busy} className={btn.primary}>{busy ? 'Enregistrement…' : 'Enregistrer'}</button>
+        <button type="button" className={btn.ghost} onClick={() => onFin('')}>Annuler</button>
+      </div>
+    </form>
+  )
+}
+
 function Suppression({ client, onDone }) {
-  const [ouvert, setOuvert] = useState(false)
   const [saisie, setSaisie] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
@@ -309,23 +469,16 @@ function Suppression({ client, onDone }) {
     try { await api.admin.supprimer(client.id, saisie.trim()); onDone() } catch (err) { setError(err.fields?.confirmation || messageErreur(err)) } finally { setBusy(false) }
   }
   return (
-    <section className="rounded-xl border-2 border-error bg-paper p-6" aria-labelledby="suppr-titre">
-      <h3 id="suppr-titre" className="text-2xl">Supprimer ce client</h3>
-      <p className="mt-2 max-w-[62ch] text-muted">Efface définitivement la fiche, le compte et les liens d’accès (par exemple à la fin du contrat ou sur demande du client). Les workflows n8n ne sont pas touchés : ils passent dans « Workflows sans client ». Impossible à annuler.</p>
-      {!ouvert ? (
-        <button type="button" className={`${btn.ghost} mt-4`} onClick={() => setOuvert(true)}>Supprimer ce client…</button>
-      ) : (
-        <form noValidate onSubmit={go} className="mt-4 max-w-md">
-          <Field id="confirmation" label={`Pour confirmer, recopiez « ${client.entreprise} »`} error={error}>
-            <input id="confirmation" className={input} value={saisie} autoComplete="off" onChange={e => { setSaisie(e.target.value); setError('') }} aria-invalid={error ? true : undefined} />
-          </Field>
-          <div className="flex flex-wrap gap-3">
-            <button type="submit" disabled={busy} className={`${btn.primary} bg-error hover:bg-ink`}>{busy ? 'Suppression…' : `Supprimer ${client.entreprise}`}</button>
-            <button type="button" className={btn.ghost} onClick={() => { setOuvert(false); setSaisie(''); setError('') }}>Garder le client</button>
-          </div>
-        </form>
-      )}
-    </section>
+    <details className="mt-12 max-w-3xl border-t border-rule pt-4">
+      <summary className="inline-flex min-h-11 cursor-pointer items-center text-sm text-muted hover:text-error">Supprimer ce client…</summary>
+      <p className="mt-2 max-w-[62ch] text-sm text-muted">Efface définitivement la fiche, le compte et les liens d’accès. Les workflows n8n ne sont pas touchés : ils repassent dans « Workflows sans client ». Impossible à annuler.</p>
+      <form noValidate onSubmit={go} className="mt-4 max-w-md">
+        <Field id="confirmation" label={`Pour confirmer, recopiez « ${client.entreprise} »`} error={error}>
+          <input id="confirmation" className={input} value={saisie} autoComplete="off" onChange={e => { setSaisie(e.target.value); setError('') }} aria-invalid={error ? true : undefined} />
+        </Field>
+        <button type="submit" disabled={busy} className={`${btn.primary} bg-error hover:bg-ink`}>{busy ? 'Suppression…' : `Supprimer ${client.entreprise}`}</button>
+      </form>
+    </details>
   )
 }
 
@@ -333,81 +486,74 @@ function LigneAutomatisation({ a, clients, onSaved }) {
   const [desc, setDesc] = useState(a.description)
   const [state, setState] = useState('')
   const save = async patch => {
-    setState('…')
+    setState('Enregistrement…')
     try { await api.admin.automatisation({ id: a.id, ...patch }); setState('Enregistré'); onSaved?.() }
     catch (e) { setState(messageErreur(e)) }
   }
   return (
-    <li className={`${card} p-5 ${a.etat === 'retiree' ? 'opacity-70' : ''}`}>
+    <li className={`p-5 ${a.etat === 'retiree' ? 'opacity-70' : ''}`}>
       <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <p className="text-lg font-medium">{a.nom}</p>
-          <p className="text-sm text-muted">n8n {a.instance} · workflow {a.workflow_id} · dernière exécution {depuis(a.derniere_execution)} · {n(a.executions_7j, 'exécution')} et {n(a.erreurs_7j, 'erreur')} sur 7 jours</p>
+        <div className="min-w-0">
+          <p className="font-medium">{a.nom}</p>
+          <p className="text-sm text-muted">Dernière exécution {depuis(a.derniere_execution)} · 7 jours{' '}: {n(a.executions_7j, 'exécution')}, {n(a.erreurs_7j, 'erreur')}</p>
         </div>
         <Badge etat={a.etat} />
       </div>
-      <div className="mt-4 grid gap-3 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
-        <Field id={`desc-${a.id}`} label="Description pour le client" hint="Une phrase simple : ce que fait l’automatisation pour lui.">
-          <input id={`desc-${a.id}`} className={input} value={desc} maxLength={500} onChange={e => setDesc(e.target.value)} />
-        </Field>
-        <button type="button" className={`${btn.ghost} mb-5`} disabled={desc === a.description} onClick={() => save({ description: desc })}>Enregistrer</button>
-      </div>
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-        <label className="flex min-h-11 items-center gap-3">
+      <form className="mt-3 flex flex-wrap items-end gap-3" onSubmit={e => { e.preventDefault(); if (desc !== a.description) save({ description: desc }) }}>
+        <label className="min-w-0 flex-1 basis-64">
+          <span className="mb-1 block text-sm text-muted">Ce que le client lit</span>
+          <input className={input} value={desc} maxLength={500} placeholder="Une phrase simple : ce qu’elle fait pour lui" onChange={e => setDesc(e.target.value)} />
+        </label>
+        {desc !== a.description && <button type="submit" className={`${petit} min-h-12`}>Enregistrer</button>}
+      </form>
+      <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-1 text-sm">
+        <label className="flex min-h-11 items-center gap-2">
           <input type="checkbox" className="size-5" checked={a.visible} onChange={e => save({ visible: e.target.checked })} />
           Visible par le client
         </label>
-        <label className="flex min-h-11 items-center gap-3">
-          Client{' '}:
-          <select className={`${input} min-h-11 w-auto py-2`} value={a.client_id ?? ''} onChange={e => save({ client_id: e.target.value === '' ? null : Number(e.target.value) })}>
-            <option value="">Non rattachée</option>
+        <label className="flex min-h-11 items-center gap-2">
+          <span className="text-muted">Client</span>
+          <select className={`${input} min-h-11 w-auto py-1 text-sm`} value={a.client_id ?? ''} onChange={e => save({ client_id: e.target.value === '' ? null : Number(e.target.value) })}>
+            <option value="">Aucun (détacher)</option>
             {clients.map(c => <option key={c.id} value={c.id}>{c.entreprise}</option>)}
           </select>
         </label>
-        {state && <span role="status" className="text-sm text-muted">{state}</span>}
+        <span className="text-muted">n8n {a.instance} · #{a.workflow_id}</span>
+        {state && <span role="status" className="text-muted">{state}</span>}
       </div>
     </li>
   )
 }
 
-function NonRattachees({ autos, clients, onChange }) {
-  if (!autos.length) return null
-  return (
-    <section className="mt-14" aria-labelledby="orph-titre">
-      <h2 id="orph-titre" className="text-[2rem] leading-tight">Workflows sans client ({autos.length})</h2>
-      <p className="mt-2 max-w-[62ch] text-muted">Workflows envoyés par n8n sans étiquette <code>client-…</code> connue (vos workflows internes, par exemple). Rattachez-les ici, ou ajoutez l’étiquette dans n8n.</p>
-      <ul className="mt-6 grid gap-4">{autos.map(a => <LigneAutomatisation key={a.id} a={a} clients={clients} onSaved={onChange} />)}</ul>
-    </section>
-  )
-}
+/* ——— Repliés en bas de l'accueil ——— */
 
 function Emails({ emails }) {
   if (!emails.length) return null
   return (
-    <section className="mt-14" aria-labelledby="mails-titre">
-      <h2 id="mails-titre" className="text-[2rem] leading-tight">Derniers e-mails envoyés</h2>
-      <p className="mt-2 max-w-[62ch] text-muted">« Envoyé » signifie que le serveur a accepté l’e-mail. S’il n’arrive pas, regardez les indésirables du destinataire.</p>
-      <ul className={`${card} mt-6 divide-y divide-rule`}>
+    <details className={`${card} p-5`}>
+      <summary className="cursor-pointer font-medium">Derniers e-mails envoyés</summary>
+      <p className="mt-2 text-sm text-muted">« Envoyé » : le serveur a accepté l’e-mail. S’il n’arrive pas, regardez les indésirables du destinataire.</p>
+      <ul className="mt-3 divide-y divide-rule">
         {emails.map((m, i) => (
-          <li key={i} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 p-4">
-            <span><span className="font-medium">{m.a}</span> <span className="text-muted">· {m.objet}</span></span>
-            <span className={`text-sm ${m.ok ? 'text-ok' : 'text-error'}`}>{m.ok ? 'Envoyé' : `Échec${m.erreur ? `\u00a0: ${m.erreur}` : ''}`} · {depuis(Date.parse(m.date) / 1000)}</span>
+          <li key={i} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-2 text-sm">
+            <span className="min-w-0"><span className="font-medium">{m.a}</span> <span className="text-muted">· {m.objet}</span></span>
+            <span className={m.ok ? 'text-ok' : 'text-error'}>{m.ok ? 'Envoyé' : `Échec${m.erreur ? ` : ${m.erreur}` : ''}`} · {depuis(Date.parse(m.date) / 1000)}</span>
           </li>
         ))}
       </ul>
-    </section>
+    </details>
   )
 }
 
 function AideN8n() {
   return (
-    <section className={`${card} mt-14 p-6`} aria-labelledby="aide-titre">
-      <h2 id="aide-titre" className="text-2xl">Relier n8n</h2>
-      <ol className="mt-4 list-decimal space-y-2 pl-5 text-muted">
-        <li>Dans n8n, ajoutez à chaque workflow d’un client l’étiquette <code>client-</code> suivie de son identifiant (affiché sur sa fiche).</li>
-        <li>Importez le workflow « Axion – Suivi des automatisations clients » : toutes les 15 minutes, il envoie ici l’état des workflows étiquetés.</li>
+    <details className={`${card} p-5`}>
+      <summary className="cursor-pointer font-medium">Relier n8n</summary>
+      <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-muted">
+        <li>Dans n8n, ajoutez à chaque workflow d’un client l’étiquette <code>client-</code> suivie de son identifiant (à copier sur sa fiche).</li>
+        <li>Le workflow « Axion – Suivi des automatisations clients » envoie ici l’état des workflows étiquetés toutes les 15 minutes.</li>
         <li>Le détail (jeton, accès à l’API n8n) est dans <code>automatisations/n8n/README.md</code>. Voir aussi <Link to="/espace-client/" className={textLink}>la vue client</Link>.</li>
       </ol>
-    </section>
+    </details>
   )
 }
