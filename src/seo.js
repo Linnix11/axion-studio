@@ -73,7 +73,7 @@ export function schemaFor(path, data) {
     url: pageUrl('/a-propos'),
     address: { '@type': 'PostalAddress', addressLocality: 'Montlignon', postalCode: '95680', addressCountry: 'FR' },
   }
-  const website = { '@type': 'WebSite', '@id': `${SITE_URL}/#site`, url: `${SITE_URL}/`, name: BRAND, inLanguage: 'fr-FR', publisher: { '@id': `${SITE_URL}/#entreprise` } }
+  const website = { '@type': 'WebSite', '@id': `${SITE_URL}/#site`, url: `${SITE_URL}/`, name: BRAND, alternateName: [company.tradeName, 'axionstudio.fr'], inLanguage: 'fr-FR', publisher: { '@id': `${SITE_URL}/#entreprise` } }
   const out = [org, website]
   if (path === '/') out.push(person)
   const post = pageMeta[path]?.post
