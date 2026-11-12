@@ -115,6 +115,7 @@ export default function EspaceAdmin() {
               </ul>
             )}
             <NonRattachees autos={data.non_rattachees} clients={data.clients} onChange={charger} />
+            <Emails emails={data.emails || []} />
             <AideN8n />
           </>
         )}
@@ -376,6 +377,24 @@ function NonRattachees({ autos, clients, onChange }) {
       <h2 id="orph-titre" className="text-[2rem] leading-tight">Workflows sans client ({autos.length})</h2>
       <p className="mt-2 max-w-[62ch] text-muted">Workflows envoyés par n8n sans étiquette <code>client-…</code> connue (vos workflows internes, par exemple). Rattachez-les ici, ou ajoutez l’étiquette dans n8n.</p>
       <ul className="mt-6 grid gap-4">{autos.map(a => <LigneAutomatisation key={a.id} a={a} clients={clients} onSaved={onChange} />)}</ul>
+    </section>
+  )
+}
+
+function Emails({ emails }) {
+  if (!emails.length) return null
+  return (
+    <section className="mt-14" aria-labelledby="mails-titre">
+      <h2 id="mails-titre" className="text-[2rem] leading-tight">Derniers e-mails envoyés</h2>
+      <p className="mt-2 max-w-[62ch] text-muted">« Envoyé » signifie que le serveur a accepté l’e-mail. S’il n’arrive pas, regardez les indésirables du destinataire.</p>
+      <ul className={`${card} mt-6 divide-y divide-rule`}>
+        {emails.map((m, i) => (
+          <li key={i} className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 p-4">
+            <span><span className="font-medium">{m.a}</span> <span className="text-muted">· {m.objet}</span></span>
+            <span className={`text-sm ${m.ok ? 'text-ok' : 'text-error'}`}>{m.ok ? 'Envoyé' : `Échec${m.erreur ? `\u00a0: ${m.erreur}` : ''}`} · {depuis(Date.parse(m.date) / 1000)}</span>
+          </li>
+        ))}
+      </ul>
     </section>
   )
 }

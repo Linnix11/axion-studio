@@ -42,6 +42,18 @@ if ($action === 'connexion') {
   $st = db()->prepare('SELECT * FROM users WHERE email = ?');
   $st->execute([$email]);
   $u = $st->fetch();
+  // Accès administrateur sans e-mail : empreinte du mot de passe dans axion-config.php (crm_admin_password_hash)
+  $adminHash = (string) (crm_config()['crm_admin_password_hash'] ?? getenv('CRM_ADMIN_PASSWORD_HASH') ?: '');
+  if ($email === crm_admin_email() && $adminHash !== '' && (!$u || !$u['password_hash']) && password_verify($password, $adminHash)) {
+    $pdo = db();
+    if (!$u) {
+      $pdo->prepare('INSERT INTO users (email, nom, role, password_hash, cree_le) VALUES (?, ?, ?, ?, ?)')->execute([$email, 'Arthur', 'admin', $adminHash, time()]);
+    } else {
+      $pdo->prepare('UPDATE users SET password_hash = ? WHERE id = ?')->execute([$adminHash, $u['id']]);
+    }
+    $st->execute([$email]);
+    $u = $st->fetch();
+  }
   // Même temps de réponse que le compte existe ou non
   $hash = $u['password_hash'] ?? null;
   $ok = $hash ? password_verify($password, $hash) : (password_hash($password, PASSWORD_DEFAULT) && false);
@@ -76,7 +88,9 @@ if ($action === 'oubli') {
       $pdo->prepare('INSERT INTO users (email, nom, role, cree_le) VALUES (?, ?, ?, ?)')->execute([$email, 'Arthur', 'admin', time()]);
       $u = ['id' => (int) $pdo->lastInsertId(), 'email' => $email, 'actif' => 1];
     }
-    if ($u && $u['actif']) send_reset($u);
+    $sent = $u && $u['actif'] ? send_reset($u) : false;
+    // Pour l'adresse administrateur (publique), on indique si l'envoi a réussi : aide au diagnostic
+    if ($email === crm_admin_email()) reply(200, ['ok' => true, 'envoi' => $sent]);
   }
   reply(200, ['ok' => true]);   // toujours la même réponse : ne révèle pas quelles adresses ont un compte
 }

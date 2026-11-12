@@ -68,7 +68,7 @@ if ($method === 'GET' && $action === 'tableau') {
   }
   $orphelines = array_values(array_map('admin_automation', array_filter($autos, fn($a) => $a['client_id'] === null && !$a['absent'])));
   $synchros = $pdo->query('SELECT instance, recu_le, nb FROM synchros ORDER BY recu_le DESC')->fetchAll();
-  reply(200, ['ok' => true, 'clients' => $out, 'non_rattachees' => $orphelines, 'synchros' => $synchros]);
+  reply(200, ['ok' => true, 'clients' => $out, 'non_rattachees' => $orphelines, 'synchros' => $synchros, 'emails' => mail_log_tail(15)]);
 }
 
 if ($method === 'GET' && $action === 'client') {

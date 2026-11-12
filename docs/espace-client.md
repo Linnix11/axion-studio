@@ -45,6 +45,21 @@ si l'espace client affiche « momentanément indisponible », vérifiez-la dans 
 
 Seule cette adresse peut devenir administrateur (réglage `crm_admin_email` d'`axion-config.php` pour en changer).
 
+**Si l'e-mail n'arrive pas** (même dans les indésirables), créez l'accès sans e-mail :
+
+1. Dans le Terminal du Mac (PHP installé avec `brew install php`), tapez votre futur mot de passe quand il est demandé :
+
+   ```bash
+   php -r 'echo password_hash(readline("Mot de passe : "), PASSWORD_DEFAULT), "\n";'
+   ```
+
+2. Copiez la ligne affichée (elle commence par `$2y$`) : c'est une empreinte, pas le mot de passe lui-même.
+3. Dans `axion-config.php`, ajoutez `'crm_admin_password_hash' => '…l'empreinte…',` puis enregistrez.
+4. Sur https://axionstudio.fr/espace-client/, connectez-vous avec votre adresse et ce mot de passe.
+
+L'administration affiche les derniers e-mails envoyés (« Envoyé » ou « Échec ») : le journal est dans
+`domains/axionstudio.fr/axion-crm-mail.log` (date, destinataire, objet, résultat ; jamais le contenu ni les liens).
+
 ### 3. Le workflow n8n de suivi
 
 Dans votre n8n (sur le Mac, http://localhost:5678) :

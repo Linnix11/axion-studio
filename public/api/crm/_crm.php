@@ -6,6 +6,9 @@
 //   'crm_n8n_token'   => jeton secret partagé avec n8n (au moins 32 caractères), obligatoire pour n8n.php
 //   'crm_admin_email' => adresse du compte administrateur (par défaut : celle du site)
 //   'crm_db'          => chemin du fichier SQLite (par défaut : axion-crm.sqlite à côté d'axion-config.php)
+//   'crm_admin_password_hash' => facultatif : empreinte du mot de passe administrateur (password_hash), pour se connecter
+//                        sans passer par l'e-mail ; générée avec : php -r 'echo password_hash(readline("Mot de passe : "), PASSWORD_DEFAULT), "\n";'
+// Journal des e-mails : axion-crm-mail.log à côté d'axion-config.php (date, destinataire, objet, résultat ; jamais le contenu).
 // Pour les tests locaux : variables d'environnement CRM_DB, CRM_SITE_URL, CRM_MAIL_LOG (écrit les e-mails dans un fichier).
 
 require_once dirname(__DIR__) . '/_common.php';
@@ -225,7 +228,9 @@ function find_token(string $raw): ?array {
 function send_mail(string $to, string $subject, string $body): bool {
   $log = getenv('CRM_MAIL_LOG');
   if ($log) {
-    return file_put_contents($log, "À : $to\nObjet : $subject\n\n$body\n-----\n", FILE_APPEND) !== false;
+    $ok = file_put_contents($log, "À : $to\nObjet : $subject\n\n$body\n-----\n", FILE_APPEND) !== false;
+    mail_log($to, $subject, $ok, '');
+    return $ok;
   }
   $headers = implode("\r\n", [
     'From: Axion Studio <' . CRM_FROM . '>',
@@ -234,7 +239,30 @@ function send_mail(string $to, string $subject, string $body): bool {
     'Content-Type: text/plain; charset=UTF-8',
     'Content-Transfer-Encoding: 8bit',
   ]);
-  return @mail($to, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, $headers, '-f' . CRM_FROM);
+  $ok = @mail($to, '=?UTF-8?B?' . base64_encode($subject) . '?=', $body, $headers, '-f' . CRM_FROM);
+  mail_log($to, $subject, $ok, $ok ? '' : (string) (error_get_last()['message'] ?? 'mail() a renvoyé false'));
+  return $ok;
+}
+
+function mail_log_path(): ?string {
+  $dir = crm_config()['_dir'] ?? null;
+  return getenv('CRM_MAIL_JOURNAL') ?: ($dir ? $dir . '/axion-crm-mail.log' : null);
+}
+
+/** Note chaque envoi (sans le contenu, qui peut contenir un lien d'accès). */
+function mail_log(string $to, string $subject, bool $ok, string $err): void {
+  $f = mail_log_path();
+  if (!$f) return;
+  $line = json_encode(['date' => date('c'), 'a' => $to, 'objet' => $subject, 'ok' => $ok, 'erreur' => substr($err, 0, 300)], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+  @file_put_contents($f, $line . "\n", FILE_APPEND | LOCK_EX);
+}
+
+/** Les $n derniers envois notés (pour l'administration). */
+function mail_log_tail(int $n = 20): array {
+  $f = mail_log_path();
+  if (!$f || !is_file($f)) return [];
+  $lines = array_slice(file($f, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) ?: [], -$n);
+  return array_reverse(array_values(array_filter(array_map(fn($l) => json_decode($l, true), $lines))));
 }
 
 function portal_url(): string { return crm_site_url() . '/espace-client/'; }

@@ -51,9 +51,14 @@ except urllib.error.HTTPError as e:
 s, r = anon.req('/auth.php', {'action': 'oubli'}, axion=False); check('POST sans en-tête = 403', s == 403, r)
 s, r = anon.req('/admin.php?action=tableau'); check('admin sans session = 401', s == 401, r)
 
+# 0. Accès administrateur sans e-mail (empreinte crm_admin_password_hash, ici CRM_ADMIN_PASSWORD_HASH)
+if os.environ.get('CRM_ADMIN_PASSWORD_HASH'):
+    s, r = Client().req('/auth.php', {'action': 'connexion', 'email': 'arthur.champagne@icloud.com', 'password': 'faux-mot-de-passe'}); check('empreinte : mauvais mot de passe refusé', s == 401, r)
+    s, r = Client().req('/auth.php', {'action': 'connexion', 'email': 'arthur.champagne@icloud.com', 'password': os.environ.get('CRM_ADMIN_TEST_PASSWORD', '')}); check('empreinte : compte admin créé à la connexion', r.get('user', {}).get('role') == 'admin', r)
+
 # 1. Premier accès administrateur
-s, r = anon.req('/auth.php', {'action': 'oubli', 'email': 'arthur.champagne@icloud.com'}); check('oubli admin', r.get('ok'), r)
-s, r = anon.req('/auth.php', {'action': 'oubli', 'email': 'inconnu@exemple.fr'}); check('oubli inconnu : même réponse', r.get('ok'), r)
+s, r = anon.req('/auth.php', {'action': 'oubli', 'email': 'arthur.champagne@icloud.com'}); check('oubli admin (résultat d’envoi indiqué)', r.get('ok') and r.get('envoi') is True, r)
+s, r = anon.req('/auth.php', {'action': 'oubli', 'email': 'inconnu@exemple.fr'}); check('oubli inconnu : même réponse, sans résultat', r.get('ok') and 'envoi' not in r, r)
 L = last_link()
 s, r = anon.req(f'/auth.php?action=lien&lien={L}'); check('lien vérifié', r.get('usage') == 'reinitialisation', r)
 s, r = anon.req('/auth.php', {'action': 'activer', 'lien': L, 'password': 'court'}); check('mot de passe trop court', r.get('error') == 'validation', r)
@@ -91,6 +96,7 @@ check('rattachement automatique (3)', c.get('nb') == 3, c)
 check('compteurs : 1 erreur, 1 en pause', c.get('erreurs') == 1 and c.get('pause') == 1, c)
 check('compte invité', c.get('compte') == 'invite', c)
 check('reste 1 non rattachée', len(r.get('non_rattachees', [])) == 1, r.get('non_rattachees'))
+check('journal des e-mails visible', any(m.get('a') == 'claire@exemple.fr' and m.get('ok') for m in r.get('emails', [])), r.get('emails'))
 
 # 4. Le client active son accès
 L = last_link()
