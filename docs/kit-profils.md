@@ -15,7 +15,7 @@ que Google et les IA lisent comme « ces profils sont bien cette entreprise ».
 | Dirigeant | Arthur Champagne-Forterre |
 | Adresse | 5 allée des Pommiers, 95680 Montlignon |
 | Téléphone | 06 48 61 23 50 |
-| E-mail | arthur.champagne@icloud.com |
+| E-mail | contact@axionstudio.fr |
 | Site | https://axionstudio.fr |
 | Zone | France entière à distance ; déplacements en Île-de-France |
 | Statut | Entrepreneur individuel (micro-entreprise) |
