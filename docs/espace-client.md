@@ -74,7 +74,7 @@ L'administration affiche les derniers e-mails envoyés (« Envoyé » ou « Éch
 
 ### 3. Le workflow n8n de suivi
 
-Dans votre n8n (sur le Mac, http://localhost:5678) :
+Dans votre n8n (hébergé : https://n8n-ic2h.srv2151065.hstgr.cloud) :
 
 1. **Clé d'API n8n** : Settings → n8n API → Create an API key. Copiez-la.
 2. **Deux accès** (Credentials → Add credential → « Header Auth ») :
@@ -86,7 +86,7 @@ Dans votre n8n (sur le Mac, http://localhost:5678) :
    « n8n API » pour « Lister les workflows » et « Lire les exécutions (7 jours) »,
    « Espace client Axion » pour « Envoyer à l'espace client ».
 5. Lancez-le une fois (« Execute workflow ») : dans l'administration, la case « Synchro n8n » doit afficher « à l'instant ».
-6. Activez-le. Il tourne toutes les 15 minutes, tant que n8n tourne sur le Mac.
+6. Activez-le. Il tourne toutes les 15 minutes sur le serveur, même Mac éteint. Un seul n8n doit l'avoir actif.
 
 Si le Mac est éteint, les statuts ne bougent plus : l'administration affiche alors l'heure de la dernière synchro en rouge
 (au-delà d'une heure), et le client voit « État mis à jour il y a … ».

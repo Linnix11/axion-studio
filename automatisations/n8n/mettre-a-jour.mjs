@@ -1,7 +1,7 @@
-// Met à jour les deux workflows Axion dans votre n8n, en gardant vos accès (credentials) et l'adresse de votre feuille.
-// À lancer sur l'ordinateur où tourne n8n :  node mettre-a-jour.mjs
+// Installe ou met à jour les trois workflows Axion dans votre n8n, en gardant vos accès (credentials) et l'adresse de votre feuille.
+// n8n hébergé :  N8N_URL=https://n8n-ic2h.srv2151065.hstgr.cloud node mettre-a-jour.mjs   (n8n du Mac : node mettre-a-jour.mjs)
 // Il faut une clé d'API n8n : dans n8n, Settings → n8n API → Create an API key. Collée une première fois, elle est gardée
-// dans ~/.config/axion/n8n-api-key (lisible par vous seul) ; si n8n la refuse, elle est oubliée et redemandée.
+// dans ~/.config/axion/ (une clé par n8n, lisible par vous seul) ; si n8n la refuse, elle est oubliée et redemandée.
 // Pour changer de feuille Google : FEUILLE="<adresse copiée dans le navigateur, avec #gid=…>" node mettre-a-jour.mjs
 // (le numéro gid désigne l'onglet ; sans lui, l'onglet déjà utilisé est gardé)
 import { createInterface } from 'node:readline/promises'
@@ -11,10 +11,11 @@ import { homedir } from 'node:os'
 
 const N8N = (process.env.N8N_URL || 'http://localhost:5678').replace(/\/$/, '')
 const SOURCE = process.env.AXION_SOURCE || 'https://raw.githubusercontent.com/Linnix11/axion-studio/main/automatisations/n8n/'   // ou un dossier local
-const FICHIERS = ['axion-1-collecte-prospects.json', 'axion-2-envoi-emails.json']
+const FICHIERS = ['axion-1-collecte-prospects.json', 'axion-2-envoi-emails.json', 'axion-3-suivi-clients.json']
 const FEUILLE = process.env.FEUILLE?.trim()                        // nouvelle feuille (sinon : celle déjà utilisée)
 
-const FICHIER_CLE = join(homedir(), '.config', 'axion', 'n8n-api-key')
+const HOTE = new URL(N8N).hostname
+const FICHIER_CLE = join(homedir(), '.config', 'axion', HOTE === 'localhost' ? 'n8n-api-key' : `n8n-api-key-${HOTE}`)
 let key = process.env.N8N_API_KEY || (() => { try { return readFileSync(FICHIER_CLE, 'utf8').trim() } catch { return '' } })()
 if (!key) {
   const rl = createInterface({ input: process.stdin, output: process.stdout })
@@ -31,7 +32,9 @@ async function api(method, path, body) {
   }).catch(e => { throw new Error(`n8n ne répond pas à ${N8N} : est-il bien lancé ? (${e.message})`) })
   if (res.status === 401 || res.status === 403) {
     rmSync(FICHIER_CLE, { force: true })
-    throw new Error('n8n refuse la clé d’API (expirée ou supprimée ?). Elle a été oubliée : relancez la commande et collez-en une nouvelle.')
+    throw new Error(res.status === 403
+      ? 'n8n accepte la clé mais ne lui donne pas les droits sur les workflows (403). Elle a été oubliée : créez-en une avec les droits « workflow » (lire, créer, modifier) et relancez.'
+      : 'n8n ne reconnaît pas la clé (401 : supprimée, mal copiée ou créée sur un autre n8n ?). Elle a été oubliée : relancez la commande et collez-en une nouvelle.')
   }
   if (!res.ok) throw new Error(`n8n a répondu ${res.status} sur ${method} ${path} : ${(await res.text()).slice(0, 200)}`)
   return res.json()

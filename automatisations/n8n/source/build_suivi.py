@@ -32,13 +32,13 @@ nodes = [
          {"rule": {"interval": [{"field": "minutes", "minutesInterval": 15}]}}, [0, 0]),
     node("Réglages", "n8n-nodes-base.code", 2, {"jsCode": "\n".join([
         "// À adapter si besoin :",
-        "// - n8n_url : adresse de ce n8n (sur le Mac : http://localhost:5678)",
+        "// - n8n_url : adresse de ce n8n vue de lui-même (localhost:5678 marche aussi dans le conteneur Docker du VPS)",
         "// - crm_url : point d'entrée de l'espace client du site",
         "// - instance : nom de ce n8n dans l'espace client (utile si plusieurs n8n envoient des statuts)",
         "return [{ json: {",
         "  n8n_url: 'http://localhost:5678',",
         "  crm_url: 'https://axionstudio.fr/api/crm/n8n.php',",
-        "  instance: 'mac-arthur',",
+        "  instance: 'vps',",
         "} }]",
     ])}, [220, 0]),
     node("Lister les workflows", "n8n-nodes-base.httpRequest", 4.2, {
