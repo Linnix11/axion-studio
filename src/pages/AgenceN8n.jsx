@@ -22,6 +22,7 @@ export default function AgenceN8n() {
         <p className="mt-8 max-w-[64ch] text-lg leading-[1.6] text-muted">
           n8n n’est pas toujours le bon choix : pour un petit besoin, Make ou Zapier peuvent suffire.
           Le comparatif est dans l’article <Link to="/blog/n8n-make-zapier-comparatif/" className={textLink}>n8n, Make ou Zapier : quel outil choisir</Link>.
+          Pour découvrir l’outil : <Link to="/blog/n8n-c-est-quoi/" className={textLink}>n8n, c’est quoi ?</Link> et <Link to="/blog/agent-ia-n8n/" className={textLink}>créer un agent IA avec n8n</Link>.
         </p>
       </Section>
 

@@ -15,6 +15,171 @@
 
 export const posts = [
   {
+    slug: 'n8n-c-est-quoi',
+    seoTitle: 'n8n, c’est quoi ? Le guide simple (TPE)',
+    seoDescription: 'n8n expliqué simplement : workflows, déclencheurs, Cloud ou auto-hébergé, licence, IA, exemples concrets pour une TPE et limites honnêtes.',
+    title: 'n8n, c’est quoi ? L’outil d’automatisation expliqué simplement',
+    description: 'Ce qu’est n8n, comment marche un workflow, n8n Cloud ou auto-hébergé, ce que permet sa licence, l’IA, et ce que ça change pour une petite entreprise.',
+    date: '2026-11-13',
+    category: 'Outils',
+    lead: 'n8n est un logiciel qui relie vos outils entre eux (messagerie, tableur, agenda, logiciel de facturation) et enchaîne des tâches à votre place. Chaque automatisation se dessine comme un schéma, appelé workflow : un événement la déclenche, puis les étapes s’exécutent les unes après les autres. n8n s’utilise en ligne (n8n Cloud) ou installé sur un serveur à votre nom, et il sait faire appel à l’intelligence artificielle.',
+    body: [
+      { p: 'n8n se présente comme une plateforme pour construire des workflows et des agents d’IA, en combinant un éditeur visuel et, si besoin, du code. Pour un dirigeant, la traduction est simple : c’est l’outil qui fait passer une information d’un logiciel à un autre, au bon moment, sans que personne ait à la recopier. Une demande arrive par le site, et elle se retrouve dans votre tableur, dans votre agenda et dans votre boîte mail, sous la forme que vous avez choisie.' },
+      { p: 'Il appartient à la même famille que Make et Zapier : des outils d’automatisation « sans code », qui évitent de faire développer un logiciel sur mesure. Ce qui le distingue, c’est surtout la possibilité de l’installer chez vous et sa place faite à l’IA.' },
+
+      { h2: 'Comment fonctionne un workflow n8n' },
+      { p: 'La documentation de n8n définit un workflow comme un ensemble de nœuds reliés entre eux pour automatiser un processus. Trois notions suffisent pour tout comprendre :' },
+      { ul: [
+        'Le déclencheur : c’est le nœud qui lance le workflow quand une condition est remplie. Par exemple un e-mail reçu dans Gmail, un formulaire envoyé, ou une heure fixe (chaque matin à 8 h, chaque lundi).',
+        'Les nœuds : chacun fait une étape. Lire un e-mail, ajouter une ligne dans un tableur, créer un contact, envoyer un message. La plupart sont des connecteurs prêts à l’emploi vers un logiciel précis, et n8n en propose plusieurs centaines.',
+        'Les connexions : ce sont les flèches qui relient les nœuds et fixent l’ordre des étapes. Des conditions permettent de prendre un chemin ou un autre (par exemple, « si le montant dépasse tel seuil, prévenir le dirigeant »).',
+      ] },
+      { p: 'Quand un logiciel n’a pas de connecteur, n8n peut quand même lui parler : le nœud HTTP Request interroge n’importe quel service qui dispose d’une API, c’est-à-dire d’une porte d’entrée prévue pour les échanges entre logiciels. C’est ce qui permet de relier un logiciel de facturation ou un outil métier moins connu.' },
+
+      { h2: 'n8n Cloud ou auto-hébergé : deux façons de l’utiliser' },
+      { p: 'n8n propose deux modes, et le choix change le coût comme la charge de travail :' },
+      { ul: [
+        'n8n Cloud : n8n s’occupe des serveurs, vous vous connectez et vous construisez. L’abonnement est calculé sur le nombre d’exécutions de workflows par mois, une exécution étant un lancement complet du workflow, quel que soit son nombre d’étapes. Les données sont stockées dans l’Union européenne, sur des serveurs situés à Francfort.',
+        'Auto-hébergé : n8n est installé sur un serveur que vous louez. L’édition Community est gratuite et ne facture pas les exécutions ; vous payez le serveur. En contrepartie, l’installation, les mises à jour, les sauvegardes et la sécurité sont à votre charge, et la documentation de n8n indique qu’elles demandent des compétences techniques.',
+      ] },
+      { p: 'Il existe aussi des éditions payantes (Business et Enterprise) qui ajoutent surtout des fonctions d’équipe : projets, partage de workflows entre utilisateurs, connexion par authentification unique, suivi des versions avec Git. Une petite entreprise où une seule personne gère les automatisations s’en passe le plus souvent.' },
+      { note: 'Les tarifs de n8n Cloud évoluent : consultez toujours la page de prix à jour sur n8n.io avant de choisir. Dans mes propositions, le coût de l’outil est indiqué à part, vérifié au moment du projet, et l’abonnement est souscrit à votre nom.' },
+
+      { h2: 'n8n est-il un logiciel libre ? Ce que dit sa licence' },
+      { p: 'Pas au sens strict, et n8n ne se présente pas comme tel. Son code source est public sur GitHub, mais il est publié sous la Sustainable Use License, que n8n qualifie de licence « fair-code ». Le fair-code désigne des logiciels dont le code est ouvert et l’usage généralement gratuit, mais dont l’exploitation commerciale est encadrée par leurs auteurs. n8n explique qu’il ne se dit pas « open source » parce que, pour l’Open Source Initiative, une licence open source ne peut pas limiter l’usage. Certaines fonctions avancées relèvent d’une seconde licence, la n8n Enterprise License, qui demande une clé payante.' },
+      { p: 'Concrètement, d’après la foire aux questions de la licence :' },
+      { ul: [
+        'vous pouvez utiliser n8n gratuitement pour les besoins internes de votre entreprise ;',
+        'un prestataire peut être payé pour créer, installer et maintenir vos workflows ;',
+        'en revanche, héberger n8n pour le proposer en service à des clients qui y construiraient leurs propres workflows n’est pas permis par cette licence.',
+      ] },
+      { p: 'C’est aussi pour cela que j’installe n8n sur un compte ou un serveur à votre nom plutôt que de vous donner accès au mien : l’outil reste le vôtre, et vous gardez tout si nous arrêtons de travailler ensemble.' },
+
+      { h2: 'L’intelligence artificielle dans n8n' },
+      { p: 'n8n peut appeler les modèles d’IA de plusieurs fournisseurs, comme OpenAI, Anthropic ou Google, et en combiner plusieurs dans un même workflow. Il y a deux grandes façons de s’en servir :' },
+      { ul: [
+        'Une étape d’IA au milieu d’un workflow classique : lire une pièce jointe, classer une demande par type, résumer un e-mail, rédiger un brouillon de réponse. Le reste du workflow reste prévisible.',
+        'Un agent d’IA : le nœud AI Agent relie un modèle d’IA à un ou plusieurs outils (agenda, tableur, base de données) et choisit lui-même lesquels utiliser pour accomplir une tâche.',
+      ] },
+      { p: 'Pour une petite entreprise, la première façon est souvent la plus utile : l’IA fait une tâche précise, et une personne relit avant que quoi que ce soit parte chez un client. Une IA peut se tromper, et les données envoyées à un service d’IA doivent être choisies avec soin ; les règles à suivre sont dans les [6 règles pour utiliser l’IA avec des données clients](/blog/ia-donnees-clients-regles/).' },
+
+      { h2: 'Ce que ça change pour une TPE : trois exemples' },
+      { p: 'Voici trois workflows typiques pour une petite entreprise. Aucun ne demande de changer vos logiciels : n8n se branche sur ceux que vous utilisez déjà.' },
+      { ul: [
+        'Les demandes de devis : un client remplit le formulaire de votre site. Le workflow crée sa fiche dans votre tableur ou votre CRM, prépare un brouillon de devis à partir de vos tarifs et vous prévient. Vous relisez et vous envoyez. Le détail est dans [automatiser ses devis quand on est artisan](/blog/devis-artisan-automatiser/).',
+        'Les relances de factures : chaque matin, à heure fixe, le workflow parcourt vos factures, envoie un rappel aimable avant l’échéance puis les relances prévues, et s’arrête dès que le paiement est enregistré. Voir [relances de factures impayées](/blog/relances-factures-impayees/).',
+        'L’agenda : un client réserve un créneau en ligne, le rendez-vous arrive dans votre agenda, un rappel part la veille et un créneau annulé peut être reproposé. Voir [prise de rendez-vous en ligne et rappels](/blog/prise-rendez-vous-en-ligne-rappels/).',
+      ] },
+      { p: 'Le bénéfice tient moins à une seule tâche qu’à leur addition : moins de recopie, moins d’oublis, des clients qui reçoivent une réponse plus vite. Pour savoir si une automatisation vaut le coup chez vous, la méthode de calcul est dans [combien coûte l’automatisation](/blog/cout-automatisation-petite-entreprise/).' },
+
+      { h2: 'Les limites, honnêtement' },
+      { ul: [
+        'Pour deux ou trois automatisations simples entre des outils courants, Make ou Zapier suffisent souvent et se prennent en main plus vite. n8n devient intéressant avec des volumes importants, des données à garder chez soi ou de l’IA.',
+        'L’auto-hébergement demande de l’entretien : mises à jour, sauvegardes, surveillance du serveur. Si personne ne s’en occupe, mieux vaut n8n Cloud.',
+        'Un workflow qui tourne seul doit être surveillé : un logiciel qui change, un accès qui expire, et il s’arrête sans prévenir s’il n’y a pas d’alerte d’erreur.',
+        'L’interface est plus technique que celle de Zapier : les cas simples se font sans code, mais les cas avancés demandent de comprendre comment les données circulent d’un nœud à l’autre.',
+      ] },
+      { note: 'n8n est un outil, pas une solution toute faite. Ce qui fait la valeur d’une automatisation, c’est le choix de la bonne tâche et un workflow testé sur vos vraies données, avec une vérification humaine là où une erreur coûterait cher.' },
+
+      { h2: 'Comment démarrer avec n8n' },
+      { ol: [
+        'Choisissez une seule tâche, qui revient chaque semaine et suit toujours les mêmes étapes. Les [5 tâches à automatiser en priorité](/blog/taches-a-automatiser-tpe/) donnent des idées.',
+        'Listez les logiciels concernés et vérifiez qu’ils ont un connecteur n8n ou une API.',
+        'Pour essayer seul, l’essai de n8n Cloud évite toute installation. Commencez par un workflow de deux ou trois nœuds, par exemple un formulaire qui ajoute une ligne dans un tableur.',
+        'Avant de vous y fier, ajoutez une alerte en cas d’erreur et gardez une vérification humaine les premières semaines.',
+        'Si vous préférez déléguer, je construis le workflow, je le teste sur vos données et je vous le remets documenté. Les projets démarrent à partir de 150 € au forfait, et un suivi facultatif est proposé à partir de 250 € par mois.',
+      ] },
+      { p: 'Pour aller plus loin : pour un accompagnement de A à Z (audit, installation, création des workflows et suivi), voir la page [agence n8n pour TPE et PME](/agence-n8n/). Vous hésitez entre plusieurs outils ? Le [comparatif n8n, Make et Zapier](/blog/n8n-make-zapier-comparatif/) aide à choisir. Pour des exemples propres à un métier, voir l’[automatisation pour les artisans du bâtiment](/automatisation/artisans-batiment/). Je regarde avec vous si n8n est le bon choix pendant l’[audit gratuit de 30 minutes](/contact/).' },
+      { p: 'Sources : [n8n, choisir entre n8n Cloud et l’auto-hébergement](https://docs.n8n.io/choose-how-to-use-n8n), [n8n, comprendre les workflows](https://docs.n8n.io/build/understand-workflows), [n8n, nœuds déclencheurs](https://docs.n8n.io/integrations/builtin/trigger-nodes), [n8n, nœud HTTP Request](https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.httprequest), [n8n, tarifs et hébergement des données Cloud](https://n8n.io/pricing/), [n8n, fonctions de l’édition Community](https://docs.n8n.io/deploy/host-n8n/community-edition-features), [n8n, licence](https://docs.n8n.io/n8n-community-license), [n8n, foire aux questions de la licence](https://docs.n8n.io/n8n-community-license/community-license/license-faq), [n8n, intégrer l’IA](https://docs.n8n.io/build/integrate-ai), [n8n, nœud AI Agent](https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.agent), [dépôt GitHub de n8n](https://github.com/n8n-io/n8n), [faircode.io, définition du fair-code](https://faircode.io/).' },
+    ],
+    faq: [
+      { q: 'n8n, c’est quoi en résumé ?', a: 'n8n est un outil d’automatisation qui relie vos logiciels entre eux par des workflows visuels : un déclencheur (e-mail reçu, formulaire envoyé, heure fixe) lance une suite d’étapes dans vos outils. Il s’utilise en ligne avec n8n Cloud ou installé sur votre propre serveur, et peut faire appel à l’IA.' },
+      { q: 'n8n est-il gratuit ?', a: 'L’édition Community, installée sur votre propre serveur, est gratuite : vous payez le serveur et le temps de maintenance. n8n Cloud est un abonnement calculé sur le nombre d’exécutions de workflows par mois. Les services d’IA éventuels sont facturés à part par leur fournisseur.' },
+      { q: 'n8n est-il open source ?', a: 'Non au sens strict. Son code est public, mais il est publié sous la Sustainable Use License, une licence « fair-code » qui autorise l’usage interne en entreprise et les prestations de création et de maintenance de workflows, mais pas la revente de n8n comme service hébergé.' },
+      { q: 'Faut-il savoir coder pour utiliser n8n ?', a: 'Pas pour les workflows simples : on assemble les étapes dans un éditeur visuel. Les cas avancés (logiciel sans connecteur, transformation de données) demandent de comprendre les API, et n8n permet d’ajouter du code si besoin.' },
+    ],
+  },
+  {
+    slug: 'agent-ia-n8n',
+    seoTitle: 'Agent IA avec n8n : le guide simple',
+    seoDescription: 'Agent IA ou workflow, nœud AI Agent et Agents de n8n, exemple pas à pas pour une TPE (e-mails, agenda, brouillon) et garde-fous : le guide sans code.',
+    title: 'Créer un agent IA avec n8n : comment ça marche, exemple pas à pas',
+    description: 'Ce qu’est un agent IA, ce que n8n propose aujourd’hui (nœud AI Agent et Agents), un exemple concret pour une TPE, sans code, et les garde-fous à prévoir.',
+    date: '2026-11-13',
+    category: 'Outils',
+    lead: 'Un agent IA est un modèle d’IA à qui l’on donne un objectif, des outils et une mémoire : c’est lui qui décide, à chaque étape, quel outil utiliser. Dans n8n, on le crée avec le nœud AI Agent à l’intérieur d’un workflow, ou avec les Agents, un objet à part entière encore en préversion. Pour une TPE, le bon usage consiste à lui faire préparer le travail (lire, chercher, proposer) en gardant une validation humaine avant tout envoi.',
+    body: [
+      { p: 'Le mot « agent » sert aujourd’hui à désigner des choses très différentes. Voici ce qu’il recouvre vraiment, ce que n8n permet de faire, et un exemple concret, sans code, de ce qu’un agent peut apporter à une petite entreprise.' },
+
+      { h2: 'Agent IA ou workflow classique : la différence' },
+      { p: 'Un workflow classique suit un chemin fixé à l’avance : quand un formulaire arrive, créer le contact, puis envoyer la confirmation. Chaque étape a été décidée par la personne qui l’a construit. Même quand une IA intervient, par exemple pour résumer un message, elle fait une seule tâche, à un endroit précis.' },
+      { p: 'Un agent IA fonctionne autrement. On lui donne un objectif, des consignes et une liste d’outils, et le modèle d’IA décide lui-même quels outils appeler, dans quel ordre, jusqu’à obtenir une réponse. La documentation de n8n le résume ainsi : là où une chaîne suit une suite d’appels prévue d’avance, un agent utilise un modèle de langage pour choisir les actions à mener. Un agent réunit quatre éléments :' },
+      { ul: [
+        'le modèle : l’IA qui raisonne et rédige (n8n se branche notamment sur OpenAI, Anthropic ou Mistral) ;',
+        'les consignes : son rôle, son ton, ce qu’il doit faire et ce qu’il ne doit jamais faire ;',
+        'les outils : les actions qu’il a le droit d’effectuer dans vos logiciels (lire l’agenda, chercher un client, créer un brouillon d’e-mail…) ;',
+        'la mémoire : l’historique de l’échange en cours, pour ne pas repartir de zéro à chaque message.',
+      ] },
+
+      { h2: 'Ce que n8n propose aujourd’hui' },
+      { p: 'n8n offre deux façons de créer un agent. Elles ne s’opposent pas, elles se complètent.' },
+      { p: 'La première est le nœud AI Agent, une brique que l’on place dans un workflow. On y branche un modèle de chat, au moins un outil (c’est obligatoire) et, si besoin, une mémoire. Les outils peuvent être des intégrations de n8n (Gmail, Google Agenda, Outlook, Google Sheets…), un autre workflow, un appel à un service en ligne, ou un serveur MCP, qui donne à l’agent, en une seule connexion, les outils proposés par un service. Le workflow garde la main sur le reste : ce qui déclenche l’agent et ce que l’on fait de sa réponse.' },
+      { p: 'La seconde, ce sont les Agents (« Build and manage agents » dans la documentation). Ce ne sont plus des nœuds mais des objets à part entière, rangés à côté des workflows dans un projet. On les configure dans l’Agent Builder : modèle, consignes, outils, mémoire de la conversation (activée par défaut) et tâches planifiées. On les teste en brouillon, puis on publie une version : les modifications suivantes ne touchent pas la version en service tant qu’on ne republie pas. Ils peuvent répondre dans Slack, Telegram, Linear ou Microsoft Teams, et un workflow peut leur écrire avec le nœud Message an Agent.' },
+      { note: 'Les Agents de n8n sont en préversion (« Preview ») : n8n prévient qu’ils peuvent se tromper et que leur fonctionnement peut encore changer. Tant que c’est le cas, pour un usage quotidien chez un client, je privilégie le nœud AI Agent dans un workflow.' },
+
+      { h2: 'Exemple pas à pas : un agent qui prépare les réponses aux demandes de rendez-vous' },
+      { p: 'Prenons un cabinet ou une petite entreprise de services qui reçoit chaque jour des e-mails du type « Bonjour, je voudrais un rendez-vous la semaine prochaine, plutôt en fin de journée ». Quelqu’un lit le message, ouvre l’agenda, cherche deux ou trois créneaux et rédige la réponse. Voici comment un agent n8n peut préparer ce travail, sans rien envoyer seul.' },
+      { ol: [
+        'Le déclencheur : un nouvel e-mail arrive dans la boîte de contact. n8n le repère (avec Gmail, il vérifie la boîte à intervalle régulier) et peut se limiter à un libellé ou à un expéditeur, pour ne traiter que les demandes.',
+        'Le tri : l’agent lit le message et détermine s’il s’agit d’une demande de rendez-vous, d’une question ou d’autre chose. Ce qui n’est pas une demande de rendez-vous vous est simplement signalé, sans réponse automatique.',
+        'La consultation de l’agenda : l’agent interroge votre agenda (Google Agenda ou Outlook) sur la période demandée et repère les créneaux libres, en respectant vos consignes : horaires, durée d’un rendez-vous, jours à éviter.',
+        'Le brouillon : il rédige une réponse qui propose deux ou trois créneaux et la dépose en brouillon dans votre messagerie, dans le fil de la conversation.',
+        'La validation : vous recevez une notification, relisez le brouillon, le corrigez si besoin et l’envoyez vous-même. Si l’outil d’envoi est confié à l’agent, n8n peut aussi le mettre en pause avant chaque envoi et vous demander d’approuver ou de refuser, par e-mail, Slack, Telegram ou Microsoft Teams.',
+        'La suite : une fois le client d’accord, le rendez-vous est inscrit dans l’agenda, par vous ou par un workflow classique.',
+      ] },
+      { p: 'Pourquoi un agent ici, et pas un simple workflow ? Parce que les demandes sont écrites librement : « mardi ou jeudi », « pas avant le 15 », « le matin si possible ». L’agent interprète la phrase et choisit lui-même la période à vérifier. Dans cet exemple, la mémoire sert peu, car chaque e-mail est traité à part. Elle devient utile quand l’agent dialogue, par exemple dans Telegram ou dans le chat d’un site, pour se souvenir de ce qui a été dit plus tôt dans la conversation.' },
+
+      { h2: 'Les garde-fous à prévoir' },
+      { ul: [
+        'Une validation humaine avant tout envoi : l’agent prépare, vous décidez. n8n permet d’exiger une approbation outil par outil, par exemple seulement pour l’envoi d’e-mails.',
+        'Des outils limités au strict nécessaire : lire l’agenda et créer un brouillon, oui ; supprimer des e-mails ou modifier des fiches clients, non, sauf besoin précis. Avec une intégration n8n, on peut fixer certains réglages à l’avance et ne laisser à l’IA que les champs utiles.',
+        'Des consignes claires : ne jamais inventer un prix, un délai ou une disponibilité, et dire « je ne sais pas » plutôt que deviner.',
+        'Un suivi : n8n conserve l’historique des exécutions (et, pour les Agents, celui des conversations et des outils utilisés), ce qui permet de vérifier après coup ce que l’agent a fait.',
+      ] },
+
+      { h2: 'Données personnelles et RGPD' },
+      { p: 'Un agent qui lit vos e-mails et votre agenda manipule des données personnelles : noms, coordonnées, parfois le motif du rendez-vous. Le texte du message est envoyé au fournisseur du modèle d’IA pour être traité, même si n8n est installé sur votre propre serveur. Les règles habituelles s’appliquent donc : n’envoyer que ce qui est utile, choisir une offre professionnelle dont les conditions excluent la réutilisation de vos données, le mentionner dans votre politique de confidentialité et l’inscrire dans votre registre. Le détail est dans [RGPD et automatisation : ce qu’une TPE doit vérifier](/blog/rgpd-automatisation-tpe/) et dans les [6 règles pour utiliser l’IA avec des données clients](/blog/ia-donnees-clients-regles/).' },
+      { p: 'Si vos messages contiennent des informations sensibles, des données de santé par exemple, un agent IA généraliste ne doit pas les lire sans un cadre adapté.' },
+
+      { h2: 'Ce que ça coûte' },
+      { p: 'Trois postes, sans surprise si on les connaît à l’avance :' },
+      { ul: [
+        'n8n lui-même : n8n Cloud, ou un serveur à votre nom. Si votre offre compte les exécutions, sachez qu’un échange avec un Agent compte comme une exécution, comme un workflow.',
+        'Le modèle d’IA : les fournisseurs facturent leur API à l’usage, selon la quantité de texte envoyée et produite. Un agent appelle souvent le modèle plusieurs fois pour une seule demande (choisir un outil, lire le résultat, rédiger), et la description de ses outils fait partie du texte envoyé : une demande traitée par un agent coûte donc plus qu’un appel unique à l’IA.',
+        'La mise en place et le suivi : écriture des consignes, tests sur de vrais e-mails, ajustements les premières semaines.',
+      ] },
+      { p: 'Je ne donne pas de chiffre général pour l’IA : il dépend du modèle choisi, de la longueur des messages et de votre volume. Je l’estime pendant l’audit, à partir de vos demandes réelles, et les abonnements restent à votre nom. Côté réalisation, les projets démarrent à partir de 150 €, prix exact fixé après l’audit.' },
+
+      { h2: 'Quand un simple workflow suffit' },
+      { p: 'Un agent n’est pas toujours la bonne réponse. Si le chemin est toujours le même, un workflow classique est plus prévisible, plus rapide et moins cher :' },
+      { ul: [
+        'le formulaire de votre site arrive toujours avec les mêmes champs : il suffit de les recopier dans le CRM ;',
+        'vos clients réservent déjà en ligne : il n’y a rien à interpréter, seulement des rappels à envoyer (voir [prise de rendez-vous en ligne et rappels](/blog/prise-rendez-vous-en-ligne-rappels/)) ;',
+        'l’IA n’a qu’une tâche précise (résumer, classer, lire une facture) : une seule étape d’IA dans un workflow suffit, sans lui laisser le choix des outils.',
+      ] },
+      { p: 'Mon conseil : commencer par un workflow, ajouter une étape d’IA là où il faut lire du texte libre, et passer à un agent seulement quand les demandes sont trop variées pour être prévues à l’avance. C’est aussi ce que recommande n8n : un agent quand le travail est trop ouvert pour un workflow fixe.' },
+
+      { p: 'Pour aller plus loin : je détaille ce que je fais avec n8n (installation, workflows, IA, maintenance) sur la page [agence n8n pour TPE et PME](/agence-n8n/), et les usages de l’IA dans la partie [intelligence artificielle des services](/services/#ia). Si vous hésitez entre un agent sur vos e-mails et un assistant sur votre site, lisez [Chatbot sur le site d’une TPE : utile ou gadget ?](/blog/chatbot-site-tpe-utile-ou-gadget/). Pour les cabinets qui gèrent beaucoup de rendez-vous, voir aussi la page [professions libérales et cabinets](/automatisation/professions-liberales/). Vous voulez savoir si un agent a du sens chez vous ? [Écrivez-moi](/contact/) : je regarde vos demandes réelles pendant l’audit gratuit de 30 minutes.' },
+      { p: 'Sources : documentation n8n, [Build and manage agents](https://docs.n8n.io/build/build-and-manage-agents/), [nœud AI Agent](https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.agent/), [What agents do](https://docs.n8n.io/build/integrate-ai/understand-ai-components/what-agents-do/), [How memory works](https://docs.n8n.io/build/integrate-ai/understand-ai-components/how-memory-works/), [Tools Agent (modèles et outils compatibles)](https://docs.n8n.io/integrations/builtin/cluster-nodes/root-nodes/n8n-nodes-langchain.agent/tools-agent/), [MCP servers](https://docs.n8n.io/build/integrate-ai/mcp-servers/), [Human-in-the-loop for tools](https://docs.n8n.io/build/integrate-ai/ai-examples/human-in-the-loop-for-tools/), [Gmail Trigger](https://docs.n8n.io/integrations/builtin/trigger-nodes/n8n-nodes-base.gmailtrigger/), [Gmail, brouillons](https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.gmail/draft-operations/), [Google Calendar, disponibilités](https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.googlecalendar/calendar-operations/), [Microsoft Outlook](https://docs.n8n.io/integrations/builtin/app-nodes/n8n-nodes-base.microsoftoutlook/), [Message an Agent](https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.messageanagent/) ; [Anthropic, tarification de l’API (facturation au texte traité, outils compris)](https://platform.claude.com/docs/en/about-claude/pricing).' },
+    ],
+    faq: [
+      { q: 'Qu’est-ce qu’un agent IA dans n8n ?', a: 'C’est un modèle d’IA relié à des outils (agenda, messagerie, tableur, autre workflow…) et, si besoin, à une mémoire. Contrairement à un workflow classique, c’est le modèle qui décide quels outils appeler et dans quel ordre pour atteindre l’objectif fixé par ses consignes.' },
+      { q: 'Quelle différence entre le nœud AI Agent et les Agents de n8n ?', a: 'Le nœud AI Agent se place dans un workflow, qui gère le déclenchement et la suite. Les Agents sont des objets à part entière, configurés dans l’Agent Builder, avec un brouillon et une version publiée ; on les joint par chat, Slack, Telegram, Linear ou Microsoft Teams, ou depuis un workflow. Ils sont encore en préversion.' },
+      { q: 'Faut-il savoir coder pour créer un agent IA avec n8n ?', a: 'Non. L’agent se configure dans l’interface de n8n : choix du modèle, consignes rédigées en phrases simples, outils choisis dans une liste. Le vrai travail est ailleurs : écrire de bonnes consignes, tester sur de vrais cas et limiter ses droits.' },
+      { q: 'Un agent IA peut-il répondre seul à mes clients ?', a: 'Techniquement oui, mais je le déconseille pour tout ce qui engage l’entreprise. L’agent prépare un brouillon et une personne valide avant l’envoi. n8n permet d’exiger cette approbation avant chaque utilisation d’un outil sensible, comme l’envoi d’un e-mail.' },
+    ],
+  },
+  {
     slug: 'lire-factures-fournisseurs-ia',
     seoTitle: 'Factures fournisseurs : les lire avec l’IA',
     seoDescription: 'Ce que l’IA sait lire sur une facture fournisseur, ses erreurs, ce que change la facture électronique, la conservation et le RGPD : le guide TPE.',
