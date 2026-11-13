@@ -50,6 +50,7 @@ $available = $config['key'] !== '' && $prompt !== false && function_exists('curl
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') reply(200, ['available' => $available]);
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') reply(405, ['ok' => false, 'error' => 'method']);
+if (($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') !== 'axion') reply(403, ['ok' => false, 'error' => 'origin']);   // un autre site ne peut pas envoyer cet en-tête (pas de CORS)
 if (!$available) reply(503, ['ok' => false, 'error' => 'unavailable']);
 
 $data = json_decode(file_get_contents('php://input'), true);

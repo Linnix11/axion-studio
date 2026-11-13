@@ -72,7 +72,7 @@ export default function ChatWidget() {
     const next = [...messages, { role: 'user', text: q }]
     setMessages(next); setInput(''); setError(''); setSending(true)
     try {
-      const res = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: next }) })
+      const res = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'axion' }, body: JSON.stringify({ messages: next }) })
       const data = await res.json().catch(() => ({}))
       if (res.ok && data.ok) setMessages(m => [...m, { role: 'model', text: data.reply }])
       else setError(errorText[data.error] || errorText.default)

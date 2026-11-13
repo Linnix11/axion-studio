@@ -36,7 +36,8 @@ $d = input();
 if ($action === 'connexion') {
   $email = strtolower(text($d['email'] ?? '', 200));
   $password = (string) ($d['password'] ?? '');
-  if (hit_limit('crm_login_ip_' . client_ip(), 20, 900) || hit_limit('crm_login_' . $email, 8, 900)) {
+  // par adresse e-mail ET par IP : un inconnu ne peut pas bloquer la connexion d'un compte depuis sa propre machine
+  if (hit_limit('crm_login_ip_' . client_ip(), 20, 900) || hit_limit('crm_login_' . $email . '|' . client_ip(), 8, 900)) {
     reply(429, ['ok' => false, 'error' => 'rate']);
   }
   $st = db()->prepare('SELECT * FROM users WHERE email = ?');
@@ -79,6 +80,8 @@ if ($action === 'deconnexion') {
 if ($action === 'oubli') {
   $email = strtolower(text($d['email'] ?? '', 200));
   if (hit_limit('crm_oubli_' . client_ip(), 5, 3600)) reply(429, ['ok' => false, 'error' => 'rate']);
+  // par adresse aussi : sinon, en changeant d'IP, on inonde un client de liens (et chaque lien annule le précédent)
+  if (hit_limit('crm_oubli_mail_' . $email, 3, 3600)) reply(429, ['ok' => false, 'error' => 'rate']);
   if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $pdo = db();
     $st = $pdo->prepare('SELECT * FROM users WHERE email = ?');

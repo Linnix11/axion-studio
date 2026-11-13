@@ -155,10 +155,11 @@ function long_text($v, int $max): string {
 
 function start_session(): void {
   if (session_status() === PHP_SESSION_ACTIVE) return;
-  $https = ($_SERVER['HTTPS'] ?? '') !== '' && ($_SERVER['HTTPS'] ?? '') !== 'off'
-        || ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https';
+  // Secure toujours (le site est entièrement en HTTPS), sauf serveur de test local en http
+  $local = in_array($_SERVER['SERVER_NAME'] ?? '', ['localhost', '127.0.0.1'], true);
   session_name('axion_crm');
-  session_set_cookie_params(['lifetime' => 0, 'path' => '/', 'secure' => $https, 'httponly' => true, 'samesite' => 'Strict']);
+  ini_set('session.use_strict_mode', '1');   // refuse un identifiant de session choisi par le visiteur
+  session_set_cookie_params(['lifetime' => 0, 'path' => '/', 'secure' => !$local, 'httponly' => true, 'samesite' => 'Strict']);
   session_start();
   if (isset($_SESSION['vu']) && time() - $_SESSION['vu'] > CRM_SESSION_IDLE) { $_SESSION = []; session_regenerate_id(true); }
   $_SESSION['vu'] = time();

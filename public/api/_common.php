@@ -13,10 +13,16 @@ function client_ip(): string {
   if ($fwd !== '') {
     $ips = array_reverse(array_map('trim', explode(',', $fwd)));
     foreach ($ips as $ip) {
-      if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) return $ip;
+      if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) return ip_bloc($ip);
     }
   }
-  return $remote !== '' ? $remote : 'inconnue';
+  return $remote !== '' ? ip_bloc($remote) : 'inconnue';
+}
+
+/** Une IPv6 est ramenée à son bloc /64 : un même abonné en possède des milliards, qui contourneraient les limites. */
+function ip_bloc(string $ip): string {
+  if (!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) return $ip;
+  return implode(':', str_split(substr(bin2hex(inet_pton($ip)), 0, 16), 4)) . '::/64';
 }
 
 /** Compte un passage ; renvoie true si la limite ($max sur $window secondes) est déjà atteinte. Verrou anti-concurrence. */

@@ -139,7 +139,7 @@ if ($action === 'supprimer') {
   }
   // Compte, liens et fiche effacés ; les automatisations restent (sans client) pour ne pas perdre le suivi technique
   $pdo->beginTransaction();
-  $pdo->prepare('UPDATE automations SET client_id = NULL WHERE client_id = ?')->execute([$c['id']]);
+  $pdo->prepare('UPDATE automations SET client_id = NULL, visible = 0 WHERE client_id = ?')->execute([$c['id']]);   // masqués : un futur client au même identifiant ne les verra pas d'office
   $pdo->prepare('DELETE FROM users WHERE client_id = ?')->execute([$c['id']]);
   $pdo->prepare('DELETE FROM clients WHERE id = ?')->execute([$c['id']]);
   $pdo->commit();
