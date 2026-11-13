@@ -16,6 +16,10 @@ const FORMULES = offers.filter(o => o.name !== 'Audit').map(o => o.name).concat(
 const SYNC_RETARD = 3600   // au-delà d'une heure sans nouvelles de n8n, on le signale
 const petit = 'inline-flex min-h-11 items-center justify-center rounded-full border border-rule bg-paper px-4 text-sm font-semibold text-ink cursor-pointer hover:border-pen hover:text-pen active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60'
 const etiquette = c => `client-${c.slug}`
+// Adresse de chaque n8n (nom d'instance envoyé par le workflow de suivi), pour ouvrir un workflow d'un clic
+const N8N_URL = { vps: 'https://n8n-ic2h.srv2151065.hstgr.cloud' }
+// Workflows de démarchage : reconnus à leur nom (« Collecte de prospects », « … de prospection », « démarchage »)
+const estProspection = a => /prospect|d[ée]marchage/i.test(a.nom)
 
 /** /espace-client/admin/ : ce qui demande une action d'abord, puis les clients, puis les workflows à rattacher.
  *  La vue est dans l'adresse (?client=…, ?nouveau) : le bouton Retour du navigateur fonctionne. */
@@ -42,6 +46,9 @@ export default function EspaceAdmin() {
 
   const clientId = Number(params.get('client')) || null
   const nouveau = params.has('nouveau')
+  const prospection = params.get('vue') === 'prospection'
+  const nbProspection = data.non_rattachees.filter(estProspection).length
+  const onglet = actif => `inline-flex min-h-11 items-center border-b-2 px-1 text-base no-underline ${actif ? 'border-pen font-medium text-ink' : 'border-transparent text-muted hover:text-pen'}`
 
   return (
     <Container className="py-8 md:py-10">
@@ -58,10 +65,18 @@ export default function EspaceAdmin() {
         </div>
       </header>
 
+      <nav aria-label="Sections de l’administration" className="mt-4 flex gap-6 border-b border-rule">
+        <button type="button" className={onglet(!prospection)} aria-current={!prospection ? 'page' : undefined} onClick={() => aller({})}>Clients</button>
+        <button type="button" className={onglet(prospection)} aria-current={prospection ? 'page' : undefined} onClick={() => aller({ vue: 'prospection' })}>
+          Prospection <span className="ml-1 text-muted tabular-nums">({nbProspection})</span>
+        </button>
+      </nav>
+
       <div className="mt-8">
         {flash && <Alert tone="ok">{flash}</Alert>}
         {error && <Alert>{error}</Alert>}
         {nouveau ? <NouveauClient onAnnuler={() => aller({})} onCree={(id, msg) => aller({ client: String(id) }, msg)} />
+          : prospection ? <Prospection autos={data.non_rattachees.filter(estProspection)} />
           : clientId ? <FicheClient key={clientId} id={clientId} clients={data.clients} onRetour={msg => aller({}, msg)} onChange={charger} />
           : <Accueil data={data} ouvrir={id => aller({ client: String(id) })} onChange={charger} />}
       </div>
@@ -95,7 +110,8 @@ function Synchro({ synchros, onChange }) {
 
 function Accueil({ data, ouvrir, onChange }) {
   const [q, setQ] = useState('')
-  const { clients, non_rattachees: orphelins } = data
+  const { clients } = data
+  const orphelins = data.non_rattachees.filter(a => !estProspection(a))   // la prospection a son propre onglet
   const emails = data.emails || []
   const filtre = q.trim().toLowerCase()
   const liste = filtre ? clients.filter(c => `${c.entreprise} ${c.contact} ${c.email} ${c.slug}`.toLowerCase().includes(filtre)) : clients
@@ -163,6 +179,46 @@ function Accueil({ data, ouvrir, onChange }) {
         <AideN8n />
       </div>
     </div>
+  )
+}
+
+/* ——— Prospection : les workflows de démarchage d'Axion Studio ——— */
+
+function Prospection({ autos }) {
+  const erreurs = autos.filter(a => a.etat === 'erreur').length
+  return (
+    <section aria-labelledby="prosp-titre">
+      <h2 id="prosp-titre" className="text-2xl">Workflows de démarchage</h2>
+      <p className="mt-1 max-w-[70ch] text-sm text-muted">
+        Vos workflows de prospection dans n8n, avec leur état à la dernière synchronisation (toutes les 15 minutes).
+        Ils apparaissent ici quand leur nom contient « prospect » ou « démarchage ». Rien n’est envoyé sans vous{'\u00a0'}: les e-mails partent en brouillon.
+      </p>
+      {erreurs > 0 && <div className="mt-4"><Alert>{n(erreurs, 'workflow')} de démarchage en erreur{'\u00a0'}: ouvrez-le dans n8n pour voir la cause.</Alert></div>}
+      {autos.length === 0 ? (
+        <p className="mt-6 text-muted">Aucun workflow de démarchage reçu de n8n pour l’instant.</p>
+      ) : (
+        <ul className="mt-6 grid gap-4 md:grid-cols-2">
+          {autos.map(a => (
+            <li key={a.id} className={`${card} flex flex-col p-5`}>
+              <div className="flex items-start justify-between gap-3">
+                <h3 className="min-w-0 text-lg leading-tight font-medium">{a.nom}</h3>
+                <Badge etat={a.etat} />
+              </div>
+              <dl className="mt-4 grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1 text-sm">
+                <dt className="text-muted">Dans n8n</dt><dd>{a.active ? 'Activé' : 'Désactivé (lancé à la main)'}</dd>
+                <dt className="text-muted">Dernier passage</dt><dd>{depuis(a.derniere_execution)}</dd>
+                <dt className="text-muted">7 derniers jours</dt><dd className="tabular-nums">{n(a.executions_7j, 'exécution')}, <span className={a.erreurs_7j ? 'font-medium text-error' : ''}>{n(a.erreurs_7j, 'erreur')}</span></dd>
+              </dl>
+              {N8N_URL[a.instance] && (
+                <a href={`${N8N_URL[a.instance]}/workflow/${a.workflow_id}`} target="_blank" rel="noopener noreferrer" className={`${petit} mt-5 self-start`}>
+                  Ouvrir dans n8n<span className="sr-only"> (nouvel onglet)</span>
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   )
 }
 
