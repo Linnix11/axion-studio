@@ -45,6 +45,21 @@ export const services = [
     examples: ['Relance automatique des factures impayées, du rappel avant l’échéance à la relance ferme', 'Création des commandes dans le tableur à partir des e-mails reçus', 'Envoi du récapitulatif hebdomadaire des ventes'],
   },
   {
+    slug: 'agenda',
+    title: 'Agenda et emploi du temps',
+    heading: 'Gestion automatique de l’agenda et de l’emploi du temps',
+    short: 'Rendez-vous, plannings d’équipe, rappels et créneaux protégés : votre semaine s’organise toute seule.',
+    intro: "Une bonne partie de la semaine part à caler des rendez-vous, déplacer des créneaux, prévenir l’équipe et rappeler les clients. Je relie votre agenda à vos demandes, à votre équipe et à vos clients : les rendez-vous se posent seuls aux bons créneaux, chacun reçoit le bon rappel et votre planning reste à jour sans ressaisie.",
+    includes: [
+      'Prise de rendez-vous en ligne selon vos vraies disponibilités',
+      'Rappels automatiques au client la veille (e-mail ou SMS)',
+      'Planning d’équipe ou d’interventions mis à jour à chaque changement',
+      'Créneaux protégés pour le travail de fond et les trajets',
+      'Récapitulatif de la journée envoyé chaque matin',
+    ],
+    examples: ['Un rendez-vous annulé libère le créneau et propose la place au client suivant', 'Les interventions de la semaine réparties dans l’agenda de chaque technicien', 'Chaque matin, le programme du jour avec adresses et documents à préparer'],
+  },
+  {
     slug: 'integrations',
     title: "Intégration d’outils",
     short: 'CRM, tableur, messagerie, agenda, facturation : vos logiciels connectés via leurs API.',
@@ -92,6 +107,7 @@ export const tools = ['n8n', 'Make', 'Zapier', 'Google Workspace', 'Microsoft 36
 
 export const useCases = [
   { sector: 'Artisan du bâtiment', task: 'Demandes de devis', before: 'Les demandes arrivent par le site, par e-mail et par téléphone. Vous les recopiez dans un carnet, puis rédigez chaque devis de zéro.', after: 'Chaque demande crée une fiche client, un brouillon de devis est préparé à partir de vos tarifs et vous êtes prévenu sur votre téléphone.', gain: '2 à 3 h par semaine' },
+  { sector: 'Services à domicile', task: 'Planning et rendez-vous', before: 'Vous calez les rendez-vous par téléphone, recopiez chaque intervention dans l’agenda et envoyez le planning à l’équipe par message, puis tout est à refaire au moindre changement.', after: 'Le client choisit un créneau libre, l’intervention arrive dans l’agenda du bon technicien, chacun reçoit son planning à jour et le client un rappel la veille.', gain: '2 h par semaine' },
   { sector: 'Cabinet de conseil', task: 'Factures fournisseurs', before: 'Les PDF s’accumulent dans la boîte mail et sont classés à la main en fin de mois, avant d’être envoyés au comptable.', after: 'Chaque facture est lue, renommée, rangée dans le bon dossier et ses montants sont reportés dans le tableau de suivi partagé avec le comptable.', gain: '1 à 2 h par semaine' },
   { sector: 'Boutique en ligne', task: 'Suivi des commandes', before: 'Vous exportez les commandes, mettez à jour le stock dans un tableur et répondez aux clients qui demandent où en est leur colis.', after: 'Le stock se met à jour à chaque vente, le client reçoit son numéro de suivi automatiquement et vous recevez une alerte quand un produit passe sous le seuil.', gain: '3 à 4 h par semaine' },
   { sector: 'Agence immobilière', task: 'Qualification des contacts', before: 'Les demandes des portails d’annonces arrivent en vrac, et il faut les trier et rappeler chaque contact pour connaître son projet.', after: 'Chaque demande est classée (achat, location, estimation), un e-mail de bienvenue pose les premières questions et le contact arrive qualifié dans le CRM.', gain: '2 h par semaine' },
@@ -131,11 +147,13 @@ export const tasks = [
   { label: 'Préparer le reporting du lundi', minutes: 40, preset: false, day: 0 },
   { label: 'Classer les justificatifs et factures', minutes: 35, preset: false, day: 3 },
   { label: 'Saisir les rendez-vous dans l’agenda', minutes: 20, preset: false, day: 4 },
+  { label: 'Refaire le planning de la semaine', minutes: 45, preset: false, day: 0 },
 ]
 
 export const needs = [
   'Automatisation de processus',
   "Intégration d’outils",
+  'Agenda et emploi du temps',
   'Intelligence artificielle',
   'Site web',
   'Je ne sais pas encore',

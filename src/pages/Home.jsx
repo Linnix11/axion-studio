@@ -20,8 +20,8 @@ export default function Home() {
               Vos tâches répétitives, faites sans vous.
             </h1>
             <p className="mt-6 max-w-[34rem] text-xl leading-[1.6] text-muted">
-              J’automatise le travail administratif des TPE, PME et indépendants : saisies, relances, reporting,
-              réponses récurrentes. Vous gardez vos outils, ils travaillent ensemble.
+              J’automatise le travail administratif des TPE, PME et indépendants : agenda et rendez-vous, saisies,
+              relances, reporting, réponses récurrentes. Vous gardez vos outils, ils travaillent ensemble.
             </p>
             <div className="no-anim mt-8 flex flex-wrap gap-3">
               <AuditLink className={btn.primary} />
@@ -50,7 +50,7 @@ export default function Home() {
         <Demo />
       </Section>
 
-      <Section tone="alt" note="4 missions, souvent combinées">
+      <Section tone="alt" note={`${services.length} missions, souvent combinées`}>
         <SectionHead title="Ce que je fais" />
         <dl className="border-t-2 border-ink">
           {services.map(s => (
@@ -69,7 +69,7 @@ export default function Home() {
         <p className="mt-2 flex flex-wrap gap-x-6"><Link to="/services/" className={standaloneLink}>Voir le détail des services</Link><Link to="/agence-n8n/" className={standaloneLink}>Agence n8n : workflows sur mesure</Link></p>
       </Section>
 
-      <Section note="3 cas types sur 5">
+      <Section note={`3 cas types sur ${useCases.length}`}>
         <SectionHead title="Avant, après">Chaque projet part de votre façon de travailler. Les gains sont des ordres de grandeur.</SectionHead>
         <div className="grid gap-5 md:grid-cols-3">
           {useCases.slice(0, 3).map(u => (
@@ -84,7 +84,7 @@ export default function Home() {
         </div>
         <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3">
           <AuditLink className={btn.primary}>Estimer mon temps gagné</AuditLink>
-          <Link to="/exemples/" className={standaloneLink}>Voir les 5 exemples</Link>
+          <Link to="/exemples/" className={standaloneLink}>Voir les {useCases.length} exemples</Link>
         </div>
       </Section>
 

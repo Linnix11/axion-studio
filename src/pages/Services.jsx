@@ -6,8 +6,8 @@ export default function Services() {
   usePageMeta('/services')
   return (
     <>
-      <PageHeader title="Services d’automatisation et d’IA pour TPE et PME" note="4 missions, au forfait">
-        Quatre types de missions pour vous libérer des tâches répétitives. Elles se combinent souvent : un site dont
+      <PageHeader title="Services d’automatisation et d’IA pour TPE et PME" note={`${services.length} missions, au forfait`}>
+        Cinq types de missions pour vous libérer des tâches répétitives. Elles se combinent souvent : un site dont
         le formulaire alimente votre CRM, une IA qui lit vos factures et les range. Les workflows sont le plus souvent
         construits avec n8n : voir la page <Link to="/agence-n8n/" className={textLink}>agence n8n</Link>.
       </PageHeader>
@@ -21,7 +21,7 @@ export default function Services() {
       </nav>
 
       {services.map((s, i) => (
-        <Section key={s.slug} id={s.slug} tone={i % 2 ? 'alt' : 'paper'} note={`Mission ${i + 1} sur 4`}>
+        <Section key={s.slug} id={s.slug} tone={i % 2 ? 'alt' : 'paper'} note={`Mission ${i + 1} sur ${services.length}`}>
           <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
             <div>
               <h2 className="text-[2rem] leading-tight md:text-[2.5rem]">{s.heading || s.title}</h2>

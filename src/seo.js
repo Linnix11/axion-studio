@@ -9,9 +9,9 @@ export const SITE_URL = 'https://axionstudio.fr'
 export const BRAND = 'Axion Studio'
 
 export const pageMeta = {
-  '/': { title: 'Agence d’automatisation et d’IA en France | Axion Studio', name: 'Accueil', description: 'Axion Studio, agence d’automatisation et d’IA pour TPE, PME et indépendants partout en France : workflows n8n, outils connectés, IA, sites web. Audit gratuit.' },
-  '/services': { title: 'Services d’automatisation et d’IA', name: 'Services', description: 'Workflows automatisés, connexion de vos logiciels (CRM, Gmail, Excel…), intelligence artificielle et sites web pour TPE, PME et indépendants. Projets dès 150 €.' },
-  '/exemples': { title: 'Exemples d’automatisation pour TPE', name: 'Exemples', description: 'Devis, factures, suivi des commandes, relances, reporting : 5 cas concrets d’automatisation pour artisans, cabinets, boutiques en ligne et agences.' },
+  '/': { title: 'Agence d’automatisation et d’IA en France | Axion Studio', name: 'Accueil', description: 'Axion Studio, agence d’automatisation et d’IA pour TPE, PME et indépendants partout en France : agenda, workflows n8n, outils connectés, IA, sites web. Audit gratuit.' },
+  '/services': { title: 'Services d’automatisation et d’IA', name: 'Services', description: 'Workflows automatisés, agenda et emploi du temps, connexion de vos logiciels (CRM, Gmail, Excel…), IA et sites web pour TPE, PME et indépendants. Projets dès 150 €.' },
+  '/exemples': { title: 'Exemples d’automatisation pour TPE', name: 'Exemples', description: 'Devis, planning, factures, suivi des commandes, relances, reporting : 6 cas concrets d’automatisation pour artisans, cabinets, boutiques en ligne et agences.' },
   '/methode': { title: 'Méthode : audit gratuit, forfait, suivi', name: 'Méthode', description: 'Audit gratuit de 30 minutes, proposition au forfait sous 72 h, mise en place testée sur vos données et un mois de suivi inclus.' },
   '/tarifs': { title: 'Tarifs de l’automatisation pour TPE dès 150 €', name: 'Tarifs', description: 'Audit offert, projets d’automatisation ou de site web au forfait dès 150 €, suivi mensuel dès 250 € par mois, sans engagement. TVA non applicable.' },
   '/a-propos': { title: 'Arthur Champagne-Forterre, fondateur d’Axion Studio', name: 'À propos', description: 'Arthur Champagne-Forterre, consultant en automatisation et IA basé à Montlignon (Val-d’Oise), aide les petites entreprises à gagner du temps.' },
