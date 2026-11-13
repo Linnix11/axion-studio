@@ -7,9 +7,11 @@ export default function Services() {
   return (
     <>
       <PageHeader title="Services d’automatisation et d’IA pour TPE et PME" note={`${services.length} missions, au forfait`}>
-        Cinq types de missions pour vous libérer des tâches répétitives. Elles se combinent souvent : un site dont
-        le formulaire alimente votre CRM, une IA qui lit vos factures et les range. Les workflows sont le plus souvent
-        construits avec n8n : voir la page <Link to="/agence-n8n/" className={textLink}>agence n8n</Link>.
+        Axion Studio propose cinq missions d’automatisation et d’IA aux TPE, PME et indépendants, partout en France : workflows
+        automatisés, gestion de l’agenda et des rendez-vous, intégration de vos logiciels entre eux, intelligence artificielle
+        et création de site web. Chaque mission est au forfait, après un audit gratuit de 30 minutes, et elles se combinent
+        souvent : un site dont le formulaire alimente votre CRM, une IA qui lit vos factures et les range. Les workflows sont
+        le plus souvent construits avec n8n : voir la page <Link to="/agence-n8n/" className={textLink}>agence n8n</Link>.
       </PageHeader>
 
       <nav aria-label="Dans cette page" className="border-b border-rule">

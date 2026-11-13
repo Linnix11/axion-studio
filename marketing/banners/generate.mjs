@@ -106,7 +106,7 @@ const banners = [
         <div class="brand" style="font-size:28px">${logo(38)}Axion Studio</div>
         <p class="h" style="font-size:96px;margin-top:40px">Audit <span class="mark">gratuit</span> de 30 minutes</p>
         <p class="lead" style="font-size:28px;margin-top:28px">On repère ensemble les tâches répétitives qui vous coûtent du temps, et ce qui peut être automatisé.</p>
-        <p style="font-size:24px;margin-top:30px;line-height:1.7">Sans engagement<br>Projets dès 150 €<br>Réponse sous 48 h ouvrées</p>
+        <p style="font-size:24px;margin-top:30px;line-height:1.7">Sans engagement<br>Projets dès 150 €<br>Réponse sous 24 h ouvrées</p>
       </div>
       <div class="abs" style="right:80px;top:200px">${week(17, 440)}</div>
       <p class="abs pill" style="left:90px;bottom:90px;font-size:28px;padding:20px 34px">Réserver sur axionstudio.fr/contact</p>`),

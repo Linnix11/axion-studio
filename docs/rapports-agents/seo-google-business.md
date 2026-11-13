@@ -1,137 +1,178 @@
-# Fiche Google Business Profile : services, publications, questions-réponses
+# Fiche Google Business Profile : à coller dès la vérification
 
-Préparé le 10 novembre 2026 par l’agent seo-google-business. **Rien n’a été publié** : vous copiez ces textes dans la fiche, une fois celle-ci créée et vérifiée par Google (voir `docs/kit-profils.md`, étape 1, point 4). Aucun fichier du site n’a été modifié.
+Mis à jour le 13 novembre 2026 par l’agent seo-google-business. **Rien n’est publié par l’agent** : Arthur copie
+ces textes dans la fiche. Aucun fichier du site n’a été modifié.
 
-Sources utilisées : `src/data.js` (services, tarifs, méthode, sécurité, pages métier), `src/n8n.js` (page Agence n8n) et `src/blog.js` (articles). Aucun chiffre n’a été ajouté : seuls les prix et délais déjà affichés sur le site sont repris (audit offert de 30 minutes, proposition sous 72 h, projets dès 150 €, suivi dès 250 € par mois). Aucun avis n’est proposé ni inventé.
+État de la fiche au 13 novembre 2026 : créée, **en attente de vérification par Google** (pas encore publique).
+Réglages retenus : adresse masquée, zone desservie Île-de-France puis France, nom « Axion Studio » seul,
+site https://axionstudio.fr, téléphone 06 48 61 23 50, adresse e-mail publique contact@axionstudio.fr.
 
-## 1. Services à renseigner sur la fiche
+Sources : `src/data.js` (services, tarifs, méthode, pages métier, FAQ), `src/blog.js` (articles),
+`docs/kit-profils.md` (catégories et descriptions déjà validées). Aucun chiffre n’a été ajouté : seuls les prix et
+délais affichés sur le site sont repris (audit offert de 30 minutes, proposition sous 72 h, projets dès 150 €,
+suivi dès 250 € par mois). Aucun avis, aucun client cité.
 
-Dans la fiche : Modifier le profil, puis Services. Pour chaque service : le nom, la description courte et, si Google le propose, le prix. Gardez exactement ces noms : ce sont ceux du site.
+## 0. Les limites de longueur de Google
 
-### Services principaux
-
-| Service | Description courte | Prix à indiquer | Page du site |
-|---|---|---|---|
-| Workflows automatisés | Relances, facturation, reporting, saisie de données : des enchaînements qui se déclenchent seuls (e-mail, formulaire, commande ou heure fixe), testés sur vos vraies données et documentés simplement. | Projet au forfait dès 150 € | https://axionstudio.fr/services/ |
-| Intégration d’outils | CRM, tableur, messagerie, agenda, facturation : vos logiciels reliés par leurs API pour qu’une donnée saisie une fois soit à jour partout, avec contrôle des doublons. | Projet au forfait dès 150 € | https://axionstudio.fr/services/ |
-| Intelligence artificielle pour TPE et PME | Tri des e-mails, lecture de factures et de documents, brouillons de réponses relus avant envoi, assistant interne à partir de vos documents. Seules les données utiles sont envoyées à l’IA. | Projet au forfait dès 150 € | https://axionstudio.fr/services/ |
-| Création de site web pour TPE et PME | Site vitrine rapide, lisible sur mobile et facile à mettre à jour, dont le formulaire de contact ou de devis alimente directement votre CRM ou votre messagerie. | Projet au forfait dès 150 € | https://axionstudio.fr/services/ |
-| Agence n8n : création et maintenance de workflows | Installation de n8n (n8n Cloud ou serveur à votre nom), création de workflows, connexion par API, étapes d’IA, reprise de workflows existants. Tout reste à votre nom. | Projet au forfait dès 150 € | https://axionstudio.fr/agence-n8n/ |
-| Audit gratuit de 30 minutes | Un appel en visio ou par téléphone pour repérer les tâches automatisables et l’ordre conseillé. Proposition chiffrée sous 72 h, sans engagement. | Gratuit | https://axionstudio.fr/contact/ |
-| Suivi mensuel des automatisations | Surveillance et correction des workflows, petites évolutions incluses et un point mensuel sur les prochaines tâches à automatiser. Sans engagement. | Dès 250 € par mois | https://axionstudio.fr/tarifs/ |
-
-### Services par métier (facultatif, à ajouter si la fiche le permet)
-
-Ces lignes reprennent les 6 pages « Automatisation pour … ». Elles aident la fiche à apparaître sur les recherches par métier. Prix : « Projet au forfait dès 150 € ».
-
-| Service | Description courte | Page du site |
+| Champ de la fiche | Limite appliquée par Google | Ce que nous avons écrit |
 |---|---|---|
-| Automatisation pour artisans du bâtiment | Demandes de devis rangées toutes seules, relances de devis et de factures, rendez-vous dans l’agenda avec rappel au client. | https://axionstudio.fr/automatisation/artisans-batiment/ |
-| Automatisation pour experts-comptables | Collecte et relance des justificatifs, lecture et classement des factures, suivi des échéances. La validation reste au cabinet. | https://axionstudio.fr/automatisation/experts-comptables/ |
-| Automatisation pour agences immobilières | Contacts des portails triés et qualifiés, visites dans l’agenda avec rappel, relances des acquéreurs et des vendeurs. | https://axionstudio.fr/automatisation/agences-immobilieres/ |
-| Automatisation pour boutiques en ligne | Stock mis à jour à chaque vente, numéro de suivi envoyé seul, alertes de rupture, export des factures pour le comptable. | https://axionstudio.fr/automatisation/boutiques-en-ligne/ |
-| Automatisation pour professions libérales | Rendez-vous et rappels, documents d’arrivée d’un nouveau client, facturation et relances, récapitulatif hebdomadaire. | https://axionstudio.fr/automatisation/professions-liberales/ |
-| Automatisation pour commerces et restaurants | Rappels de réservation, invitation à laisser un avis, commandes fournisseurs regroupées, factures transmises au comptable. | https://axionstudio.fr/automatisation/commerces-restaurants/ |
+| Nom de l’entreprise | 100 caractères | « Axion Studio » (12) |
+| Description de l’entreprise | 750 caractères | voir `docs/kit-profils.md` (description longue) |
+| Nom d’un service | 120 caractères | 20 à 46 caractères |
+| Description d’un service | 300 caractères | 218 à 256 caractères |
+| Publication « Nouveautés » | 1 500 caractères, 150 à 300 conseillés | 211 à 245 caractères |
+| Titre d’une offre | 58 caractères | non utilisé (publications en « Nouveautés ») |
+| Question et réponse | compteur affiché dans l’interface | questions sous 70, réponses sous 320 caractères |
 
-## 2. Publications (8 sur 2 mois, une par semaine)
+Google fait évoluer ces limites : **le compteur affiché dans l’interface fait foi**. Si un texte est refusé,
+coupez la dernière phrase, jamais le début.
 
-Type de publication : « Nouveautés » (ou « Actualité »). Collez le texte, choisissez le bouton **En savoir plus** et collez le lien indiqué. Le texte ne contient ni numéro de téléphone ni lien : le lien passe par le bouton, ce qui le rend cliquable. Image conseillée : un visuel de `marketing/banners/` (par exemple `google-publication-audit-1200x900.png`) ou une capture de la page concernée.
+Les photos : logo `marketing/banners/google-logo-720x720.png`, couverture `google-couverture-1024x576.png`,
+visuel de publication `google-publication-audit-1200x900.png` (format 4/3, celui que Google préfère dans les publications).
 
-Dates proposées : un mardi par semaine, en sautant la semaine du 29 décembre. Décalez librement : seule la régularité compte.
+## 1. Les 5 services à déclarer
 
-### Publication 1 : Facture électronique (mardi 17 novembre)
+Fiche Google → **Modifier le profil** → **Services** → ajouter un service → « Service personnalisé » si le nom
+proposé par Google ne correspond pas. Gardez exactement ces noms : ce sont ceux du site, ce qui garde la fiche,
+le site et les IA cohérents.
 
-> Depuis le 1er septembre 2026, toute entreprise assujettie à la TVA doit pouvoir recevoir des factures électroniques. L’émission suit en septembre 2027 pour les TPE. Calendrier, plateforme agréée et ce que vous pouvez automatiser : le guide.
+### 1. Workflows automatisés (22 caractères)
 
-- Bouton « En savoir plus » : https://axionstudio.fr/blog/facture-electronique-tpe-2026-2027/
-- Longueur : 240 caractères
+> Relances, facturation, reporting, saisie de données : des enchaînements qui se déclenchent seuls à la réception d’un e-mail, d’un formulaire, d’une commande ou à heure fixe. Testés sur vos vraies données, documentés simplement, avec alerte en cas d’erreur.
 
-### Publication 2 : Relances de factures impayées (mardi 24 novembre)
+256 caractères. Page : https://axionstudio.fr/services/#workflows
 
-> Relancer une facture impayée est désagréable et passe toujours après l’urgent. Un rappel avant l’échéance, puis des relances à date fixe qui s’arrêtent dès le paiement : la méthode, les règles à connaître et la version automatique.
+### 2. Agenda et emploi du temps (24 caractères) — nouveau
 
-- Bouton « En savoir plus » : https://axionstudio.fr/blog/relances-factures-impayees/
-- Longueur : 231 caractères
+> Prise de rendez-vous selon vos vraies disponibilités, rappel au client la veille, planning d’équipe mis à jour à chaque changement, créneaux protégés pour le travail de fond et récapitulatif de la journée chaque matin.
 
-### Publication 3 : Artisans du bâtiment (mardi 1er décembre)
+218 caractères. Page : https://axionstudio.fr/services/#agenda
 
-> Artisans du bâtiment : vos demandes de devis rangées toutes seules, les devis non signés relancés avec vos mots, les factures en retard suivies à date fixe et un rappel envoyé au client la veille du rendez-vous. Moins d’administratif le soir.
+### 3. Intégration d’outils (20 caractères)
 
-- Bouton « En savoir plus » : https://axionstudio.fr/automatisation/artisans-batiment/
-- Longueur : 242 caractères
+> CRM, tableur, messagerie, agenda, facturation : vos logiciels reliés par leurs API pour qu’une donnée saisie une fois soit à jour partout, dans un sens ou dans les deux, avec contrôle des doublons et des données manquantes.
 
-### Publication 4 : 5 tâches à automatiser (mardi 8 décembre)
+223 caractères. Page : https://axionstudio.fr/services/#integrations
 
-> Par où commencer pour automatiser une petite entreprise ? Devis, relances de factures, classement des justificatifs, reporting et réponses récurrentes : les 5 tâches qui rendent le plus de temps, et comment s’y prendre.
+### 4. Intelligence artificielle pour les PME et TPE (46 caractères)
 
-- Bouton « En savoir plus » : https://axionstudio.fr/blog/taches-a-automatiser-tpe/
-- Longueur : 219 caractères
+> Tri des e-mails entrants, lecture des factures et des documents, brouillons de réponses que vous relisez avant envoi, assistant interne qui répond à partir de vos documents. Seules les données utiles sont envoyées à l’IA.
 
-### Publication 5 : Experts-comptables (mardi 15 décembre)
+221 caractères. Page : https://axionstudio.fr/services/#ia
 
-> Cabinets d’expertise comptable : la liste des pièces manquantes part seule chaque mois, les justificatifs reçus sont lus, renommés et rangés dans le bon dossier client, et un tableau récapitule les échéances. La validation reste au cabinet.
+### 5. Création de site web pour TPE et PME (37 caractères)
 
-- Bouton « En savoir plus » : https://axionstudio.fr/automatisation/experts-comptables/
-- Longueur : 240 caractères
+> Site vitrine rapide, lisible sur mobile et facile à mettre à jour, dont le formulaire de contact ou de devis alimente directement votre CRM ou votre messagerie. Nom de domaine, mise en ligne et mentions légales compris.
 
-### Publication 6 : n8n, Make ou Zapier (mardi 22 décembre)
+219 caractères. Page : https://axionstudio.fr/services/#sites-web
 
-> n8n, Make ou Zapier : quel outil pour automatiser votre entreprise ? Facilité, prix, hébergement des données, cas d’usage : un comparatif simple pour choisir l’outil le plus facile à maintenir dans votre cas.
+**Prix** : si Google propose un champ prix, mettre « À partir de 150 € » sur les services 1 à 5 (c’est le prix affiché
+sur le site). Sinon, ne rien mettre : pas de prix inventé.
 
-- Bouton « En savoir plus » : https://axionstudio.fr/blog/n8n-make-zapier-comparatif/
-- Longueur : 208 caractères
+**Catégories** (rappel de `docs/kit-profils.md`) : principale « Consultant en informatique » ; secondaires
+« Concepteur de sites web » et « Service de conseil aux entreprises ».
 
-### Publication 7 : IA et données clients (mardi 5 janvier)
+## 2. Les 4 premières publications (un mois)
 
-> Utiliser l’IA dans une petite entreprise sans exposer les données de vos clients : n’envoyer que l’utile, préférer les offres professionnelles, garder une relecture humaine. 6 règles simples à appliquer dès maintenant.
+Fiche Google → **Ajouter une actualité** → type **Nouveautés**. Pour chacune : collez le texte, ajoutez l’image,
+choisissez le bouton et collez l’adresse de destination. **Ne mettez pas le lien dans le texte** : il n’est pas
+cliquable, c’est le bouton qui porte le lien.
 
-- Bouton « En savoir plus » : https://axionstudio.fr/blog/ia-donnees-clients-regles/
-- Longueur : 218 caractères
+Rythme conseillé : une publication par semaine, le même jour (par exemple le mardi), à partir du jour où Google
+valide la fiche. Une publication « Nouveautés » reste visible environ une semaine en vedette, puis rejoint l’onglet
+des publications.
 
-### Publication 8 : Commerces et restaurants (mardi 12 janvier)
+### Publication 1 — semaine 1 : présentation et audit gratuit
 
-> Commerces et restaurants : un rappel avant chaque réservation pour limiter les absences, une invitation simple à laisser un avis, les commandes fournisseurs regroupées et les factures transmises au comptable. Moins de travail après la fermeture.
+> Axion Studio automatise les tâches qui se répètent dans les TPE, PME et chez les indépendants : relances, devis, saisie, rendez-vous. Premier échange de 30 minutes offert, en visio ou par téléphone, pour repérer ce qui vous fait gagner du temps.
 
-- Bouton « En savoir plus » : https://axionstudio.fr/automatisation/commerces-restaurants/
-- Longueur : 245 caractères
+- 245 caractères
+- Bouton : **En savoir plus**
+- Destination : https://axionstudio.fr/contact/
+- Image : `marketing/banners/google-publication-audit-1200x900.png`
 
-## 3. Questions-réponses pour la fiche
+### Publication 2 — semaine 2 : nouveau service, l’agenda
 
-À publier depuis le compte qui gère la fiche (vous posez la question, puis vous y répondez). Les réponses reprennent uniquement ce que le site affiche déjà. Si la rubrique « Questions et réponses » n’apparaît pas sur votre fiche (Google la fait évoluer), ces textes peuvent servir de publications ou compléter la FAQ du site.
+> Nouveau : la gestion de l’agenda. Les rendez-vous se posent sur vos vraies disponibilités, le client reçoit un rappel la veille, le planning d’équipe se met à jour tout seul et vous recevez le programme de la journée chaque matin.
 
-### Question 1
+- 230 caractères
+- Bouton : **En savoir plus**
+- Destination : https://axionstudio.fr/services/#agenda
+- Image : `marketing/banners/google-couverture-1024x576.png` (Google la recadre, le texte est centré)
 
-**Intervenez-vous en dehors du Val-d’Oise ?**
+### Publication 3 — semaine 3 : facture électronique
 
-> Oui. Axion Studio travaille partout en France à distance (visio, téléphone, accès partagés à vos outils). Les déplacements sont possibles en Île-de-France. L’audit gratuit de 30 minutes se fait en visio ou par téléphone.
+> Depuis le 1er septembre 2026, toute entreprise assujettie à la TVA doit pouvoir recevoir des factures électroniques. L’émission suit en septembre 2027 pour les TPE. Le calendrier et ce qui peut être automatisé, expliqués simplement.
 
-### Question 2
+- 232 caractères
+- Bouton : **En savoir plus**
+- Destination : https://axionstudio.fr/blog/facture-electronique-tpe-2026-2027/
+- Image : `marketing/banners/google-publication-audit-1200x900.png`
+- Dates reprises de l’article du site, vérifiées sur les sources officielles qu’il cite. Si l’article change, changez la publication.
 
-**Combien coûte une automatisation ?**
+### Publication 4 — semaine 4 : artisans du bâtiment
 
-> Les projets démarrent à 150 € au forfait. Le prix exact dépend du nombre d’outils à relier, des étapes d’IA et des cas particuliers ; il est fixé par écrit après l’audit gratuit, avant de commencer, et ne bouge pas en cours de projet. Les abonnements aux outils restent à votre nom.
+> Artisans du bâtiment : les demandes de devis rangées toutes seules, les devis non signés relancés avec vos mots, les factures en retard suivies à date fixe et un rappel envoyé au client la veille du rendez-vous.
 
-### Question 3
+- 211 caractères
+- Bouton : **En savoir plus**
+- Destination : https://axionstudio.fr/automatisation/artisans-batiment/
+- Image : `marketing/banners/google-couverture-1024x576.png`
 
-**Comment se passe l’audit gratuit ?**
+Pour le mois suivant, les publications 5 à 8 (experts-comptables, 5 tâches à automatiser, comparatif n8n, commerces
+et restaurants) sont prêtes dans l’historique de ce fichier ; l’agent les régénère sur demande.
 
-> Un appel de 30 minutes en visio ou par téléphone : vous décrivez votre semaine type et vos outils, je vous dis ce qui peut être automatisé, ce qui ne vaut pas la peine de l’être et par quoi commencer. Vous recevez ensuite une proposition chiffrée sous 72 h, sans engagement.
+## 3. Six questions-réponses à publier
 
-### Question 4
+Rubrique **Questions et réponses** de la fiche. Vous posez la question depuis un compte Google personnel, puis vous
+y répondez depuis le compte qui gère la fiche : la réponse porte alors la mention « Propriétaire ». Ne publiez pas
+tout le même jour : deux ou trois questions, puis les autres la semaine suivante.
 
-**Les automatisations m’appartiennent-elles ?**
+**Q1. Intervenez-vous en dehors du Val-d’Oise ?**
+> Oui. Axion Studio travaille partout en France à distance, en visio, par téléphone et par accès partagés à vos outils. Les déplacements sont possibles en Île-de-France. L’audit gratuit de 30 minutes se fait en visio ou par téléphone.
 
-> Oui. Les comptes, les workflows et la documentation sont créés à votre nom. Vous pouvez les modifier, les exporter ou changer de prestataire à tout moment ; rien ne s’arrête si nous cessons de travailler ensemble.
+**Q2. Combien coûte une automatisation ?**
+> Les projets démarrent à 150 € au forfait et le suivi mensuel à 250 € par mois, sans engagement. Le prix exact est fixé par écrit après l’audit gratuit, avant de commencer, et ne bouge pas en cours de projet. Les abonnements aux outils restent à votre nom.
 
-### Question 5
+**Q3. Comment se passe l’audit gratuit ?**
+> Un appel de 30 minutes en visio ou par téléphone : vous décrivez votre semaine type et vos outils, je vous dis ce qui peut être automatisé, ce qui ne vaut pas la peine de l’être et par quoi commencer. Vous recevez une proposition chiffrée sous 72 h, sans engagement.
 
-**Mes données clients sont-elles protégées quand vous utilisez l’IA ?**
+**Q4. Faut-il changer de logiciels ?**
+> Non. Je pars de vos outils actuels et je les relie entre eux : CRM, tableur, messagerie, agenda, facturation. Un nouvel outil n’est proposé que s’il apporte un vrai gain. Pour automatiser, j’utilise selon les cas n8n, Make ou Zapier.
 
-> Seules les informations utiles à la tâche sont envoyées à un service d’IA, de préférence une offre professionnelle qui n’utilise pas vos données pour entraîner ses modèles. Rien de sensible ne part sans votre accord, et les accès qui me sont donnés sont limités et révocables.
+**Q5. Les automatisations m’appartiennent-elles ?**
+> Oui. Les comptes, les workflows et la documentation sont à votre nom. Vous pouvez les modifier, les exporter ou changer de prestataire à tout moment. Un mois de suivi est inclus après la mise en route, puis le suivi mensuel est facultatif.
 
-## 4. À vérifier avant de copier
+**Q6. Travaillez-vous avec les particuliers ?**
+> Non. Les prestations sont réservées aux professionnels : entreprises, indépendants, professions libérales et associations, dans le cadre de leur activité. Les conditions générales de vente sont écrites pour ce cadre.
 
-- La fiche doit d’abord être créée et vérifiée (vidéo, appel ou courrier) : seule la personne qui gère l’entreprise peut le faire.
-- Publication 1 : elle reprend les dates de l’article sur la facture électronique (réception depuis le 1er septembre 2026, émission en septembre 2027 pour les TPE). Si l’article est mis à jour, alignez la publication.
-- Une fois la fiche en ligne, envoyez son adresse : elle sera ajoutée à `company.profils` dans `src/data.js` (travail d’un autre agent, sur une branche, avec votre accord).
-- Avis clients : rien à faire ici. Ils se demandent aux vrais clients, sans contrepartie (agent seo-avis-clients).
+Ces six réponses reprennent la FAQ du site (`/faq/`) sans rien y ajouter.
+
+## 4. Ce qu’il ne faut surtout pas faire
+
+- **Pas de mots-clés dans le nom.** Le nom de la fiche est « Axion Studio », rien d’autre. « Axion Studio
+  automatisation IA Île-de-France » est une infraction aux règles de Google : fiche suspendue, et il faut
+  parfois refaire toute la vérification.
+- **Pas d’avis inventés ni échangés.** Pas d’avis écrits par vous, par des proches qui ne sont pas clients, ni
+  achetés, ni échangés avec d’autres entreprises, ni obtenus contre une remise ou un cadeau. Les avis se demandent
+  aux vrais clients, après la prestation, sans contrepartie.
+- **Pas de faux chiffres.** Aucun « +40 % de productivité », aucun nombre de clients : seuls les prix et délais du
+  site (150 €, 250 €/mois, 30 minutes, 72 h, 24 heures ouvrées).
+- **Pas de client cité** sans son accord écrit.
+- **Pas d’adresse affichée.** L’adresse reste masquée : la fiche fonctionne en zone desservie.
+- **Pas de lien dans le texte des publications** (non cliquable) ni de numéro de téléphone dans le texte : Google
+  le refuse souvent.
+- **Pas de photo prise ailleurs** (banque d’images sans licence, capture d’un autre site) : seuls les visuels de
+  `marketing/banners/` et vos propres captures.
+- **Pas de doublon de fiche** : une seule fiche pour Axion Studio.
+
+## 5. Après la vérification
+
+1. Publier logo, couverture, les 5 services, puis la publication 1.
+2. Copier l’adresse publique de la fiche (bouton « Partager votre profil ») et l’envoyer : elle sera ajoutée à
+   `company.profils` dans `src/data.js` (par un autre agent, sur une branche, avec votre accord) pour que le site
+   la déclare en `sameAs`.
+3. Dans Google Business, activer la messagerie seulement si vous comptez répondre dans la journée : un délai de
+   réponse long est visible par les visiteurs.
+4. Dès que la page de réservation Google Agenda existe (`company.rdv`), la publication 1 pourra passer du bouton
+   « En savoir plus » au bouton « Réserver ».

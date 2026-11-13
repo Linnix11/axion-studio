@@ -11,7 +11,7 @@ export const n8n = typo({
   title: 'Agence n8n pour TPE et PME',
   seoTitle: 'Agence n8n : automatisation sur mesure',
   description: 'Agence d’automatisation n8n pour TPE et PME en France : création, hébergement et maintenance de workflows, IA, intégrations. Audit gratuit, dès 150 €.',
-  intro: 'Axion Studio est une agence d’automatisation n8n indépendante qui conçoit, installe et maintient des workflows n8n pour les TPE et PME partout en France : logiciels reliés entre eux, tâches répétitives faites sans vous et IA là où elle est utile. Vous travaillez directement avec la personne qui construit vos workflows.',
+  intro: 'Axion Studio est une agence d’automatisation n8n indépendante, installée à Montlignon (95) et qui travaille partout en France. Je conçois, j’installe et je maintiens vos workflows n8n : vos logiciels sont reliés entre eux, les tâches répétitives se font sans vous et l’IA n’intervient que là où elle est utile. Vous parlez directement à la personne qui construit vos workflows, et tout reste à votre nom.',
   pourquoi: [
     { titre: 'Vos données chez vous', texte: 'n8n peut être installé sur votre propre serveur. Vos données clients ne transitent pas par une plateforme tierce, ce qui simplifie le RGPD.' },
     { titre: 'Un coût qui ne grimpe pas avec le volume', texte: 'Auto-hébergé, n8n ne facture pas chaque exécution. Pour des workflows qui tournent souvent, l’écart avec les outils payés à la tâche devient vite important.' },

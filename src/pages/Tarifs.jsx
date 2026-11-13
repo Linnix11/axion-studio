@@ -9,9 +9,9 @@ export default function Tarifs() {
   return (
     <>
       <PageHeader title="Tarifs de l’automatisation pour TPE, dès 150 €" note="Forfait, jamais à l’heure">
-        Chez Axion Studio, l’audit de 30 minutes est offert, les projets sont facturés au forfait à partir de 150 € et
-        le suivi mensuel démarre à 250 € par mois, sans engagement. Pas de facturation à l’heure : vous connaissez le
-        prix exact avant de vous engager.
+        Chez Axion Studio, un projet d’automatisation coûte à partir de 150 € au forfait et le suivi mensuel à partir de
+        250 € par mois, sans engagement. L’audit de 30 minutes qui précède est gratuit et le prix exact du projet est fixé par
+        écrit avant de commencer. Pas de facturation à l’heure : vous savez ce que vous payez avant de vous engager.
       </PageHeader>
 
       <Section note="3 formules">

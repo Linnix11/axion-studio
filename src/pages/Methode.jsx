@@ -15,8 +15,10 @@ export default function Methode() {
   return (
     <>
       <PageHeader title="Méthode : de l’audit gratuit au suivi" note="4 étapes, aucune surprise">
-        Quatre étapes, un prix fixé à l’avance et aucune surprise. Vous validez chaque étape avant de passer à la
-        suivante.
+        Un projet d’automatisation avec Axion Studio se déroule en quatre étapes : un audit gratuit de 30 minutes, une
+        proposition écrite au forfait sous 72 h, la mise en place en 1 à 4 semaines avec des tests sur vos vraies
+        données, puis un mois de suivi inclus. Vous validez chaque étape avant de passer à la suivante et le prix est
+        fixé à l’avance.
       </PageHeader>
 
       <Section note="Vous validez chaque étape">
