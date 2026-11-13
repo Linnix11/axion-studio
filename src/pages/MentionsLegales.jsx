@@ -9,7 +9,11 @@ export default function MentionsLegales() {
     ['Siège', company.siege],
     ['SIRET', company.siret],
     ['TVA', 'TVA non applicable, art. 293 B du CGI'],
-    ['Contact', <a href={`mailto:${company.email}`} className={`${textLink} -my-3 inline-block py-3`}>{company.email}</a>],
+    ['Contact', <>
+      <a href={`mailto:${company.email}`} className={`${textLink} -my-3 inline-block py-3`}>{company.email}</a>
+      {' · '}
+      <a href={`tel:${company.phoneHref}`} className={`${textLink} -my-3 inline-block py-3`}>{company.phone}</a>
+    </>],
     ['Directeur de la publication', company.owner],
     ['Hébergeur', company.host],
   ]

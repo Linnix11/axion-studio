@@ -1,7 +1,7 @@
 # Axion Studio : récapitulatif du projet (passation)
 
 À donner tel quel à un nouvel assistant. Il décrit tout ce qui a été fait, comment le projet marche
-et les règles à respecter. Dernière mise à jour : 10 novembre 2026.
+et les règles à respecter. Dernière mise à jour : 13 novembre 2026.
 
 ## 1. Le client et l'entreprise
 
@@ -167,7 +167,7 @@ docs/agents-seo.md               règles communes et rôle de chacun des 25 agen
 - [x] Google Search Console : propriété `https://axionstudio.fr/` vérifiée, sitemap envoyé (renvoyé le 10 nov. après passage à 28 pages), indexation demandée le 10 nov. pour 10 pages (accueil, Agence n8n, Services, Tarifs, agences immobilières, experts-comptables, articles facture électronique, relances, devis, rendez-vous). Limite : une dizaine de demandes par jour.
 - [ ] Bing Webmaster Tools : ajouter le site (import possible depuis Search Console).
 - [ ] hPanel : assouplir la protection anti-robots, qui bloque Bingbot et GPTBot.
-- [ ] Créer la fiche Google Business Profile (zone desservie : France, ou Île-de-France pour les déplacements). Les visuels sont prêts dans `marketing/banners/` (nouveau style).
+- [x] Fiche Google Business Profile créée le 13 nov., **en attente de vérification par Google** (pas encore publique) : dès qu'elle l'est, envoyer son adresse pour `company.profils`. Les visuels sont prêts dans `marketing/banners/` (nouveau style).
 - [ ] Mettre à jour le profil et la page LinkedIn avec les nouvelles bannières (`marketing/banners/README.md` dit où mettre chacune).
 - [ ] Renseigner le SIRET dès qu'il est attribué (`src/data.js`).
 - [ ] Faire relire les CGV.

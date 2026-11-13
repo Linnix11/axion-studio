@@ -5,7 +5,7 @@ name: Signaler les pages à Bing (IndexNow)
 on:
   push:
     branches: [main]
-    paths: ['src/data.js', 'src/blog.js', 'src/legal.js', 'src/seo.js', 'src/pages/**']
+    paths: ['src/data.js', 'src/blog.js', 'src/legal.js', 'src/seo.js', 'src/n8n.js', 'src/pages/**']
   workflow_dispatch:
 
 permissions:

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from 'react'
+import { lazy, Suspense, useEffect, useRef } from 'react'
 import { Routes, Route, useLocation } from 'react-router'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -39,9 +39,11 @@ function ScrollManager() {
 }
 
 function PageFade() {
-  // Rejoue un fondu léger sur le contenu à chaque changement de page.
+  // Rejoue un fondu léger sur le contenu à chaque changement de page (pas au premier affichage : il clignoterait).
   const { pathname } = useLocation()
+  const premier = useRef(true)
   useEffect(() => {
+    if (premier.current) { premier.current = false; return }
     const main = document.getElementById('contenu')
     if (!main) return
     main.classList.remove('page-fade'); void main.offsetWidth; main.classList.add('page-fade')

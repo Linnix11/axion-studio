@@ -108,10 +108,12 @@ Sitemap: ${SITE_URL}/sitemap.xml
 // ——— Référencement dans les IA : llms.txt (résumé) et llms-full.txt (contenu complet) ———
 const { company, services, useCases, steps, offers, faq, guarantees, security, notDoing, tools, identity } = data
 const [audit, projet, suivi] = offers
-const intro = `> Axion Studio est une agence d'automatisation et d'IA indépendante, spécialiste de n8n : la micro-entreprise d'${company.owner}, basée à Montlignon (Val-d'Oise, 95). Elle automatise les tâches répétitives des TPE, PME et indépendants : workflows automatisés, intégration d'outils (CRM, messagerie, tableurs, facturation), intelligence artificielle appliquée et création de sites web. Clientèle : entreprises et indépendants situés en France, accompagnés en français. Interventions en Île-de-France et à distance partout en France. Audit gratuit de ${audit.unit} ; projets au forfait à partir de ${projet.price} ; suivi mensuel à partir de ${suivi.price} par mois ; TVA non applicable (art. 293 B du CGI).`
+const intro = `> Axion Studio est une agence d'automatisation et d'IA indépendante, spécialiste de n8n : la micro-entreprise d'${company.owner}, basée à Montlignon (Val-d'Oise, 95). Elle automatise les tâches répétitives des TPE, PME et indépendants : workflows automatisés, gestion automatique de l'agenda et de l'emploi du temps, intégration d'outils (CRM, messagerie, tableurs, facturation), intelligence artificielle appliquée et création de sites web. Clientèle : entreprises et indépendants situés en France, accompagnés en français. Interventions en Île-de-France et à distance partout en France. Audit gratuit de ${audit.unit} ; projets au forfait à partir de ${projet.price} ; suivi mensuel à partir de ${suivi.price} par mois ; TVA non applicable (art. 293 B du CGI).`
 const reponses = [
   ['Qui est Axion Studio ?', `Une agence d'automatisation et d'IA indépendante tenue par une seule personne, ${company.owner}, à Montlignon (Val-d'Oise). Elle travaille pour des TPE, PME et indépendants partout en France, avec un seul interlocuteur de l'audit au suivi.`],
-  ['Que fait Axion Studio ?', "Elle automatise les tâches répétitives : workflows (souvent avec n8n), connexion des logiciels entre eux (CRM, messagerie, tableurs, facturation), intelligence artificielle appliquée (lecture de documents, tri, brouillons) et sites web."],
+  ['Que fait Axion Studio ?', "Elle automatise les tâches répétitives : workflows (souvent avec n8n), agenda et emploi du temps (rendez-vous posés seuls, rappels, planning de l'équipe), connexion des logiciels entre eux (CRM, messagerie, tableurs, facturation), intelligence artificielle appliquée (lecture de documents, tri, brouillons) et sites web."],
+  ['Axion Studio est-elle une agence n8n ?', `Oui. Elle installe n8n (n8n Cloud ou serveur au nom du client), construit et teste les workflows sur ses données, puis les surveille et les fait évoluer ; elle reprend aussi des workflows n8n existants. Projets à partir de ${projet.price}. Page dédiée : ${pageUrl('/agence-n8n')} ; n8n expliqué simplement : ${pageUrl('/blog/n8n-c-est-quoi')}`],
+  ['Peut-on créer un agent IA avec n8n ?', `Oui, avec le nœud AI Agent dans un workflow, ou avec les Agents de n8n, encore en préversion. Pour une TPE, l'agent prépare le travail (lire, chercher, proposer un brouillon) et une personne valide avant tout envoi. Exemple pas à pas : ${pageUrl('/blog/agent-ia-n8n')}`],
   ['Combien ça coûte ?', `Audit gratuit de ${audit.unit}. Projets au forfait à partir de ${projet.price}, prix exact fixé avant de commencer. Suivi mensuel à partir de ${suivi.price} par mois, sans engagement. TVA non applicable.`],
   ['Quels outils ?', "Ceux du client d'abord. Pour automatiser : n8n, Make ou Zapier selon le cas, et les API des logiciels. n8n peut être auto-hébergé pour garder les données chez le client."],
   ['Pour quels métiers ?', `Artisans du bâtiment, experts-comptables, agences immobilières, boutiques en ligne, professions libérales et cabinets, commerces et restaurants, et plus largement toute petite entreprise. Une page par métier : ${data.metiers.map(m => pageUrl(`/automatisation/${m.slug}`)).join(', ')}`],
@@ -147,7 +149,7 @@ ${reponses.map(([q, a]) => `- **${q}** ${a}`).join('\n')}
 ${links}
 
 ## Articles
-${posts.map(p => `- [${p.title}](${pageUrl(`/blog/${p.slug}`)}) (${p.date}) : ${p.description}`).join('\n')}
+${posts.map(p => `- [${p.title}](${pageUrl(`/blog/${p.slug}`)}) (${p.date}${p.updated ? `, mis à jour le ${p.updated}` : ''}) : ${p.description}`).join('\n')}
 
 ## Pour aller plus loin
 - [Contenu complet du site en texte](${SITE_URL}/llms-full.txt)
@@ -166,7 +168,7 @@ md.push(`## Garanties\n` + guarantees.map(g => `- ${g.title} : ${g.text}`).join
 md.push(`## Ce qu'Axion Studio ne fait pas\n` + notDoing.map(n => `- ${n}`).join('\n') + '\n')
 md.push(`## Sécurité des données\n` + security.map(s => `- ${s.title} : ${s.text}`).join('\n') + '\n')
 md.push(`## Questions fréquentes\n` + faq.map(f => `### ${f.q}\n${f.a}\n`).join('\n'))
-md.push(`## Articles du blog\n` + posts.map(p => `### ${p.title}\n${pageUrl(`/blog/${p.slug}`)} (${p.date})\n\n${p.lead}\n\n` + p.body.map(b => b.h2 ? `#### ${b.h2}` : b.p ? b.p : b.note ? `> ${b.note}` : (b.ul || b.ol).map((x, i) => (b.ol ? `${i + 1}. ` : '- ') + x).join('\n')).join('\n\n') + (p.faq?.length ? '\n\n#### Questions fréquentes\n\n' + p.faq.map(f => `**${f.q}**\n${f.a}`).join('\n\n') : '')).join('\n\n') + '\n')
+md.push(`## Articles du blog\n` + posts.map(p => `### ${p.title}\n${pageUrl(`/blog/${p.slug}`)} (${p.date}${p.updated ? `, mis à jour le ${p.updated}` : ''})\n\n${p.lead}\n\n` + p.body.map(b => b.h2 ? `#### ${b.h2}` : b.p ? b.p : b.note ? `> ${b.note}` : (b.ul || b.ol).map((x, i) => (b.ol ? `${i + 1}. ` : '- ') + x).join('\n')).join('\n\n') + (p.faq?.length ? '\n\n#### Questions fréquentes\n\n' + p.faq.map(f => `**${f.q}**\n${f.a}`).join('\n\n') : '')).join('\n\n') + '\n')
 md.push(`## Conditions générales de vente (version du ${cgvSettings.version})\n` + cgv.map((a, i) => `### Article ${i + 1}. ${a.title}\n` + a.text.join('\n')).join('\n\n') + '\n')
 md.push(`## Identité\n` + identity.map(([k, v]) => `- ${k} : ${v}`).join('\n') + '\n')
 md.push(`## Contact\n- E-mail : ${company.email}\n- Téléphone : ${company.phone}\n- Adresse : ${company.siege}\n- Formulaire : ${pageUrl('/contact')}\n`)

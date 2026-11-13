@@ -32,8 +32,6 @@ Accueil, Services, Exemples, Méthode, Tarifs, À propos, FAQ, Contact, Mentions
 
 ## À compléter avant la mise en ligne
 - **SIRET** : remplacer « En cours d'attribution » dans `src/data.js` dès réception de l'avis INSEE.
-- **Adresse** : seule la commune est affichée. La loi (LCEN) demande l'adresse de l'éditeur ;
-  ajoutez-la ou utilisez une domiciliation si vous ne voulez pas publier votre adresse personnelle.
 
 ## Formulaire de contact
 `public/api/contact.php` (exécuté par Hostinger) envoie chaque demande par e-mail à l'adresse `TO_EMAIL`,

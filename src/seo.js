@@ -39,7 +39,7 @@ export const pageUrl = path => `${SITE_URL}${path === '/' ? '/' : path + '/'}`
 export function schemaFor(path, data) {
   const { company, services, offers, faq } = data
   const org = {
-    '@type': ['ProfessionalService', 'Organization'],
+    '@type': ['LocalBusiness', 'Organization'],
     '@id': `${SITE_URL}/#entreprise`,
     name: BRAND,
     alternateName: company.tradeName,
@@ -67,15 +67,15 @@ export function schemaFor(path, data) {
   }
   const person = {
     '@type': 'Person', '@id': `${SITE_URL}/a-propos/#arthur`, name: company.owner,
-    jobTitle: 'Consultant en automatisation et intelligence artificielle', worksFor: { '@id': `${SITE_URL}/#entreprise` }, knowsLanguage: 'fr',
-    description: 'Fondateur d’Axion Studio, agence d’automatisation et d’IA indépendante pour les TPE et PME, spécialiste de n8n.',
+    jobTitle: 'Fondateur d’Axion Studio', worksFor: { '@id': `${SITE_URL}/#entreprise` }, knowsLanguage: 'fr',
     knowsAbout: ['Automatisation des processus', 'n8n', 'Make', 'Zapier', 'Intégration d’API', 'Intelligence artificielle en entreprise', 'Facture électronique', 'RGPD et automatisation'],
     url: pageUrl('/a-propos'),
     address: { '@type': 'PostalAddress', addressLocality: 'Montlignon', postalCode: '95680', addressCountry: 'FR' },
   }
   const website = { '@type': 'WebSite', '@id': `${SITE_URL}/#site`, url: `${SITE_URL}/`, name: BRAND, alternateName: [company.tradeName, 'axionstudio.fr'], inLanguage: 'fr-FR', publisher: { '@id': `${SITE_URL}/#entreprise` } }
   const out = [org, website]
-  if (path === '/') out.push(person)
+  // accueil : seulement ce que la page affiche (« Dirigeant Arthur Champagne-Forterre »)
+  if (path === '/') out.push({ '@type': 'Person', '@id': person['@id'], name: person.name, url: person.url })
   const post = pageMeta[path]?.post
   const metier = pageMeta[path]?.metier
   if (path !== '/' && pageMeta[path]) {
@@ -101,7 +101,7 @@ export function schemaFor(path, data) {
     audience: { '@type': 'BusinessAudience', audienceType: metier.cible },
     hasOfferCatalog: { '@type': 'OfferCatalog', name: `Automatisations pour ${metier.nom.toLowerCase()}`, itemListElement: metier.taches.map(t => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: t.titre, description: t.texte } })) },
     // prix seulement si la page l'affiche (dans sa FAQ)
-    ...(metier.faq.some(f => f.a.includes('150')) ? { offers: { '@type': 'Offer', priceCurrency: 'EUR', priceSpecification: { '@type': 'PriceSpecification', minPrice: 150, priceCurrency: 'EUR' } } } : {}),
+    ...(metier.faq.some(f => /\b150\s?€/.test(f.a)) ? { offers: { '@type': 'Offer', priceCurrency: 'EUR', priceSpecification: { '@type': 'PriceSpecification', minPrice: 150, priceCurrency: 'EUR' } } } : {}),
   }, { '@type': 'FAQPage', mainEntity: metier.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
   if (path === '/agence-n8n') out.push({
     '@type': 'Service', name: n8n.title, description: n8n.intro, serviceType: 'Création de workflows n8n',
@@ -115,10 +115,10 @@ export function schemaFor(path, data) {
     areaServed: { '@type': 'Country', name: 'France' }, url: `${SITE_URL}/services/#${s.slug}`,
   })))
   if (path === '/tarifs') out.push({ '@type': 'OfferCatalog', name: 'Formules Axion Studio', itemListElement: offers.map(o => ({
-    '@type': 'Offer', name: o.name, description: o.text, priceCurrency: 'EUR',
-    ...(o.price === 'Offert' ? { price: 0 } : { priceSpecification: { '@type': 'UnitPriceSpecification', minPrice: parseInt(o.price, 10), priceCurrency: 'EUR', ...(o.name.includes('mensuel') ? { unitText: 'mois' } : {}) } }),
+    '@type': 'Offer', name: o.name, description: o.text, priceCurrency: 'EUR', offeredBy: { '@id': `${SITE_URL}/#entreprise` },
+    ...(o.price === 'Offert' ? { price: 0 } : { priceSpecification: { '@type': o.name.includes('mensuel') ? 'UnitPriceSpecification' : 'PriceSpecification', minPrice: parseInt(o.price, 10), priceCurrency: 'EUR', ...(o.name.includes('mensuel') ? { unitText: 'mois' } : {}) } }),
   })) })
-  if (path === '/a-propos') out.push(person, { '@type': 'AboutPage', name: pageMeta[path].title, url: pageUrl(path), about: { '@id': `${SITE_URL}/#entreprise` } })
+  if (path === '/a-propos') out.push(person, { '@type': ['AboutPage', 'ProfilePage'], name: pageMeta[path].title, url: pageUrl(path), mainEntity: { '@id': `${SITE_URL}/a-propos/#arthur` }, about: { '@id': `${SITE_URL}/#entreprise` } })
   if (path === '/contact') out.push({ '@type': 'ContactPage', name: pageMeta[path].title, url: pageUrl(path), about: { '@id': `${SITE_URL}/#entreprise` } },
     { '@type': 'FAQPage', mainEntity: contactFaq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: sansLiens(f.a) } })) })
   return { '@context': 'https://schema.org', '@graph': out }

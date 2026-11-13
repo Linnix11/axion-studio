@@ -59,7 +59,7 @@ export const posts = [
       { p: 'n8n peut appeler les modèles d’IA de plusieurs fournisseurs, comme OpenAI, Anthropic ou Google, et en combiner plusieurs dans un même workflow. Il y a deux grandes façons de s’en servir :' },
       { ul: [
         'Une étape d’IA au milieu d’un workflow classique : lire une pièce jointe, classer une demande par type, résumer un e-mail, rédiger un brouillon de réponse. Le reste du workflow reste prévisible.',
-        'Un agent d’IA : le nœud AI Agent relie un modèle d’IA à un ou plusieurs outils (agenda, tableur, base de données) et choisit lui-même lesquels utiliser pour accomplir une tâche.',
+        'Un agent d’IA : le nœud AI Agent relie un modèle d’IA à un ou plusieurs outils (agenda, tableur, base de données) et choisit lui-même lesquels utiliser pour accomplir une tâche (voir [un exemple d’agent IA pas à pas](/blog/agent-ia-n8n/)).',
       ] },
       { p: 'Pour une petite entreprise, la première façon est souvent la plus utile : l’IA fait une tâche précise, et une personne relit avant que quoi que ce soit parte chez un client. Une IA peut se tromper, et les données envoyées à un service d’IA doivent être choisies avec soin ; les règles à suivre sont dans les [6 règles pour utiliser l’IA avec des données clients](/blog/ia-donnees-clients-regles/).' },
 
@@ -112,7 +112,7 @@ export const posts = [
       { p: 'Le mot « agent » sert aujourd’hui à désigner des choses très différentes. Voici ce qu’il recouvre vraiment, ce que n8n permet de faire, et un exemple concret, sans code, de ce qu’un agent peut apporter à une petite entreprise.' },
 
       { h2: 'Agent IA ou workflow classique : la différence' },
-      { p: 'Un workflow classique suit un chemin fixé à l’avance : quand un formulaire arrive, créer le contact, puis envoyer la confirmation. Chaque étape a été décidée par la personne qui l’a construit. Même quand une IA intervient, par exemple pour résumer un message, elle fait une seule tâche, à un endroit précis.' },
+      { p: 'Un workflow classique suit un chemin fixé à l’avance : quand un formulaire arrive, créer le contact, puis envoyer la confirmation. Chaque étape a été décidée par la personne qui l’a construit. Même quand une IA intervient, par exemple pour résumer un message, elle fait une seule tâche, à un endroit précis. Pour les bases, voir [comment fonctionne un workflow n8n](/blog/n8n-c-est-quoi/).' },
       { p: 'Un agent IA fonctionne autrement. On lui donne un objectif, des consignes et une liste d’outils, et le modèle d’IA décide lui-même quels outils appeler, dans quel ordre, jusqu’à obtenir une réponse. La documentation de n8n le résume ainsi : là où une chaîne suit une suite d’appels prévue d’avance, un agent utilise un modèle de langage pour choisir les actions à mener. Un agent réunit quatre éléments :' },
       { ul: [
         'le modèle : l’IA qui raisonne et rédige (n8n se branche notamment sur OpenAI, Anthropic ou Mistral) ;',
@@ -367,7 +367,7 @@ export const posts = [
     "title": "Chatbot sur le site d’une TPE : utile ou gadget ?",
     "description": "Quand un chatbot rend service, quand il fait perdre du temps, ce que disent l’AI Act et le RGPD, ce qu’il coûte, et l’exemple de l’assistant d’axionstudio.fr.",
     "date": "2026-11-10",
-    "updated": "2026-11-11",
+    "updated": "2026-11-13",
     "category": "IA et sécurité",
     "lead": "Un chatbot est utile sur le site d’une TPE quand les visiteurs posent souvent les mêmes questions, à des heures où personne ne peut répondre, et qu’il sait passer la main à un humain. Il devient un gadget quand il cache votre téléphone, répond à côté ou invente. Depuis le 2 août 2026, le visiteur doit aussi savoir clairement qu’il échange avec une IA.",
     "body": [
@@ -465,7 +465,7 @@ export const posts = [
         "h2": "Pour aller plus loin"
       },
       {
-        "p": "Les questions répétitives et la prise de demande sont au cœur des pages consacrées aux [professions libérales](/automatisation/professions-liberales/) et aux [commerces et restaurants](/automatisation/commerces-restaurants/). Avant de brancher une IA sur les échanges de vos clients, lisez aussi les [6 règles pour utiliser l’IA avec des données clients](/blog/ia-donnees-clients-regles/). Un doute sur l’intérêt d’un chatbot pour votre activité ? [Écrivez-moi](/contact/), l’audit de 30 minutes sert à ça."
+        "p": "Les questions répétitives et la prise de demande sont au cœur des pages consacrées aux [professions libérales](/automatisation/professions-liberales/) aux [commerces et restaurants](/automatisation/commerces-restaurants/) et aux [boutiques en ligne](/automatisation/boutiques-en-ligne/), pour les questions de suivi de commande. Si les demandes arrivent surtout par e-mail, un [agent IA qui prépare les réponses](/blog/agent-ia-n8n/) peut être plus utile qu’un chatbot. Avant de brancher une IA sur les échanges de vos clients, lisez aussi les [6 règles pour utiliser l’IA avec des données clients](/blog/ia-donnees-clients-regles/). Un doute sur l’intérêt d’un chatbot pour votre activité ? [Écrivez-moi](/contact/), l’audit de 30 minutes sert à ça."
       },
       {
         "p": "Sources : [Commission européenne, cadre réglementaire sur l’IA](https://digital-strategy.ec.europa.eu/fr/policies/regulatory-framework-ai), [Commission européenne, règles de transparence des systèmes d’IA](https://digital-strategy.ec.europa.eu/en/factpages/quick-facts-transparency-rules-ai-systems), [AI Act Service Desk, article 50](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50), [CNIL, chatbots : les conseils pour respecter les droits des personnes](https://www.cnil.fr/fr/chatbots-les-conseils-de-la-cnil-pour-respecter-les-droits-des-personnes), [Google AI Studio, tarifs de l’API Gemini](https://aistudio.google.com/docs/pricing), [Google, conditions de l’API Gemini](https://aistudio.google.com/docs/terms)."
@@ -816,7 +816,7 @@ export const posts = [
       { h2: 'Les coûts récurrents à prévoir' },
       { p: 'Une fois en place, une automatisation a généralement deux types de coûts mensuels :' },
       { ul: [
-        'L’abonnement aux outils : outil d’automatisation (n8n, Make, Zapier…) et, le cas échéant, service d’IA. Il est [souscrit à votre nom, sur vos propres comptes](/securite/) ; certains usages restent dans les offres gratuites, d’autres non.',
+        'L’abonnement aux outils : outil d’automatisation (n8n, Make, Zapier…) et, le cas échéant, service d’IA. Il est [souscrit à votre nom, sur vos propres comptes](/securite/), et avec n8n l’[hébergement sur n8n Cloud ou sur un serveur à votre nom](/agence-n8n/) est chiffré dans la proposition ; certains usages restent dans les offres gratuites, d’autres non.',
         'Le suivi, si vous le souhaitez : surveillance, corrections et petites évolutions. Il est facultatif et sans engagement.',
       ] },
       { note: 'Les tarifs des outils évoluent souvent : la proposition indique toujours leur coût estimé, vérifié au moment du projet.' },
@@ -863,7 +863,7 @@ export const posts = [
       { p: 'Relancer est désagréable, donc on le reporte. Une automatisation envoie un rappel aimable quelques jours avant l’échéance, une relance courte le lendemain, puis une relance plus ferme une dizaine de jours après, avec le ton que vous avez choisi. Elle s’arrête dès que le paiement est enregistré. Résultat : moins d’oublis, et une trésorerie plus régulière.' },
 
       { h2: '3. Le classement des factures et justificatifs' },
-      { p: 'Les PDF s’accumulent dans la boîte mail et sont rangés à la main en fin de mois. Ici, l’intelligence artificielle est vraiment utile : elle lit chaque document, en extrait le fournisseur, la date et le montant, le renomme, le range dans le bon dossier et reporte les montants dans votre tableau de suivi ou celui de votre comptable. Le circuit complet figure parmi les [exemples d’automatisation pour TPE](/exemples/).' },
+      { p: 'Les PDF s’accumulent dans la boîte mail et sont rangés à la main en fin de mois. Ici, l’intelligence artificielle est vraiment utile : son fonctionnement et ses limites sont expliqués dans [comment l’IA lit une facture fournisseur](/blog/lire-factures-fournisseurs-ia/). Elle lit chaque document, en extrait le fournisseur, la date et le montant, le renomme, le range dans le bon dossier et reporte les montants dans votre tableau de suivi ou celui de votre comptable. Le circuit complet figure parmi les [exemples d’automatisation pour TPE](/exemples/).' },
 
       { h2: '4. Le reporting hebdomadaire' },
       { p: 'Le lundi matin, beaucoup de dirigeants assemblent les chiffres de trois outils différents : ventes, rendez-vous, devis en cours. Un récapitulatif automatique arrive à la place dans votre boîte mail, toujours au même format. Vous gardez l’analyse, la machine fait la collecte.' },
@@ -902,7 +902,7 @@ export const posts = [
       { ul: ['Idéal pour : des scénarios de complexité moyenne, avec plusieurs étapes et conditions.', 'Points d’attention : un peu plus d’apprentissage au départ.'] },
 
       { h2: 'n8n : le plus libre' },
-      { p: 'n8n peut s’utiliser en ligne ou être installé sur votre propre serveur. Cette seconde option est précieuse quand vos données sont sensibles : elles restent sous votre contrôle, et le coût ne dépend plus du nombre d’exécutions. n8n est aussi très à l’aise avec l’intelligence artificielle et les appels d’API. Je détaille ces usages sur la page [agence n8n pour TPE et PME](/agence-n8n/).' },
+      { p: 'n8n peut s’utiliser en ligne ou être installé sur votre propre serveur. Cette seconde option est précieuse quand vos données sont sensibles : son fonctionnement est détaillé dans [n8n expliqué simplement](/blog/n8n-c-est-quoi/). Elles restent sous votre contrôle, et le coût ne dépend plus du nombre d’exécutions. n8n est aussi très à l’aise avec l’intelligence artificielle et les appels d’API. Je détaille ces usages sur la page [agence n8n pour TPE et PME](/agence-n8n/).' },
       { ul: ['Idéal pour : des volumes importants, des données à garder chez soi, des workflows avec de l’IA.', 'Points d’attention : un hébergement à prévoir et à maintenir si vous l’installez vous-même.'] },
 
       { h2: 'Comment choisir' },
@@ -947,7 +947,7 @@ export const posts = [
       { p: 'Si vous utilisez un outil d’IA pour traiter leurs demandes, dites-le simplement dans votre politique de confidentialité : quelles données, pour quoi faire, et avec quel prestataire. La transparence rassure, et c’est une exigence du RGPD. Les autres points à vérifier (registre, contrat avec chaque prestataire, durée de conservation) sont détaillés dans [RGPD et automatisation : ce qu’une TPE doit vérifier](/blog/rgpd-automatisation-tpe/).' },
 
       { h2: '6. Pouvoir tout arrêter' },
-      { p: 'Les comptes, les clés d’accès et les automatisations doivent être à votre nom. Vous devez pouvoir retirer un accès ou couper un service en quelques minutes, sans dépendre de personne.' },
+      { p: 'Les comptes, les clés d’accès et les automatisations doivent être à votre nom. Vous devez pouvoir retirer un accès ou couper un service en quelques minutes, sans dépendre de personne. C’est le principe suivi quand [j’installe et je maintiens n8n pour une entreprise](/agence-n8n/).' },
 
       { note: 'Ces conseils sont des bonnes pratiques générales, pas un avis juridique. Pour une situation particulière, rapprochez-vous de la CNIL (cnil.fr) ou d’un professionnel du droit.' },
       { p: 'Ce sont exactement les règles appliquées sur chaque projet Axion Studio : elles sont détaillées sur la page [Sécurité et données](/securite/). Les [questions fréquentes sur l’automatisation et l’IA](/faq/) répondent aux cas les plus courants. Une question sur votre cas ? [Écrivez-moi](/contact/).' },

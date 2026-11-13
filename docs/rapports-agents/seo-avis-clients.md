@@ -59,7 +59,7 @@ Sources :
 >
 > Arthur Champagne-Forterre
 > Axion Studio
-> arthur.champagne@icloud.com
+> contact@axionstudio.fr
 
 Pourquoi ce texte : pas de contrepartie, pas de note suggérée (« quel qu'il soit »), pas de texte proposé, et l'avis critique est explicitement accueilli. La phrase sur le compte Google vient de l'aide Google (lien partie 1).
 
@@ -96,11 +96,11 @@ Répondez à **tous** les avis, bons ou mauvais, dans les jours qui suivent. Sig
 
 ### Avis mitigé
 
-> Merci [Prénom] d'avoir pris le temps de donner un avis complet. Je suis content que [point positif cité] vous soit utile. Vous avez raison sur [point faible cité] : [ce que vous avez fait ou allez faire, en une phrase, par exemple « je fais désormais valider chaque étape par écrit avant de construire »]. Si vous le souhaitez, je vous propose un échange rapide pour en parler : arthur.champagne@icloud.com. Arthur
+> Merci [Prénom] d'avoir pris le temps de donner un avis complet. Je suis content que [point positif cité] vous soit utile. Vous avez raison sur [point faible cité] : [ce que vous avez fait ou allez faire, en une phrase, par exemple « je fais désormais valider chaque étape par écrit avant de construire »]. Si vous le souhaitez, je vous propose un échange rapide pour en parler : contact@axionstudio.fr. Arthur
 
 ### Avis négatif
 
-> Bonjour [Prénom], merci pour votre retour, et je suis désolé que le projet ne vous ait pas donné satisfaction. Je prends votre remarque sur [point cité] au sérieux. Je préfère en parler directement avec vous plutôt qu'ici : pouvez-vous m'écrire à arthur.champagne@icloud.com ? Je vous répondrai personnellement. Arthur
+> Bonjour [Prénom], merci pour votre retour, et je suis désolé que le projet ne vous ait pas donné satisfaction. Je prends votre remarque sur [point cité] au sérieux. Je préfère en parler directement avec vous plutôt qu'ici : pouvez-vous m'écrire à contact@axionstudio.fr ? Je vous répondrai personnellement. Arthur
 
 Conseils pour un avis négatif :
 - Attendez quelques heures avant de répondre, et répondez sans vous justifier point par point ni contredire le client en public.

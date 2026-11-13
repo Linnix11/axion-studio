@@ -1,3 +1,4 @@
+import { Link } from 'react-router'
 import { PageHeader, Section, textLink, usePageMeta } from '../components/ui'
 import { company } from '../data'
 import { geminiFreeTier, freeTierNotice } from '../chatbot'
@@ -30,6 +31,7 @@ export default function Confidentialite() {
             </section>
           ))}
           <p className="py-6">Contact : <a href={`mailto:${company.email}`} className={`${textLink} -my-3 inline-block py-3`}>{company.email}</a></p>
+          <p className="pb-6">Voir aussi les <Link to="/cgv/" className={textLink}>conditions générales de vente</Link> et les <Link to="/mentions-legales/" className={textLink}>mentions légales</Link>.</p>
         </div>
       </Section>
     </>

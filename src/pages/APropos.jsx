@@ -28,8 +28,9 @@ export default function APropos() {
                 vous appartient.
               </p>
               <p>
-                Je suis basé à Montlignon, dans le Val-d’Oise. Je me déplace en Île-de-France et je travaille à
-                distance partout en France.
+                Je suis basé à Montlignon, dans le Val-d’Oise (coordonnées complètes dans les{' '}
+                <Link to="/mentions-legales/" className={textLink}>mentions légales</Link>). Je me déplace en Île-de-France
+                et je travaille à distance partout en France.
               </p>
               <p>
                 Pour les entreprises qui utilisent n8n, je propose aussi la <Link to="/agence-n8n/" className={textLink}>conception et la maintenance de workflows n8n</Link>.

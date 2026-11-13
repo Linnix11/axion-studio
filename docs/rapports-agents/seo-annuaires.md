@@ -16,7 +16,7 @@ C'est vous qui créez les comptes (mot de passe, vérification d'identité, SIRE
 4. Les liens vers le site finissent toujours par « / » (exemple : `https://axionstudio.fr/agence-n8n/`).
 
 Rappel des informations communes (dans `docs/kit-profils.md`) : Axion Studio, Arthur Champagne-Forterre,
-5 allée des Pommiers, 95680 Montlignon, 06 48 61 23 50, arthur.champagne@icloud.com, https://axionstudio.fr/.
+5 allée des Pommiers, 95680 Montlignon, 06 48 61 23 50, contact@axionstudio.fr, https://axionstudio.fr/.
 
 ## Tableau récapitulatif
 

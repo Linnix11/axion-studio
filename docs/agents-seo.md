@@ -26,7 +26,7 @@ planifiée dans Claude Code ou un workflow n8n qui lance la commande.
 5. **Limites** : titres de 60 caractères maximum (marque comprise), descriptions de 160 maximum ; liens internes avec « / » final.
 6. **Pas de secret** : aucune clé d'API, aucun mot de passe dans le dépôt ni dans les réponses ; l'agent ne saisit jamais
    un mot de passe à la place de l'utilisateur.
-7. **Une seule adresse** : arthur.champagne@icloud.com (tant qu'il n'existe pas d'adresse @axionstudio.fr).
+7. **Adresses** : publique (site, profils, annuaires, demandes d'avis) contact@axionstudio.fr ; administration de l'espace client et prospection n8n : arthur.champagne@icloud.com.
 8. **Les actions hors site** (Search Console, annuaires, LinkedIn, Google Business, avis) sont préparées par l'agent
    et faites par l'utilisateur, ou par Claude dans le navigateur avec son accord explicite à chaque fois.
 9. **Tout le contexte est dans** `docs/HANDOFF.md` (fonctionnement du site), `docs/plan-seo-ia.md` (plan et avancement)
