@@ -9,9 +9,9 @@ const typo = v => typeof v === 'string'
 
 export const n8n = typo({
   title: 'Agence n8n pour TPE et PME',
-  seoTitle: 'Agence n8n : workflows et automatisation',
-  description: 'Création, hébergement et maintenance de workflows n8n pour TPE et PME en France : intégrations, IA, prospection, facturation. Audit gratuit, projets dès 150 €.',
-  intro: 'Axion Studio est une agence n8n indépendante qui conçoit, installe et maintient des workflows n8n pour les TPE et PME partout en France : logiciels reliés entre eux, tâches répétitives faites sans vous et IA là où elle est utile. Vous travaillez directement avec la personne qui construit vos workflows.',
+  seoTitle: 'Agence n8n : automatisation sur mesure',
+  description: 'Agence d’automatisation n8n pour TPE et PME en France : création, hébergement et maintenance de workflows, IA, intégrations. Audit gratuit, dès 150 €.',
+  intro: 'Axion Studio est une agence d’automatisation n8n indépendante qui conçoit, installe et maintient des workflows n8n pour les TPE et PME partout en France : logiciels reliés entre eux, tâches répétitives faites sans vous et IA là où elle est utile. Vous travaillez directement avec la personne qui construit vos workflows.',
   pourquoi: [
     { titre: 'Vos données chez vous', texte: 'n8n peut être installé sur votre propre serveur. Vos données clients ne transitent pas par une plateforme tierce, ce qui simplifie le RGPD.' },
     { titre: 'Un coût qui ne grimpe pas avec le volume', texte: 'Auto-hébergé, n8n ne facture pas chaque exécution. Pour des workflows qui tournent souvent, l’écart avec les outils payés à la tâche devient vite important.' },
@@ -32,8 +32,11 @@ export const n8n = typo({
     { titre: 'Demandes de devis', texte: 'Chaque demande reçue par le site ou par e-mail crée une fiche client, prépare un brouillon de devis et vous prévient sur votre téléphone.' },
     { titre: 'Factures fournisseurs', texte: 'Les factures reçues par e-mail sont lues, renommées, rangées dans le bon dossier et reportées dans un tableau de suivi.' },
     { titre: 'Relances', texte: 'Factures impayées et devis sans réponse sont relancés à date fixe, et les relances s’arrêtent dès le paiement ou la signature.' },
+    { titre: 'Suivi des automatisations clients', texte: 'Un autre workflow en service chez Axion Studio : toutes les 15 minutes, n8n relève l’état de chaque workflow (dernière exécution, erreurs de la semaine) et l’envoie à l’espace client du site, où chaque client voit ses automatisations et où les erreurs remontent en premier.' },
+    { titre: 'Agenda et rendez-vous', texte: 'Le client choisit un créneau libre, le rendez-vous arrive dans le bon agenda, un rappel part la veille et un créneau annulé est reproposé au suivant.' },
   ],
   faq: [
+    { q: 'Que fait une agence d’automatisation n8n ?', a: 'Elle repère avec vous les tâches qui méritent d’être automatisées, installe n8n, construit et teste les workflows sur vos données, puis les surveille et les fait évoluer. Chez Axion Studio, c’est la même personne qui fait l’audit, la construction et le suivi.' },
     { q: 'Qu’est-ce que n8n ?', a: 'n8n est un outil d’automatisation qui relie vos logiciels entre eux par des workflows visuels. Il peut être utilisé en version hébergée (n8n Cloud) ou installé sur votre propre serveur.' },
     { q: 'n8n, Make ou Zapier : lequel choisir ?', a: 'n8n convient bien quand les volumes sont importants, quand les données doivent rester chez vous ou quand il faut des traitements sur mesure. Make et Zapier sont plus simples à prendre en main pour de petits besoins. Je vous recommande l’outil le plus simple à maintenir pour votre cas.' },
     { q: 'Combien coûte un projet n8n ?', a: 'Les projets démarrent à 150 € au forfait, prix exact fixé après l’audit gratuit. L’hébergement de n8n (n8n Cloud ou serveur) reste à votre nom et à votre charge ; son coût est indiqué dans la proposition.' },

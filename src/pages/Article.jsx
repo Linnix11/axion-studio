@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Link, useParams } from 'react-router'
 import { Container, CtaBand, AuditLink, btn, usePageMeta } from '../components/ui'
 import { posts, readingMinutes, formatDate } from '../blog'
-import { company } from '../data'
+import { company, metiers } from '../data'
 import NotFound from './NotFound'
 
 /** Texte avec liens au format [texte](/chemin). */
@@ -39,6 +39,7 @@ export default function Article() {
   // Articles liés : même catégorie d'abord, puis les suivants en rotation (aucun article ne reste sans lien)
   const idx = posts.indexOf(post)
   const others = [...posts.slice(idx + 1), ...posts.slice(0, idx)]
+  const pourMetiers = metiers.filter(m => m.articles?.includes(post.slug))   // pages métier qui citent cet article
     .sort((a, b) => (b.category === post.category) - (a.category === post.category)).slice(0, 3)
   const toc = post.body.filter(b => b.h2)
   const milieu = post.body.findIndex((b, i) => b.h2 && post.body.slice(0, i).some(x => x.h2))   // 2ᵉ intertitre
@@ -58,7 +59,7 @@ export default function Article() {
               </nav>
               <h1 className="mt-2 max-w-4xl text-[2.25rem] leading-[1.08] tracking-[-0.02em] sm:text-6xl">{post.title}</h1>
               <p className="mt-6 text-sm text-muted">
-                Par <Link to="/a-propos/" className="underline decoration-1 underline-offset-4 hover:text-pen">{company.owner}</Link> · <time dateTime={post.date}>{formatDate(post.date)}</time> · {readingMinutes(post)} min de lecture
+                Par <Link to="/a-propos/" className="underline decoration-1 underline-offset-4 hover:text-pen">{company.owner}</Link> · Publié le <time dateTime={post.date}>{formatDate(post.date)}</time>{post.updated && post.updated !== post.date && <>, mis à jour le <time dateTime={post.updated}>{formatDate(post.updated)}</time></>} · {readingMinutes(post)} min de lecture
               </p>
             </div>
           </Container>
@@ -90,6 +91,12 @@ export default function Article() {
                     </Fragment>
                   ))}
                 </section>
+              )}
+              {pourMetiers.length > 0 && (
+                <p className="mt-12 border-t border-rule pt-6 font-sans text-base">
+                  <span className="text-muted">{'Pour votre métier\u00a0: '}</span>
+                  {pourMetiers.map((m, i) => <Fragment key={m.slug}>{i > 0 && ' · '}<Link to={`/automatisation/${m.slug}/`} className="text-pen underline decoration-1 underline-offset-4 hover:decoration-2">{m.nom}</Link></Fragment>)}
+                </p>
               )}
             </div>
             {toc.length > 2 && (

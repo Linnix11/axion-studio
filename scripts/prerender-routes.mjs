@@ -87,7 +87,7 @@ writeFileSync(join(dist, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${paths.map(p => {
   // Date réelle seulement pour les articles : une date de build ferait croire que tout change à chaque publication
-  const date = pageMeta[p]?.post?.date
+  const date = pageMeta[p]?.post?.updated || pageMeta[p]?.post?.date
   return `  <url><loc>${pageUrl(p)}</loc>${date ? `<lastmod>${date}</lastmod>` : ''}<priority>${priority(p)}</priority></url>`
 }).join('\n')}
 </urlset>
