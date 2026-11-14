@@ -163,3 +163,149 @@ Date : 10 novembre 2026. Aucun fichier existant modifié, rien publié.
 - Mettre à jour la ligne « Étape 3 : suite du calendrier » de `docs/plan-seo-ia.md` (non modifié ici, consigne de l'appel) :
   prochain sujet après le chatbot = RGPD et automatisation, puis factures fournisseurs avec l'IA.
 - Ajouter les mots-clés visés dans Semrush pour obtenir leurs volumes avant rédaction.
+
+
+---
+
+# Mise à jour du 14 novembre 2026
+
+13 articles en ligne. Depuis le calendrier du 10 nov., quatre sujets ont été publiés (RGPD, factures fournisseurs avec l’IA,
+puis « n8n, c’est quoi ? » et « Créer un agent IA avec n8n », hors calendrier, pour soutenir /agence-n8n/).
+Nouveauté à couvrir : le service « Agenda et emploi du temps » (`src/data.js`, slug `agenda`), qu’aucun article ne soutient.
+Aucun sujet d’étude de cas client : Axion Studio n’a pas encore de client.
+
+## Articles déjà en ligne (à ne pas concurrencer)
+
+coût de l’automatisation, 5 tâches à automatiser, n8n/Make/Zapier, IA et données clients (4 nov.) ;
+facture électronique 2026-2027, relances de factures impayées, devis d’artisan, prise de rendez-vous en ligne et rappels SMS,
+chatbot utile ou gadget (10 nov.) ; RGPD et automatisation, lire ses factures fournisseurs avec l’IA (11 nov.) ;
+n8n c’est quoi, créer un agent IA avec n8n (13 nov.).
+
+## Les 4 prochains sujets
+
+| Ordre | Article | Mot-clé visé | Pages reliées |
+|---|---|---|---|
+| 1 (fin nov. 2026) | Planning d’équipe et tournées : organiser la semaine sans Excel | planning équipe automatique | /services/ (Agenda), artisans du bâtiment, commerces et restaurants |
+| 2 (déc. 2026) | Intelligence artificielle en PME : par où commencer | intelligence artificielle pme (70/mois) | /services/ (IA), professions libérales |
+| 3 (janv. 2027) | Expert-comptable : automatiser la collecte des justificatifs clients | collecte justificatifs expert-comptable | experts-comptables |
+| 4 (févr. 2027) | Agence immobilière : qualifier automatiquement les contacts des portails | qualifier contacts immobilier | agences immobilières |
+
+---
+
+### Sujet 1 — Planning d’équipe et tournées
+
+- **Titre** : Planning d’équipe et tournées : organiser la semaine sans Excel
+- **Titre Google** : Planning d’équipe : l’organiser sans Excel (42 caractères)
+- **Question principale** : comment répartir les interventions ou les gardes de la semaine entre plusieurs personnes, et prévenir
+  chacun des changements, sans refaire le tableur tous les lundis ?
+- **Angle** : le planning vu de l’intérieur de l’entreprise, pas du client. Construire le planning à partir des demandes acceptées,
+  répartir par zone et par compétence, tenir compte des absences, envoyer à chaque personne son programme du jour avec adresses et
+  documents, et répercuter automatiquement une annulation ou une urgence sur le reste de la semaine.
+- **Mot-clé visé** : « planning équipe automatique », « automatiser son planning » (volumes non mesurés, à ajouter dans Semrush).
+  Ne vise pas « agence automatisation » (accueil) ni « automatisation artisan » (page métier).
+- **Pages à relier** : `/services/` section Agenda et emploi du temps (ancre « gestion automatique de l’agenda ») ;
+  `/automatisation/artisans-batiment/` (tournées des techniciens) ; `/automatisation/commerces-restaurants/` (plannings d’équipe) ;
+  articles `/blog/prise-rendez-vous-en-ligne-rappels/` et `/blog/devis-artisan-automatiser/` ; `/contact/`.
+- **Ce qui le distingue des articles existants** :
+  - de « Prise de rendez-vous en ligne et rappels SMS » : cet article-là traite du client qui réserve un créneau et du rappel qu’il
+    reçoit. Ici, rien à réserver : il s’agit de répartir le travail entre plusieurs personnes et de tenir le planning interne à jour.
+    Recherche différente (« prendre rendez-vous en ligne » contre « planning d’équipe »).
+  - de « 5 tâches à automatiser » : l’article généraliste mentionne le planning en une ligne parmi cinq tâches ; ici c’est le sujet entier.
+- **Pourquoi ce sujet manque** : le service « Agenda et emploi du temps » est annoncé sur l’accueil et sur /services/ mais aucun
+  article ne le soutient, alors que les quatre autres services en ont au moins un. C’est aussi la seule promesse du site sans preuve écrite.
+- **Sources officielles probables** (à ouvrir et vérifier avant rédaction, agent seo-verificateur-faits) :
+  - service-public.fr et code.travail.gouv.fr : durée du travail, repos quotidien et hebdomadaire, délai de prévenance en cas de
+    changement d’horaires (notamment pour le temps partiel) ;
+  - CNIL : fiche sur la géolocalisation des véhicules des salariés (si l’article évoque l’optimisation des tournées) ;
+  - CNIL : durée de conservation des données de planning et information des salariés.
+- **Point de vigilance** : aucun gain chiffré inventé ; seuls les ordres de grandeur déjà utilisés sur le site.
+
+### Sujet 2 — Intelligence artificielle en PME
+
+- **Titre** : Intelligence artificielle en PME : par où commencer sans se tromper
+- **Titre Google** : Intelligence artificielle en PME : débuter (42 caractères)
+- **Question principale** : quels usages de l’IA font vraiment gagner du temps à une PME, dans quel ordre les mettre en place,
+  et qu’est-ce qui coûte plus qu’il ne rapporte ?
+- **Angle** : un parcours en trois paliers (préparer des réponses et des documents, lire et classer des pièces, laisser un agent
+  agir sous contrôle), avec pour chaque palier le travail humain qui reste. Article d’entrée de gamme, pensé pour être cité par les IA.
+- **Mot-clé visé** : « intelligence artificielle pme » (70/mois, Semrush du 10 nov.) : seul mot-clé mesuré qui n’a encore ni page ni article.
+- **Pages à relier** : `/services/` section Intelligence artificielle ; `/automatisation/professions-liberales/` ;
+  articles `/blog/ia-donnees-clients-regles/`, `/blog/chatbot-site-tpe-utile-ou-gadget/`, `/blog/agent-ia-n8n/`,
+  `/blog/lire-factures-fournisseurs-ia/` ; `/securite/`.
+- **Ce qui le distingue des articles existants** :
+  - de « IA et données clients : 6 règles » : celui-ci répond à « est-ce que j’ai le droit, et comment ne pas me mettre en faute ».
+    Le nouveau répond à « par quoi je commence et qu’est-ce que ça m’apporte ». Intention d’achat contre intention de conformité.
+  - de « Créer un agent IA avec n8n » : technique, outil nommé, pas à pas. Le nouveau ne nomme pas d’outil dans le titre et
+    s’adresse à un dirigeant qui ne sait pas encore s’il veut de l’IA.
+  - de « Chatbot : utile ou gadget ? » : un seul usage, vu de la façade du site. Le nouveau couvre l’intérieur de l’entreprise.
+- **Pourquoi ce sujet manque** : le site parle d’IA dans quatre articles mais aucun ne vise la recherche la plus large et la seule
+  mesurée. C’est aussi la porte d’entrée naturelle vers les trois autres (maillage interne).
+- **Sources officielles probables** : France Num (francenum.gouv.fr), guides et baromètre du numérique des TPE-PME ;
+  Insee, enquête sur les technologies de l’information et de la communication (usage de l’IA par les entreprises) ;
+  règlement (UE) 2024/1689 sur l’IA, sur eur-lex.europa.eu et digital-strategy.ec.europa.eu ; recommandations IA de la CNIL.
+- **Point de vigilance** : les dates d’application du règlement européen sur l’IA ont fait l’objet de propositions de report.
+  Ne citer que ce qui est confirmé sur la source officielle le jour de la rédaction, comme pour l’article chatbot (article 50).
+
+### Sujet 3 — Collecte des justificatifs en cabinet comptable
+
+- **Titre** : Expert-comptable : automatiser la collecte des justificatifs clients
+- **Titre Google** : Collecte des justificatifs : l’automatiser (42 caractères)
+- **Question principale** : comment un cabinet récupère-t-il les pièces de ses clients à temps, sans relancer chacun à la main ?
+- **Angle** : la relance graduée côté cabinet : liste des pièces attendues par client, rappel automatique avec la liste de ce qui
+  manque seulement, dépôt simple pour le client, tableau de bord des dossiers complets ou non, et escalade vers un appel humain.
+- **Mot-clé visé** : « collecte justificatifs expert-comptable », « relance pièces comptables » (non mesurés, à ajouter dans Semrush).
+  Le mot-clé « automatisation cabinet d’expertise comptable » reste porté par la page métier, renforcée par un lien avec cette ancre.
+- **Pages à relier** : `/automatisation/experts-comptables/` ; articles `/blog/relances-factures-impayees/` (même logique de relance
+  graduée, objet différent), `/blog/lire-factures-fournisseurs-ia/` et `/blog/facture-electronique-tpe-2026-2027/`.
+- **Ce qui le distingue des articles existants** :
+  - de « Relances de factures impayées » : on ne relance pas de l’argent dû mais des documents manquants, auprès de ses propres
+    clients sous lettre de mission. Pas de pénalités de retard, pas de mise en demeure : la mécanique juridique n’est pas la même.
+  - de « Lire ses factures fournisseurs avec l’IA » : cet article commence quand la pièce est arrivée (la lire et l’enregistrer).
+    Le nouveau traite d’avant : obtenir la pièce.
+  - de « Facture électronique 2026-2027 » : celui-là explique une obligation et un calendrier, pas une organisation de cabinet.
+- **Pourquoi ce sujet manque** : la page experts-comptables n’est soutenue que par un article, et c’est l’un des deux mots-clés
+  métier suivis. Le moment compte : la plupart des exercices se clôturent le 31 décembre, et de janvier à avril les cabinets
+  courent après les pièces. À publier en janvier, pas plus tard.
+- **Sources officielles probables** : impots.gouv.fr, calendrier fiscal des professionnels (dates de dépôt 2027) ;
+  Conseil national de l’ordre des experts-comptables, lettre de mission et obligations du client ;
+  Code de commerce L123-22 (conservation 10 ans) et Livre des procédures fiscales L102 B (6 ans), déjà vérifiés pour l’article
+  factures fournisseurs ; CNIL, sécurité et conservation des pièces transmises.
+
+### Sujet 4 — Qualifier les contacts des portails immobiliers
+
+- **Titre** : Agence immobilière : qualifier automatiquement les contacts des portails
+- **Titre Google** : Contacts des portails immo : les qualifier (42 caractères)
+- **Question principale** : comment répondre en quelques minutes à chaque demande venue d’un portail d’annonces et repérer les
+  projets sérieux sans y passer la journée ?
+- **Angle** : le trajet d’un contact, du portail au rendez-vous : réponse immédiate, questions de qualification posées
+  automatiquement, création de la fiche dans le logiciel de transaction, attribution au bon négociateur, rappel si personne n’a
+  répondu, et règles de prospection à respecter.
+- **Mot-clé visé** : « qualifier contacts immobilier », « leads immobilier automatisation » (non mesurés).
+  Le mot-clé suivi « automatisation d’agence immobilière » reste porté par la page métier.
+- **Pages à relier** : `/automatisation/agences-immobilieres/` ; articles `/blog/prise-rendez-vous-en-ligne-rappels/` (visites),
+  `/blog/rgpd-automatisation-tpe/` (prospection et conservation) et `/blog/agent-ia-n8n/` (tri des messages entrants).
+- **Ce qui le distingue des articles existants** :
+  - de « Devis d’artisan en 5 minutes » : même idée de demande entrante traitée vite, mais rien à chiffrer ici, et la source est un
+    portail d’annonces, pas un formulaire de site. Vocabulaire et recherche entièrement différents.
+  - de « Prise de rendez-vous en ligne » : la visite n’est que la fin du parcours ; l’article porte sur le tri avant le rendez-vous.
+  - de « RGPD et automatisation » : le nouveau s’appuie sur les règles de prospection sans les réexpliquer, par un lien.
+- **Pourquoi ce sujet manque** : la page agences immobilières est l’une des deux pages métier au mot-clé suivi dans Semrush et
+  n’est soutenue par aucun article. À publier en février, avant la reprise des demandes au printemps.
+- **Sources officielles probables** : CNIL, prospection commerciale par courriel et par SMS (consentement selon particulier ou
+  professionnel) ; Code de la consommation L223-1 et suivants, opposition au démarchage téléphonique (Bloctel) ;
+  loi Hoguet et carte professionnelle, sur entreprendre.service-public.gouv.fr, si l’article évoque le mandat.
+
+## Réserve (dans cet ordre)
+
+1. **Temps perdu en tâches administratives** : à ne faire que si Insee, France Num ou Bpifrance Le Lab donnent un ordre de
+   grandeur citable. Sinon le transformer en « mesurer votre propre temps administratif en une semaine », sans chiffre global.
+2. **Boutique en ligne : stock, commandes et suivi sans ressaisie** : à viser vers juin 2027, à l’approche de septembre 2027
+   (transmission des données de ventes aux particuliers).
+3. **Faire appel à un freelance en automatisation : les questions à poser** : envoie des liens vers l’accueil et /agence-n8n/.
+4. **Création de site web pour une TPE** (« création site web tpe », 50/mois) : seule section de /services/ sans article après le sujet 1.
+
+## À faire par l’utilisateur
+
+- Ajouter dans Semrush les mots-clés visés ci-dessus pour obtenir leurs volumes avant rédaction (aucun volume n’est avancé ici
+  en dehors des 70/mois déjà mesurés).
+- Valider l’ordre des quatre sujets, puis demander la rédaction du sujet 1 (agent seo-redacteur-article), faits vérifiés avant publication.

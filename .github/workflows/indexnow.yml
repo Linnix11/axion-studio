@@ -1,7 +1,8 @@
 name: Signaler les pages à Bing (IndexNow)
 
 # À chaque envoi sur main qui modifie les TEXTES du site (pas le style) : on laisse à Hostinger le temps
-# de publier la nouvelle version (moins d'une minute d'habitude), puis on signale les pages à Bing via IndexNow.
+# de publier la nouvelle version (jusqu'à 4 min 30 constatées), puis on signale les pages à Bing via IndexNow.
+# La liste des pages vient du dépôt, pas du site en ligne : l'attente ne sert qu'à éviter que Bing arrive trop tôt.
 on:
   push:
     branches: [main]
@@ -20,6 +21,6 @@ jobs:
         with:
           node-version: 22
       - name: Attendre la mise en ligne par Hostinger
-        run: sleep 120
+        run: sleep 300
       - name: Envoyer les pages à IndexNow
         run: node scripts/indexnow.mjs

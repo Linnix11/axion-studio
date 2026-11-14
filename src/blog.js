@@ -200,7 +200,7 @@ export const posts = [
         'la date d’échéance ;',
         'la nature de l’achat (fournitures, sous-traitance, abonnement…), pour proposer un classement.',
       ] },
-      { p: 'À partir de cette fiche, une automatisation (par exemple un workflow n8n) renomme le fichier selon une règle fixe, comme « date, fournisseur, montant », le range dans le bon dossier, reporte les montants dans un tableau de suivi ou prépare l’import dans le logiciel comptable, et prévient quand une échéance approche.' },
+      { p: 'À partir de cette fiche, une automatisation (par exemple un workflow n8n, [l’outil qui relie vos logiciels entre eux](/blog/n8n-c-est-quoi/)) renomme le fichier selon une règle fixe, comme « date, fournisseur, montant », le range dans le bon dossier, reporte les montants dans un tableau de suivi ou prépare l’import dans le logiciel comptable, et prévient quand une échéance approche.' },
 
       { h2: 'Ce que ça change au quotidien' },
       { p: 'Le gain vient surtout de la disparition des petites manipulations : ouvrir la pièce jointe, l’enregistrer, la renommer, recopier trois montants. Sur le cas type « factures fournisseurs » de la page [Exemples](/exemples/), l’ordre de grandeur est d’une à deux heures par semaine pour un cabinet qui reçoit ses factures par e-mail ; pour un [commerce ou un restaurant](/automatisation/commerces-restaurants/) qui en reçoit moins, on parle plutôt d’une à deux heures par mois. Le gain réel dépend du nombre de factures et de leur diversité : il se mesure pendant les premières semaines.' },
@@ -259,7 +259,7 @@ export const posts = [
       { note: 'Ces repères sont généraux et ne remplacent ni l’avis de votre expert-comptable ni un conseil juridique ou fiscal. Les règles détaillées sont publiées sur impots.gouv.fr et entreprendre.service-public.gouv.fr.' },
 
       { h2: 'Pour aller plus loin' },
-      { p: 'Les cabinets comptables appliquent la même mécanique aux pièces de leurs clients : voir la page [automatisation pour les cabinets d’expertise comptable](/automatisation/experts-comptables/). Pour relier la lecture des factures à votre messagerie, à votre stockage et à votre logiciel, un [workflow n8n](/agence-n8n/) qui tourne sur vos propres comptes suffit le plus souvent ; ce type de projet démarre à partir de 150 € au forfait. Je regarde votre circuit de factures pendant l’[audit gratuit de 30 minutes](/contact/).' },
+      { p: 'Les cabinets comptables appliquent la même mécanique aux pièces de leurs clients : voir la page [automatisation pour les cabinets d’expertise comptable](/automatisation/experts-comptables/). Quand les documents sont trop variés pour une règle fixe, un [agent IA qui lit, cherche et prépare le travail](/blog/agent-ia-n8n/) peut prendre le relais, à condition de garder la validation humaine. Pour relier la lecture des factures à votre messagerie, à votre stockage et à votre logiciel, un [workflow n8n](/agence-n8n/) qui tourne sur vos propres comptes suffit le plus souvent ; ce type de projet démarre à partir de 150 € au forfait. Je regarde votre circuit de factures pendant l’[audit gratuit de 30 minutes](/contact/).' },
       { p: 'Sources : [impots.gouv.fr, je découvre la facturation électronique](https://www.impots.gouv.fr/professionnel/je-decouvre-la-facturation-electronique), [entreprendre.service-public.gouv.fr, mentions obligatoires d’une facture](https://entreprendre.service-public.gouv.fr/vosdroits/F31808), [entreprendre.service-public.gouv.fr, durée de conservation des documents](https://entreprendre.service-public.gouv.fr/vosdroits/F10029), [BOFiP, conservation des documents et des factures (BOI-CF-COM-10-10-30)](https://bofip.impots.gouv.fr/bofip/645-PGP.html/identifiant=BOI-CF-COM-10-10-30-20250903), [CNIL, définition d’une donnée personnelle](https://www.cnil.fr/fr/definition/donnee-personnelle), [CNIL, sous-traitant](https://www.cnil.fr/fr/sous-traitant).' },
     ],
     faq: [
@@ -323,7 +323,7 @@ export const posts = [
         'le pays bénéficie d’une décision d’adéquation de la Commission européenne : le transfert est possible sans outil supplémentaire. Pour les États-Unis, la décision du 10 juillet 2023 ne couvre que les entreprises américaines certifiées, inscrites sur la liste tenue par le ministère américain du Commerce ;',
         'sinon, il faut des garanties appropriées, le plus souvent les clauses contractuelles types adoptées par la Commission européenne, que les éditeurs intègrent en général à leur contrat.',
       ] },
-      { p: 'À vérifier pour chaque outil : où sont hébergées les données, si l’éditeur est certifié ou fournit ces clauses, et la mention du transfert dans votre registre et votre politique de confidentialité. Ce cadre peut bouger : le précédent accord avec les États-Unis, le Privacy Shield, a été invalidé par la Cour de justice de l’Union européenne en juillet 2020. Quand un hébergement en Europe existe, le choisir limite cette dépendance ; n8n, par exemple, peut être installé sur un serveur situé en Europe.' },
+      { p: 'À vérifier pour chaque outil : où sont hébergées les données, si l’éditeur est certifié ou fournit ces clauses, et la mention du transfert dans votre registre et votre politique de confidentialité. Ce cadre peut bouger : le précédent accord avec les États-Unis, le Privacy Shield, a été invalidé par la Cour de justice de l’Union européenne en juillet 2020. Quand un hébergement en Europe existe, le choisir limite cette dépendance ; n8n, par exemple, peut être installé sur un serveur situé en Europe ([n8n et ses deux modes d’hébergement](/blog/n8n-c-est-quoi/)).' },
 
       { h2: 'Informer les personnes et répondre à leurs demandes' },
       { p: 'Au moment de la collecte (formulaire, chatbot, prise de rendez-vous), les personnes doivent être informées (article 13) : qui vous êtes, pourquoi vous collectez leurs données et sur quelle base, à qui elles sont transmises, combien de temps vous les gardez, quels sont leurs droits, et qu’elles peuvent réclamer auprès de la CNIL. Une mention courte sous le formulaire, qui renvoie vers la politique de confidentialité, est la forme habituelle.' },
@@ -333,7 +333,7 @@ export const posts = [
         'prévoir un scénario « effacer ce contact partout » plutôt que de fouiller chaque outil à la main ;',
         'transmettre automatiquement une opposition à la prospection à l’outil d’e-mailing.',
       ] },
-      { p: 'Enfin, si une automatisation prend une décision importante pour quelqu’un (refuser un dossier, écarter une candidature), l’article 22 du RGPD donne le droit de ne pas faire l’objet d’une décision fondée exclusivement sur un traitement automatisé lorsqu’elle produit des effets juridiques ou l’affecte de manière significative. Il existe des exceptions (contrat, loi, consentement explicite), mais la personne doit alors pouvoir obtenir une intervention humaine. Prévoir une validation humaine est donc la précaution la plus simple.' },
+      { p: 'Enfin, si une automatisation prend une décision importante pour quelqu’un (refuser un dossier, écarter une candidature), l’article 22 du RGPD donne le droit de ne pas faire l’objet d’une décision fondée exclusivement sur un traitement automatisé lorsqu’elle produit des effets juridiques ou l’affecte de manière significative. Il existe des exceptions (contrat, loi, consentement explicite), mais la personne doit alors pouvoir obtenir une intervention humaine. Prévoir une validation humaine est donc la précaution la plus simple, et c’est encore plus vrai quand une IA choisit elle-même ses actions : voir les garde-fous décrits dans [créer un agent IA avec n8n](/blog/agent-ia-n8n/).' },
 
       { h2: 'Sécuriser les accès et prévoir l’incident' },
       { p: 'Une automatisation manipule des clés d’accès et des connexions à vos outils. Les bonnes pratiques : comptes à votre nom, accès limités à ce qui est nécessaire, retirés à la fin d’une mission, double authentification quand l’outil la propose, aucune clé copiée dans un e-mail ou un document partagé.' },
@@ -465,7 +465,7 @@ export const posts = [
         "h2": "Pour aller plus loin"
       },
       {
-        "p": "Les questions répétitives et la prise de demande sont au cœur des pages consacrées aux [professions libérales](/automatisation/professions-liberales/) aux [commerces et restaurants](/automatisation/commerces-restaurants/) et aux [boutiques en ligne](/automatisation/boutiques-en-ligne/), pour les questions de suivi de commande. Si les demandes arrivent surtout par e-mail, un [agent IA qui prépare les réponses](/blog/agent-ia-n8n/) peut être plus utile qu’un chatbot. Avant de brancher une IA sur les échanges de vos clients, lisez aussi les [6 règles pour utiliser l’IA avec des données clients](/blog/ia-donnees-clients-regles/). Un doute sur l’intérêt d’un chatbot pour votre activité ? [Écrivez-moi](/contact/), l’audit de 30 minutes sert à ça."
+        "p": "Les questions répétitives et la prise de demande sont au cœur des pages consacrées aux [professions libérales](/automatisation/professions-liberales/), aux [commerces et restaurants](/automatisation/commerces-restaurants/) et aux [boutiques en ligne](/automatisation/boutiques-en-ligne/), pour les questions de suivi de commande. Si les demandes arrivent surtout par e-mail, un [agent IA qui prépare les réponses](/blog/agent-ia-n8n/) peut être plus utile qu’un chatbot. Avant de brancher une IA sur les échanges de vos clients, lisez aussi les [6 règles pour utiliser l’IA avec des données clients](/blog/ia-donnees-clients-regles/). Un doute sur l’intérêt d’un chatbot pour votre activité ? [Écrivez-moi](/contact/), l’audit de 30 minutes sert à ça."
       },
       {
         "p": "Sources : [Commission européenne, cadre réglementaire sur l’IA](https://digital-strategy.ec.europa.eu/fr/policies/regulatory-framework-ai), [Commission européenne, règles de transparence des systèmes d’IA](https://digital-strategy.ec.europa.eu/en/factpages/quick-facts-transparency-rules-ai-systems), [AI Act Service Desk, article 50](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50), [CNIL, chatbots : les conseils pour respecter les droits des personnes](https://www.cnil.fr/fr/chatbots-les-conseils-de-la-cnil-pour-respecter-les-droits-des-personnes), [Google AI Studio, tarifs de l’API Gemini](https://aistudio.google.com/docs/pricing), [Google, conditions de l’API Gemini](https://aistudio.google.com/docs/terms)."
@@ -551,7 +551,7 @@ export const posts = [
         "h2": "Avec quels outils"
       },
       {
-        "p": "Les logiciels de devis du bâtiment (Obat, Tolteck, Batappli et d’autres) proposent souvent des modèles et parfois des connexions. Une automatisation relie ce logiciel à votre messagerie, à votre site et à votre agenda, avec un outil comme [n8n, Make ou Zapier](/blog/n8n-make-zapier-comparatif/). Je pars toujours de votre logiciel actuel : en changer n’est proposé que s’il bloque vraiment."
+        "p": "Les logiciels de devis du bâtiment (Obat, Tolteck, Batappli et d’autres) proposent souvent des modèles et parfois des connexions. Une automatisation relie ce logiciel à votre messagerie, à votre site et à la [gestion automatique de votre agenda](/services/#agenda), avec un outil comme [n8n, Make ou Zapier](/blog/n8n-make-zapier-comparatif/). Si c’est n8n qui est retenu, le [principe des workflows est expliqué pas à pas](/blog/n8n-c-est-quoi/). Je pars toujours de votre logiciel actuel : en changer n’est proposé que s’il bloque vraiment."
       },
       {
         "p": "Ordre de grandeur : sur ce type de circuit, le gain se compte en heures par semaine, selon le nombre de demandes reçues. Les projets démarrent à 150 € au forfait ([voir les tarifs](/tarifs/))."
@@ -639,7 +639,7 @@ export const posts = [
         "h2": "Avec quels outils"
       },
       {
-        "p": "Les outils de réservation spécialisés (Planity, Doctolib, TheFork, Calendly, la page de réservation de Google Agenda…) font déjà une partie du travail. L’automatisation sert à les [relier au reste de vos outils](/services/) : votre fichier clients, votre facturation, les demandes d’avis, ou une liste d’attente. Je pars de l’outil que vous utilisez déjà, et je n’en propose un nouveau que s’il manque une brique."
+        "p": "Les outils de réservation spécialisés (Planity, Doctolib, TheFork, Calendly, la page de réservation de Google Agenda…) font déjà une partie du travail. L’automatisation sert à les [relier à votre agenda et au reste de vos outils](/services/#agenda) : votre fichier clients, votre facturation, les demandes d’avis, ou une liste d’attente. Je pars de l’outil que vous utilisez déjà, et je n’en propose un nouveau que s’il manque une brique."
       },
       {
         "p": "Ordre de grandeur : ce type de circuit se met en place en une à deux semaines, tests compris, et les projets démarrent à 150 € au forfait ([voir les tarifs](/tarifs/))."
@@ -648,7 +648,7 @@ export const posts = [
         "h2": "Pour aller plus loin"
       },
       {
-        "p": "Les rendez-vous sont au cœur des pages consacrées aux [commerces et restaurants](/automatisation/commerces-restaurants/), aux [professions libérales](/automatisation/professions-liberales/) et aux [agences immobilières](/automatisation/agences-immobilieres/) pour les visites. Voir aussi les [5 tâches à automatiser en priorité](/blog/taches-a-automatiser-tpe/)."
+        "p": "Les rendez-vous sont au cœur des pages consacrées aux [commerces et restaurants](/automatisation/commerces-restaurants/), aux [professions libérales](/automatisation/professions-liberales/) et aux [agences immobilières](/automatisation/agences-immobilieres/) pour les visites. Quand les demandes arrivent surtout par e-mail plutôt que par une page de réservation, un [agent IA qui propose des créneaux à partir de votre agenda](/blog/agent-ia-n8n/) peut préparer la réponse à votre place. Voir aussi les [5 tâches à automatiser en priorité](/blog/taches-a-automatiser-tpe/)."
       },
       { "p": "Sources : [CNIL, la prospection commerciale par SMS et MMS](https://www.cnil.fr/fr/la-prospection-commerciale-par-sms-mms), [CNIL, communications électroniques aux prospects et clients](https://www.cnil.fr/fr/communication-electronique-quelles-regles)." }
     ],
@@ -717,8 +717,8 @@ export const posts = [
       { p: 'Deux réglages évitent les maladresses : une liste de clients à ne jamais relancer automatiquement (grands comptes, litiges en cours), et, si vous le souhaitez, votre validation avant toute relance ferme.' },
 
       { h2: 'Avec quels outils' },
-      { p: 'Beaucoup de logiciels de facturation proposent des relances intégrées : vérifiez d’abord ce que le vôtre sait faire. Une automatisation sur mesure (avec [n8n, Make ou Zapier](/blog/n8n-make-zapier-comparatif/)) devient utile quand les factures sont dans un tableur, quand plusieurs outils doivent se parler (facturation, banque, messagerie, CRM) ou quand vous voulez un ton et un calendrier qui vous ressemblent.' },
-      { p: 'Ordre de grandeur : une telle automatisation se met en place en une à deux semaines, tests compris, et les projets démarrent à 150 € au forfait ([voir les tarifs](/tarifs/)). Le gain se mesure en heures rendues chaque mois et, surtout, en factures payées plus tôt.' },
+      { p: 'Beaucoup de logiciels de facturation proposent des relances intégrées : vérifiez d’abord ce que le vôtre sait faire. Une automatisation sur mesure (avec [n8n, Make ou Zapier](/blog/n8n-make-zapier-comparatif/)) devient utile quand les factures sont dans un tableur, quand plusieurs outils doivent se parler (facturation, banque, messagerie, CRM) ou quand vous voulez un ton et un calendrier qui vous ressemblent. Dans ce cas, c’est un workflow déclenché à heure fixe qui fait le tour des factures ; [le rôle d’un déclencheur et des étapes d’un workflow](/blog/n8n-c-est-quoi/) est expliqué à part.' },
+      { p: 'Ordre de grandeur : une telle automatisation se met en place en une à deux semaines, tests compris, et les projets démarrent à 150 € au forfait ([voir les tarifs](/tarifs/)). Le gain se mesure en heures rendues chaque mois et, surtout, en factures payées plus tôt : la façon de vérifier que ce gain couvre la dépense est détaillée dans [combien coûte l’automatisation pour une petite entreprise](/blog/cout-automatisation-petite-entreprise/).' },
 
       { h2: 'Pour aller plus loin' },
       { p: 'Les relances sont souvent la première tâche automatisée chez les [artisans du bâtiment](/automatisation/artisans-batiment/) et dans les [professions libérales](/automatisation/professions-liberales/). Avec la [facture électronique obligatoire en 2026-2027](/blog/facture-electronique-tpe-2026-2027/), le suivi des paiements devient aussi plus simple à brancher.' },
@@ -802,11 +802,11 @@ export const posts = [
     lead: 'C’est la première question que se posent les dirigeants de petites entreprises, et elle est légitime : une automatisation n’a d’intérêt que si elle fait gagner plus qu’elle ne coûte. Voici ce qui fait varier le prix, ce qu’il faut prévoir chaque mois, et comment savoir en cinq minutes si le jeu en vaut la chandelle.',
     body: [
       { h2: 'Ce qui fait varier le prix' },
-      { p: 'Le prix d’une automatisation dépend moins de la technologie que du nombre d’étapes et d’outils à relier. Quatre critères comptent surtout :' },
+      { p: 'Le prix d’une automatisation dépend moins de la technologie que du nombre d’étapes et d’outils à relier. Le choix de l’outil (Make, Zapier ou [n8n, dont le fonctionnement est détaillé à part](/blog/n8n-c-est-quoi/)) joue surtout sur l’abonnement mensuel. Quatre critères comptent surtout :' },
       { ul: [
         'Le nombre d’outils à connecter : relier une boîte mail à un tableur est plus simple que relier un site, un CRM et un logiciel de facturation (voir l’[intégration d’outils entre eux](/services/)).',
         'Le nombre de cas particuliers : une tâche toujours identique coûte moins cher qu’une tâche avec beaucoup d’exceptions.',
-        'L’usage de l’intelligence artificielle : lire des PDF ou rédiger des brouillons demande plus de réglages et de tests.',
+        'L’usage de l’intelligence artificielle : lire des PDF ou rédiger des brouillons demande plus de réglages et de tests, et un [agent IA qui choisit lui-même ses outils](/blog/agent-ia-n8n/) en demande encore davantage.',
         'Le niveau de fiabilité attendu : alertes en cas d’erreur, reprise automatique, documentation.',
       ] },
 
@@ -853,7 +853,7 @@ export const posts = [
     lead: 'Dans une petite entreprise, le temps perdu ne vient pas d’une grosse tâche, mais d’une dizaine de petites qui reviennent chaque semaine. Voici les cinq qui méritent d’être automatisées en premier, parce qu’elles sont fréquentes, répétitives et faciles à fiabiliser.',
     body: [
       { h2: 'Comment repérer une tâche à automatiser' },
-      { p: 'Une bonne candidate coche trois cases : elle revient au moins chaque semaine, elle suit toujours les mêmes étapes, et ses informations existent déjà quelque part sous forme numérique (un e-mail, un formulaire, un tableur, un PDF). Si vous recopiez une information d’un outil vers un autre, c’est presque toujours automatisable.' },
+      { p: 'Une bonne candidate coche trois cases : elle revient au moins chaque semaine, elle suit toujours les mêmes étapes, et ses informations existent déjà quelque part sous forme numérique (un e-mail, un formulaire, un tableur, un PDF). Si vous recopiez une information d’un outil vers un autre, c’est presque toujours automatisable. Ces enchaînements se construisent avec un outil d’automatisation : [ce qu’est n8n et comment se dessine un workflow](/blog/n8n-c-est-quoi/) donne le vocabulaire utile.' },
       { note: 'Le bon réflexe : notez pendant une semaine chaque tâche que vous faites « encore une fois ». La liste qui en sort est votre feuille de route.' },
 
       { h2: '1. Le traitement des demandes de devis' },
@@ -869,10 +869,10 @@ export const posts = [
       { p: 'Le lundi matin, beaucoup de dirigeants assemblent les chiffres de trois outils différents : ventes, rendez-vous, devis en cours. Un récapitulatif automatique arrive à la place dans votre boîte mail, toujours au même format. Vous gardez l’analyse, la machine fait la collecte.' },
 
       { h2: '5. Les réponses aux questions qui reviennent' },
-      { p: 'Horaires, délais, documents à fournir, suivi de commande : une bonne partie des e-mails reçus posent les mêmes questions. Une automatisation peut classer les messages entrants par type de demande et préparer une réponse que vous relisez avant envoi. Le client est servi plus vite, et vous gardez la main. C’est l’un des usages de l’[intelligence artificielle pour TPE et PME](/services/) que je mets en place.' },
+      { p: 'Horaires, délais, documents à fournir, suivi de commande : une bonne partie des e-mails reçus posent les mêmes questions. Une automatisation peut classer les messages entrants par type de demande et préparer une réponse que vous relisez avant envoi. Le client est servi plus vite, et vous gardez la main. Quand les demandes sont trop variées pour une règle fixe, c’est le terrain d’un [agent IA relié à votre messagerie](/blog/agent-ia-n8n/). C’est l’un des usages de l’[intelligence artificielle pour TPE et PME](/services/) que je mets en place.' },
 
       { h2: 'Par où commencer ?' },
-      { p: 'Commencez par une seule tâche, celle qui vous agace le plus. Une première automatisation simple se met en place en une à deux semaines, tests compris, et sert ensuite de base aux suivantes. Les [étapes, de l’audit gratuit au suivi](/methode/) sont détaillées à part. Vous ne savez pas laquelle choisir ? C’est exactement l’objet de l’[audit gratuit de 30 minutes](/contact/) : on regarde votre semaine type et on fixe ensemble l’ordre de priorité.' },
+      { p: 'Commencez par une seule tâche, celle qui vous agace le plus. Une première automatisation simple se met en place en une à deux semaines, tests compris, et sert ensuite de base aux suivantes. Les [étapes, de l’audit gratuit au suivi](/methode/) sont détaillées à part. Vous ne savez pas laquelle choisir ? C’est exactement l’objet de l’[audit gratuit de 30 minutes](/contact/) : on regarde votre semaine type et on fixe ensemble l’ordre de priorité. Pour chiffrer le gain avant de vous lancer, le calcul est détaillé dans [combien coûte une automatisation et quand elle devient rentable](/blog/cout-automatisation-petite-entreprise/).' },
     ],
     faq: [
       { q: 'Quelles tâches automatiser en premier dans une petite entreprise ?', a: 'Le traitement des demandes de devis, les relances de factures impayées, le classement des factures et justificatifs, le reporting hebdomadaire et les réponses aux questions qui reviennent.' },
@@ -902,7 +902,7 @@ export const posts = [
       { ul: ['Idéal pour : des scénarios de complexité moyenne, avec plusieurs étapes et conditions.', 'Points d’attention : un peu plus d’apprentissage au départ.'] },
 
       { h2: 'n8n : le plus libre' },
-      { p: 'n8n peut s’utiliser en ligne ou être installé sur votre propre serveur. Cette seconde option est précieuse quand vos données sont sensibles : son fonctionnement est détaillé dans [n8n expliqué simplement](/blog/n8n-c-est-quoi/). Elles restent sous votre contrôle, et le coût ne dépend plus du nombre d’exécutions. n8n est aussi très à l’aise avec l’intelligence artificielle et les appels d’API. Je détaille ces usages sur la page [agence n8n pour TPE et PME](/agence-n8n/).' },
+      { p: 'n8n peut s’utiliser en ligne ou être installé sur votre propre serveur. Cette seconde option est précieuse quand vos données sont sensibles : son fonctionnement est détaillé dans [n8n expliqué simplement](/blog/n8n-c-est-quoi/). Elles restent sous votre contrôle, et le coût ne dépend plus du nombre d’exécutions. n8n est aussi très à l’aise avec l’intelligence artificielle, jusqu’aux [agents IA qui décident eux-mêmes des étapes](/blog/agent-ia-n8n/), et avec les appels d’API. Je détaille ces usages sur la page [agence n8n pour TPE et PME](/agence-n8n/).' },
       { ul: ['Idéal pour : des volumes importants, des données à garder chez soi, des workflows avec de l’IA.', 'Points d’attention : un hébergement à prévoir et à maintenir si vous l’installez vous-même.'] },
 
       { h2: 'Comment choisir' },
@@ -941,7 +941,7 @@ export const posts = [
       { p: 'Données de santé, informations bancaires, mots de passe, pièces d’identité : ces informations n’ont rien à faire dans un outil d’IA généraliste sans un cadre précis et l’accord des personnes concernées.' },
 
       { h2: '4. Garder un humain dans la boucle' },
-      { p: 'L’IA peut se tromper, avec beaucoup d’assurance. Pour tout ce qui part chez un client (une réponse, un devis, une relance), la bonne pratique est de faire préparer un brouillon par l’IA, puis de le relire avant l’envoi.' },
+      { p: 'L’IA peut se tromper, avec beaucoup d’assurance. Pour tout ce qui part chez un client (une réponse, un devis, une relance), la bonne pratique est de faire préparer un brouillon par l’IA, puis de le relire avant l’envoi. Ce garde-fou compte doublement avec un [agent IA à qui l’on confie des outils](/blog/agent-ia-n8n/), puisque c’est lui qui décide de ses actions.' },
 
       { h2: '5. Informer vos clients' },
       { p: 'Si vous utilisez un outil d’IA pour traiter leurs demandes, dites-le simplement dans votre politique de confidentialité : quelles données, pour quoi faire, et avec quel prestataire. La transparence rassure, et c’est une exigence du RGPD. Les autres points à vérifier (registre, contrat avec chaque prestataire, durée de conservation) sont détaillés dans [RGPD et automatisation : ce qu’une TPE doit vérifier](/blog/rgpd-automatisation-tpe/).' },

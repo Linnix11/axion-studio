@@ -38,11 +38,36 @@ que Google et les IA lisent comme « ces profils sont bien cette entreprise ».
 
 ## Étape 1 — à faire en premier
 
-### 1. Hostinger : laisser passer les robots de Bing et d'OpenAI (10 min)
-hPanel → Sites web → axionstudio.fr → cherchez la protection contre les robots (souvent dans « Sécurité » ou
-« Performance », parfois appelée protection anti-bots, mode « sous attaque » ou pare-feu). Désactivez-la ou
-ajoutez une exception pour **Bingbot** et **GPTBot**. Si vous ne trouvez pas : chat du support Hostinger, phrase à coller :
-> Bonjour, la protection anti-robots de mon site axionstudio.fr renvoie des erreurs 403 à Bingbot et 429 à GPTBot. Pouvez-vous autoriser les robots d'indexation des moteurs de recherche et des IA (Bingbot, Googlebot, GPTBot, OAI-SearchBot, ClaudeBot, PerplexityBot) ? Merci.
+### 1. Vérifier d'abord si les robots sont vraiment bloqués (2 min)
+
+Un test fait depuis une connexion personnelle ne prouve rien : le CDN de Hostinger vérifie les robots
+par DNS inverse et par les adresses IP publiées par les moteurs, donc un faux Googlebot venant d'une box
+est refusé à juste titre ([documentation Hostinger](https://www.hostinger.com/support/?p=16168)).
+
+Le seul test fiable, et il est gratuit :
+1. search.google.com/search-console, propriété `axionstudio.fr`.
+2. Barre du haut « Inspecter n'importe quelle URL » : coller `https://axionstudio.fr/`.
+3. Bouton **« Tester l'URL en direct »** (en haut à droite), attendre 30 secondes.
+4. « L'URL est disponible pour Google » : rien à faire, passer à l'étape 2.
+   Une erreur d'exploration : faire l'étape 1 bis ci-dessous.
+
+### 1 bis. Hostinger : seulement si l'étape 1 a confirmé un blocage (10 min)
+
+hPanel → **Sites web** → axionstudio.fr → **Performance** → **CDN** → bouton **Manage**. Trois réglages,
+dans cet ordre :
+
+| Où | Ce qu'il faut | Pourquoi |
+|---|---|---|
+| Onglet **Security** | Niveau sur **Medium** ou **Low**, jamais **Under Attack** | Ce mode impose une page de vérification que les robots ne savent pas passer |
+| Onglet **Traffic blocking** | Aucun blocage des **États-Unis**, aucune règle « autoriser uniquement » qui les exclut | Googlebot explore depuis des adresses IP américaines |
+| Liste des **robots bloqués** | Aucun moteur de recherche, aucun robot d'IA | Un robot de cette liste reçoit 403 **même s'il est vérifié** |
+
+Ne pas baisser le niveau de sécurité plus bas que nécessaire : les niveaux les plus bas désactivent
+l'inspection des requêtes. Un code 429 occasionnel sur une grande page est normal, les robots réessaient.
+
+Si après ces trois vérifications la Search Console signale toujours une erreur, alors seulement, chat du
+support Hostinger, phrase à coller :
+> Bonjour, la Search Console de Google signale une erreur d'exploration sur axionstudio.fr. J'ai vérifié dans le CDN : niveau de sécurité Medium, aucun blocage par pays, aucun robot bloqué. Pouvez-vous regarder si une limite de taux d'exploration s'applique à mon site ? Merci.
 
 ### 2. Google Search Console (10 min)
 1. https://search.google.com/search-console → « Ajouter une propriété » → **Préfixe d'URL** → `https://axionstudio.fr`.
