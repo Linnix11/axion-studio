@@ -159,6 +159,7 @@ function start_session(): void {
   $local = in_array($_SERVER['SERVER_NAME'] ?? '', ['localhost', '127.0.0.1'], true);
   session_name('axion_crm');
   ini_set('session.use_strict_mode', '1');   // refuse un identifiant de session choisi par le visiteur
+  ini_set('session.gc_maxlifetime', (string) CRM_SESSION_IDLE);   // sinon PHP efface la session après 24 min (valeur par défaut)
   session_set_cookie_params(['lifetime' => 0, 'path' => '/', 'secure' => !$local, 'httponly' => true, 'samesite' => 'Strict']);
   session_start();
   if (isset($_SESSION['vu']) && time() - $_SESSION['vu'] > CRM_SESSION_IDLE) { $_SESSION = []; session_regenerate_id(true); }

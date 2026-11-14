@@ -572,7 +572,7 @@ function LigneAutomatisation({ a, clients, onSaved }) {
       </form>
       <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-1 text-sm">
         <label className="flex min-h-11 items-center gap-2">
-          <input type="checkbox" className="size-5" checked={a.visible} onChange={e => save({ visible: e.target.checked })} />
+          <input type="checkbox" className="size-5" checked={a.visible} onChange={e => save({ visible: e.target.checked, ...(desc !== a.description && { description: desc }) })} />
           Visible par le client
         </label>
         <label className="flex min-h-11 items-center gap-2">
