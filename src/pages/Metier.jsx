@@ -1,7 +1,7 @@
 import { Link, useParams } from 'react-router'
 import { PageHeader, Section, SectionHead, CtaBand, AuditLink, btn, standaloneLink, usePageMeta } from '../components/ui'
 import { metiers } from '../data'
-import { posts } from '../blog'
+import { posts } from '../blog.js?meta'
 import NotFound from './NotFound'
 
 /** Page « Automatisation pour … » d'un métier (contenu dans data.js, tableau metiers). */

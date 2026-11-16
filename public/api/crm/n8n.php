@@ -48,9 +48,10 @@ if ($action === 'synchro') {
     if (!is_array($w)) continue;
     $wid = text($w['id'] ?? '', 64);
     if ($wid === '') continue;
-    $slug = slugify(text($w['client'] ?? '', 80));
-    if (($w['client'] ?? '') === '') $slug = '';
-    $statut = in_array($w['dernier_statut'] ?? '', $statuts, true) ? $w['dernier_statut'] : 'unknown';
+    $c = text($w['client'] ?? '', 80);
+    $slug = preg_match('/[\pL\pN]/u', $c) ? slugify($c) : '';   // sinon slugify renverrait « client », l'identifiant d'un vrai client possible
+    $statut = $w['dernier_statut'] ?? '';   // champ absent : avant, NULL partait en base et faisait échouer toute la synchro
+    if (!in_array($statut, $statuts, true)) $statut = 'unknown';
     $derniere = text($w['derniere_execution'] ?? '', 40);
     if ($derniere !== '' && strtotime($derniere) === false) $derniere = '';
     $upsert->execute([

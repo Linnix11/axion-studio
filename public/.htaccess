@@ -37,6 +37,6 @@ AddType text/markdown .md
 
 # Le fichier de configuration (clé d'API), les fonctions PHP communes (fichiers « _*.php ») et toute base de données
 # ne doivent jamais être appelés depuis le web
-<FilesMatch "^(axion-config\.php|_[a-z]+\.php|.*\.sqlite)$">
+<FilesMatch "^(axion-config\.php|_[a-z]+\.php|.*\.sqlite(-journal|-wal|-shm)?)$">
   Require all denied
 </FilesMatch>

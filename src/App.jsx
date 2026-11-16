@@ -15,11 +15,12 @@ import Confidentialite from './pages/Confidentialite'
 import Securite from './pages/Securite'
 import Cgv from './pages/Cgv'
 import Blog from './pages/Blog'
-import Article from './pages/Article'
 import Metier from './pages/Metier'
 import AgenceN8n from './pages/AgenceN8n'
 import ChatWidget from './components/ChatWidget'
 import NotFound from './pages/NotFound'
+// Page d'un article : chargée à part avec le texte des articles (le build attend son chargement, Google lit le texte complet)
+const Article = lazy(() => import('./pages/Article'))
 // Espace client : chargé à part, seulement quand on l'ouvre (n'alourdit pas le site public)
 const EspaceClient = lazy(() => import('./pages/EspaceClient'))
 const EspaceAdmin = lazy(() => import('./pages/EspaceAdmin'))
@@ -79,7 +80,7 @@ export default function App() {
           <Route path="/securite" element={<Securite />} />
           <Route path="/cgv" element={<Cgv />} />
           <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<Article />} />
+          <Route path="/blog/:slug" element={<Suspense fallback={attente}><Article /></Suspense>} />
           <Route path="/automatisation/:slug" element={<Metier />} />
           <Route path="/agence-n8n" element={<AgenceN8n />} />
           <Route path="/mentions-legales" element={<MentionsLegales />} />

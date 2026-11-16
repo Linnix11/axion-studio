@@ -1,7 +1,7 @@
 // Référencement : titre, description et données structurées (schema.org) de chaque page.
 // Utilisé par les pages (onglet du navigateur) ET écrit dans le HTML au build (scripts/prerender-routes.mjs),
 // pour Google, Bing et les moteurs de réponse des IA (ChatGPT, Gemini, Perplexity, Claude…).
-import { posts, wordCount } from './blog.js'
+import { posts, wordCount } from './blog.js?meta'
 import { metiers } from './data.js'
 import { n8n, tarifsFaq, contactFaq, sansLiens } from './n8n.js'
 

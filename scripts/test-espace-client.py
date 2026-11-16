@@ -152,6 +152,22 @@ s, r = Client().req('/auth.php', {'action': 'connexion', 'email': 'claire@exempl
 s, r = admin.req('/admin.php?action=tableau')
 check('workflows gardés, sans client', len(r.get('non_rattachees', [])) == 4 and all(c['id'] != 1 for c in r.get('clients', [])), r)
 
+# 9. Retirer un n8n qui n'envoie plus rien : seul celui-là disparaît
+s, r = n8n.req('/n8n.php', {'action': 'synchro', 'instance': 'ancien-mac', 'workflows': [{'id': '99', 'nom': 'Vieux test', 'active': False}]}, N, axion=False)
+s, r = admin.req('/admin.php?action=tableau'); avant = len(r.get('non_rattachees', []))
+s, r = admin.req('/admin.php', {'action': 'oublier', 'instance': 'ancien-mac'}); check('retirer un n8n', r.get('ok'), r)
+s, r = admin.req('/admin.php?action=tableau')
+check("retirer : l'instance et ses workflows partent", [x['instance'] for x in r.get('synchros', [])] == ['mac-arthur'] and len(r.get('non_rattachees', [])) == avant - 1, r.get('synchros'))
+check("retirer : l'autre instance est intacte", sum(1 for a in r.get('non_rattachees', []) if a['instance'] == 'mac-arthur') == 4, r.get('non_rattachees'))
+
+# 10. Étiquette sans lettre ni chiffre : rattachée à personne, même si un client s'appelle « client »
+s, r = n8n.req('/n8n.php', {'action': 'nouveau-client', 'entreprise': '???', 'email': 'z@exemple.fr', 'envoyer': False}, N, axion=False)
+check('client sans lettre = identifiant « client »', r.get('client', {}).get('slug') == 'client', r)
+s, r = n8n.req('/n8n.php', {'action': 'synchro', 'instance': 'test-etiquette', 'workflows': [{'id': '1', 'nom': 'Etiquette vide', 'client': '---'}]}, N, axion=False)
+s, r = admin.req('/admin.php?action=tableau')
+check('étiquette « --- » : aucun client', any(a['nom'] == 'Etiquette vide' for a in r.get('non_rattachees', [])), r.get('non_rattachees'))
+admin.req('/admin.php', {'action': 'oublier', 'instance': 'test-etiquette'})
+
 s, r = admin.req('/auth.php', {'action': 'deconnexion'}); check('déconnexion', r.get('ok'), r)
 s, r = admin.req('/admin.php?action=tableau'); check('après déconnexion = 401', s == 401, r)
 

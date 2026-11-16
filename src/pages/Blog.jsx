@@ -1,6 +1,6 @@
 import { Link } from 'react-router'
 import { PageHeader, Section, CtaBand, usePageMeta } from '../components/ui'
-import { posts, readingMinutes, formatDate } from '../blog'
+import { posts, readingMinutes, formatDate } from '../blog.js?meta'
 
 export default function Blog() {
   usePageMeta('/blog')

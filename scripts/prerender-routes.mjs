@@ -21,7 +21,7 @@ const esc = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replac
 const fonts = readdirSync(join(dist, 'assets')).filter(f => /^(bricolage-titres|hanken-texte)-latin-[\w-]{8}\.woff2$/.test(f))
 const preload = fonts.map(f => `<link rel="preload" href="/assets/${f}" as="font" type="font/woff2" crossorigin>`).join('\n  ')
 
-function page(path) {
+async function page(path) {
   const is404 = path === '/404'
   const meta = pageMeta[path] ?? { description: pageMeta['/'].description }
   const title = esc(fullTitle(path)), desc = esc(meta.description)
@@ -47,7 +47,7 @@ function page(path) {
     `<meta name="twitter:card" content="summary_large_image">`,
     `<script type="application/ld+json">${jsonld}</script>`,
   ].join('\n  ')
-  const body = render(is404 ? '/page-introuvable' : path === '/' ? '/' : path + '/')   // adresse réelle, avec « / » final (liens actifs du menu)
+  const body = await render(is404 ? '/page-introuvable' : path === '/' ? '/' : path + '/')   // adresse réelle, avec « / » final (liens actifs du menu)
   return template
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${title}</title>`)
     .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${desc}">`)
@@ -61,13 +61,13 @@ const typoWarnings = []
 for (const path of paths) {
   const dir = path === '/' ? dist : join(dist, path)
   mkdirSync(dir, { recursive: true })
-  const html = page(path)
+  const html = await page(path)
   writeFileSync(join(dir, 'index.html'), html)
   const text = html.replace(/<(script|style)[\s\S]*?<\/\1>/g, '').replace(/<[^>]+>/g, ' ')
   for (const m of text.matchAll(/\S{0,30} [:;?!»]/g)) typoWarnings.push(`${path} : « ${m[0]} »`)
 }
 if (typoWarnings.length) console.warn(`⚠ Espace insécable manquante (à remplacer par \\u00A0 avant « : », \\u202F avant ; ? ! ») :\n  ${typoWarnings.join('\n  ')}`)
-writeFileSync(join(dist, '404.html'), page('/404'))
+writeFileSync(join(dist, '404.html'), await page('/404'))
 
 // Espace client : pages privées (connexion, tableau de bord, administration), hors plan du site et non indexées.
 for (const [path, title] of [['/espace-client', 'Espace client'], ['/espace-client/admin', 'Administration']]) {
@@ -77,7 +77,7 @@ for (const [path, title] of [['/espace-client', 'Espace client'], ['/espace-clie
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${title} | ${BRAND}</title>`)
     .replace(/<meta name="description" content="[^"]*">/, '<meta name="description" content="Espace client Axion Studio : suivi de vos automatisations.">')
     .replace('</head>', `  ${preload}\n  <meta name="robots" content="noindex, nofollow">\n</head>`)
-    .replace('<div id="root"></div>', `<div id="root">${render(path + '/')}</div>`)
+    .replace('<div id="root"></div>', `<div id="root">${await render(path + '/')}</div>`)
   writeFileSync(join(dir, 'index.html'), html)
 }
 
