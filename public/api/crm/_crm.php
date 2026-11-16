@@ -419,7 +419,8 @@ function create_client(array $d, bool $envoyer): array {
 function automation_state(array $a): string {
   if ($a['absent']) return 'retiree';
   if (in_array($a['dernier_statut'], ['error', 'crashed'], true)) return 'erreur';
-  if (!$a['active']) return 'pause';
+  // Désactivée dans n8n mais lancée cette semaine : elle part d'un bouton ou d'une autre automatisation, elle n'est pas arrêtée
+  if (!$a['active']) return (int) $a['executions_7j'] > 0 ? 'demande' : 'pause';
   if ($a['dernier_statut'] === '') return 'attente';
   return 'ok';
 }

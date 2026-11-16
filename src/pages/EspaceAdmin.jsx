@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router'
 import { Container, btn, textLink } from '../components/ui'
 import { offers } from '../data'
 import { api, messageErreur } from '../espace/api'
-import { Alert, Badge, Field, card, dateLongue, depuis, input, n, usePrivateTitle } from '../espace/ui'
+import { Alert, Badge, ETATS, Field, Legende, SYNC_RETARD, activite, card, dateLongue, depuis, input, n, usePrivateTitle } from '../espace/ui'
 
 const COMPTES = {
   invite: 'Invité',
@@ -13,7 +13,6 @@ const COMPTES = {
 }
 const STATUTS = { actif: 'En cours', pause: 'En pause', termine: 'Terminé' }
 const FORMULES = offers.filter(o => o.name !== 'Audit').map(o => o.name).concat('Projet + suivi mensuel')
-const SYNC_RETARD = 3600   // au-delà d'une heure sans nouvelles de n8n, on le signale
 const petit = 'inline-flex min-h-11 items-center justify-center rounded-full border border-rule bg-paper px-4 text-sm font-semibold text-ink cursor-pointer hover:border-pen hover:text-pen active:translate-y-px disabled:cursor-not-allowed disabled:opacity-60'
 const etiquette = c => `client-${c.slug}`
 // Adresse de chaque n8n (nom d'instance envoyé par le workflow de suivi), pour ouvrir un workflow d'un clic
@@ -118,7 +117,7 @@ function Accueil({ data, ouvrir, onChange }) {
 
   return (
     <div className="grid gap-12">
-      <ATraiter clients={clients} orphelins={orphelins} emails={emails} ouvrir={ouvrir} onChange={onChange} />
+      <ATraiter clients={clients} orphelins={orphelins} emails={emails} synchros={data.synchros} ouvrir={ouvrir} onChange={onChange} />
 
       <section aria-labelledby="clients-titre">
         <div className="flex flex-wrap items-end justify-between gap-3">
@@ -151,7 +150,7 @@ function Accueil({ data, ouvrir, onChange }) {
                     {COMPTES[c.compte]}{c.compte === 'actif' && c.derniere_connexion ? <span className="text-muted">, vu {depuis(c.derniere_connexion)}</span> : null}
                   </span>
                   <span className="text-sm tabular-nums">
-                    {c.nb === 0 ? <span className="text-muted">Aucune</span> : <>{c.nb}{c.pause > 0 && <span className="text-muted"> · {c.pause} en pause</span>}</>}
+                    {c.nb === 0 ? <span className="text-muted">Aucune</span> : <>{c.nb}{c.pause > 0 && <span className="text-muted"> · {n(c.pause, 'arrêtée')}</span>}</>}
                   </span>
                   <span className="flex flex-wrap items-center gap-2 md:justify-end">
                     {c.statut !== 'actif' ? <span className="text-sm text-muted">{STATUTS[c.statut]}</span>
@@ -175,6 +174,7 @@ function Accueil({ data, ouvrir, onChange }) {
       )}
 
       <div className="grid gap-3">
+        <Legende pour="admin" />
         <Emails emails={emails} />
         <AideN8n />
       </div>
@@ -223,7 +223,7 @@ function Prospection({ autos }) {
 }
 
 /** Ce qui demande une action, avec le bouton qui la fait. Vide = rien à faire. */
-function ATraiter({ clients, orphelins, emails, ouvrir, onChange }) {
+function ATraiter({ clients, orphelins, emails, synchros, ouvrir, onChange }) {
   const [etat, setEtat] = useState({})
   const renvoyer = async c => {
     setEtat(s => ({ ...s, [c.id]: 'Envoi…' }))
@@ -235,6 +235,11 @@ function ATraiter({ clients, orphelins, emails, ouvrir, onChange }) {
   }
 
   const items = []
+  const now = Date.now() / 1000
+  synchros.filter(s => now - s.recu_le > SYNC_RETARD).forEach(s => items.push(
+    <Item key={`s${s.instance}`} tone="error" texte={<>n8n <b>{s.instance}</b> n’a rien envoyé depuis {depuis(s.recu_le).replace(/^il y a /, '')}{' '}: les états affichés aux clients ne sont plus à jour. Vérifiez que n8n tourne et que le workflow « Axion – Suivi des automatisations clients » est activé.</>}>
+      {N8N_URL[s.instance] && <a href={N8N_URL[s.instance]} target="_blank" rel="noopener noreferrer" className={petit}>Ouvrir n8n<span className="sr-only"> (nouvel onglet)</span></a>}
+    </Item>))
   clients.filter(c => c.erreurs > 0).forEach(c => items.push(
     <Item key={`e${c.id}`} tone="error" texte={<><b>{c.entreprise}</b>{' '}: {n(c.erreurs, 'automatisation')} en erreur</>}>
       <button type="button" className={petit} onClick={() => ouvrir(c.id)}>Voir</button>
@@ -243,6 +248,10 @@ function ATraiter({ clients, orphelins, emails, ouvrir, onChange }) {
     <Item key={`i${c.id}`} texte={<><b>{c.entreprise}</b> n’a pas encore choisi son mot de passe</>}>
       {etat[c.id] ? <span role="status" className="text-sm text-muted">{etat[c.id]}</span>
         : <button type="button" className={petit} onClick={() => renvoyer(c)}>Renvoyer l’accès</button>}
+    </Item>))
+  clients.filter(c => c.sans_description > 0).forEach(c => items.push(
+    <Item key={`d${c.id}`} texte={<><b>{c.entreprise}</b>{' '}: {n(c.sans_description, 'automatisation')} sans phrase d’explication, le client ne voit que le nom technique</>}>
+      <button type="button" className={petit} onClick={() => ouvrir(c.id)}>Écrire</button>
     </Item>))
   if (orphelins.length) items.push(
     <Item key="o" texte={<>{n(orphelins.length, 'workflow')} sans client</>}>
@@ -392,7 +401,8 @@ function FicheClient({ id, clients, onRetour, onChange }) {
 
   if (!d) return msg.text ? <Alert>{msg.text}</Alert> : <p className="text-lg text-muted" role="status">Chargement…</p>
   const c = d.client
-  const autos = d.automatisations
+  const rang = { erreur: 0, ok: 1, attente: 2, demande: 3, pause: 4, retiree: 5 }   // les problèmes d'abord, comme chez le client
+  const autos = [...d.automatisations].sort((a, b) => (rang[a.etat] ?? 9) - (rang[b.etat] ?? 9))
   const presentes = autos.filter(a => a.etat !== 'retiree')
 
   return (
@@ -408,6 +418,7 @@ function FicheClient({ id, clients, onRetour, onChange }) {
       <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
         <section aria-labelledby="autos-titre" className="min-w-0">
           <h3 id="autos-titre" className="text-2xl">Automatisations <span className="text-muted tabular-nums">({presentes.length})</span></h3>
+          {presentes.length > 0 && <p className="mt-1 text-sm text-muted">Le client en voit {presentes.filter(a => a.visible).length} sur {presentes.length}, avec la phrase « Ce que le client lit » sous le nom.</p>}
           {autos.length === 0 ? (
             <div className={`${card} mt-4 p-5`}>
               <p>Aucune pour l’instant.</p>
@@ -418,6 +429,7 @@ function FicheClient({ id, clients, onRetour, onChange }) {
               {autos.map(a => <LigneAutomatisation key={a.id} a={a} clients={clients} onSaved={recharger} />)}
             </ul>
           )}
+          <div className="mt-4"><Legende pour="admin" /></div>
         </section>
 
         <aside className="order-first grid gap-4 lg:order-none">
@@ -504,13 +516,16 @@ function Edition({ client, onFin }) {
   const [errors, setErrors] = useState({})
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+  const formRef = useRef(null)
+  // Le formulaire s'ouvre sous la liste des automatisations : on l'amène à l'écran
+  useEffect(() => { formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }); formRef.current?.querySelector('input')?.focus({ preventScroll: true }) }, [])
   const submit = async e => {
     e.preventDefault(); setBusy(true); setError('')
     try { await api.admin.modifier(v); onFin('Fiche enregistrée.') }
     catch (err) { setErrors(err.fields || {}); setError(messageErreur(err)) } finally { setBusy(false) }
   }
   return (
-    <form noValidate onSubmit={submit} className={`${card} mt-10 max-w-3xl p-6`} aria-labelledby="edit-titre">
+    <form ref={formRef} noValidate onSubmit={submit} className={`${card} mt-10 max-w-3xl scroll-mt-6 p-6`} aria-labelledby="edit-titre">
       <h3 id="edit-titre" className="mb-5 text-2xl">Modifier la fiche</h3>
       {error && <Alert>{error}</Alert>}
       <ChampsClient v={v} set={set} errors={errors} />
@@ -559,10 +574,16 @@ function LigneAutomatisation({ a, clients, onSaved }) {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
           <p className="font-medium">{a.nom}</p>
-          <p className="text-sm text-muted">Dernière exécution {depuis(a.derniere_execution)} · 7 jours{' '}: {n(a.executions_7j, 'exécution')}, {n(a.erreurs_7j, 'erreur')}</p>
+          <p className="text-sm text-muted">{activite(a)}</p>
         </div>
         <Badge etat={a.etat} />
       </div>
+      {ETATS[a.etat]?.admin && a.etat !== 'attente' && <p className={`mt-2 text-sm ${a.etat === 'erreur' ? 'text-error' : 'text-muted'}`}>{ETATS[a.etat].admin}</p>}
+      {N8N_URL[a.instance] && a.etat !== 'retiree' && (
+        <a href={`${N8N_URL[a.instance]}/workflow/${a.workflow_id}${a.etat === 'erreur' ? '/executions' : ''}`} target="_blank" rel="noopener noreferrer" className={`${petit} mt-3`}>
+          {a.etat === 'erreur' ? 'Voir l’erreur dans n8n' : 'Ouvrir dans n8n'}<span className="sr-only"> (nouvel onglet)</span>
+        </a>
+      )}
       <form className="mt-3 flex flex-wrap items-end gap-3" onSubmit={e => { e.preventDefault(); if (desc !== a.description) save({ description: desc }) }}>
         <label className="min-w-0 flex-1 basis-64">
           <span className="mb-1 block text-sm text-muted">Ce que le client lit</span>
@@ -570,6 +591,7 @@ function LigneAutomatisation({ a, clients, onSaved }) {
         </label>
         {desc !== a.description && <button type="submit" className={`${petit} min-h-12`}>Enregistrer</button>}
       </form>
+      {a.visible && !a.description.trim() && a.etat !== 'retiree' && <p className="mt-1 text-sm text-error">Sans cette phrase, le client ne voit que le nom technique «{' '}{a.nom}{' '}».</p>}
       <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-1 text-sm">
         <label className="flex min-h-11 items-center gap-2">
           <input type="checkbox" className="size-5" checked={a.visible} onChange={e => save({ visible: e.target.checked, ...(desc !== a.description && { description: desc }) })} />

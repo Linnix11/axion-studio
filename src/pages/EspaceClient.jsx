@@ -3,7 +3,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router'
 import { Container, btn, eyebrow, textLink } from '../components/ui'
 import { company } from '../data'
 import { api, messageErreur } from '../espace/api'
-import { Alert, Badge, ETATS, Field, card, dateLongue, depuis, input, n, usePrivateTitle } from '../espace/ui'
+import { Alert, Badge, ETATS, Field, Legende, activite, card, dateLongue, depuis, input, n, synchroEnRetard, usePrivateTitle } from '../espace/ui'
 
 /** /espace-client/ : connexion, choix du mot de passe (lien reçu par e-mail) et tableau de bord du client. */
 export default function EspaceClient() {
@@ -167,9 +167,12 @@ function TableauDeBord({ onLogout }) {
   if (!data) {
     return <Shell titre="Mon espace client">{error ? <Alert>{error}</Alert> : <p className="text-lg text-muted" role="status">Chargement…</p>}</Shell>
   }
-  const { client, automatisations: autos } = data
-  const compte = etat => autos.filter(a => a.etat === etat).length
+  const { client } = data
+  // Les problèmes d'abord, puis ce qui tourne, puis le reste
+  const rang = { erreur: 0, ok: 1, attente: 2, demande: 3, pause: 4 }
+  const autos = [...data.automatisations].sort((a, b) => (rang[a.etat] ?? 9) - (rang[b.etat] ?? 9))
   const prenom = (client.contact || '').split(' ')[0]
+  const mail = data.contact.email
 
   return (
     <>
@@ -183,11 +186,7 @@ function TableauDeBord({ onLogout }) {
             </div>
             <button type="button" onClick={logout} className={btn.ghost}>Se déconnecter</button>
           </div>
-          <dl className="mt-10 grid gap-4 sm:grid-cols-3">
-            <Stat label="Automatisations" value={autos.length} />
-            <Stat label="Actives" value={compte('ok') + compte('attente')} />
-            <Stat label="En erreur" value={compte('erreur')} alert={compte('erreur') > 0} />
-          </dl>
+          <Resume autos={autos} suivi={client.suivi} synchro={data.derniere_synchro} mail={mail} />
         </Container>
       </section>
 
@@ -195,33 +194,42 @@ function TableauDeBord({ onLogout }) {
         <Container className="py-14 md:py-20">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 className="text-[2rem] leading-tight md:text-4xl">Vos automatisations</h2>
-            <p className="text-sm text-muted">État mis à jour {depuis(data.derniere_synchro)}</p>
+            {data.derniere_synchro && <p className="text-sm text-muted">Informations relevées {depuis(data.derniere_synchro)}</p>}
           </div>
+          <p className="mt-2 max-w-[65ch] text-muted">Chaque automatisation fait une tâche à votre place. Vous voyez ici si elle fonctionne et ce qu’elle a fait cette semaine.</p>
           {error && <div className="mt-6"><Alert>{error}</Alert></div>}
           {autos.length === 0 ? (
             <div className={`${card} mt-8 p-6 sm:p-8`}>
               <p className="text-lg">Vos automatisations apparaîtront ici dès leur mise en service.</p>
-              <p className="mt-2 text-muted">Chacune affichera son état, sa dernière exécution et son activité sur 7 jours.</p>
+              <p className="mt-2 text-muted">Pour chacune, vous verrez si elle fonctionne et combien de fois elle a servi dans la semaine.</p>
             </div>
           ) : (
             <ul className="mt-8 grid gap-5 md:grid-cols-2">
               {autos.map(a => (
-                <li key={a.id} className={`${card} p-6`}>
+                <li key={a.id} className={`${card} p-6 ${a.etat === 'erreur' ? 'border-2 border-error' : ''}`}>
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="text-xl leading-tight">{a.nom}</h3>
                     <Badge etat={a.etat} />
                   </div>
-                  {a.description && <p className="mt-2 leading-[1.6] text-muted">{a.description}</p>}
-                  <p className="mt-2 text-sm text-muted">{ETATS[a.etat]?.aide}</p>
-                  <dl className="mt-5 grid grid-cols-3 gap-3 border-t border-rule pt-4 text-sm">
-                    <div><dt className="text-muted">Dernière exécution</dt><dd className="mt-1 font-medium">{depuis(a.derniere_execution)}</dd></div>
-                    <div><dt className="text-muted">Sur 7 jours</dt><dd className="mt-1 font-medium">{n(a.executions_7j, 'exécution')}</dd></div>
-                    <div><dt className="text-muted">Erreurs</dt><dd className={`mt-1 font-medium ${a.erreurs_7j ? 'text-error' : ''}`}>{a.erreurs_7j}</dd></div>
-                  </dl>
+                  {a.description && <p className="mt-2 leading-[1.6]">{a.description}</p>}
+                  <p className={`mt-3 text-sm ${a.etat === 'erreur' ? 'text-error' : 'text-muted'}`}>{ETATS[a.etat]?.aide}</p>
+                  <p className="mt-3 border-t border-rule pt-3 text-sm text-muted">{activite(a)}</p>
                 </li>
               ))}
             </ul>
           )}
+          <div className="mt-8 grid gap-3">
+            <Legende />
+            <details className={`${card} p-5`}>
+              <summary className="cursor-pointer font-medium">Questions fréquentes</summary>
+              <dl className="mt-4 grid gap-4 text-sm">
+                <div><dt className="font-medium">Dois-je faire quelque chose{' '}?</dt><dd className="mt-1 text-muted">Non. Vos automatisations tournent seules. Cette page sert à vérifier d’un coup d’œil que tout va bien.</dd></div>
+                <div><dt className="font-medium">Une automatisation ne fait plus ce qu’elle devrait{' '}?</dt><dd className="mt-1 text-muted">Écrivez-moi ce que vous avez remarqué, avec un exemple (date, client, document concerné){' '}: c’est ce qui permet de trouver la cause le plus vite.</dd></div>
+                <div><dt className="font-medium">Je voudrais modifier une automatisation ou en ajouter une</dt><dd className="mt-1 text-muted">Décrivez la tâche avec vos mots, par e-mail{' '}: vous saurez ce qui est possible et à quel prix avant que rien ne commence.</dd></div>
+                <div><dt className="font-medium">D’où viennent ces informations{' '}?</dt><dd className="mt-1 text-muted">Elles sont relevées automatiquement toutes les 15 minutes dans l’outil qui fait tourner vos automatisations, et cette page se met à jour toute seule.</dd></div>
+              </dl>
+            </details>
+          </div>
         </Container>
       </section>
 
@@ -234,11 +242,14 @@ function TableauDeBord({ onLogout }) {
               {client.date_contrat && <div><dt className="inline text-muted">Depuis le </dt><dd className="inline">{dateLongue(client.date_contrat)}</dd></div>}
               <div><dt className="inline text-muted">Suivi mensuel{' '}: </dt><dd className="inline">{client.suivi ? 'inclus' : 'non souscrit'}</dd></div>
             </dl>
+            <p className="mt-3 max-w-[50ch] text-muted">{client.suivi
+              ? 'Vos automatisations sont surveillées et corrigées, les petites évolutions sont comprises et nous faisons le point ensemble chaque mois.'
+              : 'Les corrections et les évolutions se font à la demande. Le suivi mensuel, sans engagement, les inclut.'}</p>
           </div>
           <div>
-            <h2 className="text-2xl">Une question, une évolution{' '}?</h2>
+            <h2 className="text-2xl">Une question, une évolution{' '}?</h2>
             <p className="mt-4 text-lg leading-[1.6] text-muted">Écrivez-moi, je vous réponds sous {company.delai}.</p>
-            <a href={`mailto:${data.contact.email}`} className={`${btn.primary} mt-5`}>Écrire à Axion Studio</a>
+            <a href={`mailto:${mail}`} className={`${btn.primary} mt-5`}>Écrire à Axion Studio</a>
           </div>
         </Container>
       </section>
@@ -246,11 +257,32 @@ function TableauDeBord({ onLogout }) {
   )
 }
 
-function Stat({ label, value, alert }) {
+/** La réponse à « est-ce que tout va bien ? », en une phrase, avant le détail. */
+function Resume({ autos, suivi, synchro, mail }) {
+  if (!autos.length) return null
+  const problemes = autos.filter(a => a.etat === 'erreur').length
+  const enService = autos.filter(a => a.etat !== 'pause').length
+  const total = autos.reduce((s, a) => s + (a.executions_7j || 0), 0)
   return (
-    <div className={`${card} p-5`}>
-      <dt className="text-sm text-muted">{label}</dt>
-      <dd className={`mt-1 font-display text-4xl font-extrabold tabular-nums [font-stretch:85%] ${alert ? 'text-error' : ''}`}>{value}</dd>
+    <div className="mt-10 grid max-w-3xl gap-3">
+      {problemes > 0 ? (
+        <div role="status" className="rounded-xl border-2 border-error bg-paper p-6">
+          <p className="text-2xl font-medium text-error">{problemes > 1 ? `${problemes} automatisations ont un problème` : '1 automatisation a un problème'}</p>
+          <p className="mt-2 text-lg text-muted">{suivi
+            ? 'Axion Studio le voit dans son suivi et s’en occupe dans le cadre de votre suivi mensuel. Vous n’avez rien à faire.'
+            : <>Axion Studio le voit dans son suivi. Si cette tâche est urgente pour vous, <a href={`mailto:${mail}`} className={textLink}>écrivez-moi</a>.</>}</p>
+        </div>
+      ) : (
+        <div role="status" className="rounded-xl border-2 border-ok bg-paper p-6">
+          <p className="text-2xl font-medium text-ok">Tout fonctionne normalement</p>
+          <p className="mt-2 text-lg text-muted">{n(enService, 'automatisation')} en service{total > 0 ? `, qui ont servi ${n(total, 'fois', 'fois')} ces 7 derniers jours` : ''}.</p>
+        </div>
+      )}
+      {synchroEnRetard(synchro) && (
+        <Alert tone="info">
+          {synchro ? `Dernier relevé\u00a0: ${depuis(synchro)}.` : 'Aucun relevé pour l’instant.'} Les états ci-dessous peuvent ne plus être à jour. Axion Studio le voit dans son tableau de suivi.
+        </Alert>
+      )}
     </div>
   )
 }

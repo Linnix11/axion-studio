@@ -62,9 +62,11 @@ if ($method === 'GET' && $action === 'tableau') {
       'date_contrat' => $c['date_contrat'], 'compte' => compte_state($c),
       'derniere_connexion' => $c['derniere_connexion'] ? (int) $c['derniere_connexion'] : null,
       'nb' => count($list),
-      'actives' => count(array_filter($etats, fn($e) => $e === 'ok' || $e === 'attente')),
+      'actives' => count(array_filter($etats, fn($e) => in_array($e, ['ok', 'attente', 'demande'], true))),
       'erreurs' => count(array_filter($etats, fn($e) => $e === 'erreur')),
       'pause' => count(array_filter($etats, fn($e) => $e === 'pause')),
+      // visibles par le client mais sans phrase d'explication : il ne verrait que le nom technique
+      'sans_description' => count(array_filter($list, fn($a) => $a['visible'] && trim($a['description']) === '')),
     ];
   }
   $orphelines = array_values(array_map('admin_automation', array_filter($autos, fn($a) => $a['client_id'] === null && !$a['absent'])));

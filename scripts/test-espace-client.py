@@ -95,6 +95,7 @@ c = (r.get('clients') or [{}])[0]
 check('rattachement automatique (3)', c.get('nb') == 3, c)
 check('compteurs : 1 erreur, 1 en pause', c.get('erreurs') == 1 and c.get('pause') == 1, c)
 check('compte invité', c.get('compte') == 'invite', c)
+check('3 visibles sans description', c.get('sans_description') == 3, c)
 check('reste 1 non rattachée', len(r.get('non_rattachees', [])) == 1, r.get('non_rattachees'))
 check('journal des e-mails visible', any(m.get('a') == 'claire@exemple.fr' and m.get('ok') for m in r.get('emails', [])), r.get('emails'))
 
@@ -167,6 +168,15 @@ s, r = n8n.req('/n8n.php', {'action': 'synchro', 'instance': 'test-etiquette', '
 s, r = admin.req('/admin.php?action=tableau')
 check('étiquette « --- » : aucun client', any(a['nom'] == 'Etiquette vide' for a in r.get('non_rattachees', [])), r.get('non_rattachees'))
 admin.req('/admin.php', {'action': 'oublier', 'instance': 'test-etiquette'})
+
+# 11. Désactivée dans n8n : « à la demande » si elle a tourné cette semaine (bouton, sous-workflow), sinon « en pause »
+s, r = n8n.req('/n8n.php', {'action': 'synchro', 'instance': 'test-etats', 'workflows': [
+    {'id': '1', 'nom': 'Sous-workflow appele', 'active': False, 'dernier_statut': 'success', 'executions_7j': 3},
+    {'id': '2', 'nom': 'Arrete', 'active': False, 'dernier_statut': 'success', 'executions_7j': 0}]}, N, axion=False)
+s, r = admin.req('/admin.php?action=tableau')
+etats = {a['nom']: a['etat'] for a in r.get('non_rattachees', []) if a['instance'] == 'test-etats'}
+check('états : à la demande / en pause', etats == {'Sous-workflow appele': 'demande', 'Arrete': 'pause'}, etats)
+admin.req('/admin.php', {'action': 'oublier', 'instance': 'test-etats'})
 
 s, r = admin.req('/auth.php', {'action': 'deconnexion'}); check('déconnexion', r.get('ok'), r)
 s, r = admin.req('/admin.php?action=tableau'); check('après déconnexion = 401', s == 401, r)
