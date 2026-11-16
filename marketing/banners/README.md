@@ -1,6 +1,6 @@
 # Bannières Axion Studio
 
-Style « le temps rendu » (charte v2, `docs/brand-guidelines.md`) : fond gris bleuté, polices Bricolage Grotesque et Hanken Grotesk, surligneur pour le temps gagné, semaine type hachurée. Régénérer : `node marketing/banners/generate.mjs`.
+Style « le temps rendu » (charte v2, `docs/brand-guidelines.md`) : fond gris bleuté, polices Bricolage Grotesque et Hanken Grotesk, surligneur pour le temps gagné, semaine type hachurée. Régénérer : `node marketing/banners/generate.mjs` (Playwright requis, voir plus bas). Les polices viennent de `src/assets/fonts/`, les mêmes que le site.
 Chaque visuel existe en taille exacte et en `@2x` (plus net sur les écrans haute définition, même proportion).
 
 | Fichier | Où l'utiliser |
@@ -15,16 +15,15 @@ Chaque visuel existe en taille exacte et en `@2x` (plus net sur les écrans haut
 Zones sûres respectées : sur le profil LinkedIn, la photo recouvre le coin inférieur gauche (rien d'important à
 gauche de 440 px) ; la couverture Google est centrée car Google la recadre selon l'écran.
 
-## À savoir avant de publier une bannière (13 nov. 2026)
+## À savoir avant de publier une bannière (16 nov. 2026)
 
-- **Les PNG sont à régénérer.** `generate.mjs` annonçait « Réponse sous 48 h ouvrées » alors que le site annonce
-  24 heures ouvrées (`company.delai`). Le script est corrigé, mais les PNG datent d'avant : ils affichent encore 48 h.
-  Pour les refaire : `npm i -D playwright && npx playwright install chromium`, puis `node marketing/banners/generate.mjs`.
-  En attendant, ne publiez pas `google-publication-audit-1200x900.png`.
-- **« Temps rendu chaque semaine : 2 h 15 »** est le total par défaut de la liste interactive de l'accueil
-  (3 tâches cochées : 45 + 30 + 60 minutes). C'est une simulation, pas un résultat mesuré chez un client.
-  Sur le site, le visiteur coche lui-même ses tâches ; sur une bannière isolée, le chiffre peut se lire comme une promesse.
-  À remplacer par un vrai chiffre dès qu'un client en aura donné un, avec son accord.
+- **PNG régénérés le 16 nov. 2026** : la publication d'audit affiche bien « Réponse sous 24 h ouvrées », comme le site.
+  Pour les refaire, Playwright suffit, sans l'ajouter au site : dans un dossier à part, `npm i playwright`, puis
+  `NODE_PATH=<ce dossier>/node_modules node marketing/banners/generate.mjs` depuis la racine du dépôt. Le script prend
+  Chromium de Playwright s'il est installé (`npx playwright install chromium`), sinon Google Chrome.
+- **« 2 h 15 »** est le total par défaut de la liste interactive de l'accueil (45 + 30 + 60 minutes) : une simulation,
+  pas un résultat mesuré chez un client. La carte est donc titrée « Exemple de semaine : temps rendu », et la couverture
+  Google, qui disait « en moyenne indicative », affiche à la place l'audit gratuit. À remplacer par un vrai chiffre dès
+  qu'un client en aura donné un, avec son accord.
 - **`linkedin-publication-article-1200x627.png`** porte le titre de l'article « Combien coûte l'automatisation » :
   il ne convient pas à un autre sujet. Il manque un visuel 1200x627 par article.
-

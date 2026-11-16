@@ -1,7 +1,7 @@
 // Génère les bannières LinkedIn et Google Business d'Axion Studio (HTML → PNG, dimensions exactes et @2x).
 // Style « le temps rendu » (charte v2) : fond gris bleuté, cartes blanches, surligneur pour le temps gagné,
 // hachures pour ce qui est automatisé.
-// Usage : node marketing/banners/generate.mjs   (Playwright requis)
+// Usage : node marketing/banners/generate.mjs   (Playwright requis ; utilise Chromium de Playwright, sinon Google Chrome installé)
 import { createRequire } from 'node:module'
 import { writeFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
@@ -9,7 +9,7 @@ import { join, resolve } from 'node:path'
 const { chromium } = createRequire(import.meta.url)('playwright')
 const root = resolve('.')
 const OUT = join(root, 'marketing/banners')
-const font = f => `file://${join(root, 'node_modules', f)}`
+const font = f => `file://${join(root, 'src/assets/fonts', f)}`   // les polices allégées du site (mêmes graisses et largeur)
 const C = { page: '#f3f5f9', card: '#ffffff', ink: '#14213d', muted: '#56627d', rule: '#d9e0ec', pen: '#2b5ce6', marker: '#ffe45c', hatch: '#c3cde0' }
 
 const logo = (h, chevron = C.ink) => `<svg viewBox="0 0 210 175" height="${h}" aria-hidden="true"><g stroke="${C.pen}" stroke-width="9" stroke-linecap="round"><line x1="66" y1="25" x2="23" y2="81"/><line x1="23" y1="81" x2="128" y2="81"/><line x1="128" y1="81" x2="68" y2="150"/></g><g fill="${C.pen}"><circle cx="66" cy="25" r="18"/><circle cx="23" cy="81" r="18"/><circle cx="128" cy="81" r="18"/><circle cx="68" cy="150" r="18"/></g><path d="M95 22H148L190 86L148 152H95" fill="none" stroke="${chevron}" stroke-width="18" stroke-linejoin="round"/></svg>`
@@ -24,7 +24,7 @@ const WEEK = [
 ]
 /** Carte « Temps rendu chaque semaine », mise à l'échelle par sa taille de police (em). */
 const week = (size, width) => `<div class="card" style="font-size:${size}px;width:${width}px;padding:1.1em 1.2em 1.2em">
-  <p class="muted" style="font-size:.85em">Temps rendu chaque semaine</p>
+  <p class="muted" style="font-size:.85em">Exemple de semaine : temps rendu</p>
   <p class="h" style="font-size:3.1em;margin-top:.12em;line-height:1.1"><span class="mark">2 h 15</span></p>
   <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:.4em;margin-top:.9em;align-items:start">
     ${WEEK.map(([day, blocks]) => `<div style="display:grid;gap:.4em">
@@ -35,8 +35,8 @@ const week = (size, width) => `<div class="card" style="font-size:${size}px;widt
 </div>`
 
 const base = (w, h, body) => `<!doctype html><html lang="fr"><head><meta charset="utf-8"><style>
-@font-face{font-family:BG;src:url(${font('@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wdth-normal.woff2')});font-weight:200 800;font-stretch:75% 100%}
-@font-face{font-family:HG;src:url(${font('@fontsource-variable/hanken-grotesk/files/hanken-grotesk-latin-wght-normal.woff2')});font-weight:100 900}
+@font-face{font-family:BG;src:url(${font('bricolage-titres-latin.woff2')});font-weight:500 800;font-stretch:85%}
+@font-face{font-family:HG;src:url(${font('hanken-texte-latin.woff2')});font-weight:400 700}
 *{box-sizing:border-box;margin:0}
 html,body{width:${w}px;height:${h}px;overflow:hidden}
 body{font-family:HG,Arial,sans-serif;color:${C.ink};background:${C.page};position:relative}
@@ -92,7 +92,7 @@ const banners = [
         <div class="brand" style="font-size:28px">${logo(38)}Axion Studio</div>
         <p class="h" style="font-size:66px;margin-top:22px">Vos tâches répétitives, faites sans vous.</p>
         <p class="lead" style="font-size:23px;margin-top:18px;text-wrap:balance">Automatisation et IA pour TPE, PME et indépendants, Val-d’Oise et à distance</p>
-        <p style="font-size:22px;margin-top:26px"><span class="mark" style="font-weight:700">2 h 15</span> rendues chaque semaine, en moyenne indicative</p>
+        <p style="font-size:22px;margin-top:26px"><span class="mark" style="font-weight:700">Audit gratuit</span> de 30 minutes, prix fixé avant de commencer</p>
       </div>`),
   },
   { // Logo carré Google Business
@@ -113,7 +113,7 @@ const banners = [
   },
 ]
 
-const b = await chromium.launch()
+const b = await chromium.launch().catch(() => chromium.launch({ channel: 'chrome' }))
 for (const x of banners) {
   writeFileSync(join(OUT, `${x.name}.html`), x.html)
   for (const scale of [1, 2]) {
