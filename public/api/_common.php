@@ -30,7 +30,7 @@ function hit_limit(string $name, int $max, int $window): bool {
   $file = sys_get_temp_dir() . '/axion_' . md5($name);
   $now = time();
   $fp = @fopen($file, 'c+');
-  if (!$fp) return false;
+  if (!$fp) { error_log("Axion : compteur de limite illisible ($file), demande refusée"); return true; }   // jamais « sans limite » en silence
   flock($fp, LOCK_EX);
   $hits = json_decode((string) stream_get_contents($fp), true);
   $hits = array_values(array_filter(is_array($hits) ? $hits : [], fn($t) => $t > $now - $window));

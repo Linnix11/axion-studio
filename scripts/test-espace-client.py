@@ -131,12 +131,15 @@ s, r = admin.req('/admin.php', {'action': 'acces', 'id': 1, 'actif': True}); che
 s, r = admin.req('/admin.php', {'action': 'renvoyer', 'id': 1}); check("renvoyer l'accès", r.get('mail_envoye') is True, r)
 
 # 6. Mot de passe oublié côté client
+s, r = client.req('/auth.php', {'action': 'connexion', 'email': 'claire@exemple.fr', 'password': 'boulangerie-2026'}); check('reconnexion du client', r.get('ok'), r)
 s, r = anon.req('/auth.php', {'action': 'oubli', 'email': 'claire@exemple.fr'})
 L = last_link()
 s, r = anon.req(f'/auth.php?action=lien&lien={L}'); check('lien réinitialisation client', r.get('usage') == 'reinitialisation', r)
 c2 = Client()
 s, r = c2.req('/auth.php', {'action': 'activer', 'lien': L, 'password': 'nouveau-mdp-2026'}); check('nouveau mot de passe', r.get('ok'), r)
 s, r = Client().req('/auth.php', {'action': 'connexion', 'email': 'claire@exemple.fr', 'password': 'boulangerie-2026'}); check('ancien mot de passe refusé', s == 401, r)
+s, r = client.req('/client.php'); check('ancienne session coupée par le nouveau mot de passe', s == 401, r)
+s, r = c2.req('/client.php'); check('la session qui a changé le mot de passe reste ouverte', s == 200, r)
 
 # 7. n8n crée un client (workflow « contrat signé »)
 s, r = n8n.req('/n8n.php', {'action': 'nouveau-client', 'entreprise': 'Boulangerie Martin', 'contact': 'Paul', 'email': 'paul@exemple.fr'}, N, axion=False)

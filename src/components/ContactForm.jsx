@@ -72,7 +72,7 @@ export default function ContactForm() {
 
     setState('sending'); setFailure('')
     try {
-      const res = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(values) })
+      const res = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'axion' }, body: JSON.stringify(values) })
       const data = await res.json().catch(() => ({}))
       if (res.ok && data.ok) { setState('sent'); return }
       if (data.error === 'validation' && data.fields) { setErrors(data.fields); setState('idle'); setShowSummary(true); requestAnimationFrame(() => summaryRef.current?.focus()); return }

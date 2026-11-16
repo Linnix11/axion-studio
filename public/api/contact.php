@@ -24,9 +24,10 @@ function clean($v, int $max, bool $multiline = false): string {
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') reply(405, ['ok' => false, 'error' => 'method']);
+if (($_SERVER['HTTP_X_REQUESTED_WITH'] ?? '') !== 'axion') reply(403, ['ok' => false, 'error' => 'origin']);   // un autre site ou un script ne l'envoie pas d'office
 
 $data = json_decode(file_get_contents('php://input'), true);
-if (!is_array($data)) $data = $_POST;
+if (!is_array($data)) reply(400, ['ok' => false, 'error' => 'format']);
 
 // Champ piège invisible : rempli uniquement par les robots.
 if (!empty($data['site'])) reply(200, ['ok' => true]);

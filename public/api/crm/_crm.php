@@ -176,10 +176,12 @@ function current_user(): ?array {
   if (!isset($_COOKIE['axion_crm'])) return null;   // pas de cookie déposé tant qu'on ne se connecte pas
   start_session();
   if (empty($_SESSION['uid'])) return null;
-  $st = db()->prepare('SELECT id, email, nom, role, client_id, actif FROM users WHERE id = ?');
+  $st = db()->prepare('SELECT id, email, nom, role, client_id, actif, password_hash FROM users WHERE id = ?');
   $st->execute([$_SESSION['uid']]);
   $u = $st->fetch();
-  if (!$u || !$u['actif']) { $_SESSION = []; return null; }
+  // Mot de passe changé depuis la connexion : les autres sessions ouvertes ne valent plus rien
+  if (!$u || !$u['actif'] || !hash_equals((string) ($_SESSION['ph'] ?? ''), empreinte_session($u['password_hash']))) { $_SESSION = []; return null; }
+  unset($u['password_hash']);
   return $u;
 }
 
@@ -195,11 +197,17 @@ function require_admin(): array {
   return $u;
 }
 
+/** Empreinte du mot de passe enregistré, gardée en session : elle change quand le mot de passe change. */
+function empreinte_session($hash): string { return hash('sha256', 'session|' . (string) $hash); }
+
 function log_in(array $u): void {
   start_session();
   session_regenerate_id(true);
   $_SESSION['uid'] = (int) $u['id'];
   $_SESSION['vu'] = time();
+  $st = db()->prepare('SELECT password_hash FROM users WHERE id = ?');   // relu : il vient peut-être d'être changé
+  $st->execute([$u['id']]);
+  $_SESSION['ph'] = empreinte_session($st->fetchColumn());
   db()->prepare('UPDATE users SET derniere_connexion = ? WHERE id = ?')->execute([time(), $u['id']]);
 }
 
