@@ -15,6 +15,101 @@
 
 export const posts = [
   {
+    slug: 'intelligence-artificielle-pme-commencer',
+    seoTitle: 'Intelligence artificielle en PME : débuter',
+    seoDescription: 'Intelligence artificielle en PME : trois paliers pour bien commencer (brouillons, lecture de documents, agents), choisir son premier usage, mesurer le gain.',
+    title: 'Intelligence artificielle en PME : par où commencer sans se tromper',
+    description: 'Les trois paliers pour utiliser l’IA dans une PME : ce que chacun apporte, ce qu’il demande, ce qui reste à l’humain, et comment juger si c’est rentable.',
+    date: '2026-11-16',
+    category: 'IA et sécurité',
+    lead: 'Dans une PME, l’intelligence artificielle se met en place par paliers : d’abord lui faire préparer des brouillons qu’une personne relit, ensuite lui faire lire et classer des documents (factures, e-mails, formulaires), et seulement après laisser un agent enchaîner plusieurs étapes, avec une validation humaine partout où l’entreprise s’engage. Le bon premier projet est une tâche fréquente, ennuyeuse et facile à vérifier, et sa rentabilité se mesure en notant votre propre temps avant et après.',
+    body: [
+      { p: '« Tout le monde parle d’IA, mais concrètement, je commence par quoi ? » C’est la question que se pose souvent un dirigeant de petite entreprise. La réponse tient moins au choix d’un outil qu’à l’ordre des étapes : une IA qui rédige un brouillon ne présente pas les mêmes risques qu’une IA qui envoie un e-mail à votre place.' },
+      { p: 'Si vous n’avez pas encore commencé, vous êtes loin d’être seul. D’après l’Insee, en 2025, 18 % des entreprises de 10 salariés ou plus implantées en France (secteurs principalement marchands, hors agriculture, finance et assurance) déclaraient utiliser au moins une technologie d’IA, et 15 % parmi celles de 10 à 49 salariés. Ces chiffres ne comptent pas, en principe, l’usage ponctuel qu’un salarié fait d’un assistant conversationnel de son côté. L’enquête ne couvre pas les entreprises de moins de 10 salariés.' },
+      { p: 'Cet article ne répond pas à la question « ai-je le droit ? ». Pour les données de vos clients et le RGPD, voyez les [6 règles pour utiliser l’IA avec des données clients](/blog/ia-donnees-clients-regles/). Ici, il s’agit de savoir par quoi commencer l’IA dans une petite entreprise, et comment vérifier que cela vous rapporte quelque chose.' },
+
+      { h2: 'Palier 1 : faire préparer, puis relire' },
+      { p: 'À quoi ça sert : l’IA rédige un premier jet que vous corrigez. Une réponse à une question qui revient souvent, un compte rendu de réunion à partir de vos notes, le résumé d’un long e-mail ou d’un contrat, une annonce de recrutement, une relance polie. Vous partez d’un texte presque prêt au lieu d’une page blanche.' },
+      { p: 'Ce que ça demande : peu de chose. Un assistant d’IA en version professionnelle, et quelques consignes écrites une fois pour toutes (votre ton, vos formules habituelles, ce qu’il ne faut jamais promettre). Une fois le principe rodé, le brouillon peut même arriver seul : une demande entre dans votre boîte, et la réponse proposée vous attend dans vos brouillons.' },
+      { p: 'Ce qui reste à l’humain : tout ce qui part. Une IA peut écrire avec assurance une chose fausse, inventer un délai, un prix ou une référence de loi. La personne qui envoie le texte en reste responsable.' },
+      { p: 'Les erreurs classiques :' },
+      { ul: [
+        'envoyer sans relire, parce que le texte « a l’air bien » ;',
+        'coller dans un outil gratuit des données de clients, de salariés ou des chiffres confidentiels ;',
+        'demander un texte sans donner le contexte, puis conclure que l’IA écrit mal ;',
+        'confier à l’IA une réponse qui demande une vraie décision : un geste commercial, un litige, un refus.',
+      ] },
+
+      { h2: 'Palier 2 : lire, extraire et ranger les documents' },
+      { p: 'À quoi ça sert : une bonne part du travail administratif consiste à lire un document pour en recopier quelques informations ailleurs. L’IA sait faire cette lecture : sortir d’une facture le fournisseur, la date, le montant et l’échéance ; d’un e-mail, le type de demande et la personne à prévenir ; d’un formulaire ou d’un bon de commande, les champs utiles. Ces informations sont ensuite rangées dans un tableur, un logiciel ou un dossier, sans ressaisie. L’article [lire ses factures fournisseurs avec l’IA](/blog/lire-factures-fournisseurs-ia/) montre un exemple complet de ce palier.' },
+      { p: 'Ce que ça demande : plus de préparation qu’au palier 1. Il faut relier l’IA à l’endroit où arrivent les documents (boîte e-mail, dossier partagé) et à celui où ils doivent aller, ce qui se fait avec un outil d’automatisation. Il faut aussi dire précisément quelles informations extraire, sous quelle forme, et quoi faire quand l’une d’elles manque.' },
+      { p: 'Ce qui reste à l’humain : vérifier ce qui sort de l’ordinaire. Un montant inhabituel, un fournisseur inconnu, un champ vide ou une lecture incertaine doivent arriver dans une liste « à vérifier » plutôt que passer en silence. Et c’est toujours une personne qui valide un paiement.' },
+      { p: 'Les erreurs classiques :' },
+      { ul: [
+        'tout automatiser d’un coup, tous les documents et tous les fournisseurs, au lieu d’un seul type de document bien choisi ;',
+        'ne prévoir aucun cas d’erreur : un document illisible ou incomplet doit déclencher une alerte, pas une ligne fausse dans votre tableau ;',
+        'ne plus rien contrôler une fois que « ça marche » : vérifier un échantillon de temps en temps évite les mauvaises surprises ;',
+        'faire lire des documents qui contiennent des données sensibles sans s’être demandé ce qui est envoyé, et à qui.',
+      ] },
+      { note: 'Une règle simple pour les deux premiers paliers : l’IA propose, une personne décide. Tant qu’un humain relit avant l’envoi et valide avant le paiement, une erreur de l’IA coûte quelques minutes de correction, pas un client fâché ou une facture payée deux fois.' },
+
+      { h2: 'Palier 3 : un agent qui agit, sous contrôle' },
+      { p: 'À quoi ça sert : un agent d’IA ne s’arrête pas à une seule tâche. On lui donne un objectif et des outils (votre agenda, votre tableur, votre messagerie), et c’est lui qui choisit les étapes. Par exemple, devant une demande de rendez-vous, il consulte l’agenda, retrouve la fiche du client, repère deux créneaux libres et prépare la réponse.' },
+      { p: 'Ce que ça demande : des deux premiers paliers qui fonctionnent déjà, des règles écrites (ce que l’agent a le droit de faire, ce qu’il ne doit jamais faire), des accès limités au strict nécessaire, et un journal de ce qu’il a fait. Le fonctionnement détaillé, avec un exemple pas à pas, est dans [créer un agent IA avec n8n](/blog/agent-ia-n8n/).' },
+      { p: 'Ce qui reste à l’humain : la validation à chaque endroit qui engage l’entreprise. Envoyer un message à un client, confirmer un rendez-vous, modifier une commande, payer, supprimer une donnée : l’agent prépare, une personne approuve. Ce qu’il fait seul se limite à ce qui est sans conséquence ou facile à annuler, comme chercher une information ou remplir un brouillon.' },
+      { p: 'Les erreurs classiques :' },
+      { ul: [
+        'commencer par ce palier, parce que c’est le plus impressionnant en démonstration ;',
+        'donner à l’agent les mêmes accès que vous, alors qu’il n’a besoin que des outils de sa tâche ;',
+        'le laisser répondre directement aux clients sans relecture ;',
+        'ne pas pouvoir retrouver, après coup, ce qu’il a fait et pourquoi.',
+      ] },
+      { p: 'Le chatbot installé sur un site, qui répond aux visiteurs, est un cas à part : il parle directement à vos clients, ce qui demande encore plus de précautions. J’en parle dans [chatbot sur le site d’une TPE : utile ou gadget ?](/blog/chatbot-site-tpe-utile-ou-gadget/).' },
+
+      { h2: 'Comment choisir son premier cas d’usage' },
+      { p: 'Le premier projet doit réussir, pas impressionner. Regardez votre semaine et cherchez une tâche qui coche ces cases :' },
+      { ul: [
+        'elle revient souvent, chaque jour ou chaque semaine ;',
+        'elle consiste surtout à lire, recopier, trier, ou rédiger un texte qui ressemble au précédent ;',
+        'le résultat se vérifie vite : on voit tout de suite si le brouillon ou le classement est juste ;',
+        'une erreur coûte peu et se rattrape facilement ;',
+        'les documents contiennent peu ou pas de données sensibles.',
+      ] },
+      { p: 'À l’inverse, écartez pour commencer ce qui touche à l’argent sans validation, les décisions sur des personnes (recrutement, sanctions), les données de santé, et les tâches qui ne reviennent que quelques fois par an. Dans un cabinet, par exemple, le tri des demandes reçues et les brouillons de réponse aux questions courantes sont souvent de bons candidats ; la page [automatisation pour les professions libérales](/automatisation/professions-liberales/) en donne d’autres.' },
+
+      { h2: 'Savoir si c’est rentable : mesurez votre propre temps' },
+      { p: 'Je ne vous promettrai pas un nombre d’heures gagnées : cela dépend de vos volumes, de vos documents et de votre façon de travailler aujourd’hui. La seule mesure fiable est la vôtre, et elle est simple :' },
+      { ol: [
+        'Avant de commencer, pendant une ou deux semaines, notez pour la tâche choisie combien de fois elle revient et combien de temps elle vous prend à chaque fois. Une feuille ou un tableur suffit.',
+        'Notez aussi ce qui ne se compte pas en minutes : les oublis, les erreurs de saisie, les clients qui attendent une réponse.',
+        'Après la mise en place, refaites la même mesure sur la même durée, en comptant le temps de relecture et de correction : il fait partie du coût.',
+        'Mettez en face ce que coûte la solution : l’abonnement à l’outil d’IA, l’outil d’automatisation, la mise en place et l’entretien.',
+        'Décidez : si le gain est faible, ou si la relecture prend presque autant de temps que la tâche elle-même, arrêtez ou changez de tâche. C’est un résultat utile, pas un échec.',
+      ] },
+      { p: 'Pour vous situer côté coût : chez Axion Studio, les projets démarrent à partir de 150 € au forfait, et un suivi facultatif est proposé à partir de 250 € par mois. Mis en face de votre temps mesuré, ces montants disent vite si un projet vaut la peine.' },
+
+      { h2: 'Ce que la loi demande déjà à une entreprise qui utilise l’IA' },
+      { p: 'Le règlement européen sur l’intelligence artificielle (règlement (UE) 2024/1689, souvent appelé AI Act) concerne aussi les entreprises qui se contentent d’utiliser des outils d’IA dans leur activité : le texte les appelle des « déployeurs ». Pour une PME, l’obligation la plus concrète est celle de son article 4, sur la maîtrise de l’IA. D’après la page de questions-réponses de la Commission européenne, mise à jour le 20 octobre 2026 :' },
+      { ul: [
+        'les entreprises qui utilisent des systèmes d’IA doivent prendre des mesures pour favoriser le développement de la maîtrise de l’IA de leur personnel et des autres personnes qui s’en servent pour leur compte, en tenant compte de leurs connaissances techniques, de leur expérience, de leur formation et du contexte d’utilisation ;',
+        'cette obligation s’applique depuis le 2 février 2025, et les autorités nationales de surveillance du marché la contrôlent depuis le 2 août 2026 ;',
+        'le règlement dit « Digital Omnibus on AI » (règlement (UE) 2026/1744 du 8 juillet 2026), entré en vigueur en juillet 2026, a modifié cet article : l’obligation demeure, mais aucun niveau précis de maîtrise n’est exigé ;',
+        'aucun certificat n’est nécessaire et aucune formation précise n’est imposée : les entreprises peuvent tenir un registre interne des formations et des autres actions d’accompagnement ;',
+        'pour des salariés qui utilisent ChatGPT, par exemple pour rédiger des textes publicitaires ou traduire des textes, la Commission indique qu’ils devraient être informés des risques propres à ces outils, par exemple les « hallucinations » (des réponses fausses données avec assurance).',
+      ] },
+      { p: 'En pratique, cela rejoint le bon sens des trois paliers : expliquer à l’équipe ce que l’outil fait bien, où il se trompe, ce qu’on ne lui confie pas, et le noter quelque part. Mes propres règles d’usage de l’IA avec vos données sont décrites sur la page [sécurité et données](/securite/).' },
+
+      { p: 'Pour aller plus loin : pour voir ce que je mets en place concrètement, des brouillons de réponses à la lecture de documents, voir l’offre [intelligence artificielle pour les PME et TPE](/services/#ia). Vous ne savez pas par quel palier commencer ? [Écrivez-moi](/contact/) : pendant l’audit gratuit de 30 minutes, nous cherchons ensemble la tâche qui s’y prête le mieux chez vous.' },
+      { p: 'Sources : Insee, [Les technologies de l’information et de la communication dans les entreprises en 2025, Insee Première n° 2120, juillet 2026](https://www.insee.fr/fr/statistiques/9025878) ; Commission européenne, [AI Literacy, Questions & Answers](https://digital-strategy.ec.europa.eu/en/faqs/ai-literacy-questions-answers) (article 4 du règlement (UE) 2024/1689, modifié par le [règlement (UE) 2026/1744](https://eur-lex.europa.eu/eli/reg/2026/1744/oj)).' },
+    ],
+    faq: [
+      { q: 'Par quoi une PME doit-elle commencer avec l’intelligence artificielle ?', a: 'Par des brouillons relus par une personne : réponses aux questions fréquentes, résumés, comptes rendus. C’est le palier qui demande le moins de mise en place et présente le moins de risques. Viennent ensuite la lecture et le classement de documents, puis seulement les agents qui enchaînent plusieurs étapes.' },
+      { q: 'Combien de temps l’IA fait-elle gagner à une petite entreprise ?', a: 'Aucun chiffre général n’est fiable : cela dépend de vos volumes et de vos documents. Mesurez le temps passé sur une tâche pendant une ou deux semaines, puis refaites la mesure après la mise en place, relecture comprise.' },
+      { q: 'Faut-il former ses salariés avant d’utiliser l’IA ?', a: 'Il faut au moins les sensibiliser, sous une forme adaptée. L’article 4 du règlement européen sur l’IA, applicable depuis le 2 février 2025, demande aux entreprises qui utilisent des systèmes d’IA de prendre des mesures pour favoriser le développement de la maîtrise de l’IA de leur personnel, sans exiger de niveau précis. Selon la Commission européenne, aucun certificat n’est nécessaire et aucune formation précise n’est imposée ; l’entreprise peut tenir un registre interne des formations et consignes données.' },
+      { q: 'Peut-on laisser une IA répondre seule aux clients ?', a: 'Pour commencer, non. Tout ce qui engage l’entreprise (message à un client, rendez-vous confirmé, paiement) doit passer par une validation humaine. L’IA prépare la réponse, une personne l’approuve avant l’envoi.' },
+    ],
+  },
+  {
     slug: 'planning-equipe-automatiser',
     seoTitle: 'Planning d’équipe : l’organiser sans Excel',
     seoDescription: 'Répartir les interventions par zone et compétence, gérer absences et annulations, envoyer à chacun son programme du jour : automatiser son planning.',
