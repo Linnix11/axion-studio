@@ -268,7 +268,7 @@ n8n c’est quoi, créer un agent IA avec n8n (13 nov.).
   courent après les pièces. À publier en janvier, pas plus tard.
 - **Sources officielles probables** : impots.gouv.fr, calendrier fiscal des professionnels (dates de dépôt 2027) ;
   Conseil national de l’ordre des experts-comptables, lettre de mission et obligations du client ;
-  Code de commerce L123-22 (conservation 10 ans) et Livre des procédures fiscales L102 B (6 ans), déjà vérifiés pour l’article
+  Code de commerce L123-22 (conservation 10 ans) et Livre des procédures fiscales L102 B (10 ans depuis la loi n° 2026-534 du 25 juin 2026, pour les documents dont le délai expire après le 1er janvier 2027 ; 6 ans auparavant), déjà vérifiés pour l’article
   factures fournisseurs ; CNIL, sécurité et conservation des pièces transmises.
 
 ### Sujet 4 — Qualifier les contacts des portails immobiliers
