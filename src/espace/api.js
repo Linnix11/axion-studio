@@ -35,6 +35,7 @@ export const api = {
   oubli: email => call('/auth.php', { action: 'oubli', email }),
   activer: (lien, password) => call('/auth.php', { action: 'activer', lien, password }),
   tableauClient: () => call('/client.php'),
+  envoyerAcces: (id, chiffre) => call('/client.php', { action: 'acces-envoyer', id, chiffre }),
   admin: {
     tableau: () => call('/admin.php?action=tableau'),
     client: id => call(`/admin.php?action=client&id=${id}`),
@@ -45,6 +46,9 @@ export const api = {
     automatisation: data => call('/admin.php', { action: 'automatisation', ...data }),
     supprimer: (id, confirmation) => call('/admin.php', { action: 'supprimer', id, confirmation }),
     oublier: instance => call('/admin.php', { action: 'oublier', instance }),
+    accesCreer: data => call('/admin.php', { action: 'acces-creer', ...data }),
+    accesSupprimer: id => call('/admin.php', { action: 'acces-supprimer', id }),
+    accesRedemander: id => call('/admin.php', { action: 'acces-redemander', id }),
   },
 }
 
@@ -58,6 +62,8 @@ export function messageErreur(e) {
     case 'reseau': return 'Le serveur ne répond pas. Vérifiez votre connexion et réessayez.'
     case 'config': case 'db': return 'L’espace client est momentanément indisponible. Réessayez un peu plus tard.'
     case 'validation': return 'Un champ est à corriger.'
+    case 'chiffre': return 'L’accès n’a pas pu être chiffré correctement. Rechargez la page et réessayez.'
+    case 'acces': return 'Cet accès a déjà été envoyé ou n’existe plus. Rechargez la page.'
     default: return 'Une erreur est survenue de notre côté. Réessayez dans un instant.'
   }
 }

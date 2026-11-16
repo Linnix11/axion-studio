@@ -432,6 +432,8 @@ function FicheClient({ id, clients, onRetour, onChange }) {
           <div className="mt-4"><Legende pour="admin" /></div>
         </section>
 
+        <AccesClient acces={d.acces || []} client={c} onChange={recharger} />
+
         <aside className="order-first grid gap-4 lg:order-none">
           <Acces c={c} onDone={(tone, text) => { setMsg({ tone, text }); recharger() }} />
           <section aria-labelledby="n8n-titre" className={`${card} p-5`}>
@@ -640,6 +642,118 @@ function AideN8n() {
         <li>Le workflow « Axion – Suivi des automatisations clients » envoie ici l’état des workflows étiquetés toutes les 15 minutes.</li>
         <li>Le détail (jeton, accès à l’API n8n) est dans <code>automatisations/n8n/README.md</code>. Voir aussi <Link to="/espace-client/" className={textLink}>la vue client</Link>.</li>
       </ol>
+    </details>
+  )
+}
+
+/* ——— Accès que le client fournit chiffrés (coffre) ——— */
+
+const ETAT_ACCES_ADMIN = { demande: 'Demandé au client', recu: 'Reçu chiffré, installation en cours', installe: 'Installé dans n8n', erreur: 'Échec de l’installation' }
+// Modèles : le type et les noms de champs exacts de n8n (vérifiés dans n8n 2.47)
+const MODELES = {
+  jeton: { titre: 'Clé API ou jeton (en-tête Authorization: Bearer)', type: 'httpBearerAuth', champs: [{ cle: 'token', libelle: 'Clé API' }] },
+  entete: { titre: 'Clé API dans un en-tête précis', type: 'httpHeaderAuth', champs: [{ cle: 'value', libelle: 'Clé API' }], entete: true },
+  identifiant: { titre: 'Identifiant et mot de passe', type: 'httpBasicAuth', champs: [{ cle: 'user', libelle: 'Identifiant' }, { cle: 'password', libelle: 'Mot de passe' }] },
+  autre: { titre: 'Autre type d’accès n8n', type: '', champs: [] },
+}
+
+function AccesClient({ acces, client, onChange }) {
+  const [state, setState] = useState({})
+  const agir = async (id, fn, texte) => {
+    setState(s => ({ ...s, [id]: 'Un instant…' }))
+    try { await fn(); setState(s => ({ ...s, [id]: texte })); onChange() } catch (e) { setState(s => ({ ...s, [id]: messageErreur(e) })) }
+  }
+  return (
+    <section aria-labelledby="coffre-titre" className="min-w-0 lg:col-start-1">
+      <h3 id="coffre-titre" className="text-2xl">Accès fournis par le client <span className="text-muted tabular-nums">({acces.length})</span></h3>
+      <p className="mt-1 max-w-[70ch] text-sm text-muted">Le client saisit ses clés et mots de passe dans son espace{' '}: ils sont chiffrés dans son navigateur et installés directement dans n8n par le serveur. Vous ne voyez jamais leur valeur, ici comme dans n8n.</p>
+      {acces.length > 0 && (
+        <ul className={`${card} mt-4 divide-y divide-rule`}>
+          {acces.map(a => (
+            <li key={a.id} className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2 p-5">
+              <span className="min-w-0">
+                <span className="block font-medium">{a.libelle}</span>
+                <span className={`block text-sm ${a.statut === 'erreur' ? 'text-error' : a.statut === 'installe' ? 'text-ok' : 'text-muted'}`}>
+                  {ETAT_ACCES_ADMIN[a.statut]}{a.statut === 'installe' && a.installe_le ? ` ${depuis(a.installe_le)}` : ''}{a.statut === 'erreur' && a.erreur ? ` : ${a.erreur}` : ''}
+                </span>
+                <span className="block text-sm text-muted">n8n{' '}: <code>{a.type}</code>{a.n8n_id ? <> · accès <code>{a.n8n_id}</code></> : null}</span>
+              </span>
+              <span className="flex flex-wrap items-center gap-2">
+                {state[a.id] && <span role="status" className="text-sm text-muted">{state[a.id]}</span>}
+                {(a.statut === 'installe' || a.statut === 'erreur') && <button type="button" className={petit} onClick={() => agir(a.id, () => api.admin.accesRedemander(a.id), 'Redemandé au client.')}>Redemander</button>}
+                <button type="button" className={petit} onClick={() => window.confirm(`Retirer la demande « ${a.libelle} » ? Un accès déjà installé reste dans n8n : supprimez-le aussi là-bas s’il ne sert plus.`) && agir(a.id, () => api.admin.accesSupprimer(a.id), 'Retiré.')}>Retirer</button>
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <NouvelAcces client={client} onCree={onChange} />
+    </section>
+  )
+}
+
+function NouvelAcces({ client, onCree }) {
+  const [modele, setModele] = useState('jeton')
+  const [v, set] = useState({ libelle: '', aide: '', entete: 'X-API-Key', type: '', champs: '', fixes: '' })
+  const [errors, setErrors] = useState({})
+  const [msg, setMsg] = useState('')
+  const [busy, setBusy] = useState(false)
+  const m = MODELES[modele]
+
+  const lignes = t => t.split('\n').map(l => l.trim()).filter(Boolean)
+  const submit = async e => {
+    e.preventDefault(); setErrors({}); setMsg('')
+    const data = { client_id: client.id, libelle: v.libelle, aide: v.aide, type: m.type, champs: m.champs, fixes: {} }
+    if (m.entete) data.fixes = { name: v.entete }
+    if (modele === 'autre') {
+      data.type = v.type.trim()
+      data.champs = lignes(v.champs).map(l => { const [cle, ...lib] = l.split('|'); return { cle: cle.trim(), libelle: lib.join('|').trim() } })
+      data.fixes = Object.fromEntries(lignes(v.fixes).map(l => { const i = l.indexOf('='); return [l.slice(0, i).trim(), l.slice(i + 1).trim()] }))
+    }
+    setBusy(true)
+    try {
+      await api.admin.accesCreer(data)
+      set(x => ({ ...x, libelle: '', aide: '' })); setMsg(`Demande créée : ${client.entreprise} la voit dans son espace client, rubrique « Accès à fournir ».`); onCree()
+    } catch (err) { setErrors(err.fields || {}); setMsg(messageErreur(err)) } finally { setBusy(false) }
+  }
+
+  return (
+    <details className={`${card} mt-4 p-5`}>
+      <summary className="cursor-pointer font-medium">Demander un accès au client</summary>
+      <form noValidate onSubmit={submit} className="mt-4 max-w-2xl" aria-busy={busy}>
+        {msg && <Alert tone={Object.keys(errors).length ? 'error' : 'ok'}>{msg}</Alert>}
+        <Field id="acces-modele" label="Type d’accès">
+          <select id="acces-modele" className={input} value={modele} onChange={e => setModele(e.target.value)}>
+            {Object.entries(MODELES).map(([k, x]) => <option key={k} value={k}>{x.titre}</option>)}
+          </select>
+        </Field>
+        <Field id="acces-libelle" label="Ce que le client doit fournir" error={errors.libelle} hint="Exemple : « Clé API de votre logiciel de facturation »">
+          <input id="acces-libelle" className={input} value={v.libelle} onChange={e => set({ ...v, libelle: e.target.value })} />
+        </Field>
+        <Field id="acces-aide" label="Où la trouver (facultatif)" hint="Le chemin dans son logiciel, en mots simples. Le client le lit au-dessus du champ.">
+          <textarea id="acces-aide" rows={3} className={`${input} resize-y`} value={v.aide} onChange={e => set({ ...v, aide: e.target.value })} />
+        </Field>
+        {m.entete && (
+          <Field id="acces-entete" label="Nom de l’en-tête (non secret)" error={errors.fixes} hint="Indiqué dans la documentation de l’API du logiciel, par ex. X-API-Key.">
+            <input id="acces-entete" className={input} value={v.entete} onChange={e => set({ ...v, entete: e.target.value })} />
+          </Field>
+        )}
+        {modele === 'autre' && (
+          <>
+            <Field id="acces-type" label="Type d’accès n8n" error={errors.type} hint="Le nom technique, par ex. pipedriveApi (visible dans l’adresse de la page de création d’accès de n8n).">
+              <input id="acces-type" className={`${input} font-mono`} value={v.type} onChange={e => set({ ...v, type: e.target.value })} />
+            </Field>
+            <Field id="acces-champs" label="Champs saisis par le client (un par ligne : nom n8n | libellé)" error={errors.champs} hint="Exemple : apiToken | Clé API Pipedrive">
+              <textarea id="acces-champs" rows={3} className={`${input} resize-y font-mono`} value={v.champs} onChange={e => set({ ...v, champs: e.target.value })} />
+            </Field>
+            <Field id="acces-fixes" label="Réglages fixes, non secrets (un par ligne : nom n8n = valeur)" error={errors.fixes} hint="Facultatif, par ex. domain = monentreprise">
+              <textarea id="acces-fixes" rows={2} className={`${input} resize-y font-mono`} value={v.fixes} onChange={e => set({ ...v, fixes: e.target.value })} />
+            </Field>
+          </>
+        )}
+        {modele !== 'autre' && <p className="mb-5 text-sm text-muted">Le client remplira{' '}: {m.champs.map(f => f.libelle).join(', ')}. Accès n8n créé{' '}: <code>{m.type}</code>.</p>}
+        <button type="submit" disabled={busy} className={btn.primary}>{busy ? 'Création…' : 'Demander cet accès'}</button>
+      </form>
     </details>
   )
 }

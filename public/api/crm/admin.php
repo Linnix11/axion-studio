@@ -8,6 +8,10 @@
 // POST {"action":"acces", id, actif}           → suspend ou rétablit l'accès du client
 // POST {"action":"automatisation", id, description, visible, client_id}
 // POST {"action":"supprimer", id, confirmation}  → efface le client, son compte et ses liens (confirmation = nom de l'entreprise)
+// POST {"action":"acces-creer", client_id, libelle, aide, type, champs:[{cle,libelle}], fixes:{cle:valeur}}
+//                                              → demande au client un accès (clé, mot de passe) à fournir chiffré
+// POST {"action":"acces-supprimer", id}       → retire la demande (et le bloc chiffré s'il en reste un)
+// POST {"action":"acces-redemander", id}      → la demande repasse « à fournir » (après une erreur ou une clé changée)
 // POST {"action":"oublier", instance}         → retire un n8n qui n'envoie plus rien : sa synchro et ses workflows
 
 require __DIR__ . '/_crm.php';
@@ -84,7 +88,10 @@ if ($method === 'GET' && $action === 'client') {
     'statut' => $c['statut'], 'date_contrat' => $c['date_contrat'], 'notes' => $c['notes'],
     'compte' => compte_state($c), 'derniere_connexion' => $c['derniere_connexion'] ? (int) $c['derniere_connexion'] : null,
   ];
-  reply(200, ['ok' => true, 'client' => $client, 'automatisations' => array_map('admin_automation', $st->fetchAll())]);
+  $autos = array_map('admin_automation', $st->fetchAll());
+  $st = $pdo->prepare('SELECT * FROM acces WHERE client_id = ? ORDER BY cree_le');
+  $st->execute([$c['id']]);
+  reply(200, ['ok' => true, 'client' => $client, 'automatisations' => $autos, 'acces' => array_map(fn($a) => public_acces($a, true), $st->fetchAll())]);
 }
 
 require_post();
@@ -145,6 +152,44 @@ if ($action === 'supprimer') {
   $pdo->prepare('DELETE FROM users WHERE client_id = ?')->execute([$c['id']]);
   $pdo->prepare('DELETE FROM clients WHERE id = ?')->execute([$c['id']]);
   $pdo->commit();
+  reply(200, ['ok' => true]);
+}
+
+if ($action === 'acces-creer') {
+  $c = client_row($pdo, (int) ($d['client_id'] ?? 0));
+  $err = [];
+  $libelle = text($d['libelle'] ?? '', 120);
+  if ($libelle === '') $err['libelle'] = 'Indiquez ce que le client doit fournir.';
+  $type = trim((string) ($d['type'] ?? ''));
+  if (!preg_match('/^[a-zA-Z][a-zA-Z0-9]{1,60}$/', $type)) $err['type'] = 'Type d’accès n8n invalide (ex. httpBearerAuth).';
+  $cle = '/^[a-zA-Z][a-zA-Z0-9_]{0,60}$/';
+  $champs = [];
+  foreach (is_array($d['champs'] ?? null) ? array_slice($d['champs'], 0, 10) : [] as $f) {
+    $k = trim((string) ($f['cle'] ?? '')); $l = text($f['libelle'] ?? '', 80);
+    if (!preg_match($cle, $k) || $l === '' || isset($champs[$k])) { $err['champs'] = 'Chaque champ a un nom n8n (lettres, chiffres) et un libellé, sans doublon.'; break; }
+    $champs[$k] = ['cle' => $k, 'libelle' => $l];
+  }
+  if (!$champs && !isset($err['champs'])) $err['champs'] = 'Au moins un champ à remplir par le client.';
+  $fixes = [];
+  foreach (is_array($d['fixes'] ?? null) ? array_slice($d['fixes'], 0, 10, true) : [] as $k => $v) {
+    $k = trim((string) $k);
+    if (!preg_match($cle, $k) || isset($champs[$k])) { $err['fixes'] = 'Réglage invalide ou déjà demandé au client.'; break; }
+    $fixes[$k] = text($v, 500);
+  }
+  if ($err) reply(422, ['ok' => false, 'error' => 'validation', 'fields' => $err]);
+  $pdo->prepare('INSERT INTO acces (client_id, libelle, aide, type, champs, fixes, cree_le) VALUES (?, ?, ?, ?, ?, ?, ?)')
+      ->execute([$c['id'], $libelle, long_text($d['aide'] ?? '', 600), $type, json_encode(array_values($champs), JSON_UNESCAPED_UNICODE),
+                 json_encode((object) $fixes, JSON_UNESCAPED_UNICODE), time()]);
+  reply(200, ['ok' => true, 'id' => (int) $pdo->lastInsertId()]);
+}
+
+if ($action === 'acces-supprimer') {
+  $pdo->prepare('DELETE FROM acces WHERE id = ?')->execute([(int) ($d['id'] ?? 0)]);
+  reply(200, ['ok' => true]);
+}
+
+if ($action === 'acces-redemander') {
+  $pdo->prepare("UPDATE acces SET statut = 'demande', chiffre = NULL, erreur = '', recu_le = NULL WHERE id = ?")->execute([(int) ($d['id'] ?? 0)]);
   reply(200, ['ok' => true]);
 }
 

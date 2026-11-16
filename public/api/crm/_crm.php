@@ -132,6 +132,25 @@ function db(): PDO {
       recu_le INTEGER NOT NULL,
       nb INTEGER NOT NULL
     );
+    -- Coffre : accès (clés, mots de passe) que le client fournit pour ses automatisations.
+    -- Le navigateur du client chiffre la valeur avec la clé publique du serveur n8n : le site ne stocke qu'un bloc
+    -- illisible (chiffre), effacé dès que le serveur n8n l'a installé. Voir docs/coffre-acces.md.
+    CREATE TABLE IF NOT EXISTS acces (
+      id INTEGER PRIMARY KEY,
+      client_id INTEGER NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
+      libelle TEXT NOT NULL,
+      aide TEXT NOT NULL DEFAULT '',
+      type TEXT NOT NULL,
+      champs TEXT NOT NULL,
+      fixes TEXT NOT NULL DEFAULT '{}',
+      statut TEXT NOT NULL DEFAULT 'demande' CHECK (statut IN ('demande', 'recu', 'installe', 'erreur')),
+      chiffre TEXT,
+      n8n_id TEXT NOT NULL DEFAULT '',
+      erreur TEXT NOT NULL DEFAULT '',
+      cree_le INTEGER NOT NULL,
+      recu_le INTEGER,
+      installe_le INTEGER
+    );
   SQL);
   return $pdo;
 }
@@ -441,3 +460,28 @@ function last_sync(): ?int {
   $v = db()->query('SELECT MAX(recu_le) FROM synchros')->fetchColumn();
   return $v ? (int) $v : null;
 }
+
+// ——— Coffre des accès clients ———
+
+/** Ce que le client et l'administration voient d'un accès : jamais le bloc chiffré. */
+function public_acces(array $a, bool $admin = false): array {
+  $out = [
+    'id' => (int) $a['id'], 'libelle' => $a['libelle'], 'aide' => $a['aide'],
+    'champs' => json_decode($a['champs'], true) ?: [], 'statut' => $a['statut'],
+    'recu_le' => $a['recu_le'] !== null ? (int) $a['recu_le'] : null,
+    'installe_le' => $a['installe_le'] !== null ? (int) $a['installe_le'] : null,
+  ];
+  if ($admin) $out += ['type' => $a['type'], 'fixes' => json_decode($a['fixes'], true) ?: (object) [], 'n8n_id' => $a['n8n_id'], 'erreur' => $a['erreur'], 'cree_le' => (int) $a['cree_le']];
+  return $out;
+}
+
+/** Bloc chiffré envoyé par le navigateur : {v:1, k, iv, c} en base64 (clé AES chiffrée en RSA-OAEP, données en AES-GCM). */
+function bloc_chiffre_valide($b): ?string {
+  if (!is_array($b) || ($b['v'] ?? null) !== 1) return null;
+  foreach (['k' => [600, 800], 'iv' => [16, 16], 'c' => [24, 24000]] as $k => [$min, $max]) {
+    $v = $b[$k] ?? null;
+    if (!is_string($v) || strlen($v) < $min || strlen($v) > $max || !preg_match('#^[A-Za-z0-9+/]+={0,2}$#', $v)) return null;
+  }
+  return json_encode(['v' => 1, 'k' => $b['k'], 'iv' => $b['iv'], 'c' => $b['c']]);
+}
+

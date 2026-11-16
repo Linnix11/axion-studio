@@ -178,6 +178,87 @@ etats = {a['nom']: a['etat'] for a in r.get('non_rattachees', []) if a['instance
 check('états : à la demande / en pause', etats == {'Sous-workflow appele': 'demande', 'Arrete': 'pause'}, etats)
 admin.req('/admin.php', {'action': 'oublier', 'instance': 'test-etats'})
 
+# 12. Coffre : le client dépose un accès chiffré dans son navigateur, le serveur n8n l'installe (docs/coffre-acces.md).
+# Nécessite CRM_COFFRE_TEST_DIR (clés de test : chiffrement.pem/.pub.pem, signature.pem/.pub.pem) et le serveur PHP
+# lancé avec CRM_COFFRE_SIGNATURE_PUB=$CRM_COFFRE_TEST_DIR/signature.pub.pem.
+K = os.environ.get('CRM_COFFRE_TEST_DIR')
+if K:
+    import base64, subprocess, time
+    from cryptography.hazmat.primitives import hashes, serialization
+    from cryptography.hazmat.primitives.asymmetric import padding
+    RACINE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    def chiffrer_navigateur(i, valeurs):   # le vrai code du navigateur (src/espace/coffre.js), exécuté par Node
+        js = ("import { chiffrerAcces } from './src/espace/coffre.js'; import { readFileSync } from 'node:fs';"
+              f"console.log(JSON.stringify(await chiffrerAcces({i}, {json.dumps(valeurs)}, readFileSync('{K}/chiffrement.pub.pem', 'utf8'))))")
+        return json.loads(subprocess.run(['node', '--input-type=module', '-e', js], cwd=RACINE, capture_output=True, text=True, check=True).stdout)
+
+    def signe(corps, temps=None, cle='signature.pem'):
+        temps = str(temps or int(time.time()))
+        k = serialization.load_pem_private_key(open(os.path.join(K, cle), 'rb').read(), None)
+        sig = k.sign(temps.encode() + b'\n' + corps, padding.PKCS1v15(), hashes.SHA256())
+        return {'X-Axion-Temps': temps, 'X-Axion-Signature': base64.b64encode(sig).decode()}
+
+    def agent(importer):
+        env = dict(os.environ, COFFRE_SITE=B + '/coffre.php', COFFRE_DOSSIER=K, COFFRE_IMPORT=importer)
+        return subprocess.run([sys.executable, os.path.join(RACINE, 'automatisations/coffre/agent.py')], env=env, capture_output=True, text=True)
+
+    # un client actif
+    s, r = admin.req('/admin.php', {'action': 'creer', 'entreprise': 'Cabinet Coffre', 'email': 'coffre@exemple.fr', 'envoyer': True})
+    cid = r['client']['id']
+    cc = Client(); s, r = cc.req('/auth.php', {'action': 'activer', 'lien': last_link(), 'password': 'coffre-mdp-2026'})
+    s, r = admin.req('/admin.php', {'action': 'acces-creer', 'client_id': cid, 'libelle': 'Clé', 'type': 'pas un type!', 'champs': [{'cle': 'token', 'libelle': 'Clé'}]})
+    check('coffre : type invalide refusé', s == 422 and 'type' in r.get('fields', {}), r)
+    s, r = admin.req('/admin.php', {'action': 'acces-creer', 'client_id': cid, 'libelle': 'Clé API facturation', 'type': 'httpBearerAuth', 'champs': [{'cle': 'token', 'libelle': 'Clé API'}]})
+    aid = r.get('id'); check('coffre : demande créée', bool(aid), r)
+    s, r = cc.req('/client.php')
+    check('coffre : le client voit la demande', [a['statut'] for a in r.get('acces', [])] == ['demande'], r.get('acces'))
+    check('coffre : le client ne voit ni type ni réglages', 'type' not in r['acces'][0] and 'fixes' not in r['acces'][0], r['acces'][0])
+    s, r = cc.req('/client.php', {'action': 'acces-envoyer', 'id': aid, 'chiffre': {'v': 1, 'k': 'abc', 'iv': 'x', 'c': 'y'}})
+    check('coffre : bloc mal formé refusé', s == 422 and r.get('error') == 'chiffre', r)
+    s, r = client.req('/client.php', {'action': 'acces-envoyer', 'id': aid, 'chiffre': chiffrer_navigateur(aid, {'token': 'x'})})
+    check("coffre : un autre compte ne peut pas déposer", s in (401, 403, 404), (s, r))
+    # le client glisse un champ en plus : il ne doit pas être installé
+    s, r = cc.req('/client.php', {'action': 'acces-envoyer', 'id': aid, 'chiffre': chiffrer_navigateur(aid, {'token': 'sk-secret-É€-42', 'oauthTokenData': 'piege'})})
+    check('coffre : accès chiffré déposé', r.get('ok'), r)
+    s, r = cc.req('/client.php', {'action': 'acces-envoyer', 'id': aid, 'chiffre': chiffrer_navigateur(aid, {'token': 'y'})})
+    check('coffre : pas de second dépôt pendant l’installation', s == 404, (s, r))
+    s, r = admin.req(f'/admin.php?action=client&id={cid}')
+    check("coffre : l'admin voit « reçu », jamais le bloc", r['acces'][0]['statut'] == 'recu' and 'chiffre' not in json.dumps(r) and 'sk-secret' not in json.dumps(r), r['acces'])
+    # entrée du serveur n8n : signature obligatoire
+    corps = json.dumps({'action': 'a-installer'}).encode()
+    s, r = n8n.req('/coffre.php', {'action': 'a-installer'}, axion=False); check('coffre : sans signature = 401', s == 401, r)
+    s, r = n8n.req('/coffre.php', {'action': 'a-installer'}, signe(corps, cle='chiffrement.pem'), axion=False); check('coffre : mauvaise clé = 401', s == 401, r)
+    s, r = n8n.req('/coffre.php', {'action': 'a-installer'}, signe(corps, temps=int(time.time()) - 600), axion=False); check('coffre : signature périmée = 401', s == 401, r)
+    s, r = n8n.req('/coffre.php', {'action': 'a-installer'}, signe(corps), axion=False)
+    check('coffre : le serveur reçoit le bloc', [a['id'] for a in r.get('acces', [])] == [aid] and r['acces'][0]['champs'] == ['token'], r)
+    # le programme du serveur : déchiffre et « importe » (ici dans un fichier de test)
+    imp = os.path.join(T, 'import.json')
+    out = agent(f"sh -c 'cat > {imp}'")
+    importe = json.load(open(imp))[0]
+    check('coffre : importé avec la bonne valeur', importe['type'] == 'httpBearerAuth' and importe['data'] == {'token': 'sk-secret-É€-42'}, importe)
+    check('coffre : champ glissé par le client ignoré', 'oauthTokenData' not in importe['data'], importe['data'])
+    s, r = cc.req('/client.php')
+    check('coffre : le client voit « en place »', r['acces'][0]['statut'] == 'installe', r['acces'])
+    s, r = admin.req(f'/admin.php?action=client&id={cid}')
+    check("coffre : l'admin voit l'identifiant n8n", r['acces'][0]['n8n_id'] == importe['id'], r['acces'])
+    s, r = n8n.req('/coffre.php', {'action': 'a-installer'}, signe(corps), axion=False)
+    check('coffre : bloc effacé après installation', r.get('acces') == [], r)
+    journal = open(os.path.join(K, 'journal.log')).read()
+    check('coffre : aucune valeur dans le journal', 'sk-secret' not in journal and 'installé' in journal, journal)
+    # échec d'installation : le client peut renvoyer
+    s, r = admin.req('/admin.php', {'action': 'acces-redemander', 'id': aid}); check('coffre : redemander', r.get('ok'), r)
+    s, r = cc.req('/client.php', {'action': 'acces-envoyer', 'id': aid, 'chiffre': chiffrer_navigateur(aid, {'token': 'nouvelle-cle'})})
+    out = agent('false')
+    s, r = cc.req('/client.php')
+    check('coffre : échec signalé, à renvoyer', r['acces'][0]['statut'] == 'erreur', r['acces'])
+    s, r = cc.req('/client.php', {'action': 'acces-envoyer', 'id': aid, 'chiffre': chiffrer_navigateur(aid, {'token': 'encore'})})
+    check('coffre : renvoi accepté après une erreur', r.get('ok'), r)
+    s, r = admin.req('/admin.php', {'action': 'acces-supprimer', 'id': aid}); check('coffre : retirer la demande', r.get('ok'), r)
+    s, r = cc.req('/client.php'); check('coffre : demande retirée', r.get('acces') == [], r.get('acces'))
+else:
+    print('(coffre non testé : CRM_COFFRE_TEST_DIR absent)')
+
 s, r = admin.req('/auth.php', {'action': 'deconnexion'}); check('déconnexion', r.get('ok'), r)
 s, r = admin.req('/admin.php?action=tableau'); check('après déconnexion = 401', s == 401, r)
 

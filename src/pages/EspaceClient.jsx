@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router'
 import { Container, btn, eyebrow, textLink } from '../components/ui'
 import { company } from '../data'
-import { api, messageErreur } from '../espace/api'
+import { ApiError, api, messageErreur } from '../espace/api'
+import { chiffrementDisponible, chiffrerAcces } from '../espace/coffre'
 import { Alert, Badge, ETATS, Field, Legende, activite, card, dateLongue, depuis, input, n, synchroEnRetard, usePrivateTitle } from '../espace/ui'
 
 /** /espace-client/ : connexion, choix du mot de passe (lien reçu par e-mail) et tableau de bord du client. */
@@ -190,6 +191,8 @@ function TableauDeBord({ onLogout }) {
         </Container>
       </section>
 
+      {data.acces?.length > 0 && <AccesAFournir acces={data.acces} onEnvoye={charger} />}
+
       <section>
         <Container className="py-14 md:py-20">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -284,5 +287,84 @@ function Resume({ autos, suivi, synchro, mail }) {
         </Alert>
       )}
     </div>
+  )
+}
+
+const ETAT_ACCES = {
+  demande: 'À fournir',
+  erreur: 'À renvoyer',
+  recu: 'Reçu, installation en cours',
+  installe: 'En place',
+}
+
+/** Accès (clés, mots de passe) demandés par Axion Studio, chiffrés dans le navigateur avant l’envoi. */
+function AccesAFournir({ acces, onEnvoye }) {
+  const aFaire = acces.filter(a => a.statut === 'demande' || a.statut === 'erreur').length
+  return (
+    <section aria-labelledby="acces-titre" className="border-b border-rule">
+      <Container className="py-14 md:py-20">
+        <h2 id="acces-titre" className="text-[2rem] leading-tight md:text-4xl">Accès à fournir{aFaire > 0 && <span className="text-muted tabular-nums"> ({aFaire})</span>}</h2>
+        <p className="mt-2 max-w-[65ch] text-muted">
+          Pour que vos automatisations se connectent à vos outils, elles ont besoin de quelques accès.
+          Ce que vous saisissez ici est <b className="font-medium text-ink">chiffré dans votre navigateur avant l’envoi</b>{' '}: le site ne reçoit qu’un bloc illisible.
+          Il n’est déchiffré que sur le serveur qui fait tourner vos automatisations, où il est enregistré directement dans l’outil, masqué.
+          Personne n’a besoin de le lire, et vous ne l’envoyez jamais par e-mail.
+        </p>
+        {!chiffrementDisponible() && <div className="mt-6"><Alert>Votre navigateur ne permet pas le chiffrement. Ouvrez cette page avec un navigateur récent (Chrome, Firefox, Safari, Edge).</Alert></div>}
+        <ul className="mt-8 grid gap-5 md:grid-cols-2">
+          {acces.map(a => <CarteAcces key={a.id} a={a} onEnvoye={onEnvoye} />)}
+        </ul>
+      </Container>
+    </section>
+  )
+}
+
+function CarteAcces({ a, onEnvoye }) {
+  const [valeurs, setValeurs] = useState({})
+  const [voir, setVoir] = useState(false)
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
+  const aRemplir = a.statut === 'demande' || a.statut === 'erreur'
+
+  const envoyer = async e => {
+    e.preventDefault()
+    setError('')
+    if (a.champs.some(f => !(valeurs[f.cle] || '').trim())) { setError('Remplissez chaque champ.'); return }
+    setBusy(true)
+    try {
+      const propre = Object.fromEntries(a.champs.map(f => [f.cle, valeurs[f.cle].trim()]))
+      await api.envoyerAcces(a.id, await chiffrerAcces(a.id, propre))
+      setValeurs({})   // la valeur ne reste pas dans la page
+      onEnvoye()
+    } catch (err) { setError(err instanceof ApiError ? messageErreur(err) : 'Le chiffrement a échoué dans ce navigateur. Réessayez avec un navigateur récent.') }
+    finally { setBusy(false) }
+  }
+
+  return (
+    <li className={`${card} p-6 ${a.statut === 'erreur' ? 'border-2 border-error' : ''}`}>
+      <div className="flex items-start justify-between gap-3">
+        <h3 className="text-xl leading-tight">{a.libelle}</h3>
+        <span className={`shrink-0 text-sm font-medium ${a.statut === 'installe' ? 'text-ok' : a.statut === 'erreur' ? 'text-error' : 'text-muted'}`}>{ETAT_ACCES[a.statut]}</span>
+      </div>
+      {a.aide && <p className="mt-2 whitespace-pre-line leading-[1.6] text-muted">{a.aide}</p>}
+      {a.statut === 'recu' && <p className="mt-3 text-sm text-muted">Reçu chiffré {depuis(a.recu_le)}. Il sera installé dans quelques minutes, sans action de votre part.</p>}
+      {a.statut === 'installe' && <p className="mt-3 text-sm text-muted">Installé {depuis(a.installe_le)}. Si vous changez cette clé ou ce mot de passe, écrivez-moi{' '}: je vous redemanderai la nouvelle valeur ici.</p>}
+      {a.statut === 'erreur' && <p className="mt-3 text-sm text-error">L’installation n’a pas abouti. Vérifiez la valeur (sans espace en trop) et renvoyez-la.</p>}
+      {aRemplir && chiffrementDisponible() && (
+        <form noValidate onSubmit={envoyer} className="mt-4" aria-busy={busy}>
+          {error && <Alert>{error}</Alert>}
+          {a.champs.map(f => (
+            <Field key={f.cle} id={`acces-${a.id}-${f.cle}`} label={f.libelle}>
+              <input id={`acces-${a.id}-${f.cle}`} className={`${input} font-mono`} type={voir ? 'text' : 'password'} autoComplete="off" spellCheck={false}
+                     value={valeurs[f.cle] || ''} onChange={e => setValeurs(v => ({ ...v, [f.cle]: e.target.value }))} />
+            </Field>
+          ))}
+          <label className="mb-4 flex min-h-11 items-center gap-2 text-sm text-muted">
+            <input type="checkbox" className="size-5" checked={voir} onChange={e => setVoir(e.target.checked)} /> Afficher ce que je tape
+          </label>
+          <button type="submit" disabled={busy} className={btn.primary}>{busy ? 'Chiffrement et envoi…' : 'Chiffrer et envoyer'}</button>
+        </form>
+      )}
+    </li>
   )
 }
