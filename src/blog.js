@@ -15,6 +15,103 @@
 
 export const posts = [
   {
+    slug: 'planning-equipe-automatiser',
+    seoTitle: 'Planning d’équipe : l’organiser sans Excel',
+    seoDescription: 'Répartir les interventions par zone et compétence, gérer absences et annulations, envoyer à chacun son programme du jour : automatiser son planning.',
+    title: 'Planning d’équipe et tournées : organiser la semaine sans Excel',
+    description: 'Ce qui s’automatise dans un planning d’équipe (répartition, absences, programme du jour, annulations), ce qui reste une décision humaine, et les règles à respecter.',
+    date: '2026-11-16',
+    category: 'Organisation',
+    lead: 'Automatiser le planning d’une équipe, c’est relier les interventions acceptées, les absences et les compétences de chacun à un agenda partagé : l’outil propose une répartition par zone, envoie à chaque personne son programme du jour et signale ce qu’une annulation déplace dans la semaine. Les choix qui engagent l’équipe restent les vôtres : valider la répartition, arbitrer une urgence, et prévenir un salarié d’un changement d’horaires dans les délais prévus par le Code du travail ou votre convention collective.',
+    body: [
+      { p: 'Dans bien des petites entreprises, le lundi matin ressemble à ceci : reprendre le tableur de la semaine, y recopier les chantiers ou les visites acceptés, vérifier qui est en congé, puis envoyer à chacun une photo du planning par message. Au premier imprévu, tout est à refaire.' },
+      { p: 'Cet article parle du planning vu de l’intérieur de l’entreprise : répartir le travail entre plusieurs personnes et tenir ce planning à jour. Si votre besoin est plutôt de laisser vos clients réserver un créneau eux-mêmes, lisez [prise de rendez-vous en ligne et rappels](/blog/prise-rendez-vous-en-ligne-rappels/).' },
+
+      { h2: 'Ce qui coince avec le tableur du lundi' },
+      { ul: [
+        'La ressaisie : chaque intervention acceptée est recopiée à la main, depuis un e-mail, un devis signé ou une note prise au téléphone.',
+        'Les versions : le fichier circule par e-mail ou par message, et personne ne sait plus laquelle est la bonne.',
+        'Les absences oubliées : un congé posé il y a plusieurs semaines n’apparaît pas dans le tableau, et une intervention est attribuée à quelqu’un qui ne viendra pas.',
+        'L’effet domino : une annulation libère un créneau, mais personne n’a le temps de regarder ce qu’on pourrait avancer.',
+        'Le programme du jour : chacun doit demander l’adresse, le code d’accès ou le document à emporter, souvent par téléphone, souvent au dernier moment.',
+      ] },
+      { p: 'Aucun de ces problèmes ne demande un logiciel compliqué. Ils ont la même origine : l’information existe déjà quelque part (devis, agenda, demande de congé), mais elle n’arrive pas seule dans le planning.' },
+
+      { h2: 'Ce qui s’automatise, étape par étape' },
+      { p: 'Voici un exemple type, pour une entreprise de quatre ou cinq intervenants : une équipe d’artisans, ou un service de ménage ou de garde d’enfants à domicile. Ce n’est pas le récit d’un client, c’est un circuit possible, à adapter à vos outils.' },
+      { ol: [
+        'Une intervention est acceptée : le devis est signé, la demande est validée ou le contrat démarre. Elle entre dans une liste d’interventions à planifier, avec l’adresse, la durée prévue et la compétence demandée. Si vos devis passent déjà par un circuit automatisé, comme dans [automatiser ses devis d’artisan](/blog/devis-artisan-automatiser/), cette étape ne demande aucune saisie.',
+        'Les disponibilités sont lues : l’outil consulte l’agenda de chaque intervenant, les congés validés et les jours de repos habituels.',
+        'Une répartition est proposée : par zone (pour éviter les allers-retours d’un bout à l’autre du secteur), par compétence (seuls ceux qui savent faire reçoivent l’intervention) et selon la charge déjà prévue de chacun.',
+        'Vous validez : la proposition arrive dans un tableau ou dans l’agenda partagé, marquée « à confirmer ». Vous déplacez ce qui ne vous convient pas, puis vous confirmez.',
+        'Les agendas se remplissent : chaque intervention confirmée s’inscrit dans l’agenda de la bonne personne, visible sur son téléphone.',
+        'Chaque matin, le programme du jour part : à heure fixe, chacun reçoit par e-mail ou par SMS la liste de ses interventions, dans l’ordre, avec l’adresse, le contact sur place et les documents utiles (bon d’intervention, plan d’accès, consignes).',
+      ] },
+      { p: 'Dans un commerce ou un restaurant, le principe est le même avec des créneaux horaires au lieu d’interventions : les heures d’ouverture, le nombre de personnes nécessaires à chaque moment et les disponibilités de chacun donnent une grille proposée, que vous ajustez avant que chacun reçoive ses horaires de la semaine. La page [automatisation pour les commerces et restaurants](/automatisation/commerces-restaurants/) détaille ce cas.' },
+      { p: 'L’automatisation ne remplace ni votre logiciel métier ni votre agenda : elle les relie. Un outil comme n8n lit une source (devis, tableur, formulaire), applique vos règles et écrit dans l’agenda de chacun. C’est ce que je propose dans la [gestion automatique de l’agenda](/services/#agenda).' },
+
+      { h2: 'Absences, annulations, urgences : répercuter un changement sur la semaine' },
+      { p: 'C’est là que le tableur montre ses limites, et là qu’une automatisation rend le plus service. Trois cas reviennent souvent :' },
+      { ul: [
+        'Une absence : quand un congé est validé ou qu’un intervenant se déclare absent, ses interventions sont repérées et signalées. L’outil propose un remplaçant qui a la bonne compétence et un créneau libre dans la même zone. Vous choisissez.',
+        'Une annulation : le client de jeudi annule. Le créneau libéré est signalé, avec les interventions en attente qui pourraient y entrer (même zone, même compétence). Le client que vous décidez d’avancer reçoit un message, et l’intervenant voit son agenda mis à jour.',
+        'Une urgence : une fuite, une panne, un remplacement à assurer le jour même. L’outil montre qui a la bonne compétence et travaille déjà dans le secteur ce jour-là, et ce que l’urgence décalerait ensuite.',
+      ] },
+      { p: 'Dans les trois cas, rien n’est déplacé sans votre accord : l’automatisation fait le repérage et prépare les messages, vous décidez. Une fois la décision prise, la mise à jour des agendas et l’envoi des nouveaux programmes se font seuls.' },
+      { note: 'Un planning n’a pas besoin de savoir pourquoi quelqu’un est absent. Notez « absent » ou « congé », jamais le motif : un arrêt maladie, par exemple, n’a rien à faire dans un agenda partagé avec toute l’équipe.' },
+
+      { h2: 'Ce qui doit rester une décision humaine' },
+      { p: 'Un outil sait trier par zone et par compétence. Il ne connaît ni votre équipe ni vos clients. Gardez la main sur :' },
+      { ul: [
+        'la validation de la répartition de la semaine, au moins les premiers temps ;',
+        'les arbitrages entre clients, quand deux urgences arrivent le même jour ;',
+        'les habitudes qui comptent : le client qui préfère toujours le même intervenant, l’apprenti qui ne part pas seul, la personne âgée qui a besoin d’un visage connu ;',
+        'tout changement d’horaires d’un salarié : l’outil peut préparer le message, mais c’est vous qui décidez et qui prévenez dans les délais (voir la partie suivante) ;',
+        'les cas qui ne rentrent dans aucune règle : un chantier qui déborde, un véhicule en panne, une demande inhabituelle.',
+      ] },
+      { p: 'Mon conseil : commencer par une automatisation qui propose et une personne qui valide. Quand les propositions sont justes semaine après semaine, on peut laisser partir seules les étapes les plus simples, comme l’envoi du programme du jour.' },
+
+      { h2: 'Les règles du Code du travail à respecter' },
+      { p: 'Un planning automatisé reste un planning : il obéit aux mêmes règles que celui fait à la main. Voici les repères utiles, lus le 16 novembre 2026 sur code.travail.gouv.fr, le site officiel du Code du travail numérique :' },
+      { ul: [
+        'Repos quotidien : tout salarié bénéficie d’un repos quotidien d’au moins onze heures consécutives, sauf dérogation prévue par un accord collectif ou, à défaut, par décret, et en cas d’urgence (article L3131-1).',
+        'Repos hebdomadaire : au moins vingt-quatre heures consécutives, auxquelles s’ajoutent les onze heures du repos quotidien (article L3132-2), sauf travaux urgents qui permettent de le suspendre (article L3132-4).',
+        'Durée quotidienne : pas plus de dix heures de travail effectif par jour, sauf dérogation accordée par l’inspecteur du travail, urgence, ou cas prévus à l’article L3121-19 (article L3121-18).',
+        'Salariés à temps partiel : toute modification de la répartition de leur durée du travail entre les jours de la semaine ou les semaines du mois leur est notifiée en respectant un délai de prévenance (article L3123-11). À défaut d’accord, ce délai est d’au moins sept jours ouvrés avant la date du changement (article L3123-31). Un accord collectif peut le réduire, sans descendre sous trois jours ouvrés, avec des contreparties pour le salarié s’il est inférieur à sept jours ouvrés ; dans les associations et entreprises d’aide à domicile, il peut être plus court pour des cas d’urgence définis par l’accord (article L3123-24).',
+        'Temps de travail réparti sur plus d’une semaine : si un accord d’entreprise ou de branche organise la durée du travail sur une période plus longue que la semaine (article L3121-44), c’est lui qui fixe le délai pour prévenir d’un changement de durée ou d’horaires ; s’il ne dit rien, ce délai est de sept jours (article L3121-47).',
+      ] },
+      { p: 'Ce que l’automatisation apporte ici : elle peut signaler, avant que vous ne validiez, un planning qui laisse moins de onze heures de repos consécutives ou dépasse dix heures de travail sur une journée, et dater chaque envoi de planning, ce qui garde une trace du moment où chacun a été prévenu. Elle ne remplace pas la lecture de votre convention collective, qui peut prévoir ses propres règles : en cas de doute, posez la question à votre expert-comptable ou à votre organisation professionnelle.' },
+
+      { h2: 'Tournées et géolocalisation des véhicules : ce que dit la CNIL' },
+      { p: 'Pour optimiser les tournées, on pense vite à suivre la position des véhicules. C’est possible, mais encadré. La CNIL compte parmi les usages admis le fait de mieux répartir des moyens pour des prestations à accomplir en des lieux dispersés. Elle fixe aussi des limites claires :' },
+      { ul: [
+        'Les interdits : surveiller un salarié en permanence, contrôler le respect des limitations de vitesse, équiper le véhicule d’un salarié libre d’organiser ses déplacements, ou collecter la position en dehors du temps de travail, trajet domicile-travail et pauses compris. Elle exclut aussi, entre autres, de suivre les représentants du personnel dans l’exercice de leur mandat, et de calculer le temps de travail quand un autre moyen existe déjà.',
+        'L’information : les représentants du personnel sont informés ou consultés avant l’installation, et chaque salarié est informé des finalités, des destinataires, de la durée de conservation et de ses droits, par exemple par un avenant au contrat ou une note de service.',
+        'La désactivation : les salariés doivent pouvoir désactiver la collecte ou la transmission de leur position en dehors du temps de travail.',
+        'La conservation : deux mois en principe ; un an lorsque les données servent à optimiser les tournées, ou à prouver des interventions faute d’autre moyen ; cinq ans lorsqu’elles servent au suivi du temps de travail.',
+      ] },
+      { p: 'La CNIL précise que sa fiche est en cours de mise à jour : relisez-la avant d’installer un boîtier. Et bien des fois, on peut s’en passer : répartir les interventions à partir de leur adresse, sans suivre personne en temps réel, suffit souvent à regrouper celles d’un même secteur.' },
+
+      { h2: 'Par où commencer' },
+      { ol: [
+        'Pendant une ou deux semaines, notez ce qui vous prend du temps dans le planning : ressaisie, appels, changements de dernière minute.',
+        'Choisissez une seule étape à automatiser d’abord. L’envoi du programme du jour, chaque matin, est souvent la plus simple et la plus visible pour l’équipe.',
+        'Écrivez vos règles de répartition (zones, compétences, binômes) : une règle que vous ne savez pas écrire, l’outil ne pourra pas l’appliquer.',
+        'Gardez la validation humaine les premières semaines, et comparez chaque proposition avec ce que vous auriez fait.',
+        'Si vous préférez déléguer, je construis le circuit avec vos outils actuels (agenda partagé, tableur ou logiciel métier, e-mail ou SMS), je le teste sur vos vraies données et je vous le remets documenté. Les projets démarrent à partir de 150 €, et un suivi facultatif est proposé à partir de 250 € par mois.',
+      ] },
+
+      { p: 'Pour aller plus loin : pour les tournées de techniciens et les chantiers, voir l’[automatisation pour les artisans du bâtiment](/automatisation/artisans-batiment/). Vous voulez savoir ce qui peut s’automatiser dans votre planning ? [Écrivez-moi](/contact/) : je regarde avec vous votre semaine type pendant l’audit gratuit de 30 minutes.' },
+      { p: 'Sources : Code du travail, sur code.travail.gouv.fr : [article L3131-1 (repos quotidien)](https://code.travail.gouv.fr/code-du-travail/l3131-1), [article L3132-2 (repos hebdomadaire)](https://code.travail.gouv.fr/code-du-travail/l3132-2), [article L3132-4 (travaux urgents)](https://code.travail.gouv.fr/code-du-travail/l3132-4), [article L3121-18 (durée quotidienne maximale)](https://code.travail.gouv.fr/code-du-travail/l3121-18), [article L3121-44 (aménagement sur plus d’une semaine)](https://code.travail.gouv.fr/code-du-travail/l3121-44), [article L3121-47 (délai de prévenance à défaut d’accord)](https://code.travail.gouv.fr/code-du-travail/l3121-47), [article L3123-11 (temps partiel, modification de la répartition)](https://code.travail.gouv.fr/code-du-travail/l3123-11), [article L3123-24 (délai fixé par accord)](https://code.travail.gouv.fr/code-du-travail/l3123-24), [article L3123-31 (délai à défaut d’accord)](https://code.travail.gouv.fr/code-du-travail/l3123-31) ; CNIL, [la géolocalisation des véhicules des salariés](https://www.cnil.fr/fr/la-geolocalisation-des-vehicules-des-salaries).' },
+    ],
+    faq: [
+      { q: 'Peut-on automatiser entièrement le planning d’une équipe ?', a: 'En partie. La répartition proposée, la mise à jour des agendas et l’envoi du programme du jour s’automatisent bien. La validation de la semaine, les arbitrages entre clients et les changements d’horaires d’un salarié restent des décisions humaines.' },
+      { q: 'Faut-il un logiciel de planning spécialisé ?', a: 'Pas forcément. Un agenda partagé, un tableur ou votre logiciel métier, et un outil d’automatisation comme n8n suffisent souvent à relier les interventions, les absences et les agendas de chacun. Un logiciel spécialisé se justifie plutôt pour une équipe nombreuse ou des règles de planning très complexes.' },
+      { q: 'Quel délai pour prévenir un salarié à temps partiel d’un changement de planning ?', a: 'À défaut d’accord collectif, au moins sept jours ouvrés avant le changement (article L3123-31 du Code du travail). Un accord peut le réduire, sans descendre sous trois jours ouvrés, avec des contreparties s’il est inférieur à sept jours ouvrés ; l’aide à domicile peut aller en dessous pour des urgences définies par l’accord (article L3123-24).' },
+      { q: 'Peut-on géolocaliser les véhicules pour optimiser les tournées ?', a: 'Oui, la CNIL l’admet pour mieux répartir des prestations à accomplir en des lieux dispersés, à condition d’informer les salariés, de ne pas collecter la position hors temps de travail et de ne pas conserver les données plus de deux mois, ou un an si elles servent à optimiser les tournées. La surveillance permanente et le contrôle de la vitesse sont interdits.' },
+    ],
+  },
+  {
     slug: 'n8n-c-est-quoi',
     seoTitle: 'n8n, c’est quoi ? Le guide simple (TPE)',
     seoDescription: 'n8n expliqué simplement : workflows, déclencheurs, Cloud ou auto-hébergé, licence, IA, exemples concrets pour une TPE et limites honnêtes.',
