@@ -25,7 +25,7 @@ export default function Footer() {
         </div>
         <div>
           <h2 className="mb-2 text-base">Le studio</h2>
-          <ul className="space-y-2">{nav.filter(n => n.to !== '/services/').map(n => <li key={n.to}><Link className={link} to={n.to}>{n.label}</Link></li>)}<li><Link className={link} to="/securite/">Sécurité et données</Link></li></ul>
+          <ul className="space-y-2">{nav.filter(n => n.to !== '/services/').map(n => <li key={n.to}><Link className={link} to={n.to}>{n.label}</Link></li>)}<li><Link className={link} to="/realisations/">Réalisations</Link></li><li><Link className={link} to="/securite/">Sécurité et données</Link></li></ul>
         </div>
         <div>
           <h2 className="mb-2 text-base">Contact</h2>

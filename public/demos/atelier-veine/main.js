@@ -1,0 +1,497 @@
+// Atelier Veine : concept de démonstration Axion Studio (entreprise fictive).
+// GSAP, ScrollTrigger, SplitText et Lenis sont chargés en scripts classiques (globals).
+
+const root = document.documentElement;
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const { gsap, ScrollTrigger, SplitText, Lenis } = window;
+
+setupForm();
+
+if (reduceMotion || !gsap || !ScrollTrigger || !SplitText || !Lenis) {
+  root.classList.remove('motion');
+  document.querySelector('.loader')?.remove();
+} else {
+  init();
+}
+
+/* ---------------- Formulaire (démo : rien n'est envoyé) ---------------- */
+function setupForm() {
+  const form = document.querySelector('.devis-form');
+  const status = document.getElementById('devis-demo');
+  if (!form || !status) return;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    status.classList.add('is-visible');
+    status.focus({ preventScroll: true });
+    status.scrollIntoView({ block: 'nearest', behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
+}
+
+/* ---------------- Animation ---------------- */
+function init() {
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+  root.classList.add('ready');
+
+  // Défilement fluide, synchronisé avec ScrollTrigger
+  const lenis = new Lenis({ lerp: 0.1 });
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  document.querySelectorAll('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id.length < 2) return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: id === '#accueil' ? 0 : -60 });
+      if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true });
+    });
+  });
+
+  const loader = createLoader();
+  const canvas = document.querySelector('.scene-canvas');
+  const scenePromise = initScene(canvas)
+    .catch(() => null)
+    .finally(() => loader.mark('scene'));
+
+  buildScroll(scenePromise);
+  loader.onDone(intro);
+}
+
+/* Compteur 0 à 100 lié au vrai chargement : polices, page, scène 3D. Jamais bloquant. */
+function createLoader() {
+  const el = document.querySelector('.loader');
+  const num = el?.querySelector('.loader-num');
+  const bar = el?.querySelector('.loader-line i');
+  const tasks = { fonts: false, load: false, scene: false };
+  const start = performance.now();
+  let target = 0;
+  let shown = 0;
+  let finished = false;
+  let doneCb = () => {};
+
+  const mark = (k) => {
+    if (tasks[k]) return;
+    tasks[k] = true;
+    const n = Object.values(tasks).filter(Boolean).length;
+    target = Math.max(target, (n / 3) * 100);
+  };
+
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => mark('fonts'));
+  else mark('fonts');
+  if (document.readyState === 'complete') mark('load');
+  else window.addEventListener('load', () => mark('load'), { once: true });
+
+  // Plafond : le compteur ne retient jamais la page plus de 2,6 s.
+  setTimeout(() => { target = 100; }, 2600);
+  const skip = () => { target = 100; };
+  window.addEventListener('pointerdown', skip, { once: true });
+  window.addEventListener('keydown', skip, { once: true });
+  window.addEventListener('wheel', skip, { once: true, passive: true });
+
+  const finish = () => {
+    if (finished) return;
+    finished = true;
+    if (!el) { doneCb(); return; }
+    gsap.to(el, {
+      clipPath: 'inset(0 0 100% 0)',
+      duration: 0.9,
+      ease: 'power3.inOut',
+      onComplete: () => el.remove(),
+    });
+    gsap.delayedCall(0.35, doneCb);
+  };
+
+  let lastT = performance.now();
+  const tick = (now) => {
+    const dt = Math.min((now - lastT) / 1000, 0.1);
+    lastT = now;
+    shown += Math.max((target - shown) * (1 - Math.exp(-dt * 8)), target > shown ? dt * 40 : 0);
+    shown = Math.min(shown, target);
+    if (num) num.textContent = String(Math.round(shown));
+    if (bar) bar.style.transform = `scaleX(${shown / 100})`;
+    if (shown >= 99.5 && performance.now() - start > 700) finish();
+    else requestAnimationFrame(tick);
+  };
+  if (!el) mark('load');
+  requestAnimationFrame(tick);
+
+  return {
+    mark,
+    onDone(cb) { doneCb = cb; if (finished) cb(); },
+  };
+}
+
+function intro() {
+  gsap.from('.eyebrow, .hero-sub, .hero-cta, .scroll-hint', {
+    y: 24, opacity: 0, duration: 1.1, ease: 'power3.out', stagger: 0.08,
+  });
+  gsap.from('.hero-title', { opacity: 0, duration: 1.4, ease: 'power2.out' });
+}
+
+/* ---------------- Scènes au défilement ---------------- */
+function buildScroll(scenePromise) {
+  // Accueil épinglé : les mots dispersés se rassemblent en titre.
+  const scatter = [
+    [0.42, 0.04, -8, 1.2], [0.08, -0.06, 6, 0.8], [0.30, 0.16, -4, 1.1],
+    [0.55, -0.12, 10, 0.75], [0.22, -0.30, -5, 1.2], [0.62, -0.42, 6, 0.9], [0.40, -0.22, -9, 1.1],
+  ];
+  const words = gsap.utils.toArray('.hero-title .w');
+  gsap.timeline({
+    scrollTrigger: {
+      trigger: '.hero',
+      start: 'top top',
+      end: '+=110%',
+      pin: true,
+      scrub: 1,
+      invalidateOnRefresh: true,
+    },
+  })
+    .from(words, {
+      x: (i) => scatter[i % scatter.length][0] * window.innerWidth,
+      y: (i) => scatter[i % scatter.length][1] * window.innerHeight,
+      rotation: (i) => scatter[i % scatter.length][2],
+      scale: (i) => scatter[i % scatter.length][3],
+      opacity: 0.45,
+      ease: 'power2.inOut',
+      duration: 1,
+    })
+    .to('.scroll-hint', { opacity: 0, duration: 0.3 }, 0);
+
+  // Progression de la scène 3D (accueil + geste)
+  scenePromise.then((scene) => {
+    if (!scene) return;
+    ScrollTrigger.create({
+      trigger: '.scene',
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: (self) => {
+        scene.progress = self.progress;
+        scene.velocity = self.getVelocity();
+      },
+    });
+  });
+  gsap.to('.scene-canvas', {
+    opacity: 0.22,
+    ease: 'none',
+    scrollTrigger: { trigger: '.geste', start: 'top 85%', end: 'top 25%', scrub: true },
+  });
+
+  // Titres de section : lignes qui montent derrière un masque
+  document.querySelectorAll('.split-title').forEach((title) => {
+    SplitText.create(title, {
+      type: 'lines',
+      mask: 'lines',
+      autoSplit: true,
+      onSplit: (self) => gsap.from(self.lines, {
+        yPercent: 105,
+        duration: 1.1,
+        ease: 'power4.out',
+        stagger: 0.08,
+        scrollTrigger: { trigger: title, start: 'top 85%' },
+      }),
+    });
+  });
+
+  // Le geste : le texte se révèle mot à mot
+  SplitText.create('.geste-lead', {
+    type: 'words',
+    autoSplit: true,
+    onSplit: (self) => gsap.fromTo(self.words, { opacity: 0.16 }, {
+      opacity: 1,
+      stagger: 0.1,
+      ease: 'none',
+      scrollTrigger: { trigger: '.geste-lead', start: 'top 75%', end: 'bottom 45%', scrub: true },
+    }),
+  });
+  gsap.from('.gestes > div', {
+    y: 30, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.12,
+    scrollTrigger: { trigger: '.gestes', start: 'top 85%' },
+  });
+
+  // Mots géants qui glissent en sens opposés
+  const bandTl = { trigger: '.bands', start: 'top bottom', end: 'bottom top', scrub: true };
+  gsap.fromTo('.band-row:not(.band-row--alt)', { xPercent: 0 }, { xPercent: -28, ease: 'none', scrollTrigger: bandTl });
+  gsap.fromTo('.band-row--alt', { xPercent: -36 }, { xPercent: -6, ease: 'none', scrollTrigger: { ...bandTl } });
+
+  gsap.from('.service', {
+    y: 50, opacity: 0, duration: 1, ease: 'power3.out', stagger: 0.12,
+    scrollTrigger: { trigger: '.services', start: 'top 82%' },
+  });
+
+  // Méthode épinglée : les quatre étapes se succèdent
+  const steps = gsap.utils.toArray('.step');
+  gsap.set(steps.slice(1), { opacity: 0, y: 40 });
+  const methodTl = gsap.timeline({
+    scrollTrigger: {
+      trigger: '.methode',
+      start: 'top top',
+      end: () => '+=' + window.innerHeight * (steps.length - 0.5),
+      pin: true,
+      scrub: 0.6,
+      invalidateOnRefresh: true,
+    },
+  });
+  steps.forEach((step, i) => {
+    if (i === 0) return;
+    methodTl
+      .to(steps[i - 1], { opacity: 0, y: -40, duration: 0.35 }, i)
+      .to(step, { opacity: 1, y: 0, duration: 0.45 }, i + 0.3);
+  });
+  methodTl.fromTo('.methode-bar i', { scaleX: 0.25 }, { scaleX: 1, ease: 'none', duration: steps.length - 0.25 }, 0.25);
+
+  // Galerie horizontale (grands écrans uniquement)
+  const mm = gsap.matchMedia();
+  mm.add('(min-width: 900px)', () => {
+    const track = document.querySelector('.gallery-track');
+    const distance = () => Math.max(0, track.scrollWidth - document.documentElement.clientWidth);
+    gsap.to(track, {
+      x: () => -distance(),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.pieces',
+        start: 'top top',
+        end: () => '+=' + distance(),
+        pin: true,
+        scrub: 0.8,
+        invalidateOnRefresh: true,
+      },
+    });
+    gsap.from('.piece svg', {
+      clipPath: 'inset(0 0 100% 0)',
+      duration: 1.2,
+      ease: 'power3.inOut',
+      stagger: 0.1,
+      scrollTrigger: { trigger: '.pieces', start: 'top 60%' },
+    });
+  });
+
+  window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+}
+
+/* ---------------- Scène three.js : planche et veines en shader ---------------- */
+const vertexShader = /* glsl */ `
+  varying vec2 vUv;
+  varying vec3 vObjNormal;
+  void main() {
+    vUv = uv;
+    vObjNormal = normal;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`;
+
+const fragmentShader = /* glsl */ `
+  uniform float uTime;
+  uniform float uReveal;
+  uniform float uWave;
+  uniform float uAspect;
+  uniform vec2 uMouse;
+  varying vec2 vUv;
+  varying vec3 vObjNormal;
+
+  float hash(vec2 p) {
+    p = fract(p * vec2(123.34, 456.21));
+    p += dot(p, p + 45.32);
+    return fract(p.x * p.y);
+  }
+  float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    vec2 u = f * f * (3.0 - 2.0 * f);
+    return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), u.x),
+               mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), u.x), u.y);
+  }
+  float fbm(vec2 p) {
+    float v = 0.0;
+    float a = 0.5;
+    for (int i = 0; i < 4; i++) {
+      v += a * noise(p);
+      p = p * 2.02 + vec2(1.7, 9.2);
+      a *= 0.5;
+    }
+    return v;
+  }
+  // x : veine (cerne), y : fibre fine
+  vec2 wood(vec2 uv) {
+    vec2 p = vec2(uv.x * uAspect, uv.y);
+    float w = fbm(p * vec2(0.55, 2.4));
+    float wave = sin(p.x * 2.2 - uTime * 0.9 + p.y * 3.0) * 0.045 * uWave;
+    float r = (p.y + w * 0.62 + wave + sin(p.x * 0.7) * 0.08) * 11.0;
+    float ring = 0.5 + 0.5 * sin(r * 6.2831);
+    float vein = pow(ring, 7.0);
+    float fibre = noise(vec2(p.x * 1.2, p.y * 140.0 + w * 30.0));
+    return vec2(vein, fibre);
+  }
+  float revealMask(vec2 uv, float edgeN) {
+    return 1.0 - smoothstep(uReveal - 0.12, uReveal, uv.x + (edgeN - 0.5) * 0.18);
+  }
+  float heightAt(vec2 uv, float m) {
+    vec2 w = wood(uv);
+    return w.x * m * 0.9 + w.y * 0.22;
+  }
+
+  void main() {
+    vec2 uv = vUv;
+    float edgeN = fbm(vec2(uv.y * 6.0, uv.x * 2.0));
+    float m = revealMask(uv, edgeN);
+    vec2 wd = wood(uv);
+
+    float e = 0.002;
+    float h = wd.x * m * 0.9 + wd.y * 0.22;
+    float hx = heightAt(uv + vec2(e, 0.0), m);
+    float hy = heightAt(uv + vec2(0.0, e), m);
+    vec3 n = normalize(vec3((h - hx) * 6.0, (h - hy) * 6.0, 1.0));
+
+    // Lumière rasante : direction pilotée par la souris, très basse sur l'horizon
+    vec3 L = normalize(vec3(uMouse.x * 1.4, uMouse.y * 1.4, 0.3));
+    float diff = clamp(dot(n, L), 0.0, 1.0);
+    vec3 H = normalize(L + vec3(0.0, 0.0, 1.0));
+    float spec = pow(max(dot(n, H), 0.0), 36.0);
+
+    vec2 lp = uMouse * 0.5 + 0.5;
+    float d = distance(vec2(uv.x * uAspect, uv.y), vec2(lp.x * uAspect, lp.y));
+    float spot = exp(-d * d * 0.35);
+
+    vec3 pale = vec3(0.87, 0.74, 0.55);
+    vec3 oak = vec3(0.73, 0.55, 0.36);
+    vec3 walnut = vec3(0.32, 0.19, 0.11);
+    vec3 base = mix(pale, oak, wd.y * 0.35 + edgeN * 0.25);
+    base = mix(base, walnut, wd.x * m * 0.8);
+
+    vec3 col = base * (0.3 + 1.7 * diff * (0.5 + 0.7 * spot));
+    col += spec * spot * 0.22 * vec3(1.0, 0.9, 0.75);
+
+    // Trait chaud là où la veine est en train d'apparaître
+    float front = uv.x + (edgeN - 0.5) * 0.18 - uReveal + 0.06;
+    col += vec3(0.95, 0.62, 0.3) * exp(-front * front * 900.0) * 0.18 * step(uReveal, 1.08);
+
+    // Chants : bois de bout, plus sombre
+    if (abs(vObjNormal.z) < 0.5) col = base * (0.22 + 0.25 * spot);
+
+    gl_FragColor = vec4(col, 1.0);
+  }
+`;
+
+async function initScene(canvas) {
+  if (!canvas) return null;
+  const THREE = await import('../_lib/three.module.js');
+
+  const isSmall = () => window.innerWidth < 900;
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    antialias: !isSmall(),
+    alpha: true,
+    powerPreference: 'low-power',
+  });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
+  camera.position.set(0, 0, 7);
+
+  const plankW = 4.6;
+  const plankH = 1.28;
+  const uniforms = {
+    uTime: { value: 0 },
+    uReveal: { value: 0.05 },
+    uWave: { value: 0.2 },
+    uAspect: { value: plankW / plankH },
+    uMouse: { value: new THREE.Vector2(0.45, 0.35) },
+  };
+  const plank = new THREE.Mesh(
+    new THREE.BoxGeometry(plankW, plankH, 0.1),
+    new THREE.ShaderMaterial({ uniforms, vertexShader, fragmentShader }),
+  );
+  scene.add(plank);
+
+  const resize = () => {
+    const w = canvas.clientWidth || window.innerWidth;
+    const h = canvas.clientHeight || window.innerHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  };
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Souris (ou orbite lente sur écran tactile)
+  const mouse = { x: 0.45, y: 0.35, tx: 0.45, ty: 0.35 };
+  const finePointer = window.matchMedia('(pointer: fine)').matches;
+  window.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    mouse.tx = (e.clientX / window.innerWidth) * 2 - 1;
+    mouse.ty = -((e.clientY / window.innerHeight) * 2 - 1);
+  }, { passive: true });
+
+  const state = { progress: 0, velocity: 0 };
+  let p = 0;
+  let wave = 0.2;
+  let visible = true;
+  let running = false;
+  let last = performance.now();
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const ease = (t) => t * t * (3 - 2 * t);
+
+  const frame = (now) => {
+    if (!running) return;
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+    uniforms.uTime.value += dt;
+
+    if (!finePointer) {
+      const t = uniforms.uTime.value * 0.35;
+      mouse.tx = Math.cos(t) * 0.7;
+      mouse.ty = 0.3 + Math.sin(t * 1.3) * 0.35;
+    }
+    mouse.x = lerp(mouse.x, mouse.tx, 0.06);
+    mouse.y = lerp(mouse.y, mouse.ty, 0.06);
+    uniforms.uMouse.value.set(mouse.x, mouse.y);
+
+    p = lerp(p, state.progress, 0.08);
+    const k1 = ease(Math.min(p / 0.45, 1));
+    const k2 = ease(Math.min(Math.max((p - 0.45) / 0.4, 0), 1));
+    uniforms.uReveal.value = 0.05 + Math.min(p / 0.55, 1) * 1.1;
+    const targetWave = 0.25 + Math.min(Math.abs(state.velocity) / 1800, 1) * 1.4;
+    wave = lerp(wave, targetWave, 0.05);
+    uniforms.uWave.value = wave;
+
+    const small = isSmall();
+    // Accueil : planche à droite, presque à plat. Geste : elle glisse à gauche, sous le texte.
+    plank.rotation.x = lerp(-1.2, -0.42, k1) + k2 * 0.2 + mouse.y * 0.05;
+    plank.rotation.y = lerp(0.12, -0.02, k1) + mouse.x * 0.08;
+    plank.rotation.z = lerp(0.24, 0.06, k1) - k2 * 0.1;
+    plank.position.x = small ? 0 : lerp(2.0, 1.75, k1) - k2 * 3.95;
+    plank.position.y = small ? lerp(-1.35, -1.0, k1) + k2 * 0.6 : lerp(-1.05, -0.75, k1) + k2 * 0.65;
+    plank.scale.setScalar(small ? 0.62 : 0.82);
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(frame);
+  };
+
+  const update = () => {
+    const shouldRun = visible && !document.hidden;
+    if (shouldRun && !running) {
+      running = true;
+      last = performance.now();
+      requestAnimationFrame(frame);
+    } else if (!shouldRun) {
+      running = false;
+    }
+  };
+  new IntersectionObserver((entries) => {
+    visible = entries[0].isIntersecting;
+    update();
+  }).observe(canvas.parentElement);
+  document.addEventListener('visibilitychange', update);
+
+  renderer.render(scene, camera);
+  update();
+
+  return {
+    set progress(v) { state.progress = v; },
+    set velocity(v) { state.velocity = v; },
+  };
+}

@@ -407,3 +407,68 @@ export const metiers = [
     ],
   },
 ]
+
+/** Page Réalisations : le site d’Axion Studio (vraie réalisation), puis les démos de sites vitrine.
+ *  Les démos (public/demos/<dossier>/) présentent des entreprises FICTIVES : `demo: true` affiche la mention sur la page.
+ *  `apercu` : couleurs de l’aperçu dessiné en CSS (fond, accent, texte). */
+export const realisations = [
+  {
+    nom: 'axionstudio.fr',
+    type: 'Site d’Axion Studio',
+    texte: 'Le site que vous lisez. Je l’ai conçu et développé moi-même, des textes au code.',
+    inclus: [
+      'Pages pré-rendues au build : rapides et lisibles sans JavaScript',
+      'Formulaire de contact qui m’envoie chaque demande',
+      'Espace client relié à n8n pour suivre ses automatisations',
+      'Assistant qui répond aux questions des visiteurs',
+    ],
+    lien: 'https://axionstudio.fr/',
+    lienTexte: 'Voir le site',
+    apercu: { fond: '#f3f5f9', accent: '#2b5ce6', texte: '#14213d', mot: 'Axion' },
+  },
+  {
+    dossier: 'ardoise-et-sel',
+    nom: 'Ardoise & Sel',
+    type: 'Restaurant de saison',
+    metier: 'commerces-restaurants',
+    texte: 'Une ambiance de nuit et de braises, pour un restaurant qui veut donner envie de réserver.',
+    inclus: [
+      'Grands visuels et particules de braise en 3D, faits en code',
+      'Formulaire de réservation : chez un vrai client, il remplit l’agenda et envoie la confirmation',
+      'Page lisible sans animation si le visiteur les a désactivées',
+    ],
+    lien: '/demos/ardoise-et-sel/',
+    demo: true,
+    apercu: { fond: '#1a1210', accent: '#e8833a', texte: '#f5e9dc', mot: 'Braise' },
+  },
+  {
+    dossier: 'atelier-veine',
+    nom: 'Atelier Veine',
+    type: 'Ébéniste',
+    metier: 'artisans-batiment',
+    texte: 'La matière et la lumière rasante, pour un artisan qui veut montrer la qualité de son travail.',
+    inclus: [
+      'Planche de bois en 3D dont les veines bougent au défilement',
+      'Formulaire de demande de devis : chez un vrai client, il crée la fiche client',
+      'Page lisible sans animation si le visiteur les a désactivées',
+    ],
+    lien: '/demos/atelier-veine/',
+    demo: true,
+    apercu: { fond: '#2a1d14', accent: '#c8935a', texte: '#f3e6d6', mot: 'Veine' },
+  },
+  {
+    dossier: 'seuil',
+    nom: 'Seuil',
+    type: 'Agence immobilière de caractère',
+    metier: 'agences-immobilieres',
+    texte: 'Une ambiance calme et architecturale, pour une agence qui vend des biens singuliers.',
+    inclus: [
+      'Volumes de maison en 3D qui s’assemblent au défilement',
+      'Formulaire de demande de visite : chez un vrai client, la visite arrive dans l’agenda du négociateur',
+      'Page lisible sans animation si le visiteur les a désactivées',
+    ],
+    lien: '/demos/seuil/',
+    demo: true,
+    apercu: { fond: '#e9e6df', accent: '#3f5a52', texte: '#1f2623', mot: 'Seuil' },
+  },
+]

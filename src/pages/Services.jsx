@@ -30,6 +30,7 @@ export default function Services() {
               <p className="mt-4 max-w-[52ch] text-lg leading-[1.6] text-muted">{s.intro}</p>
               {s.slug === 'agenda' && <p className="mt-4 max-w-[52ch] text-lg leading-[1.6] text-muted">{'Pour une équipe de plusieurs intervenants : '}<Link to="/blog/planning-equipe-automatiser/" className={textLink}>organiser le planning de la semaine sans Excel</Link></p>}
               {s.slug === 'ia' && <p className="mt-4 max-w-[52ch] text-lg leading-[1.6] text-muted">Avant d’installer un assistant sur votre site : <Link to="/blog/chatbot-site-tpe-utile-ou-gadget/" className={textLink}>un chatbot sur le site d’une TPE, utile ou gadget ?</Link></p>}
+              {s.slug === 'sites-web' && <p className="mt-4 max-w-[52ch] text-lg leading-[1.6] text-muted">{'Des exemples : '}<Link to="/realisations/" className={textLink}>mes réalisations et concepts de sites vitrine</Link></p>}
               <AuditLink className={`${btn.ghost} mt-6`} demande={`Bonjour,\n\nJe m’intéresse à la mission « ${s.title} ». Mon besoin : `}>Parler de mon projet</AuditLink>
             </div>
             <div className="grid gap-8 sm:grid-cols-2">

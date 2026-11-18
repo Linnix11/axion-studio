@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Atelier Veine, ébéniste (concept de démonstration) | Axion Studio</title>
+  <meta name="description" content="Concept de démonstration réalisé par Axion Studio pour une entreprise fictive d’ébénisterie et de menuiserie sur mesure.">
+  <meta name="theme-color" content="#1b120c">
+  <link rel="icon" href="data:,">
+  <script>
+    document.documentElement.classList.add('js');
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('motion');
+  </script>
+  <link rel="preload" href="atkinson-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../_lib/lenis.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip" href="#contenu">Aller au contenu</a>
+
+  <div class="loader" aria-hidden="true">
+    <div class="loader-inner">
+      <span class="loader-name">Atelier Veine</span>
+      <span class="loader-count"><span class="loader-num">0</span></span>
+      <span class="loader-line"><i></i></span>
+      <span class="loader-note">Préparation de l’atelier</span>
+    </div>
+  </div>
+
+  <!-- Motifs et teintes partagés par les visuels de la galerie -->
+  <svg class="svg-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="g-noyer" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#7a4f2e"/><stop offset="1" stop-color="#3f2617"/>
+      </linearGradient>
+      <linearGradient id="g-noyer-d" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#4a2e1b"/><stop offset="1" stop-color="#2c1a0f"/>
+      </linearGradient>
+      <linearGradient id="g-chene" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#dcbf93"/><stop offset="1" stop-color="#b08758"/>
+      </linearGradient>
+      <linearGradient id="g-chene-d" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#a27a4c"/><stop offset="1" stop-color="#7f5c37"/>
+      </linearGradient>
+      <linearGradient id="g-frene" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="#eadabd"/><stop offset="1" stop-color="#cdb289"/>
+      </linearGradient>
+      <pattern id="grain" width="160" height="22" patternUnits="userSpaceOnUse">
+        <path d="M0 5 C40 1 80 10 160 5" fill="none" stroke="#2b170b" stroke-opacity=".16" stroke-width="1"/>
+        <path d="M0 13 C50 9 100 17 160 12" fill="none" stroke="#2b170b" stroke-opacity=".1" stroke-width="1.4"/>
+        <path d="M0 19 C30 21 120 15 160 19" fill="none" stroke="#2b170b" stroke-opacity=".08" stroke-width=".8"/>
+      </pattern>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <a class="brand" href="#accueil" aria-label="Atelier Veine, retour en haut">
+      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true" focusable="false">
+        <rect x="2" y="2" width="28" height="28" rx="3" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M6 22 C12 18 14 10 26 9" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M6 26 C14 22 18 15 26 14" fill="none" stroke="currentColor" stroke-width="1" opacity=".6"/>
+      </svg>
+      <span>Atelier Veine</span>
+    </a>
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li class="nav-opt"><a href="#geste">Le geste</a></li>
+        <li class="nav-opt"><a href="#atelier">L’atelier</a></li>
+        <li class="nav-opt"><a href="#methode">Méthode</a></li>
+        <li class="nav-opt"><a href="#pieces">Pièces</a></li>
+        <li><a class="nav-cta" href="#devis">Devis</a></li>
+      </ul>
+    </nav>
+    <p class="demo-badge">Démo, entreprise fictive</p>
+  </header>
+
+  <main id="contenu" tabindex="-1">
+    <div class="scene">
+      <canvas class="scene-canvas" aria-hidden="true"></canvas>
+
+      <section class="hero" id="accueil" aria-labelledby="hero-title">
+        <div class="hero-inner">
+          <p class="eyebrow">Ébénisterie · Menuiserie · Restauration</p>
+          <h1 class="hero-title" id="hero-title">
+            <span class="line"><span class="w">Le</span> <span class="w">bois</span> <span class="w">garde</span></span>
+            <span class="line"><span class="w">la</span> <span class="w w-em">mémoire</span></span>
+            <span class="line"><span class="w">du</span> <span class="w">geste.</span></span>
+          </h1>
+          <p class="hero-sub">Meubles sur mesure, agencements intérieurs et restauration de pièces anciennes. Dessinés pour un lieu, fabriqués à la main, posés avec soin.</p>
+          <p class="hero-cta">
+            <a class="btn btn-light" href="#devis">Parler de votre projet</a>
+            <a class="btn btn-ghost" href="#pieces">Voir des pièces types</a>
+          </p>
+        </div>
+        <p class="scroll-hint" aria-hidden="true"><span>Faites défiler</span><i></i></p>
+      </section>
+
+      <section class="geste" id="geste" aria-labelledby="geste-title">
+        <div class="geste-inner">
+          <p class="kicker">01 · Le geste</p>
+          <h2 class="split-title" id="geste-title">Lire le fil avant de couper.</h2>
+          <p class="geste-lead">Chaque planche a un sens, une tension, un caractère. Avant de tracer la moindre cote, on la regarde sous une lumière rasante&nbsp;: c’est elle qui montre les nœuds, les contrefils et les veines qui feront la beauté d’un plateau. Le reste est affaire de patience.</p>
+          <dl class="gestes">
+            <div><dt>Choisir</dt><dd>Les bois massifs sont sélectionnés planche par planche, en fonction de la pièce et de l’usage.</dd></div>
+            <div><dt>Assembler</dt><dd>Tenons, mortaises, queues d’aronde&nbsp;: des liaisons faites pour durer, et pour se réparer.</dd></div>
+            <div><dt>Finir</dt><dd>Ponçage progressif, huiles et cires, chants adoucis à la main pour un toucher que l’on a envie de retrouver.</dd></div>
+          </dl>
+        </div>
+      </section>
+    </div>
+
+    <section class="atelier" id="atelier" aria-labelledby="atelier-title">
+      <div class="bands" aria-hidden="true">
+        <p class="band-row">Sur mesure · Agencement · Restauration · Sur mesure · Agencement · Restauration ·</p>
+        <p class="band-row band-row--alt">Noyer · Chêne · Frêne · Merisier · Noyer · Chêne · Frêne · Merisier ·</p>
+      </div>
+      <div class="wrap">
+        <p class="kicker">02 · L’atelier</p>
+        <h2 class="split-title" id="atelier-title">Ce que fait l’atelier</h2>
+        <div class="services">
+          <article class="service">
+            <span class="service-num" aria-hidden="true">a</span>
+            <h3>Sur mesure</h3>
+            <p>Tables, bibliothèques, commodes, bureaux. Une pièce dessinée pour vos dimensions, vos usages et le bois que vous aimez.</p>
+            <ul>
+              <li>Plan coté avant fabrication</li>
+              <li>Choix de l’essence et de la finition</li>
+            </ul>
+          </article>
+          <article class="service">
+            <span class="service-num" aria-hidden="true">b</span>
+            <h3>Agencement</h3>
+            <p>Cuisines, dressings, placards sous pente, habillages d’escalier. Chaque recoin sert, même quand les murs ne sont pas d’équerre.</p>
+            <ul>
+              <li>Relevé précis sur place</li>
+              <li>Intégration des contraintes du lieu</li>
+            </ul>
+          </article>
+          <article class="service">
+            <span class="service-num" aria-hidden="true">c</span>
+            <h3>Restauration</h3>
+            <p>Meubles de famille, sièges, petites marqueteries. On consolide, on reprend les assemblages et on respecte la patine plutôt que de l’effacer.</p>
+            <ul>
+              <li>Diagnostic avant intervention</li>
+              <li>Interventions réversibles quand c’est possible</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="methode" id="methode" aria-labelledby="methode-title">
+      <div class="methode-inner">
+        <div class="methode-head">
+          <p class="kicker">03 · La méthode</p>
+          <h2 class="split-title" id="methode-title">En quatre temps, sans surprise.</h2>
+          <div class="methode-bar" aria-hidden="true"><i></i></div>
+        </div>
+        <ol class="steps">
+          <li class="step">
+            <span class="step-num" aria-hidden="true">01</span>
+            <h3>Visite</h3>
+            <p>On vient voir le lieu, la lumière, les contraintes. On prend les mesures et on écoute ce que la pièce doit vous apporter au quotidien.</p>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">02</span>
+            <h3>Plan</h3>
+            <p>Vous recevez un plan coté, une proposition d’essence et de finition, et un devis détaillé. On ajuste jusqu’à ce que tout soit clair.</p>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">03</span>
+            <h3>Fabrication</h3>
+            <p>Débit, usinage, assemblages, finitions&nbsp;: tout se fait à l’atelier. Vous êtes tenu informé à chaque étape importante.</p>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">04</span>
+            <h3>Pose</h3>
+            <p>Livraison et pose par les mains qui ont fabriqué la pièce. Derniers réglages, puis quelques conseils pour l’entretenir.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="pieces" id="pieces" aria-labelledby="pieces-title">
+      <div class="pieces-head">
+        <p class="kicker">04 · Pièces types</p>
+        <h2 class="split-title" id="pieces-title">Des pièces pensées pour durer</h2>
+        <p class="pieces-note">Visuels dessinés en code pour cette démonstration&nbsp;: ce sont des exemples de pièces, pas des réalisations.</p>
+      </div>
+      <div class="gallery-track">
+        <figure class="piece">
+          <svg viewBox="0 0 400 300" role="img" aria-label="Dessin d’une table de repas en noyer">
+            <ellipse cx="200" cy="262" rx="160" ry="9" fill="#2b1d14" opacity=".14"/>
+            <path d="M92 150 L82 258 L92 258 L106 150 Z" fill="url(#g-noyer-d)"/>
+            <path d="M310 150 L318 258 L308 258 L296 150 Z" fill="url(#g-noyer-d)"/>
+            <path d="M70 128 L330 128 L352 146 L48 146 Z" fill="url(#g-noyer)"/>
+            <path d="M70 128 L330 128 L352 146 L48 146 Z" fill="url(#grain)"/>
+            <rect x="48" y="146" width="304" height="12" fill="url(#g-noyer-d)"/>
+            <path d="M64 158 L52 262 L66 262 L82 158 Z" fill="url(#g-noyer)"/>
+            <path d="M336 158 L348 262 L334 262 L318 158 Z" fill="url(#g-noyer)"/>
+            <path d="M82 166 L318 166" stroke="#2c1a0f" stroke-width="6"/>
+          </svg>
+          <figcaption><span class="tag">Exemple de pièce</span><strong>Table de repas en noyer</strong><span>Plateau massif aux chants adoucis, piétement fuselé.</span></figcaption>
+        </figure>
+        <figure class="piece">
+          <svg viewBox="0 0 400 300" role="img" aria-label="Dessin d’une bibliothèque murale en chêne">
+            <ellipse cx="200" cy="270" rx="140" ry="7" fill="#2b1d14" opacity=".12"/>
+            <rect x="86" y="30" width="228" height="238" fill="url(#g-chene-d)"/>
+            <rect x="96" y="40" width="208" height="222" fill="#5a4330" opacity=".35"/>
+            <g fill="url(#g-chene)">
+              <rect x="86" y="30" width="228" height="10"/><rect x="86" y="94" width="228" height="8"/>
+              <rect x="86" y="156" width="228" height="8"/><rect x="86" y="218" width="228" height="8"/>
+              <rect x="86" y="260" width="228" height="10"/><rect x="198" y="40" width="6" height="220"/>
+            </g>
+            <g opacity=".85">
+              <rect x="104" y="58" width="12" height="36" fill="#7d6a58"/><rect x="118" y="52" width="10" height="42" fill="#a48e74"/>
+              <rect x="130" y="62" width="14" height="32" fill="#5a4a3c"/><rect x="212" y="70" width="40" height="24" fill="#8c7761"/>
+              <rect x="226" y="120" width="10" height="36" fill="#5a4a3c"/><rect x="238" y="114" width="12" height="42" fill="#a48e74"/>
+              <rect x="252" y="124" width="9" height="32" fill="#7d6a58"/><circle cx="140" cy="198" r="14" fill="#c9b49a"/>
+              <rect x="108" y="178" width="8" height="40" fill="#7d6a58"/><rect x="250" y="186" width="34" height="32" fill="#9c8670"/>
+            </g>
+            <rect x="86" y="30" width="228" height="10" fill="url(#grain)"/>
+          </svg>
+          <figcaption><span class="tag">Exemple de pièce</span><strong>Bibliothèque murale en chêne</strong><span>Montants et tablettes ajustés à l’alcôve, sans fixation visible.</span></figcaption>
+        </figure>
+        <figure class="piece">
+          <svg viewBox="0 0 400 300" role="img" aria-label="Dessin d’une commode ancienne restaurée">
+            <ellipse cx="200" cy="262" rx="140" ry="8" fill="#2b1d14" opacity=".14"/>
+            <rect x="72" y="92" width="256" height="14" rx="3" fill="url(#g-noyer)"/>
+            <rect x="72" y="92" width="256" height="14" rx="3" fill="url(#grain)"/>
+            <rect x="82" y="106" width="236" height="136" fill="url(#g-noyer-d)"/>
+            <g fill="url(#g-noyer)" stroke="#2a180d" stroke-width="1.5">
+              <rect x="94" y="116" width="212" height="34" rx="2"/><rect x="94" y="158" width="212" height="34" rx="2"/><rect x="94" y="200" width="212" height="34" rx="2"/>
+            </g>
+            <g fill="url(#grain)"><rect x="94" y="116" width="212" height="34"/><rect x="94" y="158" width="212" height="34"/><rect x="94" y="200" width="212" height="34"/></g>
+            <g fill="#c9a46a"><circle cx="150" cy="133" r="4"/><circle cx="250" cy="133" r="4"/><circle cx="150" cy="175" r="4"/><circle cx="250" cy="175" r="4"/><circle cx="150" cy="217" r="4"/><circle cx="250" cy="217" r="4"/></g>
+            <path d="M86 242 L92 262 L100 262 L102 242 Z M314 242 L308 262 L300 262 L298 242 Z" fill="url(#g-noyer-d)"/>
+          </svg>
+          <figcaption><span class="tag">Exemple de pièce</span><strong>Commode restaurée</strong><span>Assemblages repris, placage recollé, patine conservée.</span></figcaption>
+        </figure>
+        <figure class="piece">
+          <svg viewBox="0 0 400 300" role="img" aria-label="Dessin d’un banc d’entrée en frêne">
+            <ellipse cx="200" cy="258" rx="165" ry="8" fill="#2b1d14" opacity=".12"/>
+            <rect x="44" y="150" width="312" height="18" rx="4" fill="url(#g-frene)"/>
+            <rect x="44" y="150" width="312" height="18" rx="4" fill="url(#grain)"/>
+            <rect x="62" y="168" width="18" height="88" fill="#c2a47a"/><rect x="320" y="168" width="18" height="88" fill="#c2a47a"/>
+            <rect x="80" y="226" width="240" height="8" fill="#b8996e"/>
+            <g fill="#d6bf98"><rect x="100" y="234" width="64" height="20" rx="2"/><rect x="236" y="236" width="56" height="18" rx="2"/></g>
+          </svg>
+          <figcaption><span class="tag">Exemple de pièce</span><strong>Banc d’entrée en frêne</strong><span>Assise d’un seul tenant, étagère basse pour les chaussures.</span></figcaption>
+        </figure>
+        <figure class="piece">
+          <svg viewBox="0 0 400 300" role="img" aria-label="Dessin d’un dressing aménagé sous une pente de toit">
+            <path d="M50 272 L50 176 L190 54 L350 54 L350 272 Z" fill="url(#g-chene)"/>
+            <path d="M50 272 L50 176 L190 54 L350 54 L350 272 Z" fill="url(#grain)"/>
+            <path d="M50 272 L50 176 L190 54 L350 54 L350 272 Z" fill="none" stroke="#7f5c37" stroke-width="3"/>
+            <g stroke="#8d6a42" stroke-width="2"><path d="M136 101 L136 272"/><path d="M243 54 L243 272"/></g>
+            <g fill="#4a2e1b"><rect x="124" y="170" width="4" height="34" rx="2"/><rect x="146" y="170" width="4" height="34" rx="2"/><rect x="231" y="170" width="4" height="34" rx="2"/><rect x="253" y="170" width="4" height="34" rx="2"/></g>
+            <path d="M50 236 L350 236" stroke="#8d6a42" stroke-width="2"/>
+          </svg>
+          <figcaption><span class="tag">Exemple de pièce</span><strong>Dressing sous pente</strong><span>Portes suivant l’angle du toit, tiroirs bas sur coulisses.</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="devis" id="devis" aria-labelledby="devis-title">
+      <div class="wrap devis-grid">
+        <div class="devis-intro">
+          <p class="kicker">05 · Votre projet</p>
+          <h2 class="split-title" id="devis-title">Demander un devis</h2>
+          <p>Décrivez votre projet en quelques lignes. Des dimensions approximatives suffisent pour commencer&nbsp;: tout sera mesuré précisément lors de la visite.</p>
+        </div>
+        <!-- Démo : aucun champ n'a d'attribut name, rien ne quitte la page. -->
+        <form class="devis-form" action="#devis-demo" method="get">
+          <div class="field">
+            <label for="f-type">Type de projet</label>
+            <select id="f-type" required>
+              <option value="">Choisir…</option>
+              <option>Meuble sur mesure</option>
+              <option>Agencement</option>
+              <option>Restauration</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-piece">Pièce concernée</label>
+            <select id="f-piece">
+              <option value="">Choisir…</option>
+              <option>Cuisine</option><option>Salon ou séjour</option><option>Chambre</option>
+              <option>Entrée</option><option>Bureau</option><option>Combles</option><option>Autre</option>
+            </select>
+          </div>
+          <div class="field field-wide">
+            <label for="f-dim">Dimensions approximatives <span class="hint">(facultatif)</span></label>
+            <input id="f-dim" type="text" placeholder="Par exemple 240 × 90 × 75 cm" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="f-nom">Nom</label>
+            <input id="f-nom" type="text" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="f-mail">E-mail</label>
+            <input id="f-mail" type="email" required autocomplete="email">
+          </div>
+          <div class="field field-wide">
+            <label for="f-msg">Message</label>
+            <textarea id="f-msg" rows="4" placeholder="L’usage, l’essence souhaitée, une contrainte particulière…"></textarea>
+          </div>
+          <div class="field-wide form-actions">
+            <button class="btn btn-light" type="submit">Envoyer la demande</button>
+            <p class="form-legal">Ceci est une démonstration&nbsp;: aucune donnée n’est envoyée ni enregistrée.</p>
+          </div>
+          <div class="form-status" id="devis-demo" role="status" tabindex="-1">
+            <p><strong>Démonstration&nbsp;: rien n’a été envoyé.</strong></p>
+            <p>Chez un vrai client, cette demande créerait automatiquement une fiche dans son outil de suivi, préparerait un brouillon de devis à partir des informations saisies et proposerait par e-mail un rendez-vous pour la visite.</p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-grid">
+      <p class="footer-brand">Atelier Veine</p>
+      <p>Concept de démonstration réalisé par Axion Studio, entreprise fictive. Les visuels sont dessinés en code&nbsp;; aucun avis, chiffre ou réalisation présenté ici n’est réel.</p>
+      <p><a href="https://axionstudio.fr/realisations/">Voir les réalisations d’Axion Studio</a></p>
+    </div>
+  </footer>
+
+  <script src="../_lib/gsap.min.js"></script>
+  <script src="../_lib/ScrollTrigger.min.js"></script>
+  <script src="../_lib/SplitText.min.js"></script>
+  <script src="../_lib/lenis.min.js"></script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

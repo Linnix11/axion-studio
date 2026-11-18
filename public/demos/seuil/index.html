@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Seuil, maisons de caractère (concept de démonstration)</title>
+  <meta name="description" content="Concept de démonstration réalisé par Axion Studio : Seuil, agence immobilière fictive spécialisée dans les maisons de caractère.">
+  <meta name="theme-color" content="#ece6db">
+  <script>
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('rm');
+    })();
+  </script>
+  <link rel="preload" href="atkinson-hyperlegible-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../_lib/lenis.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="../_lib/gsap.min.js" defer></script>
+  <script src="../_lib/ScrollTrigger.min.js" defer></script>
+  <script src="../_lib/SplitText.min.js" defer></script>
+  <script src="../_lib/lenis.min.js" defer></script>
+  <script type="module" src="main.js"></script>
+</head>
+<body>
+  <a class="skip" href="#contenu">Aller au contenu</a>
+
+  <div class="loader" aria-hidden="true">
+    <div class="loader__inner">
+      <span class="loader__brand">Seuil</span>
+      <span class="loader__count"><span class="loader__num">0</span><span class="loader__pct">%</span></span>
+    </div>
+    <div class="loader__bar"><span></span></div>
+  </div>
+
+  <p class="demo-ribbon">Concept de démonstration&nbsp;: Seuil est une entreprise fictive.</p>
+
+  <header class="top">
+    <a class="top__logo" href="#accueil" aria-label="Seuil, retour en haut de page">
+      <svg viewBox="0 0 28 32" width="22" height="25" aria-hidden="true"><path d="M3 31V13a11 11 0 0 1 22 0v18" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M0 31h28" stroke="currentColor" stroke-width="2.4"/></svg>
+      <span>Seuil</span>
+    </a>
+    <nav aria-label="Navigation principale">
+      <ul class="top__nav">
+        <li><a href="#approche">Approche</a></li>
+        <li><a href="#biens">Biens</a></li>
+        <li><a href="#vendre">Vendre</a></li>
+        <li><a class="top__cta" href="#demande">Demander une visite</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenu">
+    <!-- Accueil -->
+    <section class="hero" id="accueil" aria-labelledby="hero-titre">
+      <div class="hero__light" aria-hidden="true"></div>
+      <div class="hero__portal" aria-hidden="true"><span class="hero__glow"></span></div>
+      <div class="hero__stage">
+        <p class="hero__kicker">Agence indépendante &middot; maisons de caractère</p>
+        <h1 id="hero-titre" class="hero__title">
+          <span class="hw hw--1"><span class="hw__in">Passer</span></span>
+          <span class="hw hw--2"><span class="hw__in">le</span></span>
+          <span class="hw hw--3"><span class="hw__in">seuil</span></span>
+        </h1>
+        <p class="hero__lede">Longères, maisons de maître, anciens ateliers&nbsp;: nous accompagnons peu de biens à la fois, et chacun jusqu’au bout.</p>
+      </div>
+      <p class="hero__scroll" aria-hidden="true"><span>Défiler</span><i></i></p>
+    </section>
+
+    <!-- Approche -->
+    <section class="approach" id="approche" aria-labelledby="approche-titre">
+      <p class="eyebrow">01 &middot; L’approche</p>
+      <h2 id="approche-titre" class="approach__statement">Peu de biens, bien suivis. Une maison ancienne se raconte lentement&nbsp;: ses murs, sa lumière du matin, ce qu’elle a traversé. Nous prenons le temps de la comprendre avant de la montrer.</h2>
+      <ul class="pledges">
+        <li class="pledge">
+          <span class="pledge__num"><span class="count" data-to="12">12</span></span>
+          <span class="pledge__label">biens confiés au plus en même temps, pour garder le temps de chacun.</span>
+        </li>
+        <li class="pledge">
+          <span class="pledge__num"><span class="count" data-to="1">1</span></span>
+          <span class="pledge__label">seul interlocuteur, du premier rendez-vous à la signature.</span>
+        </li>
+        <li class="pledge">
+          <span class="pledge__num"><span class="count" data-to="48">48</span>&nbsp;h</span>
+          <span class="pledge__label">au plus pour vous transmettre le compte rendu d’une visite.</span>
+        </li>
+      </ul>
+      <p class="note">Engagements de l’agence fictive, donnés pour illustrer la démonstration.</p>
+    </section>
+
+    <!-- Scène 3D -->
+    <section class="build" id="maison" aria-labelledby="build-titre">
+      <div class="build__sticky">
+        <div class="build__canvas" aria-hidden="true">
+          <canvas class="build__gl"></canvas>
+          <svg class="build__fallback" viewBox="0 0 400 300" role="presentation">
+            <rect x="0" y="240" width="400" height="60" fill="#d8cfbf"/>
+            <path d="M80 240V140h240v100z" fill="#efe8dc" stroke="#4f5b45" stroke-width="2"/>
+            <path d="M64 142 200 70l136 72z" fill="#68736a" stroke="#4f5b45" stroke-width="2"/>
+            <rect x="268" y="74" width="20" height="40" fill="#b9ae9c"/>
+            <rect x="186" y="180" width="28" height="60" fill="#4f5b45"/>
+            <rect x="112" y="168" width="32" height="40" fill="#f3d39c"/>
+            <rect x="256" y="168" width="32" height="40" fill="#f3d39c"/>
+          </svg>
+        </div>
+        <div class="build__text">
+          <p class="eyebrow">02 &middot; Comprendre une maison</p>
+          <h2 id="build-titre" class="build__title">Pièce par pièce</h2>
+          <ol class="build__steps">
+            <li class="step is-on"><strong>Les fondations</strong> Le terrain, l’orientation, ce qui a été fait et quand.</li>
+            <li class="step"><strong>Les murs</strong> Pierre, chaux, épaisseurs&nbsp;: ce qui fait le caractère et ce qui demande de l’entretien.</li>
+            <li class="step"><strong>Le toit</strong> Charpente, couverture, combles&nbsp;: nous posons les questions qu’un acheteur posera.</li>
+            <li class="step"><strong>La lumière</strong> Les ouvertures, la course du soleil, l’heure où chaque pièce est la plus belle. C’est à cette heure-là que nous faisons visiter.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Biens -->
+    <section class="homes" id="biens" aria-labelledby="biens-titre">
+      <div class="homes__head">
+        <p class="eyebrow">03 &middot; En ce moment</p>
+        <h2 id="biens-titre" class="h2">Trois maisons, trois histoires</h2>
+        <p class="homes__intro">Les biens ci-dessous sont inventés pour la démonstration. Aucun n’est à vendre.</p>
+      </div>
+      <ul class="cards">
+        <li class="card">
+          <article>
+            <div class="card__visual">
+              <span class="badge">Bien fictif</span>
+              <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+                <defs>
+                  <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6e7cc"/><stop offset="1" stop-color="#e9e3d6"/></linearGradient>
+                </defs>
+                <rect width="400" height="300" fill="url(#sky1)"/>
+                <g class="px" data-depth="-0.6"><circle cx="318" cy="78" r="30" fill="#f5d59e"/></g>
+                <g class="px" data-depth="0.3"><path d="M0 214q60-26 130-12t150-6 120 4v100H0z" fill="#c9cfbb"/></g>
+                <g class="px" data-depth="0.8">
+                  <path d="M40 236V170h300v66z" fill="#ddd2bf"/>
+                  <path d="M28 172 80 112h220l52 60z" fill="#5f6b60"/>
+                  <path d="M120 136h28v-16l14-10 14 10v16z" fill="#e8dfcf"/><rect x="150" y="124" width="12" height="14" fill="#f2cf93"/>
+                  <path d="M228 136h28v-16l14-10 14 10v16z" fill="#e8dfcf"/><rect x="258" y="124" width="12" height="14" fill="#f2cf93"/>
+                  <rect x="70" y="190" width="24" height="28" fill="#f2cf93"/><rect x="176" y="186" width="30" height="50" fill="#4f5b45"/>
+                  <rect x="280" y="190" width="24" height="28" fill="#f2cf93"/>
+                  <path d="M40 236h300" stroke="#a89d8a" stroke-width="2"/>
+                  <path d="M0 236h400v64H0z" fill="#b8bfa6"/>
+                </g>
+              </svg>
+            </div>
+            <div class="card__body">
+              <h3 class="card__title">La longère des Aulnes</h3>
+              <p class="card__meta">Longère en pierre &middot; 6 pièces &middot; jardin clos</p>
+              <p>Un corps de ferme allongé, orienté plein sud, avec deux lucarnes à la capucine et une grange attenante restée brute.</p>
+            </div>
+          </article>
+        </li>
+        <li class="card">
+          <article>
+            <div class="card__visual">
+              <span class="badge">Bien fictif</span>
+              <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+                <defs>
+                  <linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e5e9dc"/><stop offset="1" stop-color="#efe8da"/></linearGradient>
+                </defs>
+                <rect width="400" height="300" fill="url(#sky2)"/>
+                <g class="px" data-depth="-0.6"><circle cx="84" cy="70" r="24" fill="#f3d8a8"/></g>
+                <g class="px" data-depth="0.3"><ellipse cx="342" cy="200" rx="46" ry="60" fill="#8e9a80"/><ellipse cx="60" cy="210" rx="40" ry="50" fill="#a3ad93"/></g>
+                <g class="px" data-depth="0.8">
+                  <rect x="110" y="120" width="180" height="120" fill="#ece3d3"/>
+                  <path d="M100 122 140 84h120l40 38z" fill="#646d68"/>
+                  <rect x="186" y="64" width="12" height="26" fill="#bfb3a0"/>
+                  <g fill="#f2cf93">
+                    <rect x="128" y="138" width="20" height="30"/><rect x="164" y="138" width="20" height="30"/><rect x="216" y="138" width="20" height="30"/><rect x="252" y="138" width="20" height="30"/>
+                    <rect x="128" y="186" width="20" height="30"/><rect x="252" y="186" width="20" height="30"/>
+                  </g>
+                  <path d="M186 240v-46a14 14 0 0 1 28 0v46z" fill="#4f5b45"/>
+                  <path d="M0 240h400v60H0z" fill="#c4c9b4"/>
+                  <path d="M172 240h56l10 60h-76z" fill="#ddd4c2"/>
+                </g>
+              </svg>
+            </div>
+            <div class="card__body">
+              <h3 class="card__title">La maison de l’Écluse</h3>
+              <p class="card__meta">Maison de maître &middot; 8 pièces &middot; parc arboré</p>
+              <p>Une façade symétrique en pierre de taille, un escalier d’origine et des pièces de réception qui reçoivent le soleil dès le matin.</p>
+            </div>
+          </article>
+        </li>
+        <li class="card">
+          <article>
+            <div class="card__visual">
+              <span class="badge">Bien fictif</span>
+              <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+                <defs>
+                  <linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1e2cf"/><stop offset="1" stop-color="#e6e1d6"/></linearGradient>
+                </defs>
+                <rect width="400" height="300" fill="url(#sky3)"/>
+                <g class="px" data-depth="-0.6"><circle cx="300" cy="64" r="22" fill="#f4d29a"/></g>
+                <g class="px" data-depth="0.8">
+                  <path d="M60 236V130l50-40v40l50-40v40l50-40v40l50-40v40l50-40v146z" fill="#d9cfbd"/>
+                  <g fill="#cfdccc" opacity=".9"><path d="M110 90v40l-50 0z"/><path d="M160 90v40l-50 0z"/><path d="M210 90v40l-50 0z"/><path d="M260 90v40l-50 0z"/><path d="M310 90v40l-50 0z"/></g>
+                  <rect x="90" y="150" width="200" height="70" fill="#f2cf93"/>
+                  <path d="M90 150h200v70H90zM130 150v70M170 150v70M210 150v70M250 150v70M90 185h200" fill="none" stroke="#4f5b45" stroke-width="3"/>
+                  <rect x="304" y="176" width="24" height="60" fill="#4f5b45"/>
+                  <path d="M0 236h400v64H0z" fill="#bdbfae"/>
+                </g>
+              </svg>
+            </div>
+            <div class="card__body">
+              <h3 class="card__title">L’atelier sous verrière</h3>
+              <p class="card__meta">Ancien atelier &middot; 4 pièces &middot; cour intérieure</p>
+              <p>Une toiture en sheds, une grande verrière d’angle et un volume ouvert de plus de cinq mètres sous plafond.</p>
+            </div>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Mots qui glissent -->
+    <section class="drift" aria-hidden="true">
+      <p class="drift__line drift__line--a">Pierre &middot; chaux &middot; lumière</p>
+      <p class="drift__line drift__line--b">Ouvrir la porte</p>
+      <p class="drift__line drift__line--c">Le temps qu’il faut</p>
+    </section>
+
+    <!-- Vendre -->
+    <section class="sell" id="vendre" aria-labelledby="vendre-titre">
+      <div class="sell__head">
+        <p class="eyebrow">04 &middot; Vendre avec Seuil</p>
+        <h2 id="vendre-titre" class="h2">Une vente qui ressemble à votre maison</h2>
+      </div>
+      <ol class="sell__steps">
+        <li class="sstep">
+          <span class="sstep__n">I</span>
+          <h3>L’estimation</h3>
+          <p>Une visite complète, sans se presser, puis une estimation écrite et argumentée&nbsp;: les atouts, les points à anticiper, les ventes comparables du secteur.</p>
+        </li>
+        <li class="sstep">
+          <span class="sstep__n">II</span>
+          <h3>Les visites</h3>
+          <p>Des acheteurs qualifiés avant de venir, des créneaux choisis à la bonne heure, et toujours la même personne pour ouvrir la porte.</p>
+        </li>
+        <li class="sstep">
+          <span class="sstep__n">III</span>
+          <h3>Le suivi</h3>
+          <p>Après chaque visite, un compte rendu clair&nbsp;: ce qui a plu, ce qui a freiné, la suite. Jusqu’à la signature chez le notaire.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- Demande -->
+    <section class="ask" id="demande" aria-labelledby="demande-titre">
+      <div class="ask__intro">
+        <p class="eyebrow">05 &middot; Prendre rendez-vous</p>
+        <h2 id="demande-titre" class="h2">Demander une visite ou une estimation</h2>
+        <p>Dites-nous ce que vous cherchez et quand vous êtes disponible. Nous revenons vers vous avec un créneau précis.</p>
+        <p class="ask__demo">Démonstration&nbsp;: ce formulaire n’envoie rien.</p>
+      </div>
+      <form class="form" id="form" method="dialog" novalidate>
+        <fieldset class="field field--choice">
+          <legend>Je souhaite</legend>
+          <label class="pill"><input type="radio" name="motif" value="visiter" checked> <span>visiter un bien</span></label>
+          <label class="pill"><input type="radio" name="motif" value="estimer"> <span>faire estimer ma maison</span></label>
+        </fieldset>
+
+        <div class="field">
+          <label for="bien">Bien concerné</label>
+          <select id="bien" name="bien">
+            <option value="aulnes">La longère des Aulnes (bien fictif)</option>
+            <option value="ecluse">La maison de l’Écluse (bien fictif)</option>
+            <option value="atelier">L’atelier sous verrière (bien fictif)</option>
+            <option value="mien">Ma propre maison, à estimer</option>
+          </select>
+        </div>
+
+        <fieldset class="field field--choice">
+          <legend>Créneaux préférés <span class="hint">(plusieurs choix possibles)</span></legend>
+          <label class="pill"><input type="checkbox" name="creneau" value="matin"> <span>en semaine, le matin</span></label>
+          <label class="pill"><input type="checkbox" name="creneau" value="midi"> <span>en semaine, entre midi et deux</span></label>
+          <label class="pill"><input type="checkbox" name="creneau" value="soir"> <span>en semaine, en fin de journée</span></label>
+          <label class="pill"><input type="checkbox" name="creneau" value="samedi"> <span>le samedi matin</span></label>
+        </fieldset>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="nom">Nom</label>
+            <input id="nom" name="nom" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+        </div>
+
+        <button class="btn" type="submit"><span>Envoyer ma demande</span></button>
+        <div class="form__result" role="status" aria-live="polite"></div>
+        <noscript><p class="form__result is-on">Démonstration&nbsp;: ce formulaire n’envoie rien. Chez un vrai client, la demande serait classée dans ses contacts, un créneau serait proposé depuis son agenda et une relance partirait en l’absence de réponse.</p></noscript>
+      </form>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p class="foot__word" aria-hidden="true">Seuil</p>
+    <div class="foot__row">
+      <p>Concept de démonstration réalisé par Axion Studio, entreprise fictive.</p>
+      <p><a href="https://axionstudio.fr/realisations/">Voir les autres réalisations d’Axion Studio</a></p>
+    </div>
+  </footer>
+</body>
+</html>
