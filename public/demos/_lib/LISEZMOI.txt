@@ -1,0 +1,2 @@
+Bibliothèques des démos, copiées depuis node_modules (versions figées dans package.json).
+three.min.js : three 0.187.0 minifié en un seul fichier (vite build en mode lib d'un fichier « export * from 'three' »).

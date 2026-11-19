@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="fr" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Ampère &amp; Fils · Concept de démonstration Axion Studio</title>
+  <meta name="description" content="Site vitrine de démonstration pour un électricien fictif, réalisé par Axion Studio.">
+  <meta name="theme-color" content="#0b0e13">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <script>document.documentElement.className = 'js';</script>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="main.js"></script>
+</head>
+<body>
+  <a class="skip" href="#contenu">Aller au contenu</a>
+
+  <header class="top">
+    <div class="wrap top__in">
+      <a class="top__brand" href="#accueil"><img src="logo.svg" alt="" width="28" height="28">Ampère <span>&amp;</span> Fils</a>
+      <nav class="top__nav" aria-label="Navigation principale">
+        <a href="#prestations">Prestations</a>
+        <a href="#securite">Sécurité</a>
+        <a href="#bornes">Bornes</a>
+        <a href="#chantier">Chantier</a>
+        <a href="#faq">Questions</a>
+        <a class="btn btn--sm" href="#devis">Demander un devis</a>
+      </nav>
+    </div>
+  </header>
+
+  <p class="demo-flag">Démo · entreprise fictive</p>
+
+  <main id="contenu">
+    <!-- Accueil -->
+    <section class="hero" id="accueil" aria-labelledby="hero-titre">
+      <svg class="hero__circuit" viewBox="0 0 600 420" aria-hidden="true" focusable="false">
+        <g class="trace" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path pathLength="1" d="M0 80H140L180 120H330L370 80H600"/>
+          <path pathLength="1" d="M0 210H90L130 170H250L290 210H420L460 250H600"/>
+          <path pathLength="1" d="M60 420V330L100 290H220L260 330H380L420 290H520V0"/>
+          <path pathLength="1" d="M330 120V170L370 210H420"/>
+          <path pathLength="1" d="M180 120V40H300"/>
+        </g>
+        <g class="nodes">
+          <circle cx="140" cy="80" r="6"/><circle cx="330" cy="120" r="6"/><circle cx="250" cy="170" r="6"/>
+          <circle cx="420" cy="210" r="6"/><circle cx="220" cy="290" r="6"/><circle cx="520" cy="290" r="6"/>
+          <circle cx="300" cy="40" r="6"/>
+        </g>
+      </svg>
+      <div class="wrap hero__in">
+        <p class="kicker">Électricien · rénovation, mise aux normes, dépannage</p>
+        <h1 id="hero-titre">Une installation électrique sûre, expliquée simplement.</h1>
+        <p class="lead">Tableau vieillissant, disjoncteur qui saute, borne de recharge à installer&#8239;? Envoyez deux photos de votre tableau&nbsp;: on vous répond avec une première estimation et un créneau de visite.</p>
+        <div class="hero__actions">
+          <a class="btn" href="#devis">Demander un devis</a>
+          <a class="btn btn--ghost" href="#securite">Votre installation est-elle sûre&#8239;?</a>
+        </div>
+        <ul class="facts" aria-label="En bref (exemples)">
+          <li><strong>Zone</strong> communes autour de l’atelier <em>(exemple)</em></li>
+          <li><strong>Dépannage</strong> rappel dans la journée ouvrée <em>(exemple)</em></li>
+          <li><strong>Devis</strong> détaillé poste par poste, sans engagement</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Prestations -->
+    <section class="section" id="prestations" aria-labelledby="presta-titre">
+      <div class="wrap">
+        <p class="kicker">Prestations</p>
+        <h2 id="presta-titre">Du simple dépannage à la rénovation complète</h2>
+        <ul class="cards">
+          <li class="card reveal">
+            <svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M6 4h20v24H6zM10 9h12M10 14h12M10 19h7"/></svg>
+            <h3>Mise aux normes</h3>
+            <p>Prise de terre, protections différentielles, liaisons dans la salle de bains&nbsp;: on remet l’installation au niveau des règles actuelles, pièce par pièce si besoin.</p>
+          </li>
+          <li class="card reveal">
+            <svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 28V12l12-8 12 8v16H4zM12 28v-9h8v9"/></svg>
+            <h3>Rénovation électrique</h3>
+            <p>Logement ancien, travaux de rénovation, nouvelle cuisine&nbsp;: nouveaux circuits, prises et éclairages placés là où vous en avez vraiment besoin.</p>
+          </li>
+          <li class="card reveal">
+            <svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M5 5h22v22H5zM10 10v5M14 10v5M18 10v5M22 10v5M10 21h12"/></svg>
+            <h3>Tableau électrique</h3>
+            <p>Remplacement d’un tableau à fusibles, ajout de circuits, repérage clair de chaque disjoncteur pour savoir quoi couper le jour où il le faut.</p>
+          </li>
+          <li class="card reveal">
+            <svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M18 3 8 18h8l-2 11 10-15h-8z"/></svg>
+            <h3>Dépannage</h3>
+            <p>Panne de courant partielle, disjoncteur qui ne se réarme plus, prise qui ne fonctionne plus&nbsp;: recherche de la cause, pas seulement du symptôme.</p>
+          </li>
+          <li class="card reveal">
+            <svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M8 4h12v24H8zM20 10h3a2 2 0 0 1 2 2v9a2 2 0 0 0 4 0V8M12 9h4"/></svg>
+            <h3>Bornes de recharge</h3>
+            <p>Étude de la puissance disponible, circuit dédié depuis le tableau, pose et mise en service d’une borne pour véhicule électrique.</p>
+          </li>
+          <li class="card reveal">
+            <svg class="ico" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 4a8 8 0 0 0-5 14v4h10v-4a8 8 0 0 0-5-14zM12 26h8M13 29h6"/></svg>
+            <h3>Domotique simple</h3>
+            <p>Volets, chauffage, éclairages programmés&nbsp;: quelques commandes utiles, faciles à reprendre en main, sans abonnement imposé.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Sécurité -->
+    <section class="section section--alert" id="securite" aria-labelledby="secu-titre">
+      <div class="wrap split">
+        <div>
+          <p class="kicker">Sécurité</p>
+          <h2 id="secu-titre">Votre installation est-elle sûre&#8239;?</h2>
+          <p>Certains signes doivent faire appeler un électricien. Aucun ne se règle en démontant une prise ou un tableau soi-même&nbsp;: l’électricité peut blesser gravement, même sur une installation «&nbsp;coupée&nbsp;» par erreur.</p>
+          <div class="urgent reveal">
+            <h3>Odeur de brûlé, fumée, étincelles&#8239;?</h3>
+            <p>Si vous pouvez le faire sans danger, coupez le courant au disjoncteur général, ne touchez à rien et appelez un électricien. En cas de feu ou de personne blessée, appelez le&nbsp;18 ou le&nbsp;112.</p>
+          </div>
+        </div>
+        <ul class="signs">
+          <li class="reveal"><h3>Un disjoncteur qui saute souvent</h3><p>Il signale un défaut ou un circuit surchargé. Le réarmer en boucle ne règle rien&nbsp;: notez ce qui fonctionnait au moment de la coupure, cela aide au diagnostic.</p></li>
+          <li class="reveal"><h3>Une prise ou un interrupteur qui chauffe</h3><p>Plastique tiède ou jauni, traces noires, odeur de chaud&nbsp;: débranchez ce qui y est raccordé si vous pouvez le faire sans toucher de partie abîmée, et n’utilisez plus cette prise.</p></li>
+          <li class="reveal"><h3>Des grésillements ou des lumières qui vacillent</h3><p>Un bruit dans un interrupteur, une prise ou le tableau, ou un éclairage qui baisse quand un appareil démarre, peut révéler une connexion desserrée.</p></li>
+          <li class="reveal"><h3>Des fils visibles, des prises qui bougent</h3><p>Prise descellée du mur, gaine abîmée, boîte sans couvercle&nbsp;: à protéger et à faire réparer, surtout si des enfants passent par là.</p></li>
+          <li class="reveal"><h3>Une installation ancienne</h3><p>Fusibles en porcelaine, prises sans terre, pas de protection différentielle&nbsp;: rien n’a lâché, mais l’installation ne protège plus comme aujourd’hui. Un contrôle permet de savoir quoi faire en priorité.</p></li>
+          <li class="reveal"><h3>Électricité et humidité</h3><p>Prise près d’un point d’eau, appareil qui «&nbsp;picote&nbsp;» au toucher, infiltration près d’un tableau&nbsp;: ne touchez pas l’appareil et faites vérifier rapidement.</p></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Bornes -->
+    <section class="section" id="bornes" aria-labelledby="bornes-titre">
+      <div class="wrap split">
+        <div>
+          <p class="kicker">Véhicule électrique</p>
+          <h2 id="bornes-titre">Une borne de recharge, sans mauvaise surprise</h2>
+          <p>Recharger sa voiture chaque nuit, c’est un appareil puissant qui fonctionne des heures. Avant de choisir une borne, on regarde ce que votre installation peut accepter.</p>
+          <p class="note">Au-delà de 3,7&nbsp;kW, une borne doit être installée par un électricien qualifié IRVE&nbsp;: demandez-lui sa qualification. Des aides peuvent exister selon votre situation&nbsp;; vérifiez-les sur les sites officiels avant de signer.</p>
+        </div>
+        <ol class="checklist">
+          <li class="reveal"><strong>La puissance disponible.</strong> Votre abonnement et vos usages actuels suffisent-ils, ou faut-il programmer la recharge aux heures creuses&#8239;?</li>
+          <li class="reveal"><strong>Le trajet du câble.</strong> Distance entre le tableau et la place de stationnement, passages de murs, protection du câble.</li>
+          <li class="reveal"><strong>Un circuit dédié.</strong> La borne a sa propre ligne et ses propres protections au tableau, jamais une rallonge.</li>
+          <li class="reveal"><strong>Prise renforcée ou borne murale.</strong> Selon vos trajets quotidiens, l’une ou l’autre peut suffire&nbsp;: on vous explique la différence.</li>
+          <li class="reveal"><strong>En copropriété.</strong> Parlez-en au syndic avant les travaux&nbsp;: le parking et les parties communes ont leurs propres démarches.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Exemples -->
+    <section class="section section--tint" aria-labelledby="ex-titre">
+      <div class="wrap">
+        <p class="kicker">Exemples de chantiers</p>
+        <h2 id="ex-titre">À quoi ressemble un travail bien fait</h2>
+        <ul class="gallery">
+          <li class="reveal">
+            <svg viewBox="0 0 240 160" aria-hidden="true">
+              <rect x="50" y="18" width="140" height="124" rx="6" class="g-box"/>
+              <g class="g-line"><path d="M62 52h116M62 92h116"/></g>
+              <g class="g-acc"><rect x="66" y="30" width="12" height="18" rx="2"/><rect x="84" y="30" width="12" height="18" rx="2"/><rect x="102" y="30" width="12" height="18" rx="2"/><rect x="120" y="30" width="12" height="18" rx="2"/><rect x="66" y="70" width="12" height="18" rx="2"/><rect x="84" y="70" width="12" height="18" rx="2"/><rect x="102" y="70" width="12" height="18" rx="2"/></g>
+              <g class="g-tag"><rect x="66" y="104" width="30" height="8"/><rect x="102" y="104" width="44" height="8"/><rect x="66" y="118" width="54" height="8"/></g>
+            </svg>
+            <p><strong>Tableau remplacé et repéré</strong> <span>Exemple, dessin</span></p>
+          </li>
+          <li class="reveal">
+            <svg viewBox="0 0 240 160" aria-hidden="true">
+              <path class="g-line" d="M20 140h200M30 140V40h70v100"/>
+              <rect x="146" y="48" width="38" height="56" rx="8" class="g-box"/>
+              <circle class="g-acc" cx="165" cy="66" r="7"/>
+              <path class="g-acc-s" d="M100 70h46M165 104v20c0 10 10 10 20 10h20"/>
+            </svg>
+            <p><strong>Borne murale au garage</strong> <span>Exemple, dessin</span></p>
+          </li>
+          <li class="reveal">
+            <svg viewBox="0 0 240 160" aria-hidden="true">
+              <path class="g-line" d="M20 30h200M20 140h200"/>
+              <rect x="40" y="70" width="44" height="44" rx="8" class="g-box"/><rect x="98" y="70" width="44" height="44" rx="8" class="g-box"/><rect x="156" y="70" width="44" height="44" rx="8" class="g-box"/>
+              <g class="g-acc"><circle cx="56" cy="92" r="3"/><circle cx="68" cy="92" r="3"/><circle cx="114" cy="92" r="3"/><circle cx="126" cy="92" r="3"/><circle cx="172" cy="92" r="3"/><circle cx="184" cy="92" r="3"/></g>
+              <path class="g-acc-s" d="M62 70V30M120 70V30M178 70V30"/>
+            </svg>
+            <p><strong>Prises de cuisine sur circuits dédiés</strong> <span>Exemple, dessin</span></p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Chantier -->
+    <section class="section" id="chantier" aria-labelledby="chantier-titre">
+      <div class="wrap">
+        <p class="kicker">Méthode</p>
+        <h2 id="chantier-titre">Comment se passe un chantier</h2>
+        <ol class="steps">
+          <li class="reveal"><h3>Votre demande</h3><p>Quelques lignes et des photos du tableau suffisent pour comprendre la situation et préparer la visite.</p></li>
+          <li class="reveal"><h3>La visite</h3><p>On contrôle le tableau, la terre et les circuits concernés, et on vous dit ce qui est urgent et ce qui peut attendre.</p></li>
+          <li class="reveal"><h3>Le devis</h3><p>Chaque poste est détaillé&nbsp;: matériel, main-d’œuvre, durée prévue, et à quel moment le courant sera coupé.</p></li>
+          <li class="reveal"><h3>Les travaux</h3><p>Sols et meubles protégés, coupures annoncées et aussi courtes que possible, chantier rangé chaque soir.</p></li>
+          <li class="reveal"><h3>Les essais et la remise</h3><p>Chaque circuit est testé devant vous, le tableau est repéré, et on vous laisse le schéma de l’installation.</p></li>
+        </ol>
+        <p class="note">Assurance décennale&nbsp;: attestation fournie avec chaque devis <em>(exemple de mention, entreprise fictive)</em>.</p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section section--tint" id="faq" aria-labelledby="faq-titre">
+      <div class="wrap narrow">
+        <p class="kicker">Questions fréquentes</p>
+        <h2 id="faq-titre">Ce qu’on nous demande souvent</h2>
+        <details>
+          <summary>Faut-il refaire toute l’installation&#8239;?</summary>
+          <p>Pas forcément. Après la visite, on sépare ce qui touche à la sécurité (protections, terre, parties abîmées) de ce qui relève du confort. Vous pouvez étaler les travaux dans le temps.</p>
+        </details>
+        <details>
+          <summary>Combien de temps serons-nous sans courant&#8239;?</summary>
+          <p>Cela dépend des travaux&nbsp;: le devis indique quand et combien de temps le courant sera coupé. Pour un changement de tableau, on prévoit en général de rétablir le courant le jour même.</p>
+        </details>
+        <details>
+          <summary>Pourquoi demander des photos du tableau&#8239;?</summary>
+          <p>Elles montrent l’âge de l’installation, le type de protections et la place disponible. On arrive à la visite avec le bon matériel, et l’estimation est plus juste.</p>
+        </details>
+        <details>
+          <summary>Le diagnostic demandé pour vendre ou louer, c’est vous&#8239;?</summary>
+          <p>Non&nbsp;: ce diagnostic est réalisé par un diagnostiqueur, indépendant des entreprises de travaux. Si son rapport relève des anomalies, nous pouvons ensuite les corriger.</p>
+        </details>
+        <details>
+          <summary>Le devis est-il payant&#8239;?</summary>
+          <p>Ici, à titre d’exemple, le devis est gratuit et sans engagement. Chaque entreprise fixe ses propres conditions&nbsp;: elles doivent figurer clairement avant la visite.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Devis -->
+    <section class="section" id="devis" aria-labelledby="devis-titre">
+      <div class="wrap split">
+        <div>
+          <p class="kicker">Devis</p>
+          <h2 id="devis-titre">Demander un devis</h2>
+          <p>Décrivez vos travaux en quelques lignes et joignez une ou deux photos du tableau électrique, porte ouverte si possible, sans rien démonter.</p>
+          <p class="note">Formulaire de démonstration&nbsp;: il n’envoie rien.<span class="nojs"> Il s’active avec JavaScript.</span></p>
+        </div>
+        <form class="form" id="devis-form" novalidate>
+          <div class="champ">
+            <label for="f-type">Type de travaux</label>
+            <select id="f-type" name="type" required aria-describedby="e-type">
+              <option value="">Choisir…</option>
+              <option>Mise aux normes</option>
+              <option>Rénovation électrique</option>
+              <option>Tableau électrique</option>
+              <option>Dépannage</option>
+              <option>Borne de recharge</option>
+              <option>Domotique</option>
+              <option>Autre</option>
+            </select>
+            <p class="err" id="e-type"></p>
+          </div>
+          <fieldset class="champ">
+            <legend>Logement</legend>
+            <div class="radios">
+              <label><input type="radio" name="logement" value="maison" required> Maison</label>
+              <label><input type="radio" name="logement" value="appartement"> Appartement</label>
+              <label><input type="radio" name="logement" value="local"> Local professionnel</label>
+            </div>
+            <p class="err" id="e-logement"></p>
+          </fieldset>
+          <div class="champ">
+            <label for="f-cp">Code postal</label>
+            <input id="f-cp" name="cp" inputmode="numeric" autocomplete="postal-code" pattern="[0-9]{5}" maxlength="5" required aria-describedby="e-cp">
+            <p class="err" id="e-cp"></p>
+          </div>
+          <div class="champ champ--full">
+            <label for="f-desc">Description</label>
+            <textarea id="f-desc" name="description" rows="4" required aria-describedby="h-desc e-desc"></textarea>
+            <p class="hint" id="h-desc">Ce qui se passe, depuis quand, les pièces concernées.</p>
+            <p class="err" id="e-desc"></p>
+          </div>
+          <div class="champ champ--full">
+            <label for="f-photos">Photos du tableau <span class="opt">(facultatif)</span></label>
+            <input id="f-photos" name="photos" type="file" accept="image/*" multiple aria-describedby="h-photos">
+            <p class="hint" id="h-photos">Sur la démo, les fichiers ne quittent pas votre appareil.</p>
+          </div>
+          <div class="champ">
+            <label for="f-nom">Nom</label>
+            <input id="f-nom" name="nom" autocomplete="name" required aria-describedby="e-nom">
+            <p class="err" id="e-nom"></p>
+          </div>
+          <div class="champ">
+            <label for="f-mail">E-mail</label>
+            <input id="f-mail" name="email" type="email" autocomplete="email" required aria-describedby="e-mail">
+            <p class="err" id="e-mail"></p>
+          </div>
+          <div class="champ">
+            <label for="f-tel">Téléphone <span class="opt">(facultatif)</span></label>
+            <input id="f-tel" name="tel" type="tel" autocomplete="tel">
+          </div>
+          <div class="champ champ--full">
+            <button class="btn" type="submit" disabled>Envoyer ma demande</button>
+          </div>
+          <div class="statut champ--full" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <a class="cta-mobile btn" href="#devis">Demander un devis</a>
+
+  <footer class="pied">
+    <div class="wrap pied__grid">
+      <p class="pied__nom">Ampère <span>&amp;</span> Fils</p>
+      <p>Concept de démonstration réalisé par Axion Studio, entreprise fictive. Les délais, la zone d’intervention, les mentions et les chantiers présentés sont des exemples.</p>
+      <p><a href="https://axionstudio.fr/realisations/">Voir les réalisations d’Axion Studio</a></p>
+    </div>
+  </footer>
+</body>
+</html>

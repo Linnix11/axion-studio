@@ -4,14 +4,23 @@
 const root = document.documentElement;
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const { gsap, ScrollTrigger, SplitText, Lenis } = window;
+// État partagé entre le défilement et la scène 3D (chargée plus tard).
+const sceneState = { progress: 0, velocity: 0 };
 
 setupForm();
 
-if (reduceMotion || !gsap || !ScrollTrigger || !SplitText || !Lenis) {
-  root.classList.remove('motion');
-  document.querySelector('.loader')?.remove();
-} else {
-  init();
+if (!reduceMotion && gsap && ScrollTrigger && SplitText) init();
+else root.classList.remove('motion');
+
+// 3D : seulement sur grand écran, après le premier affichage.
+if (!reduceMotion && window.matchMedia('(min-width: 900px)').matches) {
+  afterLoad(() => initScene(document.querySelector('.scene-canvas')).catch(() => {}));
+}
+
+function afterLoad(cb) {
+  const idle = () => ('requestIdleCallback' in window ? window.requestIdleCallback(cb, { timeout: 2000 }) : setTimeout(cb, 200));
+  if (document.readyState === 'complete') idle();
+  else window.addEventListener('load', idle, { once: true });
 }
 
 /* ---------------- Formulaire (démo : rien n'est envoyé) ---------------- */
@@ -32,11 +41,15 @@ function init() {
   gsap.registerPlugin(ScrollTrigger, SplitText);
   root.classList.add('ready');
 
-  // Défilement fluide, synchronisé avec ScrollTrigger
-  const lenis = new Lenis({ lerp: 0.1 });
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
+  // Défilement fluide discret, seulement à la souris (pas au doigt).
+  let lenis = null;
+  const touch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  if (Lenis && !touch) {
+    lenis = new Lenis({ autoRaf: false, lerp: 0.13, syncTouch: false });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
 
   document.querySelectorAll('a[href^="#"]').forEach((a) => {
     a.addEventListener('click', (e) => {
@@ -45,134 +58,27 @@ function init() {
       const target = document.querySelector(id);
       if (!target) return;
       e.preventDefault();
-      lenis.scrollTo(target, { offset: id === '#accueil' ? 0 : -60 });
+      if (lenis) lenis.scrollTo(target, { offset: id === '#accueil' ? 0 : -60 });
+      else target.scrollIntoView();
       if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
       target.focus({ preventScroll: true });
     });
   });
 
-  const loader = createLoader();
-  const canvas = document.querySelector('.scene-canvas');
-  const scenePromise = initScene(canvas)
-    .catch(() => null)
-    .finally(() => loader.mark('scene'));
-
-  buildScroll(scenePromise);
-  loader.onDone(intro);
-}
-
-/* Compteur 0 à 100 lié au vrai chargement : polices, page, scène 3D. Jamais bloquant. */
-function createLoader() {
-  const el = document.querySelector('.loader');
-  const num = el?.querySelector('.loader-num');
-  const bar = el?.querySelector('.loader-line i');
-  const tasks = { fonts: false, load: false, scene: false };
-  const start = performance.now();
-  let target = 0;
-  let shown = 0;
-  let finished = false;
-  let doneCb = () => {};
-
-  const mark = (k) => {
-    if (tasks[k]) return;
-    tasks[k] = true;
-    const n = Object.values(tasks).filter(Boolean).length;
-    target = Math.max(target, (n / 3) * 100);
-  };
-
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => mark('fonts'));
-  else mark('fonts');
-  if (document.readyState === 'complete') mark('load');
-  else window.addEventListener('load', () => mark('load'), { once: true });
-
-  // Plafond : le compteur ne retient jamais la page plus de 2,6 s.
-  setTimeout(() => { target = 100; }, 2600);
-  const skip = () => { target = 100; };
-  window.addEventListener('pointerdown', skip, { once: true });
-  window.addEventListener('keydown', skip, { once: true });
-  window.addEventListener('wheel', skip, { once: true, passive: true });
-
-  const finish = () => {
-    if (finished) return;
-    finished = true;
-    if (!el) { doneCb(); return; }
-    gsap.to(el, {
-      clipPath: 'inset(0 0 100% 0)',
-      duration: 0.9,
-      ease: 'power3.inOut',
-      onComplete: () => el.remove(),
-    });
-    gsap.delayedCall(0.35, doneCb);
-  };
-
-  let lastT = performance.now();
-  const tick = (now) => {
-    const dt = Math.min((now - lastT) / 1000, 0.1);
-    lastT = now;
-    shown += Math.max((target - shown) * (1 - Math.exp(-dt * 8)), target > shown ? dt * 40 : 0);
-    shown = Math.min(shown, target);
-    if (num) num.textContent = String(Math.round(shown));
-    if (bar) bar.style.transform = `scaleX(${shown / 100})`;
-    if (shown >= 99.5 && performance.now() - start > 700) finish();
-    else requestAnimationFrame(tick);
-  };
-  if (!el) mark('load');
-  requestAnimationFrame(tick);
-
-  return {
-    mark,
-    onDone(cb) { doneCb = cb; if (finished) cb(); },
-  };
-}
-
-function intro() {
-  gsap.from('.eyebrow, .hero-sub, .hero-cta, .scroll-hint', {
-    y: 24, opacity: 0, duration: 1.1, ease: 'power3.out', stagger: 0.08,
-  });
-  gsap.from('.hero-title', { opacity: 0, duration: 1.4, ease: 'power2.out' });
+  buildScroll();
 }
 
 /* ---------------- Scènes au défilement ---------------- */
-function buildScroll(scenePromise) {
-  // Accueil épinglé : les mots dispersés se rassemblent en titre.
-  const scatter = [
-    [0.42, 0.04, -8, 1.2], [0.08, -0.06, 6, 0.8], [0.30, 0.16, -4, 1.1],
-    [0.55, -0.12, 10, 0.75], [0.22, -0.30, -5, 1.2], [0.62, -0.42, 6, 0.9], [0.40, -0.22, -9, 1.1],
-  ];
-  const words = gsap.utils.toArray('.hero-title .w');
-  gsap.timeline({
-    scrollTrigger: {
-      trigger: '.hero',
-      start: 'top top',
-      end: '+=110%',
-      pin: true,
-      scrub: 1,
-      invalidateOnRefresh: true,
+function buildScroll() {
+  // Progression de la scène 3D (accueil + geste), lue par la scène si elle est chargée.
+  ScrollTrigger.create({
+    trigger: '.scene',
+    start: 'top top',
+    end: 'bottom bottom',
+    onUpdate: (self) => {
+      sceneState.progress = self.progress;
+      sceneState.velocity = self.getVelocity();
     },
-  })
-    .from(words, {
-      x: (i) => scatter[i % scatter.length][0] * window.innerWidth,
-      y: (i) => scatter[i % scatter.length][1] * window.innerHeight,
-      rotation: (i) => scatter[i % scatter.length][2],
-      scale: (i) => scatter[i % scatter.length][3],
-      opacity: 0.45,
-      ease: 'power2.inOut',
-      duration: 1,
-    })
-    .to('.scroll-hint', { opacity: 0, duration: 0.3 }, 0);
-
-  // Progression de la scène 3D (accueil + geste)
-  scenePromise.then((scene) => {
-    if (!scene) return;
-    ScrollTrigger.create({
-      trigger: '.scene',
-      start: 'top top',
-      end: 'bottom bottom',
-      onUpdate: (self) => {
-        scene.progress = self.progress;
-        scene.velocity = self.getVelocity();
-      },
-    });
   });
   gsap.to('.scene-canvas', {
     opacity: 0.22,
@@ -188,10 +94,10 @@ function buildScroll(scenePromise) {
       autoSplit: true,
       onSplit: (self) => gsap.from(self.lines, {
         yPercent: 105,
-        duration: 1.1,
-        ease: 'power4.out',
-        stagger: 0.08,
-        scrollTrigger: { trigger: title, start: 'top 85%' },
+        duration: 0.8,
+        ease: 'power3.out',
+        stagger: 0.06,
+        scrollTrigger: { trigger: title, start: 'top 90%' },
       }),
     });
   });
@@ -200,75 +106,89 @@ function buildScroll(scenePromise) {
   SplitText.create('.geste-lead', {
     type: 'words',
     autoSplit: true,
-    onSplit: (self) => gsap.fromTo(self.words, { opacity: 0.16 }, {
+    onSplit: (self) => gsap.fromTo(self.words, { opacity: 0.3 }, {
       opacity: 1,
       stagger: 0.1,
       ease: 'none',
-      scrollTrigger: { trigger: '.geste-lead', start: 'top 75%', end: 'bottom 45%', scrub: true },
+      scrollTrigger: { trigger: '.geste-lead', start: 'top 85%', end: 'bottom 55%', scrub: true },
     }),
   });
   gsap.from('.gestes > div', {
-    y: 30, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.12,
-    scrollTrigger: { trigger: '.gestes', start: 'top 85%' },
+    y: 24, opacity: 0, duration: 0.7, ease: 'power2.out', stagger: 0.08,
+    scrollTrigger: { trigger: '.gestes', start: 'top 88%' },
   });
 
-  // Mots géants qui glissent en sens opposés
-  const bandTl = { trigger: '.bands', start: 'top bottom', end: 'bottom top', scrub: true };
-  gsap.fromTo('.band-row:not(.band-row--alt)', { xPercent: 0 }, { xPercent: -28, ease: 'none', scrollTrigger: bandTl });
-  gsap.fromTo('.band-row--alt', { xPercent: -36 }, { xPercent: -6, ease: 'none', scrollTrigger: { ...bandTl } });
+  // Un seul bandeau de mots géants qui glisse
+  gsap.fromTo('.band-row', { xPercent: 0 }, {
+    xPercent: -28, ease: 'none',
+    scrollTrigger: { trigger: '.bands', start: 'top bottom', end: 'bottom top', scrub: true },
+  });
 
   gsap.from('.service', {
-    y: 50, opacity: 0, duration: 1, ease: 'power3.out', stagger: 0.12,
-    scrollTrigger: { trigger: '.services', start: 'top 82%' },
+    y: 36, opacity: 0, duration: 0.7, ease: 'power2.out', stagger: 0.08,
+    scrollTrigger: { trigger: '.services', start: 'top 85%' },
   });
 
-  // Méthode épinglée : les quatre étapes se succèdent
-  const steps = gsap.utils.toArray('.step');
-  gsap.set(steps.slice(1), { opacity: 0, y: 40 });
-  const methodTl = gsap.timeline({
-    scrollTrigger: {
-      trigger: '.methode',
-      start: 'top top',
-      end: () => '+=' + window.innerHeight * (steps.length - 0.5),
-      pin: true,
-      scrub: 0.6,
-      invalidateOnRefresh: true,
-    },
-  });
-  steps.forEach((step, i) => {
-    if (i === 0) return;
-    methodTl
-      .to(steps[i - 1], { opacity: 0, y: -40, duration: 0.35 }, i)
-      .to(step, { opacity: 1, y: 0, duration: 0.45 }, i + 0.3);
-  });
-  methodTl.fromTo('.methode-bar i', { scaleX: 0.25 }, { scaleX: 1, ease: 'none', duration: steps.length - 0.25 }, 0.25);
-
-  // Galerie horizontale (grands écrans uniquement)
   const mm = gsap.matchMedia();
-  mm.add('(min-width: 900px)', () => {
+
+  // Grand écran : épinglages courts.
+  mm.add('(min-width: 900px) and (min-height: 650px)', () => {
+    // Accueil : le titre est lisible tout de suite ; au défilement, les mots s'écartent un peu.
+    const scatter = [
+      [0.10, -0.04, -4], [0.04, 0.03, 3], [0.08, -0.02, -2],
+      [0.12, 0.05, 4], [0.05, -0.06, -3], [0.14, 0.04, 3], [0.06, 0.02, -4],
+    ];
+    gsap.to('.hero-title .w', {
+      x: (i) => scatter[i % scatter.length][0] * window.innerWidth,
+      y: (i) => scatter[i % scatter.length][1] * window.innerHeight,
+      rotation: (i) => scatter[i % scatter.length][2],
+      ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 0.6, invalidateOnRefresh: true },
+    });
+    gsap.to('.scroll-hint', {
+      opacity: 0, ease: 'none',
+      scrollTrigger: { trigger: '.hero', start: 'top top', end: '+=20%', scrub: true },
+    });
+
+    // Méthode : les quatre étapes se succèdent sur une hauteur d'écran.
+    root.classList.add('pin-methode');
+    const steps = gsap.utils.toArray('.step');
+    gsap.set(steps.slice(1), { opacity: 0, y: 30 });
+    const methodTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '.methode', start: 'top top', end: '+=100%', pin: true, scrub: 0.5, invalidateOnRefresh: true,
+      },
+    });
+    steps.forEach((step, i) => {
+      if (i === 0) return;
+      methodTl
+        .to(steps[i - 1], { opacity: 0, y: -30, duration: 0.35 }, i)
+        .to(step, { opacity: 1, y: 0, duration: 0.45 }, i + 0.3);
+    });
+    methodTl.fromTo('.methode-bar i', { scaleX: 0.25 }, { scaleX: 1, ease: 'none', duration: steps.length - 0.25 }, 0.25);
+
+    // Galerie : défilement horizontal court.
+    root.classList.add('pin-pieces');
     const track = document.querySelector('.gallery-track');
     const distance = () => Math.max(0, track.scrollWidth - document.documentElement.clientWidth);
     gsap.to(track, {
       x: () => -distance(),
       ease: 'none',
       scrollTrigger: {
-        trigger: '.pieces',
-        start: 'top top',
-        end: () => '+=' + distance(),
-        pin: true,
-        scrub: 0.8,
-        invalidateOnRefresh: true,
+        trigger: '.pieces', start: 'top top', end: () => '+=' + distance(), pin: true, scrub: 0.6, invalidateOnRefresh: true,
       },
     });
-    gsap.from('.piece svg', {
-      clipPath: 'inset(0 0 100% 0)',
-      duration: 1.2,
-      ease: 'power3.inOut',
-      stagger: 0.1,
-      scrollTrigger: { trigger: '.pieces', start: 'top 60%' },
+    return () => root.classList.remove('pin-methode', 'pin-pieces');
+  });
+
+  // Petit écran : flux normal, simples apparitions.
+  mm.add('(max-width: 899px), (max-height: 649px)', () => {
+    gsap.utils.toArray('.step, .piece').forEach((el) => {
+      gsap.from(el, { y: 30, opacity: 0, duration: 0.7, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 90%' } });
     });
   });
 
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
   window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
 }
 
@@ -377,16 +297,17 @@ const fragmentShader = /* glsl */ `
 
 async function initScene(canvas) {
   if (!canvas) return null;
-  const THREE = await import('../_lib/three.module.js');
+  const THREE = await import('../_lib/three.min.js');
 
   const isSmall = () => window.innerWidth < 900;
   const renderer = new THREE.WebGLRenderer({
     canvas,
-    antialias: !isSmall(),
+    antialias: false,
     alpha: true,
     powerPreference: 'low-power',
   });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1));
+  root.classList.add('has-3d');
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 50);
@@ -426,7 +347,7 @@ async function initScene(canvas) {
     mouse.ty = -((e.clientY / window.innerHeight) * 2 - 1);
   }, { passive: true });
 
-  const state = { progress: 0, velocity: 0 };
+  const state = sceneState;
   let p = 0;
   let wave = 0.2;
   let visible = true;
@@ -490,8 +411,4 @@ async function initScene(canvas) {
   renderer.render(scene, camera);
   update();
 
-  return {
-    set progress(v) { state.progress = v; },
-    set velocity(v) { state.velocity = v; },
-  };
 }

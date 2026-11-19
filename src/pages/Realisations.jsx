@@ -27,50 +27,66 @@ function Apercu({ apercu: a }) {
   )
 }
 
+const GROUPES = [
+  { id: 'batiment', titre: 'Artisans du bâtiment et services', texte: 'Des sites rapides et sobres, pensés pour un téléphone en 4G : ils s’affichent tout de suite et mènent au devis.' },
+  { id: 'axion', titre: 'Mon propre site', texte: 'Le site d’Axion Studio, en ligne : conçu, écrit et développé par moi.' },
+  { id: 'immersif', titre: 'Sites immersifs', texte: 'Pour une entreprise qui veut se démarquer : effets au défilement et 3D sur grand écran, une page simple et légère sur mobile.' },
+]
+
 export default function Realisations() {
   usePageMeta('/realisations')
   return (
     <>
       <PageHeader title="Réalisations : sites vitrine" note="Sites web">
         Je crée des sites vitrine soignés, rapides et reliés à vos outils : un formulaire qui crée la fiche client,
-        une prise de rendez-vous qui remplit votre agenda, une confirmation envoyée seule. Voici mon propre site,
-        puis trois concepts de démonstration pour montrer ce que je peux faire.
+        une prise de rendez-vous qui remplit votre agenda, une confirmation envoyée seule. Voici des concepts de
+        démonstration, d’abord pour les artisans du bâtiment, puis mon propre site et des sites plus spectaculaires.
       </PageHeader>
 
-      <Section note={`${realisations.length} sites`}>
-        <ul className="grid gap-8 md:grid-cols-2">
-          {realisations.map(r => {
-            const metier = r.metier && metiers.find(m => m.slug === r.metier)
-            return (
-              <li key={r.nom}>
-                <article className="lift flex h-full flex-col rounded-xl border border-rule bg-paper p-5">
-                  <Apercu apercu={r.apercu} />
-                  <p className="mt-5 text-sm text-muted">{r.type}</p>
-                  <h2 className="text-2xl leading-tight">{r.nom}</h2>
-                  {r.demo
-                    ? <p className="mt-3 self-start rounded-md border border-pen px-2.5 py-1 text-sm font-semibold text-pen">Concept de démonstration, entreprise fictive</p>
-                    : <p className="mt-3 self-start rounded-md bg-paper-2 px-2.5 py-1 text-sm font-semibold">Réalisation en ligne</p>}
-                  <p className="mt-4 text-lg leading-[1.6] text-muted">{r.texte}</p>
-                  <h3 className="mt-5 border-b-2 border-ink pb-2 text-base font-medium">Ce qui est inclus</h3>
-                  <ul className="mt-1">
-                    {r.inclus.map(x => <li key={x} className="border-b border-rule py-3 leading-[1.5]">{x}</li>)}
-                  </ul>
-                  {metier && (
-                    <p className="mt-4 leading-[1.6] text-muted">
-                      {'Pensé pour : '}<Link to={`/automatisation/${metier.slug}/`} className={textLink}>{metier.nom.toLowerCase()}</Link>
-                    </p>
-                  )}
-                  <div className="mt-auto pt-4">
-                    {r.demo
-                      ? <a href={r.lien} target="_blank" rel="noopener" className={standaloneLink}>Voir la démo<span className="sr-only"> {r.nom}, nouvel onglet</span></a>
-                      : <a href={r.lien} className={standaloneLink}>{r.lienTexte}</a>}
-                  </div>
-                </article>
-              </li>
-            )
-          })}
-        </ul>
-        <p className="mt-10 max-w-[64ch] text-lg leading-[1.6] text-muted">
+      {GROUPES.map((g, i) => {
+        const liste = realisations.filter(r => r.groupe === g.id)
+        return (
+          <Section key={g.id} note={i === 0 ? `${realisations.length} sites` : undefined}>
+            <h2 className="text-3xl leading-tight md:text-4xl">{g.titre}</h2>
+            <p className="mt-3 max-w-[64ch] text-lg leading-[1.6] text-muted">{g.texte}</p>
+            <ul className="mt-8 grid gap-8 md:grid-cols-2">
+              {liste.map(r => {
+                const metier = r.metier && metiers.find(m => m.slug === r.metier)
+                return (
+                  <li key={r.nom}>
+                    <article className="lift flex h-full flex-col rounded-xl border border-rule bg-paper p-5">
+                      <Apercu apercu={r.apercu} />
+                      <p className="mt-5 text-sm text-muted">{r.type}</p>
+                      <h3 className="text-2xl leading-tight">{r.nom}</h3>
+                      {r.demo
+                        ? <p className="mt-3 self-start rounded-md border border-pen px-2.5 py-1 text-sm font-semibold text-pen">Concept de démonstration, entreprise fictive</p>
+                        : <p className="mt-3 self-start rounded-md bg-paper-2 px-2.5 py-1 text-sm font-semibold">Réalisation en ligne</p>}
+                      <p className="mt-4 text-lg leading-[1.6] text-muted">{r.texte}</p>
+                      <p className="mt-5 border-b-2 border-ink pb-2 text-base font-medium">Ce qui est inclus</p>
+                      <ul className="mt-1">
+                        {r.inclus.map(x => <li key={x} className="border-b border-rule py-3 leading-[1.5]">{x}</li>)}
+                      </ul>
+                      {metier && (
+                        <p className="mt-4 leading-[1.6] text-muted">
+                          {'Pensé pour : '}<Link to={`/automatisation/${metier.slug}/`} className={textLink}>{metier.nom.toLowerCase()}</Link>
+                        </p>
+                      )}
+                      <div className="mt-auto pt-4">
+                        {r.demo
+                          ? <a href={r.lien} target="_blank" rel="noopener" className={standaloneLink}>Voir la démo<span className="sr-only"> {r.nom}, nouvel onglet</span></a>
+                          : <a href={r.lien} className={standaloneLink}>{r.lienTexte}</a>}
+                      </div>
+                    </article>
+                  </li>
+                )
+              })}
+            </ul>
+          </Section>
+        )
+      })}
+
+      <Section>
+        <p className="max-w-[64ch] text-lg leading-[1.6] text-muted">
           Les démos présentent des entreprises inventées. Leurs formulaires n’envoient rien : chaque démo explique ce qui
           se passerait chez un vrai client. Le détail de l’offre est sur la page <Link to="/services/#sites-web" className={textLink}>services</Link>.
         </p>

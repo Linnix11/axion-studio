@@ -17,13 +17,6 @@
   <script type="module" src="main.js"></script>
 </head>
 <body>
-  <div class="loader" aria-hidden="true">
-    <p class="loader__name">Ardoise &amp; Sel</p>
-    <p class="loader__count"><span class="loader__num">0</span></p>
-    <p class="loader__hint">On allume le feu</p>
-    <div class="loader__bar"><span></span></div>
-  </div>
-
   <a class="skip" href="#contenu">Aller au contenu</a>
 
   <header class="top">
@@ -90,7 +83,6 @@
 
     <div class="defile" aria-hidden="true">
       <p class="defile__ligne">poireaux brûlés <i>·</i> beurre noisette <i>·</i> sarrasin <i>·</i> coing rôti <i>·</i> lieu de ligne <i>·</i> châtaignes <i>·</i></p>
-      <p class="defile__ligne defile__ligne--b">four à bois <i>·</i> crème crue <i>·</i> potimarron <i>·</i> chou pointu <i>·</i> fleur de sel <i>·</i> braise <i>·</i></p>
     </div>
 
     <section class="carte" id="carte" aria-labelledby="carte-titre">
@@ -239,40 +231,5 @@
     </div>
   </footer>
 
-  <script>
-    (function () {
-      var root = document.documentElement;
-      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var loader = document.querySelector('.loader');
-      if (reduce || !loader) { root.classList.add('is-loaded'); if (loader) loader.remove(); window.__ardoiseLoaded = true; return; }
-      var num = loader.querySelector('.loader__num');
-      var bar = loader.querySelector('.loader__bar span');
-      var shown = 0, target = 20, done = false;
-      function step(v) { if (v > target) target = v; }
-      if (document.readyState !== 'loading') step(40); else document.addEventListener('DOMContentLoaded', function () { step(40); });
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { step(55); });
-      window.addEventListener('ardoise:scene', function () { step(85); });
-      if (document.readyState === 'complete') step(100); else window.addEventListener('load', function () { step(100); });
-      setTimeout(function () { step(100); }, 2600);
-      setTimeout(function () { if (!done) finish(); }, 3400);
-      function finish() {
-        done = true;
-        root.classList.add('is-loaded');
-        window.__ardoiseLoaded = true;
-        window.dispatchEvent(new Event('ardoise:loaded'));
-        setTimeout(function () { loader.remove(); }, 900);
-      }
-      function tick() {
-        shown += (target - shown) * 0.12 + 0.3;
-        if (shown > target) shown = target;
-        var n = Math.round(shown);
-        num.textContent = n;
-        bar.style.transform = 'scaleX(' + (n / 100) + ')';
-        if (n >= 100) { setTimeout(function () { if (!done) finish(); }, 180); return; }
-        requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    })();
-  </script>
 </body>
 </html>

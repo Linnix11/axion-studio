@@ -1,199 +1,130 @@
 // Seuil : démo Axion Studio (entreprise fictive).
-import * as THREE from '../_lib/three.module.js';
-
-const NBSP = ' ';
+const NBSP = ' ';
 const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const { gsap, ScrollTrigger, SplitText, Lenis } = window;
+// Progression de la section « maison », partagée avec la scène 3D (chargée plus tard).
+const buildState = { target: 0 };
 
 setupForm();
 
-if (reduced || !gsap || !ScrollTrigger) {
-  document.querySelector('.loader')?.remove();
-} else {
-  init().catch((err) => {
-    console.error(err);
-    document.querySelector('.loader')?.remove();
+if (!reduced && gsap && ScrollTrigger && SplitText) init();
+
+// 3D : seulement sur grand écran, après le premier affichage.
+if (!reduced && gsap && ScrollTrigger && window.matchMedia('(min-width: 900px)').matches) {
+  afterLoad(async () => {
+    try {
+      const THREE = await import('../_lib/three.min.js');
+      setupHouse(THREE);
+      ScrollTrigger.refresh();
+    } catch { /* le dessin SVG reste */ }
   });
 }
 
+function afterLoad(cb) {
+  const idle = () => ('requestIdleCallback' in window ? window.requestIdleCallback(cb, { timeout: 2000 }) : setTimeout(cb, 200));
+  if (document.readyState === 'complete') idle();
+  else window.addEventListener('load', idle, { once: true });
+}
+
 /* ------------------------------------------------------------------ */
-async function init() {
+function init() {
   gsap.registerPlugin(ScrollTrigger, SplitText);
-  const loader = createLoader();
-
   setupLenis();
-
-  const fontsReady = Promise.race([
-    document.fonts ? document.fonts.ready : Promise.resolve(),
-    wait(1500),
-  ]);
-  fontsReady.then(() => loader.mark('fonts'));
-
-  if (document.readyState === 'complete') loader.mark('load');
-  else window.addEventListener('load', () => loader.mark('load'), { once: true });
-
-  const house = setupHouse();
-  house.ready.then(() => loader.mark('scene'));
-
-  await fontsReady;
-  const intro = setupHero();
+  setupHero();
   setupApproach();
+  setupBuild();
   setupHomes();
   setupDrift();
   setupSell();
   setupHeadings();
-  ScrollTrigger.refresh();
-
-  await loader.finished;
-  intro.play();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
+  window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
 }
 
-function wait(ms) { return new Promise((r) => setTimeout(r, ms)); }
-
-/* ---------- Chargement : compte de 0 à 100 lié aux vraies étapes ---------- */
-function createLoader() {
-  const el = document.querySelector('.loader');
-  if (!el) return { mark() {}, finished: Promise.resolve() };
-  el.classList.add('is-js');
-  const num = el.querySelector('.loader__num');
-  const bar = el.querySelector('.loader__bar span');
-  const tasks = { fonts: false, load: false, scene: false };
-  const shown = { v: 0 };
-  let done = false;
-  let resolveFinished;
-  const finished = new Promise((r) => (resolveFinished = r));
-
-  const render = () => {
-    num.textContent = Math.round(shown.v);
-    bar.style.transform = `scaleX(${shown.v / 100})`;
-  };
-
-  const exit = () => {
-    if (done) return;
-    done = true;
-    gsap.to(shown, {
-      v: 100, duration: 0.35, ease: 'power1.out', overwrite: true, onUpdate: render,
-      onComplete: () => {
-        gsap.to(el, {
-          clipPath: 'inset(0 0 100% 0)', duration: 0.9, ease: 'power3.inOut',
-          onComplete: () => el.remove(),
-        });
-        setTimeout(resolveFinished, 350);
-      },
-    });
-  };
-
-  const mark = (key) => {
-    if (done || tasks[key]) return;
-    tasks[key] = true;
-    const vals = Object.values(tasks);
-    const ratio = vals.filter(Boolean).length / vals.length;
-    if (ratio === 1) return exit();
-    gsap.to(shown, { v: ratio * 100 - 6, duration: 0.5, ease: 'power2.out', overwrite: true, onUpdate: render });
-  };
-
-  gsap.set(el, { clipPath: 'inset(0 0 0% 0)' });
-  setTimeout(exit, 2400); // jamais plus de 2,4 s
-  return { mark, finished };
-}
-
-/* ---------- Défilement fluide ---------- */
+/* ---------- Défilement fluide discret, seulement à la souris ---------- */
 function setupLenis() {
-  if (!Lenis) return null;
-  const lenis = new Lenis({ autoRaf: false, lerp: 0.09, anchors: { offset: -64 } });
+  const touch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  if (!Lenis || touch) return null;
+  const lenis = new Lenis({ autoRaf: false, lerp: 0.13, syncTouch: false, anchors: { offset: -64 } });
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((t) => lenis.raf(t * 1000));
   gsap.ticker.lagSmoothing(0);
   return lenis;
 }
 
-/* ---------- Accueil : mots dispersés qui se rassemblent ---------- */
+/* ---------- Accueil : le seuil s'ouvre (grand écran, épinglage court) ---------- */
 function setupHero() {
-  const words = gsap.utils.toArray('.hw');
-  const small = () => window.innerWidth < 720;
-  const scatter = [
-    { x: 36, y: -8, r: 6, s: 0.55 },
-    { x: -30, y: 12, r: -12, s: 1.25 },
-    { x: -30, y: -34, r: 4, s: 0.7 },
-  ];
   gsap.set('.hero__portal', { xPercent: -50, yPercent: -50 });
-
-  const tl = gsap.timeline({
-    defaults: { ease: 'none' },
-    scrollTrigger: {
-      trigger: '.hero', start: 'top top', end: '+=140%', scrub: 1, pin: true, invalidateOnRefresh: true,
-    },
+  const scatter = [
+    { x: 6, y: -3, r: 3 },
+    { x: -5, y: 2, r: -5 },
+    { x: -4, y: 4, r: 2 },
+  ];
+  gsap.matchMedia().add('(min-width: 900px)', () => {
+    gsap.timeline({
+      defaults: { ease: 'none' },
+      scrollTrigger: {
+        trigger: '.hero', start: 'top top', end: '+=60%', scrub: 0.6, pin: true, invalidateOnRefresh: true,
+      },
+    })
+      .to('.hw', {
+        x: (i) => `${scatter[i].x}vw`,
+        y: (i) => `${scatter[i].y}vh`,
+        rotation: (i) => scatter[i].r,
+        duration: 1,
+      }, 0)
+      .to('.hero__portal', { scaleX: () => (window.innerWidth / 140) * 1.2, scaleY: 1.5, duration: 1, ease: 'power2.in' }, 0)
+      .to('.hero__kicker, .hero__scroll', { autoAlpha: 0, duration: 0.2 }, 0);
   });
-  tl.from(words, {
-    x: (i) => `${scatter[i].x * (small() ? 0.4 : 1)}vw`,
-    y: (i) => `${scatter[i].y * (small() ? 0.5 : 1)}vh`,
-    rotation: (i) => scatter[i].r,
-    scale: (i) => scatter[i].s,
-    duration: 1,
-  }, 0)
-    .from('.hero__lede', { autoAlpha: 0, y: 40, duration: 0.35 }, 0.6)
-    .to('.hero__portal', { scaleX: () => (window.innerWidth / 140) * 1.2, scaleY: 1.5, duration: 0.6, ease: 'power2.in' }, 0.75)
-    .to('.hero__kicker, .hero__scroll', { autoAlpha: 0, duration: 0.2 }, 0.1);
-
-  // Entrée après le chargement : chaque lettre monte depuis sa ligne.
-  const split = SplitText.create('.hw__in', { type: 'chars', mask: 'chars' });
-  const intro = gsap.timeline({ paused: true })
-    .from(split.chars, { yPercent: 110, duration: 1.2, ease: 'expo.out', stagger: 0.035 })
-    .from('.hero__portal', { scaleY: 0, transformOrigin: '50% 100%', duration: 1.4, ease: 'expo.inOut' }, 0)
-    .from('.hero__kicker, .top', { autoAlpha: 0, y: -12, duration: 0.8, ease: 'power2.out' }, 0.4);
-  gsap.set(split.chars, { yPercent: 110 });
-  return intro;
 }
 
-/* ---------- Approche : mots qui s'éclairent, compteurs ---------- */
+/* ---------- Approche : mots qui s'éclairent ---------- */
 function setupApproach() {
   const statement = document.querySelector('.approach__statement');
   SplitText.create(statement, {
     type: 'words',
     autoSplit: true,
-    onSplit: (self) => gsap.fromTo(self.words, { opacity: 0.16 }, {
+    onSplit: (self) => gsap.fromTo(self.words, { opacity: 0.3 }, {
       opacity: 1, ease: 'none', stagger: 0.1,
-      scrollTrigger: { trigger: statement, start: 'top 80%', end: 'bottom 45%', scrub: true },
+      scrollTrigger: { trigger: statement, start: 'top 85%', end: 'bottom 55%', scrub: true },
     }),
   });
-
-  document.querySelectorAll('.count').forEach((el) => {
-    const to = Number(el.dataset.to);
-    const proxy = { v: 0 };
-    el.textContent = '0';
-    ScrollTrigger.create({
-      trigger: el, start: 'top 88%', once: true,
-      onEnter: () => gsap.to(proxy, {
-        v: to, duration: 1.6, ease: 'power3.out',
-        onUpdate: () => (el.textContent = Math.round(proxy.v)),
-      }),
-    });
-  });
-
   gsap.from('.pledge', {
-    y: 50, autoAlpha: 0, duration: 1, stagger: 0.12, ease: 'power3.out',
-    scrollTrigger: { trigger: '.pledges', start: 'top 85%' },
+    y: 30, autoAlpha: 0, duration: 0.7, stagger: 0.08, ease: 'power2.out',
+    scrollTrigger: { trigger: '.pledges', start: 'top 88%' },
   });
 }
 
-/* ---------- Biens : rideau, parallaxe dans les dessins ---------- */
+/* ---------- Maison : étapes (et 3D sur grand écran) ---------- */
+function setupBuild() {
+  const steps = [...document.querySelectorAll('.step')];
+  const root = document.documentElement;
+  gsap.matchMedia().add('(min-width: 900px)', () => {
+    root.classList.add('pin-build');
+    let active = 0;
+    const st = ScrollTrigger.create({
+      trigger: '.build', start: 'top top', end: 'bottom bottom',
+      onUpdate: (self) => {
+        const p = self.progress;
+        buildState.target = p;
+        const idx = p < 0.2 ? 0 : p < 0.5 ? 1 : p < 0.78 ? 2 : 3;
+        if (idx !== active) {
+          steps[active].classList.remove('is-on');
+          steps[idx].classList.add('is-on');
+          active = idx;
+        }
+      },
+    });
+    return () => { st.kill(); root.classList.remove('pin-build'); steps.forEach((s, i) => s.classList.toggle('is-on', i === 0)); };
+  });
+}
+
+/* ---------- Biens : rideau ---------- */
 function setupHomes() {
   gsap.utils.toArray('.card').forEach((card) => {
-    const visual = card.querySelector('.card__visual');
-    gsap.fromTo(visual, { clipPath: 'inset(100% 0% 0% 0%)' }, {
-      clipPath: 'inset(0% 0% 0% 0%)', duration: 1.4, ease: 'expo.out',
-      scrollTrigger: { trigger: card, start: 'top 85%' },
-    });
-    gsap.from(card.querySelector('.card__body'), {
-      y: 30, autoAlpha: 0, duration: 1, delay: 0.25, ease: 'power3.out',
-      scrollTrigger: { trigger: card, start: 'top 85%' },
-    });
-    card.querySelectorAll('.px').forEach((g) => {
-      const d = Number(g.dataset.depth) || 0;
-      gsap.fromTo(g, { y: d * 24 }, {
-        y: d * -24, ease: 'none',
-        scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true },
-      });
+    gsap.fromTo(card.querySelector('.card__visual'), { clipPath: 'inset(100% 0% 0% 0%)' }, {
+      clipPath: 'inset(0% 0% 0% 0%)', duration: 0.9, ease: 'power3.out',
+      scrollTrigger: { trigger: card, start: 'top 88%' },
     });
   });
 }
@@ -205,12 +136,8 @@ function setupDrift() {
     ['.drift__line--b', 14, -22],
     ['.drift__line--c', -10, 16],
   ];
-  lines.forEach(([sel, from, to]) => {
-    gsap.fromTo(sel, { x: `${from}vw` }, {
-      x: `${to}vw`, ease: 'none',
-      scrollTrigger: { trigger: '.drift', start: 'top bottom', end: 'bottom top', scrub: true },
-    });
-  });
+  const tl = gsap.timeline({ scrollTrigger: { trigger: '.drift', start: 'top bottom', end: 'bottom top', scrub: true } });
+  lines.forEach(([sel, from, to]) => tl.fromTo(sel, { x: `${from}vw` }, { x: `${to}vw`, ease: 'none' }, 0));
 }
 
 /* ---------- Vendre : la ligne se trace, les étapes arrivent ---------- */
@@ -218,11 +145,11 @@ function setupSell() {
   const list = document.querySelector('.sell__steps');
   gsap.fromTo(list, { '--p': 0 }, {
     '--p': 1, ease: 'none',
-    scrollTrigger: { trigger: list, start: 'top 75%', end: 'bottom 60%', scrub: true },
+    scrollTrigger: { trigger: list, start: 'top 80%', end: 'bottom 65%', scrub: true },
   });
   gsap.from('.sstep', {
-    y: 60, autoAlpha: 0, duration: 1, stagger: 0.15, ease: 'power3.out',
-    scrollTrigger: { trigger: list, start: 'top 80%' },
+    y: 36, autoAlpha: 0, duration: 0.7, stagger: 0.1, ease: 'power2.out',
+    scrollTrigger: { trigger: list, start: 'top 88%' },
   });
 }
 
@@ -232,31 +159,26 @@ function setupHeadings() {
     SplitText.create(el, {
       type: 'lines', mask: 'lines', autoSplit: true,
       onSplit: (self) => gsap.from(self.lines, {
-        yPercent: 105, duration: 1.1, stagger: 0.08, ease: 'power4.out',
-        scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+        yPercent: 105, duration: 0.8, stagger: 0.06, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 90%', once: true },
       }),
     });
   });
 }
 
 /* ---------- Scène three.js : la maison s'assemble ---------- */
-function setupHouse() {
+function setupHouse(THREE) {
   const section = document.querySelector('.build');
   const canvas = document.querySelector('.build__gl');
   const box = document.querySelector('.build__canvas');
-  const steps = [...document.querySelectorAll('.step')];
-  let resolveReady;
-  const ready = new Promise((r) => (resolveReady = r));
-
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'low-power' });
-  } catch (e) {
-    resolveReady();
-    return { ready };
+  } catch {
+    return;
   }
   document.documentElement.classList.add('has-3d');
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1));
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFShadowMap;
 
@@ -269,14 +191,14 @@ function setupHouse() {
   const sun = new THREE.DirectionalLight(0xffe1b3, 2.4);
   sun.position.set(-7, 10, 12);
   sun.castShadow = true;
-  sun.shadow.mapSize.set(1024, 1024);
+  sun.shadow.mapSize.set(512, 512);
   Object.assign(sun.shadow.camera, { left: -10, right: 10, top: 10, bottom: -10, near: 1, far: 40 });
   sun.shadow.bias = -0.0008;
   sun.shadow.radius = 4;
   scene.add(sun);
 
   const ground = new THREE.Mesh(
-    new THREE.CircleGeometry(16, 64),
+    new THREE.CircleGeometry(16, 32),
     new THREE.ShadowMaterial({ color: 0x3e4636, opacity: 0.2 }),
   );
   ground.rotation.x = -Math.PI / 2;
@@ -368,10 +290,8 @@ function setupHouse() {
 
   house.rotation.y = -0.35;
 
-  // Pilotage : progression de la section (lissée), heure du jour, étapes.
-  let target = 0;
+  // Pilotage : progression de la section (lissée) et heure du jour.
   let current = 0;
-  let activeStep = 0;
   const ease = (t) => 1 - Math.pow(1 - t, 3);
   const clamp01 = (t) => Math.min(1, Math.max(0, t));
   const warm = new THREE.Color(0xffd29a);
@@ -393,13 +313,6 @@ function setupHouse() {
     mat.glass.emissiveIntensity = light * 1.5;
     sun.color.copy(pale).lerp(warm, light);
     sun.intensity = 2.1 + light * 0.9;
-
-    const idx = p < 0.2 ? 0 : p < 0.55 ? 1 : p < 0.82 ? 2 : 3;
-    if (idx !== activeStep) {
-      steps[activeStep]?.classList.remove('is-on');
-      steps[idx]?.classList.add('is-on');
-      activeStep = idx;
-    }
   };
 
   const resize = () => {
@@ -414,7 +327,7 @@ function setupHouse() {
   resize();
 
   const frame = (time) => {
-    current += (target - current) * 0.08;
+    current += (buildState.target - current) * 0.08;
     apply(current);
     const t = time * 0.001;
     const radius = camera.aspect < 1 ? 22 / Math.max(camera.aspect, 0.55) : 20;
@@ -431,19 +344,8 @@ function setupHouse() {
     .observe(section);
   document.addEventListener('visibilitychange', update);
 
-  ScrollTrigger.create({
-    trigger: section, start: 'top top', end: 'bottom bottom',
-    onUpdate: (self) => { target = self.progress; },
-  });
-
-  // Premier rendu (compile les shaders) pendant l'écran de chargement.
-  requestAnimationFrame(() => {
-    apply(0);
-    frame(0);
-    resolveReady();
-  });
-
-  return { ready };
+  apply(0);
+  frame(0);
 }
 
 /* ---------- Formulaire : n'envoie rien, explique ce qui se passerait ---------- */
